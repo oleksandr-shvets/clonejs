@@ -16,16 +16,20 @@
  *
  * @example
  *     var $myType = Clone.make({
- *         constructor: function(){
+ *         constructor: Clone.defineType('MyType', function(){
  *             var obj = this.applySuper(arguments);
  *             // do something with obj...
  *             return obj;
- *         },
+ *         }),
  *         property: 1
  *     });
- *     var myTypeInstance = $myType.create();
- *     var $myArray = Clone(Array.prototype, {customMethod: function(){}});
- *         $myArray = Clone.makeFomClass(Array, {customMethod: function(){}});
+ *     var myTypeInstance1 = $myType.create();
+ *     var myTypeInstance2 = $myType.create();
+ *     assert( $myType.isPrototypeOf(myTypeInstance1) );
+ *
+ *     var $myArray1 = Clone(Array.prototype, {customMethod: function(){}});
+ *     var $myArray2 = Clone.makeFomClass(Array, {customMethod: function(){}});
+ *
  *
  *     var myObj = {a:1, b:2, c:3};
  *     var cloneOfMyObj = Clone(myObj);
@@ -119,7 +123,7 @@ function(){'use strict';
     /**
      * Create custom type (class).
      * @param typeName    The name of new type, if no given, constructor.name used, if it empty, the default will be "CustomTypeN".
-     * @param prototype   The prototype of new type, if no given, you should set the prototype property of returned function.
+     * @param prototype   The prototype of new type, if no given, you should manually set the prototype property of returned Function.
      * @param constructor If no given, and if defined prototype.constructor, it used.
      * @returns {FunctionType}
      *
@@ -180,9 +184,13 @@ function(){'use strict';
 
     /**
      *
-     * @returns {Clone}
+     * @returns {~Clone}
      */
-    Clone.makeFromClass = function(/** FunctionType */BaseClass, /** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
+    Clone.makeFromClass = function(
+        /**        FunctionType */BaseClass,
+        /**             Object= */properties,
+        /** PropertyDescriptor= */defaultDescriptor
+    ){
         var prototype = BaseClass.prototype;
 
         if(BaseClass instanceof Clone || Clone.can(prototype, 'clone').as(Clone.prototype) ){
@@ -198,7 +206,7 @@ function(){'use strict';
     };
 
     /**
-     * Use this method to check if method of one object stored in another object.
+     * Use this to check if method of one object is the same as in the another object.
      * @example
      *     var myObj = {split: function(){} };
      *     Clone.can(myObj, 'split').like(new Array);
