@@ -1,0 +1,590 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">/**
+<span class='line'>  2</span>  * @ clone.js Framework
+<span class='line'>  3</span>  * @version 0.4.5
+<span class='line'>  4</span>  * @author  Alex Shvets
+<span class='line'>  5</span>  *
+<span class='line'>  6</span>  * @class
+<span class='line'>  7</span>  *     This class is the library, that have actsent on the new ECMA Script 5 features like Object.create and property descriptors.
+<span class='line'>  8</span>  *
+<span class='line'>  9</span>  *     &lt;p>&lt;b>Naming conventions&lt;/b>
+<span class='line'> 10</span>  *     &lt;p>Prefix your var names with "$", if it contain prototype object.
+<span class='line'> 11</span>  *     &lt;p>
+<span class='line'> 12</span>  * @description
+<span class='line'> 13</span>  *     If called as function, return a clone of &lt;i>baseObj&lt;/i>, and set it's properties.
+<span class='line'> 14</span>  *     If called with &lt;i>new&lt;/i> operator, constructor will take 2 arguments (properties and defaultDescriptor).
+<span class='line'> 15</span>  *
+<span class='line'> 16</span>  * @example
+<span class='line'> 17</span>  *     var $myType = Clone.make({
+<span class='line'> 18</span>  *         constructor: function(){
+<span class='line'> 19</span>  *             var obj = this.applySuper(arguments);
+<span class='line'> 20</span>  *             // do something with obj...
+<span class='line'> 21</span>  *             return obj;
+<span class='line'> 22</span>  *         },
+<span class='line'> 23</span>  *         property: 1
+<span class='line'> 24</span>  *     });
+<span class='line'> 25</span>  *     var myTypeInstance = $myType.create();
+<span class='line'> 26</span>  *     var $myArray = Clone(Array.prototype, {customMethod: function(){}});
+<span class='line'> 27</span>  *         $myArray = Clone.makeFomClass(Array, {customMethod: function(){}});
+<span class='line'> 28</span>  *
+<span class='line'> 29</span>  *     var myObj = {a:1, b:2, c:3};
+<span class='line'> 30</span>  *     var cloneOfMyObj = Clone(myObj);
+<span class='line'> 31</span>  *     cloneOfMyObj.a = 11; // myObj.a still == 1
+<span class='line'> 32</span>  *
+<span class='line'> 33</span>  *     var myClone = new Clone();
+<span class='line'> 34</span>  *     myClone.defineProperties({a:1, b:2, c:3});
+<span class='line'> 35</span>  *
+<span class='line'> 36</span>  *     @param {Object} baseObj
+<span class='line'> 37</span>  *            Does not used, if called with new operator.
+<span class='line'> 38</span>  *
+<span class='line'> 39</span>  *     @param {Object=} properties
+<span class='line'> 40</span>  *            Own properties of the created object.
+<span class='line'> 41</span>  *
+<span class='line'> 42</span>  *     @param {PropertyDescriptor=} defaultDescriptor
+<span class='line'> 43</span>  *            Default property descriptor for properties.
+<span class='line'> 44</span>  *
+<span class='line'> 45</span>  * @return {Object} The new clone.
+<span class='line'> 46</span>  */</span><span class="WHIT">
+<span class='line'> 47</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Clone</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">
+<span class='line'> 48</span> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="STRN">'use strict'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 49</span> 
+<span class='line'> 50</span> </span><span class="WHIT">    </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">Clone</span><span class="PUNC">(</span><span class="NAME">baseObj</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** Object= */</span><span class="NAME">properties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** PropertyDescriptor= */</span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 51</span> 
+<span class='line'> 52</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">global</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">window</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 53</span> </span><span class="WHIT">            </span><span class="COMM">// Called as constructor (with new operator or used call/apply):</span><span class="WHIT">
+<span class='line'> 54</span> </span><span class="WHIT">            </span><span class="COMM">// We assume that the new object is already created,</span><span class="WHIT">
+<span class='line'> 55</span> </span><span class="WHIT">            </span><span class="COMM">// and we need only to set its properties (if specified).</span><span class="WHIT">
+<span class='line'> 56</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">arguments.length</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 57</span> </span><span class="WHIT">                </span><span class="NAME">Array.prototype.unshift.call</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 58</span> </span><span class="WHIT">                </span><span class="NAME">Function.call.apply</span><span class="PUNC">(</span><span class="NAME">Clone.prototype.defineProperties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 59</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 60</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 61</span> 
+<span class='line'> 62</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="KEYW">else</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 63</span> </span><span class="WHIT">        </span><span class="COMM">// Called like a regular function:</span><span class="WHIT">
+<span class='line'> 64</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">arguments.length</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'> 65</span> </span><span class="WHIT">                </span><span class="NAME">baseObj</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Clone.prototype</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 66</span> 
+<span class='line'> 67</span> </span><span class="WHIT">            </span><span class="COMM">//if(Clone.can(baseObj, 'clone').like(Clone) )</span><span class="WHIT">
+<span class='line'> 68</span> 
+<span class='line'> 69</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Clone.prototype.clone.call</span><span class="PUNC">(</span><span class="NAME">baseObj</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">properties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 70</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 71</span> 
+<span class='line'> 72</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 73</span> 
+<span class='line'> 74</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 75</span>      * Translate object to property descriptors.
+<span class='line'> 76</span>      * &lt;p>For example, {a:{}, b:2} will be translated to something like {a: {value: {}}, b: {value: 2}}.
+<span class='line'> 77</span>      * &lt;p>Functions, properties prefixed with "_", and constructor will be automatically marked as non-enumerable.
+<span class='line'> 78</span>      *
+<span class='line'> 79</span>      * @param {Object} properties
+<span class='line'> 80</span>      * @param {PropertyDescriptor=} defaultDescriptor The default property descriptor for properties.
+<span class='line'> 81</span>      * @returns {{PropertyDescriptor}} Properties descriptors.
+<span class='line'> 82</span>      *
+<span class='line'> 83</span>      * @static
+<span class='line'> 84</span>      */</span><span class="WHIT">
+<span class='line'> 85</span> </span><span class="WHIT">    </span><span class="NAME">Clone.describe</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">properties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 86</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">descriptors</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 87</span> 
+<span class='line'> 88</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 89</span> </span><span class="WHIT">            </span><span class="COMM">/*
+<span class='line'> 90</span>              * @typedef {Object}
+<span class='line'> 91</span>              * @name PropertyDescriptor */</span><span class="WHIT">
+<span class='line'> 92</span> </span><span class="WHIT">            </span><span class="NAME">defaultDescriptor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 93</span> </span><span class="WHIT">                </span><span class="NAME">value</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 94</span> </span><span class="WHIT">                </span><span class="NAME">configurable</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 95</span> </span><span class="WHIT">                </span><span class="NAME">writable</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 96</span> </span><span class="WHIT">                </span><span class="NAME">enumerable</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="WHIT">
+<span class='line'> 97</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 98</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 99</span> 
+<span class='line'>100</span> </span><span class="WHIT">        </span><span class="KEYW">for</span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">property</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">properties</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>101</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">value</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">properties</span><span class="PUNC">[</span><span class="NAME">property</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>102</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">descriptor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">descriptors</span><span class="PUNC">[</span><span class="NAME">property</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Object.create</span><span class="PUNC">(</span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>103</span> </span><span class="WHIT">            </span><span class="NAME">descriptor.value</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>104</span> 
+<span class='line'>105</span> </span><span class="WHIT">            </span><span class="COMM">// methods and private properties should be non-enumerable:</span><span class="WHIT">
+<span class='line'>106</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="PUNC">(</span><span class="NAME">value</span><span class="PUNC">)</span><span class="PUNC">==</span><span class="STRN">'function'</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">property</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">==</span><span class="STRN">'_'</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>107</span> </span><span class="WHIT">                </span><span class="NAME">descriptor.enumerable</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>108</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>109</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>110</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">descriptors.hasOwnProperty</span><span class="PUNC">(</span><span class="STRN">'constructor'</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'>111</span> </span><span class="WHIT">            </span><span class="NAME">descriptors.constructor.enumerable</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>112</span> 
+<span class='line'>113</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">descriptors</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>114</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>115</span> 
+<span class='line'>116</span> 
+<span class='line'>117</span> </span><span class="WHIT">    </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">n</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>118</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>119</span>      * Create custom type (class).
+<span class='line'>120</span>      * @param typeName    The name of new type, if no given, constructor.name used, if it empty, the default will be "CustomTypeN".
+<span class='line'>121</span>      * @param prototype   The prototype of new type, if no given, you should set the prototype property of returned function.
+<span class='line'>122</span>      * @param constructor If no given, and if defined prototype.constructor, it used.
+<span class='line'>123</span>      * @returns {FunctionType}
+<span class='line'>124</span>      *
+<span class='line'>125</span>      * @static
+<span class='line'>126</span>      */</span><span class="WHIT">
+<span class='line'>127</span> </span><span class="WHIT">    </span><span class="NAME">Clone.defineType</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** string|*= */</span><span class="NAME">typeName</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** Object= */</span><span class="NAME">prototype</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** Function= */</span><span class="NAME">constructor</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>128</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="PUNC">(</span><span class="NAME">typeName</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="STRN">'string'</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>129</span> </span><span class="WHIT">            </span><span class="NAME">prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">typeName</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>130</span> </span><span class="WHIT">            </span><span class="NAME">typeName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>131</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>132</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="PUNC">(</span><span class="NAME">prototype</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="STRN">'function'</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>133</span> </span><span class="WHIT">            </span><span class="NAME">constructor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">prototype</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>134</span> </span><span class="WHIT">            </span><span class="NAME">prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">constructor.prototype</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>135</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>136</span> 
+<span class='line'>137</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">constructor</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>138</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">prototype</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">prototype.hasOwnProperty</span><span class="PUNC">(</span><span class="STRN">'constructor'</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>139</span> </span><span class="WHIT">                </span><span class="NAME">constructor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">prototype.constructor</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>140</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="KEYW">else</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>141</span> </span><span class="WHIT">                </span><span class="NAME">constructor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>142</span> </span><span class="WHIT">                    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.applySuper</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>143</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>144</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>145</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>146</span> </span><span class="WHIT">        </span><span class="COMM">/** @default constructor.name or CustomTypeN */</span><span class="WHIT">
+<span class='line'>147</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">typeName</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="NAME">typeName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">constructor.name</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="STRN">'CustomType'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">n</span><span class="PUNC">++</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>148</span> 
+<span class='line'>149</span> </span><span class="WHIT">        </span><span class="COMM">//&lt;/arguments></span><span class="WHIT">
+<span class='line'>150</span> 
+<span class='line'>151</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">prototype</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>152</span> </span><span class="WHIT">            </span><span class="COMM">//prototype.constructor = constructor;</span><span class="WHIT">
+<span class='line'>153</span> </span><span class="WHIT">            </span><span class="COMM">//constructor.prototype = prototype;</span><span class="WHIT">
+<span class='line'>154</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">prototype.constructor</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="NAME">constructor</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'>155</span> </span><span class="WHIT">                </span><span class="NAME">Object.defineProperty</span><span class="PUNC">(</span><span class="NAME">prototype</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'constructor'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">value</span><span class="PUNC">:</span><span class="NAME">constructor</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">writable</span><span class="PUNC">:</span><span class="PUNC">!</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="NAME">configurable</span><span class="PUNC">:</span><span class="PUNC">!</span><span class="NUMB">0</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>156</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">constructor.prototype</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="NAME">prototype</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'>157</span> </span><span class="WHIT">                </span><span class="NAME">Object.defineProperty</span><span class="PUNC">(</span><span class="NAME">constructor</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'prototype'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">value</span><span class="PUNC">:</span><span class="NAME">prototype</span><span class="PUNC">,</span><span class="WHIT">   </span><span class="NAME">writable</span><span class="PUNC">:</span><span class="PUNC">!</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="NAME">configurable</span><span class="PUNC">:</span><span class="PUNC">!</span><span class="NUMB">0</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>158</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>159</span> 
+<span class='line'>160</span> </span><span class="WHIT">        </span><span class="COMM">// store typeName for future use (e.g. debugging):</span><span class="WHIT">
+<span class='line'>161</span> </span><span class="WHIT">        </span><span class="NAME">Object.defineProperty</span><span class="PUNC">(</span><span class="NAME">constructor</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'typeName'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">value</span><span class="PUNC">:</span><span class="NAME">typeName</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">writable</span><span class="PUNC">:</span><span class="PUNC">!</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="NAME">configurable</span><span class="PUNC">:</span><span class="PUNC">!</span><span class="NUMB">0</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>162</span> 
+<span class='line'>163</span> </span><span class="WHIT">        </span><span class="COMM">//global[typeName] = constructor;</span><span class="WHIT">
+<span class='line'>164</span> 
+<span class='line'>165</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">constructor</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>166</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>167</span> 
+<span class='line'>168</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>169</span> 
+<span class='line'>170</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>171</span>      * Create new Clone object.
+<span class='line'>172</span>      * @returns {Clone}
+<span class='line'>173</span>      *
+<span class='line'>174</span>      * @static
+<span class='line'>175</span>      */</span><span class="WHIT">
+<span class='line'>176</span> </span><span class="WHIT">    </span><span class="NAME">Clone.make</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** Object= */</span><span class="NAME">properties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** PropertyDescriptor= */</span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>177</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Clone.makeFromClass</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">properties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>178</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>179</span> 
+<span class='line'>180</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>181</span>      *
+<span class='line'>182</span>      * @returns {Clone}
+<span class='line'>183</span>      */</span><span class="WHIT">
+<span class='line'>184</span> </span><span class="WHIT">    </span><span class="NAME">Clone.makeFromClass</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** FunctionType */</span><span class="NAME">BaseClass</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** Object= */</span><span class="NAME">properties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** PropertyDescriptor= */</span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>185</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BaseClass.prototype</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>186</span> 
+<span class='line'>187</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">BaseClass</span><span class="WHIT"> </span><span class="KEYW">instanceof</span><span class="WHIT"> </span><span class="NAME">Clone</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">Clone.can</span><span class="PUNC">(</span><span class="NAME">prototype</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'clone'</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">as</span><span class="PUNC">(</span><span class="NAME">Clone.prototype</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>188</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Clone</span><span class="PUNC">(</span><span class="NAME">prototype</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">properties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>189</span> 
+<span class='line'>190</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="KEYW">else</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>191</span> 
+<span class='line'>192</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">newObj</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Clone.mix</span><span class="PUNC">(</span><span class="NAME">prototype</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Clone.prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>193</span> </span><span class="WHIT">            </span><span class="NAME">newObj.defineProperties</span><span class="PUNC">(</span><span class="NAME">properties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>194</span> 
+<span class='line'>195</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">newObj</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>196</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>197</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>198</span> 
+<span class='line'>199</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>200</span>      * Use this method to check if method of one object stored in another object.
+<span class='line'>201</span>      * @example
+<span class='line'>202</span>      *     var myObj = {split: function(){} };
+<span class='line'>203</span>      *     Clone.can(myObj, 'split').like(new Array);
+<span class='line'>204</span>      *
+<span class='line'>205</span>      * @returns {{valueOf: Function, like: function(Object), as: function(Object)}}
+<span class='line'>206</span>      */</span><span class="WHIT">
+<span class='line'>207</span> </span><span class="WHIT">    </span><span class="NAME">Clone.can</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** Object */</span><span class="NAME">obj1</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** string */</span><span class="NAME">method</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** number=false */</span><span class="NAME">not</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>208</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>209</span> </span><span class="WHIT">            </span><span class="NAME">valueOf</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>210</span> </span><span class="WHIT">                </span><span class="COMM">// a ^ b == a ? !b : b</span><span class="WHIT">
+<span class='line'>211</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">not</span><span class="WHIT"> </span><span class="PUNC">^</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">obj1</span><span class="PUNC">[</span><span class="NAME">method</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="PUNC">==</span><span class="STRN">'function'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>212</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>213</span> 
+<span class='line'>214</span> </span><span class="WHIT">            </span><span class="NAME">like</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">obj2</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>215</span> </span><span class="WHIT">                </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">obj2Method</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">obj2</span><span class="PUNC">[</span><span class="NAME">method</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>216</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.valueOf</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'>217</span> </span><span class="WHIT">                    </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">not</span><span class="WHIT"> </span><span class="PUNC">^</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="WHIT">
+<span class='line'>218</span> </span><span class="WHIT">                        </span><span class="KEYW">typeof</span><span class="PUNC">(</span><span class="NAME">obj2Method</span><span class="PUNC">)</span><span class="PUNC">==</span><span class="STRN">'function'</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT">
+<span class='line'>219</span> </span><span class="WHIT">                        </span><span class="NAME">obj2Method.length</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="NAME">obj1</span><span class="PUNC">[</span><span class="NAME">method</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">length</span><span class="WHIT">
+<span class='line'>220</span> </span><span class="WHIT">                    </span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>221</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>222</span> 
+<span class='line'>223</span> </span><span class="WHIT">            </span><span class="NAME">as</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">obj2</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>224</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.valueOf</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'>225</span> </span><span class="WHIT">                    </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">not</span><span class="WHIT"> </span><span class="PUNC">^</span><span class="WHIT"> </span><span class="NAME">obj1</span><span class="PUNC">[</span><span class="NAME">method</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">obj2</span><span class="PUNC">[</span><span class="NAME">method</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>226</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>227</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>228</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>229</span> </span><span class="WHIT">    </span><span class="COMM">/** @see Clone.can */</span><span class="WHIT">
+<span class='line'>230</span> </span><span class="WHIT">    </span><span class="NAME">Clone.cant</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** Object */</span><span class="NAME">obj1</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** string */</span><span class="NAME">method</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>231</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Clone.can</span><span class="PUNC">(</span><span class="NAME">obj1</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">method</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>232</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>233</span> 
+<span class='line'>234</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>235</span>      * Mix two or more objects.
+<span class='line'>236</span>      *
+<span class='line'>237</span>      * @param root
+<span class='line'>238</span>      *        The root object. Will be modified, if copyNesting does not set.
+<span class='line'>239</span>      * @param objectToMix
+<span class='line'>240</span>      *        Object(s) to mix.
+<span class='line'>241</span>      * @param parentsLevel
+<span class='line'>242</span>      *        Set this to Infinity to copy all parents properties up to Object.prototype.
+<span class='line'>243</span>      * @param copyNesting
+<span class='line'>244</span>      *        If not true, all properties of all objects will be directly attached to the one root object.
+<span class='line'>245</span>      * @returns {Object}
+<span class='line'>246</span>      */</span><span class="WHIT">
+<span class='line'>247</span> </span><span class="WHIT">    </span><span class="NAME">Clone.mix</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="WHIT">
+<span class='line'>248</span> </span><span class="WHIT">        </span><span class="COMM">/**       Object|FunctionType */</span><span class="NAME">root</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>249</span> </span><span class="WHIT">        </span><span class="COMM">/** Object|FunctionType|Array */</span><span class="NAME">objectToMix</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>250</span> </span><span class="WHIT">        </span><span class="COMM">/**                  number=0 */</span><span class="NAME">parentsLevel</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>251</span> </span><span class="WHIT">        </span><span class="COMM">/**              boolean=true */</span><span class="NAME">copyNesting</span><span class="WHIT">
+<span class='line'>252</span> </span><span class="WHIT">    </span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>253</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="PUNC">(</span><span class="NAME">root</span><span class="PUNC">)</span><span class="PUNC">==</span><span class="STRN">'function'</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">Object.getOwnPropertyNames</span><span class="PUNC">(</span><span class="NAME">root.prototype</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>254</span> </span><span class="WHIT">            </span><span class="NAME">root</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">root.prototype</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>255</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>256</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">copyNesting</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>257</span> </span><span class="WHIT">            </span><span class="NAME">copyNesting</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>258</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>259</span> 
+<span class='line'>260</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">objectToMix</span><span class="WHIT"> </span><span class="KEYW">instanceof</span><span class="WHIT"> </span><span class="NAME">Array</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>261</span> </span><span class="WHIT">            </span><span class="NAME">mixedObjects</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">objectToMix</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>262</span> </span><span class="WHIT">            </span><span class="COMM">//objectToMix = mixedObjects.shift();</span><span class="WHIT">
+<span class='line'>263</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="KEYW">else</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>264</span> </span><span class="WHIT">            </span><span class="COMM">// get parents:</span><span class="WHIT">
+<span class='line'>265</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">obj</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">objectToMix</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>266</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">mixedObjects</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>267</span> </span><span class="WHIT">            </span><span class="KEYW">do</span><span class="WHIT">  </span><span class="NAME">mixedObjects.push</span><span class="PUNC">(</span><span class="NAME">obj</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>268</span> </span><span class="WHIT">            </span><span class="KEYW">while</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">parentsLevel</span><span class="PUNC">--</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">obj</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Object.getPrototypeOf</span><span class="PUNC">(</span><span class="NAME">obj</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="NAME">Object.prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>269</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>270</span> 
+<span class='line'>271</span> </span><span class="WHIT">        </span><span class="NAME">mixedObjects</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">mixedObjects.reverse</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>272</span> 
+<span class='line'>273</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">updateObj</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">root</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>274</span> 
+<span class='line'>275</span> </span><span class="WHIT">        </span><span class="KEYW">for</span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">objIdx</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">mixedObjects</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>276</span> </span><span class="WHIT">            </span><span class="NAME">obj</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">mixedObjects</span><span class="PUNC">[</span><span class="NAME">objIdx</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>277</span> 
+<span class='line'>278</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="PUNC">(</span><span class="NAME">obj</span><span class="PUNC">)</span><span class="PUNC">==</span><span class="STRN">'function'</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">Object.getOwnPropertyNames</span><span class="PUNC">(</span><span class="NAME">obj.prototype</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>279</span> </span><span class="WHIT">                </span><span class="NAME">obj</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">obj.prototype</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>280</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>281</span> 
+<span class='line'>282</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">ownPropertyNames</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Object.getOwnPropertyNames</span><span class="PUNC">(</span><span class="NAME">obj</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>283</span> 
+<span class='line'>284</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">copyNesting</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">ownPropertyNames.length</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>285</span> </span><span class="WHIT">                </span><span class="NAME">updateObj</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Clone</span><span class="PUNC">(</span><span class="NAME">updateObj</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>286</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>287</span> 
+<span class='line'>288</span> </span><span class="WHIT">            </span><span class="COMM">// copy all own properties from obj to updateObj:</span><span class="WHIT">
+<span class='line'>289</span> </span><span class="WHIT">            </span><span class="KEYW">for</span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">=</span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">ownPropertyNames.length</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">++</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>290</span> </span><span class="WHIT">                </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">name</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ownPropertyNames</span><span class="PUNC">[</span><span class="NAME">i</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>291</span> </span><span class="WHIT">                </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">descriptor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Object.getOwnPropertyDescriptor</span><span class="PUNC">(</span><span class="NAME">obj</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>292</span> </span><span class="WHIT">                </span><span class="NAME">Object.defineProperty</span><span class="PUNC">(</span><span class="NAME">updateObj</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">descriptor</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>293</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>294</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>295</span> 
+<span class='line'>296</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">updateObj</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>297</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>298</span> 
+<span class='line'>299</span> </span><span class="WHIT">    </span><span class="COMM">//Clone.defineType('Clone', Clone.makeFomClass(Object,</span><span class="WHIT">
+<span class='line'>300</span> </span><span class="WHIT">    </span><span class="NAME">Object.defineProperties</span><span class="PUNC">(</span><span class="NAME">Clone.prototype</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Clone.describe</span><span class="PUNC">(</span><span class="WHIT">
+<span class='line'>301</span> </span><span class="WHIT">        </span><span class="COMM">/** @lands Clone.prototype */</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>302</span> 
+<span class='line'>303</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span class='line'>304</span>          * Override it if you want to create custom type:
+<span class='line'>305</span>          * @example
+<span class='line'>306</span>          *     var $myType = new Clone({
+<span class='line'>307</span>          *         constructor: Clone.defineType('MyType'),
+<span class='line'>308</span>          *     });
+<span class='line'>309</span>          *     var myTypeInstance = $myType.create();
+<span class='line'>310</span>          *     assertTrue( myTypeInstance.constructor === $myType.constructor );
+<span class='line'>311</span>          *     assertTrue( $myType.isPrototypeOf(myTypeInstance) );
+<span class='line'>312</span>          *
+<span class='line'>313</span>          * @see Clone.defineType
+<span class='line'>314</span>          * @type {Function}
+<span class='line'>315</span>          * @constructs Clone
+<span class='line'>316</span>          */</span><span class="WHIT">
+<span class='line'>317</span> </span><span class="WHIT">        </span><span class="NAME">constructor</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Clone</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>318</span> </span><span class="WHIT">    </span><span class="COMM">//    get constructor(){</span><span class="WHIT">
+<span class='line'>319</span> </span><span class="WHIT">    </span><span class="COMM">//        var self = this;</span><span class="WHIT">
+<span class='line'>320</span> </span><span class="WHIT">    </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'>321</span> </span><span class="WHIT">    </span><span class="COMM">//        var Constructor = Clone.defineType('', this);</span><span class="WHIT">
+<span class='line'>322</span> </span><span class="WHIT">    </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'>323</span> </span><span class="WHIT">    </span><span class="COMM">//        this.defineProperty('constructor', {</span><span class="WHIT">
+<span class='line'>324</span> </span><span class="WHIT">    </span><span class="COMM">//            value: Constructor</span><span class="WHIT">
+<span class='line'>325</span> </span><span class="WHIT">    </span><span class="COMM">//        });</span><span class="WHIT">
+<span class='line'>326</span> </span><span class="WHIT">    </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'>327</span> </span><span class="WHIT">    </span><span class="COMM">//        return Constructor;</span><span class="WHIT">
+<span class='line'>328</span> </span><span class="WHIT">    </span><span class="COMM">//    },</span><span class="WHIT">
+<span class='line'>329</span> 
+<span class='line'>330</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span class='line'>331</span>          * Create a clone of this. See {@link Object.create} for details.
+<span class='line'>332</span>          * @see Clone
+<span class='line'>333</span>          * @see Object.create
+<span class='line'>334</span>          * @returns {Clone}
+<span class='line'>335</span>          */</span><span class="WHIT">
+<span class='line'>336</span> </span><span class="WHIT">        </span><span class="NAME">clone</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** Object= */</span><span class="NAME">properties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** Object= */</span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>337</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">arguments.length</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>338</span> </span><span class="WHIT">                </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">ownPropertiesDescriptors</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Clone.describe.apply</span><span class="PUNC">(</span><span class="KEYW">null</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>339</span> 
+<span class='line'>340</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">ownPropertiesDescriptors.hasOwnProperty</span><span class="PUNC">(</span><span class="STRN">'constructor'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>341</span> </span><span class="WHIT">                    </span><span class="NAME">ownPropertiesDescriptors.constructor.value.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>342</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>343</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>344</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.create</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">ownPropertiesDescriptors</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>345</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>346</span> 
+<span class='line'>347</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span class='line'>348</span>          * Use this method to create an instances of prototype ($uper) objects.
+<span class='line'>349</span>          * &lt;p>Behaves like a clone method, but also call constructor.
+<span class='line'>350</span>          * And, the created instance are sealed: to prevent it, override the create method.
+<span class='line'>351</span>          * @returns {Clone}
+<span class='line'>352</span>          */</span><span class="WHIT">
+<span class='line'>353</span> </span><span class="WHIT">        </span><span class="NAME">create</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** ...? */</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>354</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">newObj</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.clone</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>355</span> </span><span class="WHIT">            </span><span class="NAME">newObj</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.constructor.apply</span><span class="PUNC">(</span><span class="NAME">newObj</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">newObj</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>356</span> </span><span class="WHIT">            </span><span class="NAME">newObj.seal</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="COMM">//ToDo: maybe, move this to constructor? (if constructor === this.constructor)</span><span class="WHIT">
+<span class='line'>357</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">newObj</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>358</span> </span><span class="WHIT">    </span><span class="COMM">//        return/* if */(this.constructor !== Clone)</span><span class="WHIT">
+<span class='line'>359</span> </span><span class="WHIT">    </span><span class="COMM">//            &&/* then return: */ this.constructor.apply(newObj, arguments) /*(if not void)*/</span><span class="WHIT">
+<span class='line'>360</span> </span><span class="WHIT">    </span><span class="COMM">//            ||/* else return: */ newObj;</span><span class="WHIT">
+<span class='line'>361</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>362</span> 
+<span class='line'>363</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span class='line'>364</span>          * Apply method of super object to this object.
+<span class='line'>365</span>          * @returns {*}
+<span class='line'>366</span>          */</span><span class="WHIT">
+<span class='line'>367</span> </span><span class="WHIT">        </span><span class="NAME">applySuper</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** string=constructor|Array */</span><span class="WHIT"> </span><span class="NAME">methodName</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** Array= */</span><span class="NAME">args</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>368</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="PUNC">(</span><span class="NAME">methodName</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="STRN">'string'</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>369</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">arguments</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="KEYW">instanceof</span><span class="WHIT"> </span><span class="NAME">Array</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>370</span> </span><span class="WHIT">                    </span><span class="NAME">args</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">arguments</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>371</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>372</span> </span><span class="WHIT">                </span><span class="NAME">methodName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'constructor'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>373</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="COMM">//&lt;/arguments></span><span class="WHIT">
+<span class='line'>374</span> 
+<span class='line'>375</span> </span><span class="WHIT">            </span><span class="COMM">/* if not */</span><span class="PUNC">(</span><span class="STRN">'__super__'</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">this.defineProperty</span><span class="PUNC">(</span><span class="WHIT">
+<span class='line'>376</span> </span><span class="WHIT">                </span><span class="STRN">'__super__'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">value</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Object.getPrototypeOf</span><span class="PUNC">(</span><span class="NAME">Object.getPrototypeOf</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">writable</span><span class="PUNC">:</span><span class="PUNC">!</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="NAME">configurable</span><span class="PUNC">:</span><span class="PUNC">!</span><span class="NUMB">0</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>377</span> </span><span class="WHIT">            </span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>378</span> 
+<span class='line'>379</span> </span><span class="WHIT">            </span><span class="COMM">// save super</span><span class="WHIT">
+<span class='line'>380</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">savedSuper</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.__super__</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>381</span> </span><span class="WHIT">            </span><span class="COMM">// set super to next by prototype chain, in case if method also call applySuper</span><span class="WHIT">
+<span class='line'>382</span> </span><span class="WHIT">            </span><span class="NAME">this.__super__</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Object.getPrototypeOf</span><span class="PUNC">(</span><span class="NAME">savedSuper</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>383</span> </span><span class="WHIT">            </span><span class="COMM">// apply method</span><span class="WHIT">
+<span class='line'>384</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">returned</span><span class="WHIT">   </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">savedSuper</span><span class="PUNC">[</span><span class="NAME">methodName</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">apply</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>385</span> </span><span class="WHIT">            </span><span class="COMM">// restore super</span><span class="WHIT">
+<span class='line'>386</span> </span><span class="WHIT">            </span><span class="NAME">this.__super__</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">savedSuper</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>387</span> 
+<span class='line'>388</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">returned</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>389</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>390</span> 
+<span class='line'>391</span> </span><span class="WHIT">        </span><span class="COMM">/** @see Clone.prototype.applySuper */</span><span class="WHIT">
+<span class='line'>392</span> </span><span class="WHIT">        </span><span class="NAME">callSuper</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** string */</span><span class="NAME">methodName</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** ?= */</span><span class="WHIT"> </span><span class="NAME">arg1</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** ?= */</span><span class="NAME">argN</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>393</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">args</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Array.prototype.slice.call</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>394</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.applySuper</span><span class="PUNC">(</span><span class="NAME">methodName</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>395</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>396</span> 
+<span class='line'>397</span> </span><span class="COMM">//        /**</span><span class="WHIT">
+<span class='line'>398</span> </span><span class="COMM">//         * Async safe version of {@link Clone.prototype.applySuper}.</span><span class="WHIT">
+<span class='line'>399</span> </span><span class="COMM">//         * @param {string} methodName</span><span class="WHIT">
+<span class='line'>400</span> </span><span class="COMM">//         * @param {Array} args</span><span class="WHIT">
+<span class='line'>401</span> </span><span class="COMM">//         * @param {...number=} callbackArgIdx1 Indexes of arguments, that is a callbacks, that can call applySuper.</span><span class="WHIT">
+<span class='line'>402</span> </span><span class="COMM">//         *     Default value is the last arg index.</span><span class="WHIT">
+<span class='line'>403</span> </span><span class="COMM">//         * @param callbackArgIdxN</span><span class="WHIT">
+<span class='line'>404</span> </span><span class="COMM">//         * @returns {*}</span><span class="WHIT">
+<span class='line'>405</span> </span><span class="COMM">//         */</span><span class="WHIT">
+<span class='line'>406</span> </span><span class="COMM">//        applySuperAsync: function(methodName, args, /** number=`args.length-1` */callbackArgIdx1, /** number= */callbackArgIdxN){</span><span class="WHIT">
+<span class='line'>407</span> </span><span class="COMM">//            if( callbackArgIdx1===undefined)</span><span class="WHIT">
+<span class='line'>408</span> </span><span class="COMM">//                callbackArgIdx1 = args.length - 1;</span><span class="WHIT">
+<span class='line'>409</span> </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'>410</span> </span><span class="COMM">//            var safeArgs = new Array(args.length);</span><span class="WHIT">
+<span class='line'>411</span> </span><span class="COMM">//            var indexOf = Array.prototype.indexOf;</span><span class="WHIT">
+<span class='line'>412</span> </span><span class="COMM">//            for(var i=0; i &lt; args; i++){</span><span class="WHIT">
+<span class='line'>413</span> </span><span class="COMM">//                safeArgs[i] = indexOf.call(arguments, i, 2+i) ? this.createSuperSafeCallback(args[i]) : args[i];</span><span class="WHIT">
+<span class='line'>414</span> </span><span class="COMM">//            }</span><span class="WHIT">
+<span class='line'>415</span> </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'>416</span> </span><span class="COMM">//            return this.applySuper(methodName, safeArgs);</span><span class="WHIT">
+<span class='line'>417</span> </span><span class="COMM">//        },</span><span class="WHIT">
+<span class='line'>418</span> 
+<span class='line'>419</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span class='line'>420</span>          * Use this method to create callback, that can call "applySuper" method.
+<span class='line'>421</span>          * @param {Function} fn Callback.
+<span class='line'>422</span>          * @param {Object=} boundThis
+<span class='line'>423</span>          * @returns {Function}
+<span class='line'>424</span>          */</span><span class="WHIT">
+<span class='line'>425</span> </span><span class="WHIT">        </span><span class="NAME">createSuperSafeCallback</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">fn</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">boundThis</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>426</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">self</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>427</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">callbackSuper</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.__super__</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>428</span> 
+<span class='line'>429</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">superSafeCallback</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>430</span> 
+<span class='line'>431</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">self.__super__</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">callbackSuper</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>432</span> </span><span class="WHIT">                    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">fn.apply</span><span class="PUNC">(</span><span class="NAME">boundThis</span><span class="PUNC">||</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>433</span> 
+<span class='line'>434</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="KEYW">else</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>435</span> </span><span class="WHIT">                    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">savedSuper</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">self.__super__</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>436</span> </span><span class="WHIT">                    </span><span class="NAME">self.__super__</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">callbackSuper</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>437</span> </span><span class="WHIT">                    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">returned</span><span class="WHIT">   </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">fn.apply</span><span class="PUNC">(</span><span class="NAME">boundThis</span><span class="PUNC">||</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>438</span> </span><span class="WHIT">                    </span><span class="NAME">self.__super__</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">savedSuper</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>439</span> 
+<span class='line'>440</span> </span><span class="WHIT">                    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">returned</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>441</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>442</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>443</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>444</span> 
+<span class='line'>445</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span class='line'>446</span>          * Returns all changed properties, since cloning of object.
+<span class='line'>447</span>          * Separate object from its prototype and return it.
+<span class='line'>448</span>          * @returns {Object}
+<span class='line'>449</span>          */</span><span class="WHIT">
+<span class='line'>450</span> </span><span class="WHIT">        </span><span class="NAME">getState</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** boolean=false */</span><span class="NAME">listPrivate</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>451</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">currentState</span><span class="WHIT">  </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>452</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">ownProperties</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Object.getOwnPropertyNames</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>453</span> 
+<span class='line'>454</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">listPrivate</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>455</span> </span><span class="WHIT">                </span><span class="KEYW">for</span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">=</span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">ownProperties.length</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">++</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">name</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ownProperties</span><span class="PUNC">[</span><span class="NAME">i</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>456</span> </span><span class="WHIT">                    </span><span class="NAME">currentState</span><span class="PUNC">[</span><span class="NAME">name</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">[</span><span class="NAME">name</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>457</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>458</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="KEYW">else</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>459</span> </span><span class="WHIT">                </span><span class="KEYW">for</span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">=</span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">ownProperties.length</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">++</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">name</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ownProperties</span><span class="PUNC">[</span><span class="NAME">i</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>460</span> </span><span class="WHIT">                    </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">this.propertyIsEnumerable</span><span class="PUNC">(</span><span class="NAME">name</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'>461</span> </span><span class="WHIT">                        </span><span class="NAME">currentState</span><span class="PUNC">[</span><span class="NAME">name</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">[</span><span class="NAME">name</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>462</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>463</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>464</span> 
+<span class='line'>465</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">currentState</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>466</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>467</span> 
+<span class='line'>468</span> </span><span class="WHIT">        </span><span class="COMM">/**
+<span class='line'>469</span>          *
+<span class='line'>470</span>          */</span><span class="WHIT">
+<span class='line'>471</span> </span><span class="WHIT">        </span><span class="NAME">mixWith</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** Object|FunctionType */</span><span class="NAME">mixinObject</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** number=0 */</span><span class="NAME">parentsLevel</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>472</span> </span><span class="WHIT">            </span><span class="NAME">Clone.mix</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">mixinObject</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="KEYW">false</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>473</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>474</span> 
+<span class='line'>475</span> </span><span class="WHIT">        </span><span class="NAME">toString</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>476</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">JSON.stringify</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">this.getState</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>477</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>478</span> 
+<span class='line'>479</span> </span><span class="COMM">//        /**</span><span class="WHIT">
+<span class='line'>480</span> </span><span class="COMM">//         * Returns true if all enumerable properties of this present in obj.</span><span class="WHIT">
+<span class='line'>481</span> </span><span class="COMM">//         * @returns {boolean}</span><span class="WHIT">
+<span class='line'>482</span> </span><span class="COMM">//         */</span><span class="WHIT">
+<span class='line'>483</span> </span><span class="COMM">//        looksLike: function(/** Object */obj){</span><span class="WHIT">
+<span class='line'>484</span> </span><span class="COMM">//            for(var  p in this){</span><span class="WHIT">
+<span class='line'>485</span> </span><span class="COMM">//                if(!(p in obj))</span><span class="WHIT">
+<span class='line'>486</span> </span><span class="COMM">//                    return false;</span><span class="WHIT">
+<span class='line'>487</span> </span><span class="COMM">//            }</span><span class="WHIT">
+<span class='line'>488</span> </span><span class="COMM">//            return true;</span><span class="WHIT">
+<span class='line'>489</span> </span><span class="COMM">//        },</span><span class="WHIT">
+<span class='line'>490</span> </span><span class="COMM">//        /**</span><span class="WHIT">
+<span class='line'>491</span> </span><span class="COMM">//         * Returns true if all methods of this present in obj.</span><span class="WHIT">
+<span class='line'>492</span> </span><span class="COMM">//         * @returns {boolean}</span><span class="WHIT">
+<span class='line'>493</span> </span><span class="COMM">//         */</span><span class="WHIT">
+<span class='line'>494</span> </span><span class="COMM">//        behavesLike: function(/** Object */obj){</span><span class="WHIT">
+<span class='line'>495</span> </span><span class="COMM">//            var propertyNames = this.getOwnPropertyNames();</span><span class="WHIT">
+<span class='line'>496</span> </span><span class="COMM">//            for(var i= 0; i &lt; propertyNames.length; i++){var name = propertyNames[i];</span><span class="WHIT">
+<span class='line'>497</span> </span><span class="COMM">//                if(name[0]!=='_'){</span><span class="WHIT">
+<span class='line'>498</span> </span><span class="COMM">//                    var property = this[name];</span><span class="WHIT">
+<span class='line'>499</span> </span><span class="COMM">//                    if(typeof(property)=='function'){</span><span class="WHIT">
+<span class='line'>500</span> </span><span class="COMM">//                        var objProperty = obj[name];</span><span class="WHIT">
+<span class='line'>501</span> </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'>502</span> </span><span class="COMM">//                        if(typeof(objProperty)!='function') return false;</span><span class="WHIT">
+<span class='line'>503</span> </span><span class="COMM">//                        if(objProperty.length != property.length) return false;</span><span class="WHIT">
+<span class='line'>504</span> </span><span class="COMM">//                    }</span><span class="WHIT">
+<span class='line'>505</span> </span><span class="COMM">//                }</span><span class="WHIT">
+<span class='line'>506</span> </span><span class="COMM">//            }</span><span class="WHIT">
+<span class='line'>507</span> </span><span class="COMM">//            return true;</span><span class="WHIT">
+<span class='line'>508</span> </span><span class="COMM">//        },</span><span class="WHIT">
+<span class='line'>509</span> 
+<span class='line'>510</span> </span><span class="WHIT">        </span><span class="COMM">// Some sugar:</span><span class="WHIT">
+<span class='line'>511</span> 
+<span class='line'>512</span> </span><span class="WHIT">        </span><span class="COMM">/** @see Object.getPrototypeOf */</span><span class="WHIT">
+<span class='line'>513</span> </span><span class="WHIT">        </span><span class="NAME">getPrototype</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>514</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.getPrototypeOf</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>515</span> </span><span class="WHIT">        </span><span class="COMM">/** @see Object.keys */</span><span class="WHIT">
+<span class='line'>516</span> </span><span class="WHIT">        </span><span class="NAME">getEnumerableOwnPropertyNames</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>517</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.keys</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>518</span> </span><span class="WHIT">        </span><span class="COMM">/** @see Object.getOwnPropertyNames */</span><span class="WHIT">
+<span class='line'>519</span> </span><span class="WHIT">        </span><span class="NAME">getOwnPropertyNames</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>520</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.getOwnPropertyNames</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>521</span> 
+<span class='line'>522</span> </span><span class="WHIT">        </span><span class="COMM">/** @see Object.preventExtensions */</span><span class="WHIT">
+<span class='line'>523</span> </span><span class="WHIT">        </span><span class="NAME">preventExtensions</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>524</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.preventExtensions</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>525</span> </span><span class="WHIT">        </span><span class="COMM">/** @see Object.isExtensible */</span><span class="WHIT">
+<span class='line'>526</span> </span><span class="WHIT">            </span><span class="NAME">isExtensible</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>527</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.isExtensible</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>528</span> </span><span class="WHIT">        </span><span class="COMM">/** @see Object.seal */</span><span class="WHIT">
+<span class='line'>529</span> </span><span class="WHIT">        </span><span class="NAME">seal</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>530</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.seal</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>531</span> </span><span class="WHIT">        </span><span class="COMM">/** @see Object.isSealed */</span><span class="WHIT">
+<span class='line'>532</span> </span><span class="WHIT">            </span><span class="NAME">isSealed</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>533</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.isSealed</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>534</span> </span><span class="WHIT">        </span><span class="COMM">/** @see Object.freeze */</span><span class="WHIT">
+<span class='line'>535</span> </span><span class="WHIT">        </span><span class="NAME">freeze</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>536</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.freeze</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>537</span> </span><span class="WHIT">        </span><span class="COMM">/** @see Object.isFrozen */</span><span class="WHIT">
+<span class='line'>538</span> </span><span class="WHIT">            </span><span class="NAME">isFrozen</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>539</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.isFrozen</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>540</span> 
+<span class='line'>541</span> </span><span class="WHIT">        </span><span class="COMM">/** @see Object.getOwnPropertyDescriptor */</span><span class="WHIT">
+<span class='line'>542</span> </span><span class="WHIT">        </span><span class="NAME">getOwnPropertyDescriptor</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** string */</span><span class="NAME">propertyName</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>543</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.getOwnPropertyDescriptor</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">propertyName</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>544</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>545</span> 
+<span class='line'>546</span> </span><span class="WHIT">        </span><span class="COMM">/** @see Object.defineProperties
+<span class='line'>547</span>          *  @see Clone.describe */</span><span class="WHIT">
+<span class='line'>548</span> </span><span class="WHIT">        </span><span class="NAME">defineProperties</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** Object= */</span><span class="NAME">properties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** PropertyDescriptor= */</span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>549</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.defineProperties</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Clone.describe.apply</span><span class="PUNC">(</span><span class="KEYW">null</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>550</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>551</span> 
+<span class='line'>552</span> </span><span class="WHIT">        </span><span class="COMM">/** @see Object.defineProperty */</span><span class="WHIT">
+<span class='line'>553</span> </span><span class="WHIT">        </span><span class="NAME">defineProperty</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** string */</span><span class="NAME">name</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** PropertyDescriptor */</span><span class="NAME">propertyDescriptor</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>554</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.defineProperty</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">propertyDescriptor</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>555</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>556</span> 
+<span class='line'>557</span> </span><span class="WHIT">    </span><span class="COMM">//    descriptor: {</span><span class="WHIT">
+<span class='line'>558</span> </span><span class="WHIT">    </span><span class="COMM">//        get configurable(){return Object.isExtensible(this)},</span><span class="WHIT">
+<span class='line'>559</span> </span><span class="WHIT">    </span><span class="COMM">//        set configurable(preventExtensions){ if(preventExtensions) Object.preventExtensions(this) }</span><span class="WHIT">
+<span class='line'>560</span> </span><span class="WHIT">    </span><span class="COMM">//    }</span><span class="WHIT">
+<span class='line'>561</span> 
+<span class='line'>562</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>563</span> 
+<span class='line'>564</span> </span><span class="WHIT">    </span><span class="NAME">Clone.defineType</span><span class="PUNC">(</span><span class="STRN">'Clone'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Clone</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>565</span> 
+<span class='line'>566</span> </span><span class="WHIT">    </span><span class="COMM">//nodejs:</span><span class="WHIT">
+<span class='line'>567</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">module</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">module.exports</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="NAME">module.exports</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Clone</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>568</span> 
+<span class='line'>569</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Clone</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>570</span> </span><span class="WHIT">    </span><span class="COMM">//unreachable code, for jsdoc:</span><span class="WHIT">
+<span class='line'>571</span> 
+<span class='line'>572</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>573</span>      * Object, that has at least one of the following property: &lt;br>
+<span class='line'>574</span>      * value, get, set, writable, configurable, enumerable.
+<span class='line'>575</span>      * @typedef {({value:*}|{get:{function():*}}|{set:{function(*):void}}|{writable:boolean}|{configurable:boolean}|{enumerable:boolean})} */</span><span class="WHIT">
+<span class='line'>576</span> </span><span class="WHIT">     </span><span class="NAME">PropertyDescriptor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Object</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>577</span> 
+<span class='line'>578</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>579</span>      *
+<span class='line'>580</span>      * @typedef {Function} */</span><span class="WHIT">
+<span class='line'>581</span> </span><span class="WHIT">     </span><span class="NAME">FunctionType</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Function</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>582</span> 
+<span class='line'>583</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>
