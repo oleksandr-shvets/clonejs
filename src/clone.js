@@ -610,7 +610,7 @@ Clone.prototype =
     if(typeof(module)!='undefined' && module.exports) module.exports = Clone;
 
     return;
-    //unreachable code, for jsdoc:
+    ;//unreachable code, for jsdoc:
 
     /**
      * Object, that has at least one of the following property: <br>
