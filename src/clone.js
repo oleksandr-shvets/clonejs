@@ -246,12 +246,12 @@ function(){'use strict';
      * @param root
      *        The root object. Will be modified, if copyNesting does not set.
      * @param objectToMix
-     *        Object(s) to mix.
+     *        Object(s) to mix. If it is FunctionType, FunctionType.prototype will be used instead.
      * @param parentsLevel
-     *        Set this to Infinity to copy all parents properties up to Object.prototype.
+     *        Set this to Infinity if you want to copy all objectToMix parents properties up to Object.prototype.
      * @param copyNesting
      *        If not true, all properties of all objects will be directly attached to the one root object.
-     * @returns {Object}
+     * @returns {Object} Modified root object if copyNesting, else - the new object based on objectsToMix and root.
      */
     Clone.mix = function(
         /**       Object|FunctionType */root,
@@ -478,12 +478,15 @@ function(){'use strict';
         },
 
         /**
-         *
-         */
+         * Mix this object with another.
+         * @see Clone.mix */
         mixWith: function(/** Object|FunctionType */mixinObject, /** number=0 */parentsLevel){
             Clone.mix(this, mixinObject, 0,false);
         },
 
+        /**
+         * Returns the current state of this object in JSON format.
+         * @see Clone.prototype.getState */
         toString: function(){
             return JSON.stringify( this.getState() );
         },
