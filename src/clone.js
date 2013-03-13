@@ -1,23 +1,22 @@
 /**
- * @ clone.js - The true prototype-based OOP framework.
- * @version 0.4.5
- * @author  Alex Shvets
- * @see     https://github.com/quadroid/clonejs
+ * @fileOverview  clone.js - The true prototype-based OOP framework.
+ *      @version  0.4.5
+ *       @author  Alex Shvets
+ *          @see  https://github.com/quadroid/clonejs
  *
  * @class
  *     This is the framework that implements the true prototype-based OOP paradigm in JS.
  *     It based on the new ECMA Script 5 features like Object.create and property descriptors.
  *
  *     <p><b>Naming conventions</b>
- *     <p><b>Var names, prefixed with "$"</b>, contain object, used as prototype for other objects.
- *     <p>For example:<br>
+ *     <p><b>Var names, prefixed with "$"</b>, contain object, used as prototype for other objects. For example:<br>
  *        var $array = Array.prototype, $myType = {}, <br>
  *            myTypeInstance = Clone($myType);
  *     <p>
  *     <p><b>properties, prefixed with "_"</b>, are private.
  *     <p>
  * @description
- *     If called as function, return a clone of <i>baseObj</i>, and set it's properties.
+ *     If called as function, return a clone of <i>baseObj</i>, and set it's own properties.
  *     If called with <i>new</i> operator, constructor will take 2 arguments (properties and defaultDescriptor).
  *
  * @example
