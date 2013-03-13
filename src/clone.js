@@ -429,12 +429,18 @@ function(){'use strict';
 //        },
 
         /**
-         * Use this method to create callback, that can call "applySuper" method.
-         * @param {Function} fn Callback.
-         * @param {Object=} boundThis
+         * Use this method to wrap callback, that can call "applySuper" method.
+         * @see Clone.prototype.applySuper
          * @returns {Function}
          */
-        createSuperSafeCallback: function(fn, boundThis){
+        createSuperSafeCallback: function(/** Function|string */fnOrMethodName, /** Object= */boundThis){
+            if(typeof fnOrMethodName == 'string'){
+                var fn = this[fn];
+                boundThis = this;
+            }else{
+                fn = fnOrMethodName;
+            }
+
             var self = this;
             var callbackSuper = this.__super__;
 
