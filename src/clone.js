@@ -1,9 +1,9 @@
 'use strict';
 /**
- *        @title  clone.js - The true prototype-based OOP framework.
- *      @version  0.4.5
- *       @author  Alex Shvets
- *          @see  https://github.com/quadroid/clonejs
+ * @title   clone.js - The true prototype-based OOP framework.
+ * @version 0.4.5
+ * @author  Alex Shvets
+ * @see     https://github.com/quadroid/clonejs
  *
  * @class
  *     This is the framework that implements the true prototype-based OOP paradigm in JS.
@@ -159,7 +159,7 @@ Clone.defineType = function(/** string|*=CustomTypeN */name, /** Object= */proto
     }
 
     // store name for future use (e.g. debugging):
-    Object.defineProperty(constructor, 'name', {value:name, writable:!0,configurable:!0});
+    Object.defineProperty(constructor, 'typeName', {value:name, writable:!0,configurable:!0});
 
     //global[name] = constructor;
 
