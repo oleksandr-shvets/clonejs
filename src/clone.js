@@ -62,7 +62,7 @@ function(){'use strict';
                 Array.prototype.unshift.call(arguments, this);
                 Function.call.apply(Clone.prototype.defineProperties, arguments);
             }
-            return this;
+            return this;// if call/apply
 
         }else{
         // Called like a regular function:
@@ -245,12 +245,17 @@ function(){'use strict';
      *
      * @param root
      *        The root object. Will be modified, if copyNesting does not set.
+     *
      * @param objectToMix
      *        Object(s) to mix. If it is FunctionType, FunctionType.prototype will be used instead.
+     *
      * @param parentsLevel
      *        Set this to Infinity if you want to copy all objectToMix parents properties up to Object.prototype.
+     *
      * @param copyNesting
+     *        Should be true if objectsToMix have methods, that call {@link Clone.prototype.applyParent}
      *        If not true, all properties of all objects will be directly attached to the one root object.
+     *
      * @returns {Object} Modified root object if copyNesting, else - the new object based on objectsToMix and root.
      */
     Clone.mix = function(
@@ -319,8 +324,8 @@ function(){'use strict';
          *         constructor: Clone.defineType('MyType'),
          *     });
          *     var myTypeInstance = $myType.create();
-         *     assertTrue( myTypeInstance.constructor === $myType.constructor );
-         *     assertTrue( $myType.isPrototypeOf(myTypeInstance) );
+         *     assert( myTypeInstance.constructor === $myType.constructor );
+         *     assert( $myType.isPrototypeOf(myTypeInstance) );
          *
          * @see Clone.defineType
          * @type {Function}
@@ -330,13 +335,13 @@ function(){'use strict';
     //    get constructor(){
     //        var self = this;
     //
-    //        var Constructor = Clone.defineType('', this);
+    //        var Type = Clone.defineType('', this);
     //
     //        this.defineProperty('constructor', {
-    //            value: Constructor
+    //            value: Type
     //        });
     //
-    //        return Constructor;
+    //        return Type;
     //    },
 
         /**
@@ -359,10 +364,13 @@ function(){'use strict';
         /**
          * Use this method to create an instances of prototype ($uper) objects.
          * <p>Behaves like a clone method, but also call constructor.
-         * And, the created instance are sealed: to prevent it, override the create method.
+         * And, the created instance are sealed ({@link Object.seal}): to prevent it, override the create method.
+         * @see Clone.prototype.clone
+         * @see Clone.prototype.constructor
+         * @see Object.seal
          * @returns {Clone}
          */
-        create: function(/** ...? */){
+        create: function(/** ...?= */constructorArguments){
             var newObj = this.clone();
             newObj = this.constructor.apply(newObj, arguments) || newObj;
             newObj.seal();//ToDo: maybe, move this to constructor? (if constructor === this.constructor)
@@ -461,8 +469,9 @@ function(){'use strict';
         },
 
         /**
-         * Returns all changed properties, since cloning of object.
-         * Separate object from its prototype and return it.
+         * Returns all changed properties, since cloning of object.<br>
+         * Separate object from its prototype and return it.<br>
+         * Private meens non-enumerable properties.
          * @returns {Clone}
          */
         getState: function(/** boolean=false */listPrivate){
@@ -597,7 +606,7 @@ function(){'use strict';
      PropertyDescriptor = Object;
 
     /**
-     *
+     * Function, that can be called with "new" operator and/or have modified prototype property.
      * @typedef {Function} */
      FunctionType = Function;
 
