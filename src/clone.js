@@ -1,7 +1,8 @@
 /**
- * @ clone.js Framework
+ * @ clone.js - The prototype-based paradigm framework.
  * @version 0.4.5
  * @author  Alex Shvets
+ * @see     https://github.com/quadroid/clonejs
  *
  * @class
  *     This class is the library, that have actsent on the new ECMA Script 5 features like Object.create and property descriptors.
@@ -49,7 +50,7 @@ function(){'use strict';
 
     function Clone(baseObj, /** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
 
-        if(this && this !== (global || window) ){
+        if(this && this !== (typeof(global)!=='undefined' && global || window) ){
             // Called as constructor (with new operator or used call/apply):
             // We assume that the new object is already created,
             // and we need only to set its properties (if specified).
@@ -114,7 +115,7 @@ function(){'use strict';
     };
 
 
-    (function(n){
+    (function(counter){
     /**
      * Create custom type (class).
      * @param typeName    The name of new type, if no given, constructor.name used, if it empty, the default will be "CustomTypeN".
@@ -143,8 +144,8 @@ function(){'use strict';
                 };
             }
         }
-        /** @default constructor.name or CustomTypeN */
-        if(!typeName) typeName = constructor.name || 'CustomType' + n++;
+        /** @default constructor.name or "CustomTypeN" */
+        if(!typeName) typeName = constructor.name || 'CustomType' + counter++;
 
         //</arguments>
 
@@ -165,7 +166,7 @@ function(){'use strict';
         return constructor;
     };
 
-    })(0);
+    })(/* counter initial value: */0);
 
     /**
      * Create new Clone object.
@@ -564,7 +565,7 @@ function(){'use strict';
     Clone.defineType('Clone', Clone);
 
     //nodejs:
-    if(module && module.exports) module.exports = Clone;
+    if(typeof(module)!='undefined' && module.exports) module.exports = Clone;
 
     return Clone;
     //unreachable code, for jsdoc:
