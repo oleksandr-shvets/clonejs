@@ -263,7 +263,10 @@ function(){'use strict';
             root = root.prototype;
         }
         if( copyNesting === undefined ){
-            copyNesting = true;
+            if(typeof parentsLevel == 'boolean'){
+                copyNesting   = parentsLevel;
+                parentsLevel  = 0;
+            }else copyNesting = true;
         }
 
         if(objectToMix instanceof Array){
