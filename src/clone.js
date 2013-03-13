@@ -433,12 +433,12 @@ function(){'use strict';
          * @see Clone.prototype.applySuper
          * @returns {Function}
          */
-        createSuperSafeCallback: function(/** Function|string */fnOrMethodName, /** Object= */boundThis){
-            if(typeof fnOrMethodName == 'string'){
+        createSuperSafeCallback: function(/** Function|string */functionOrMethodName, /** Object= */boundThis){
+            if(typeof functionOrMethodName == 'string'){
                 var fn = this[fn];
                 boundThis = this;
             }else{
-                fn = fnOrMethodName;
+                fn = functionOrMethodName;
             }
 
             var self = this;
