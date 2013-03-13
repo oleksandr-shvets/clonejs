@@ -1,14 +1,20 @@
 /**
- * @ clone.js - The prototype-based paradigm framework.
+ * @ clone.js - The true prototype-based OOP framework.
  * @version 0.4.5
  * @author  Alex Shvets
  * @see     https://github.com/quadroid/clonejs
  *
  * @class
- *     This class is the library, that have actsent on the new ECMA Script 5 features like Object.create and property descriptors.
+ *     This is the framework that implements the true prototype-based OOP paradigm in JS.
+ *     It based on the new ECMA Script 5 features like Object.create and property descriptors.
  *
  *     <p><b>Naming conventions</b>
- *     <p>Prefix your var names with "$", if it contain prototype object.
+ *     <p><b>Var names, prefixed with "$"</b>, contain object, used as prototype for other objects.
+ *     <p>For example:<br>
+ *        var $array = Array.prototype, $myType = {}, <br>
+ *            myTypeInstance = Clone($myType);
+ *     <p>
+ *     <p><b>properties, prefixed with "_"</b>, are private.
  *     <p>
  * @description
  *     If called as function, return a clone of <i>baseObj</i>, and set it's properties.
@@ -17,19 +23,16 @@
  * @example
  *     var $myType = Clone.make({
  *         constructor: Clone.defineType('MyType', function(){
- *             var obj = this.applySuper(arguments);
- *             // do something with obj...
- *             return obj;
+ *             this.applySuper(arguments);
+ *             // do something with this...
  *         }),
  *         property: 1
  *     });
- *     var myTypeInstance1 = $myType.create();
- *     var myTypeInstance2 = $myType.create();
- *     assert( $myType.isPrototypeOf(myTypeInstance1) );
+ *     var myTypeInstance = $myType.create();
+ *     assert( $myType.isPrototypeOf(myTypeInstance) );
  *
  *     var $myArray1 = Clone(Array.prototype, {customMethod: function(){}});
  *     var $myArray2 = Clone.makeFomClass(Array, {customMethod: function(){}});
- *
  *
  *     var myObj = {a:1, b:2, c:3};
  *     var cloneOfMyObj = Clone(myObj);
@@ -54,15 +57,15 @@ function(){'use strict';
 
     function Clone(baseObj, /** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
 
-        if(this && this !== (typeof(global)!=='undefined' && global || window) ){
+        if(this && this !== (window || global) ){
             // Called as constructor (with new operator or used call/apply):
             // We assume that the new object is already created,
-            // and we need only to set its properties (if specified).
+            // and we need only to set its own properties (if specified).
             if(arguments.length){
                 Array.prototype.unshift.call(arguments, this);
                 Function.call.apply(Clone.prototype.defineProperties, arguments);
             }
-            return this;// if call/apply
+            return this;// need for call/apply
 
         }else{
         // Called like a regular function:
@@ -179,21 +182,21 @@ function(){'use strict';
      * @static
      */
     Clone.make = function(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
-        return Clone.makeFromClass(this, properties, defaultDescriptor);
+        return Clone.makeFromType(this, properties, defaultDescriptor);
     };
 
     /**
      *
      * @returns {~Clone}
      */
-    Clone.makeFromClass = function(
-        /**        FunctionType */BaseClass,
+    Clone.makeFromType = function(
+        /**        FunctionType */BaseType,
         /**             Object= */properties,
         /** PropertyDescriptor= */defaultDescriptor
     ){
-        var prototype = BaseClass.prototype;
+        var prototype = BaseType.prototype;
 
-        if(BaseClass instanceof Clone || Clone.can(prototype, 'clone').as(Clone.prototype) ){
+        if(BaseType instanceof Clone || Clone.can(prototype, 'clone').as(Clone.prototype) ){
             return Clone(prototype, properties, defaultDescriptor);
 
         }else{
@@ -244,7 +247,7 @@ function(){'use strict';
      * Mix two or more objects.
      *
      * @param root
-     *        The root object. Will be modified, if copyNesting does not set.
+     *        The root object. Will be modified, if copyNesting does not true.
      *
      * @param objectToMix
      *        Object(s) to mix. If it is FunctionType, FunctionType.prototype will be used instead.
@@ -254,9 +257,9 @@ function(){'use strict';
      *
      * @param copyNesting
      *        Should be true if objectsToMix have methods, that call {@link Clone.prototype.applyParent}
-     *        If not true, all properties of all objects will be directly attached to the one root object.
+     *        If not true, all own properties of all objects will be directly attached to the one root object.
      *
-     * @returns {Object} Modified root object if copyNesting, else - the new object based on objectsToMix and root.
+     * @returns {Object} Modified root object if copyNesting, else - the new object based on objectsToMix copies and root.
      */
     Clone.mix = function(
         /**       Object|FunctionType */root,
@@ -313,7 +316,7 @@ function(){'use strict';
         return updateObj;
     };
 
-    //Clone.defineType('Clone', Clone.makeFomClass(Object,
+    //Clone.defineType('Clone', Clone.makeFomType(Object,
     Object.defineProperties(Clone.prototype, Clone.describe(
         /** @lands Clone.prototype */{
 
@@ -362,7 +365,7 @@ function(){'use strict';
         },
 
         /**
-         * Use this method to create an instances of prototype ($uper) objects.
+         * Use this method to create an instances of prototype objects.
          * <p>Behaves like a clone method, but also call constructor.
          * And, the created instance are sealed ({@link Object.seal}): to prevent it, override the create method.
          * @see Clone.prototype.clone
@@ -496,7 +499,7 @@ function(){'use strict';
          * Mix this object with another.
          * @see Clone.mix */
         mixWith: function(/** Object|FunctionType */mixinObject, /** number=0 */parentsLevel){
-            Clone.mix(this, mixinObject, 0,false);
+            Clone.mix(this, mixinObject, parentsLevel, false);
         },
 
         /**
@@ -606,7 +609,7 @@ function(){'use strict';
      PropertyDescriptor = Object;
 
     /**
-     * Function, that can be called with "new" operator and/or have modified prototype property.
+     * JavaScript class. Function, that can be called with "new" operator and/or have modified prototype property.
      * @typedef {Function} */
      FunctionType = Function;
 
