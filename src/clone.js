@@ -123,8 +123,7 @@ function(){'use strict';
 
     (function(counter){
     /**
-     * Create custom type (class).
-     * @param typeName    The name of new type, if no given, constructor.name used, if it empty, the default will be "CustomTypeN".
+     * @param name        The name of new type, if no given, constructor.name used, if it empty, the default will be "CustomTypeN".
      * @param prototype   The prototype of new type, if no given, you should manually set the prototype property of returned Function.
      * @param constructor If no given, and if defined prototype.constructor, it used.
      * @returns {FunctionType}
