@@ -452,7 +452,7 @@ function(){'use strict';
          */
         createSuperSafeCallback: function(/** Function|string */functionOrMethodName, /** Object= */boundThis){
             if(typeof functionOrMethodName == 'string'){
-                var fn = this[fn];
+                var fn = this[functionOrMethodName];
                 if(typeof boundThis == 'undefined') boundThis = this;
             }else{
                 fn = functionOrMethodName;
