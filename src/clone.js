@@ -123,6 +123,7 @@ function(){'use strict';
 
     (function(counter){
     /**
+     * Create custom Type (JS class).
      * @param name        The name of new type, if no given, constructor.name used, if it empty, the default will be "CustomTypeN".
      * @param prototype   The prototype of new type, if no given, you should manually set the prototype property of returned Function.
      * @param constructor If no given, and if defined prototype.constructor, it used.
@@ -130,14 +131,14 @@ function(){'use strict';
      *
      * @static
      */
-    Clone.defineType = function(/** string|*= */typeName, /** Object= */prototype, /** Function= */constructor){
-        if(typeof(typeName) != 'string'){
-            prototype = typeName;
-            typeName = undefined;
+    Clone.defineType = function(/** string|*= */name, /** Object= */prototype, /** Function= */constructor){
+        if(typeof(name) != 'string'){
+            prototype = name;
+            name = undefined;
         }
         if(typeof(prototype) == 'function'){
             constructor = prototype;
-            prototype = constructor.prototype;
+              prototype = constructor.prototype;
         }
 
         if(!constructor){
@@ -150,7 +151,7 @@ function(){'use strict';
             }
         }
         /** @default constructor.name or "CustomTypeN" */
-        if(!typeName) typeName = constructor.name || 'CustomType' + counter++;
+        if(!name) name = constructor.name || 'CustomType' + counter++;
 
         //</arguments>
 
@@ -163,10 +164,10 @@ function(){'use strict';
                 Object.defineProperty(constructor, 'prototype', {value:prototype,   writable:!0,configurable:!0});
         }
 
-        // store typeName for future use (e.g. debugging):
-        Object.defineProperty(constructor, 'typeName', {value:typeName, writable:!0,configurable:!0});
+        // store name for future use (e.g. debugging):
+        Object.defineProperty(constructor, 'name', {value:name, writable:!0,configurable:!0});
 
-        //global[typeName] = constructor;
+        //global[name] = constructor;
 
         return constructor;
     };
@@ -382,7 +383,7 @@ function(){'use strict';
         },
 
         /**
-         * Apply method of super object to this object.
+         * Apply method of super object (prototype) to this object.
          * @returns {*}
          */
         applySuper: function(/** string=constructor|Array */ methodName, /** Array= */args){
@@ -394,6 +395,13 @@ function(){'use strict';
             }//</arguments>
 
             /* if not */('__super__' in this) || this.defineProperty(
+                /**
+                 * Link to the object prototype.
+                 * Dynamically changed to next (by prototype chain), while applySuper method run.
+                 * System property. Use it only for debug purposes.
+                 * @name  __super__
+                 * @lands Clone.prototype (instance of object)
+                 */
                 '__super__', {value: Object.getPrototypeOf(Object.getPrototypeOf(this)), writable:!0,configurable:!0}
             );
 
@@ -594,7 +602,7 @@ function(){'use strict';
 
     Clone.defineType('Clone', Clone);
 
-    //nodejs:
+    //export for nodejs:
     if(typeof(module)!='undefined' && module.exports) module.exports = Clone;
 
     return Clone;
