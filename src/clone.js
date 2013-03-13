@@ -457,10 +457,10 @@ function(){'use strict';
         /**
          * Returns all changed properties, since cloning of object.
          * Separate object from its prototype and return it.
-         * @returns {Object}
+         * @returns {Clone}
          */
         getState: function(/** boolean=false */listPrivate){
-            var currentState  = {};
+            var currentState  = new Clone;
             var ownProperties = Object.getOwnPropertyNames(this);
 
             if(listPrivate){
