@@ -79,24 +79,20 @@ var Clone = function Clone(baseObj, /** Object= */properties, /** PropertyDescri
  *
  * @param {Object} properties
  * @param {PropertyDescriptor=} defaultDescriptor The default property descriptor for properties.
- * @returns {{PropertyDescriptor}} Properties descriptors.
+ * @returns {{PropertyDescriptor}} Property descriptors.
  *
  * @static
  */
 Clone.describe = function(properties, defaultDescriptor){
     var descriptors = {};
 
-    if(!defaultDescriptor){
-        /*
-         * @typedef {Object}
-         * @name PropertyDescriptor */
-        defaultDescriptor = {
-            value: undefined,
-            configurable: true,
+    if(!defaultDescriptor) defaultDescriptor =
+    {
+               value: undefined,
+        configurable: true,
             writable: true,
-            enumerable: true
-        };
-    }
+          enumerable: true
+    };
 
     for(var property in properties){
         var value = properties[property];
@@ -257,10 +253,11 @@ Clone.cant = function(/** Object */obj1, /** string */method){
  * @returns {Object} Modified root object if copyNesting, else - the new object based on objectsToMix copies and root.
  */
 Clone.mix = function(
-    /**       Object|FunctionType */root,
-    /** Object|FunctionType|Array */objectToMix,
-    /**                  number=0 */parentsLevel,
-    /**              boolean=true */copyNesting
+    /** Object|FunctionType */root,
+    /** Object|FunctionType|Array.<(Object|FunctionType)> */
+                              objectToMix,
+    /**            number=0 */parentsLevel,
+    /**        boolean=true */copyNesting
 ){
     if( typeof(root)=='function' && Object.getOwnPropertyNames(root.prototype) ){
         root = root.prototype;
@@ -274,7 +271,6 @@ Clone.mix = function(
 
     if(objectToMix instanceof Array){
         mixedObjects = objectToMix;
-        //objectToMix = mixedObjects.shift();
     }else{
         // get parents:
         var obj = objectToMix;
@@ -329,7 +325,7 @@ Object.defineProperties(Clone.prototype, Clone.describe(
      *
      * @see Clone.defineType
      * @type {Function}
-     * @fieldOf Clone#
+     * @memberOf Clone#
      */
     constructor: Clone,
 //    get constructor(){
@@ -396,6 +392,7 @@ Object.defineProperties(Clone.prototype, Clone.describe(
         }//</arguments>
 
         /* if not */('__super__' in this) || this.defineProperty(
+            '__super__', {value: Object.getPrototypeOf(Object.getPrototypeOf(this)), writable:!0,configurable:!0}
             /**
              * Link to the object prototype.
              * Dynamically changed to next (by prototype chain), while applySuper method run.
@@ -403,9 +400,8 @@ Object.defineProperties(Clone.prototype, Clone.describe(
              * @name  __super__
              * @type  {?Object}
              * @see Clone#applySuper
-             * @fieldOf Clone#
+             * @memberOf Clone#
              */
-            '__super__', {value: Object.getPrototypeOf(Object.getPrototypeOf(this)), writable:!0,configurable:!0}
         );
 
         // save super
@@ -422,7 +418,7 @@ Object.defineProperties(Clone.prototype, Clone.describe(
 
     /** @see Clone#applySuper
      *  @memberof Clone# */
-    callSuper: function(/** string */methodName, /** ?= */ arg1, /** ?= */argN){
+    callSuper: function(/** string */methodName, /** ?= */ arg1, /** ...?= */argN){
         var args = Array.prototype.slice.call(arguments, 1);
         return this.applySuper(methodName, args);
     },
@@ -618,11 +614,13 @@ Clone.defineType('Clone', Clone);
 //export for nodejs:
 if(typeof(module)!='undefined' && module.exports) module.exports = Clone;
 
+if(0)//need for IDEA code inspections
 /**
  * Object, that has at least one of the following property: <br>
  * value, get, set, writable, configurable, enumerable.
  * @name PropertyDescriptor
  * @typedef {({value:*}|{get:{function():*}}|{set:{function(*):void}}|{writable:boolean}|{configurable:boolean}|{enumerable:boolean})} */
+PropertyDescriptor;
 
 /**
  * JavaScript class. Function, that can be called by "new" operator and/or have modified prototype property.
