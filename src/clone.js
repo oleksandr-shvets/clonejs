@@ -18,7 +18,7 @@
  *     <p>
  * @description
  *     If called as function, return a clone of <i>baseObj</i>, and set it's own properties.
- *     If called by <i>new</i> operator, constructor will take 2 arguments (properties and defaultDescriptor).
+ *     If called by <i>new</i> operator, constructor will take no more than 2 arguments (properties and defaultDescriptor).
  *
  * @example
  *     var $myType = Clone.make({
@@ -32,7 +32,7 @@
  *         '(const) constant': 'not writable',
  *         '(final) notConfigurableAndNotWritable': true,
  *         '(hidden) notEnumerable': true,
- *         '(writable final) notConfigurable': null,
+ *         '(writable final) notConfigurableOnly': null,
  *         '(hidden final get) notEnumerableGetter': function(){},
  *         property: 1
  *     });
@@ -134,7 +134,7 @@ Clone.describe = function(properties, defaultDescriptor){
 
         if(descriptor.get || descriptor.set){
             descriptor.value = undefined;
-            value = undefined;// do not allow to hide
+            value = undefined;// do not allow to hide getters/setters by default
         }else{
             descriptor.value = value;
         }
