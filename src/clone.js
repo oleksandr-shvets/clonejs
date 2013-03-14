@@ -108,9 +108,9 @@ Clone.describe = function(properties, defaultDescriptor){
             descriptor.enumerable = false;
         }
     }
-    if( descriptors.hasOwnProperty('constructor'))
+    if( descriptors.hasOwnProperty('constructor')){
         descriptors.constructor.enumerable = false;
-
+    }
     return descriptors;
 };
 
@@ -491,17 +491,10 @@ Object.defineProperties(Clone.prototype, Clone.describe(
      */
     getState: function(/** boolean=false */listPrivate){
         var currentState  = new Clone;
-        var ownProperties = Object.getOwnPropertyNames(this);
+        var ownProperties = listPrivate ? Object.getOwnPropertyNames(this) : Object.keys(this);
 
-        if(listPrivate){
-            for(var i=0; i < ownProperties.length; i++){var name = ownProperties[i];
-                currentState[name] = this[name];
-            }
-        }else{
-            for(var i=0; i < ownProperties.length; i++){var name = ownProperties[i];
-                if(this.propertyIsEnumerable(name) )
-                    currentState[name] = this[name];
-            }
+        for(var i=0; i < ownProperties.length; i++){var name = ownProperties[i];
+            currentState[name] = this[name];
         }
 
         return currentState;
