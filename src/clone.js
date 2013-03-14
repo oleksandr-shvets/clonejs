@@ -78,7 +78,7 @@ var Clone = function Clone(baseObj, /** Object= */properties, /** PropertyDescri
  * <p>Functions, properties prefixed by "_", and constructor will be automatically marked as non-enumerable.
  *
  * @param {Object} properties
- * @param {PropertyDescriptor=} defaultDescriptor The default property descriptor for properties.
+ * @param {PropertyDescriptor=} defaultDescriptor The default property descriptor.
  * @returns {{PropertyDescriptor}} Property descriptors.
  *
  * @static
@@ -585,8 +585,8 @@ Object.defineProperties(Clone.prototype, Clone.describe(
 
     /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor">Object.getOwnPropertyDescriptor</a>
      * @memberof Clone# */
-    getOwnPropertyDescriptor: function(/** string */propertyName){
-        return Object.getOwnPropertyDescriptor(this, propertyName);
+    getOwnPropertyDescriptor: function(/** string */ name){
+        return Object.getOwnPropertyDescriptor(this, name);
     },
 
     /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperties">Object.defineProperties</a>
