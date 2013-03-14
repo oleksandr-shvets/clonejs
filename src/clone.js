@@ -24,7 +24,7 @@
  *     var $myType = Clone.make({
  *         constructor: Clone.defineType('MyType', function(){
  *             this.applySuper(arguments);
- *             // do something with this...
+ *             // do something...
  *         }),
  *         _item: null,//private property (not enumerable)
  *         '(get) item': function(){return this._item},
@@ -41,7 +41,7 @@
  *     assert( $myType.isPrototypeOf(myTypeInstance) );
  *
  *     var $myArray1 = Clone(Array.prototype, {customMethod: function(){}});
- *     var $myArray2 = Clone.makeFomClass(Array, {customMethod: function(){}});
+ *     var $myArray2 = Clone.makeFom(Array, {customMethod: function(){}});
  *
  *     var myObj = {a:1, b:2, c:3};
  *     var cloneOfMyObj = Clone(myObj);
@@ -86,12 +86,12 @@ var Clone = function Clone(baseObj, /** Object= */properties, /** PropertyDescri
  * <p>For example, {a:{}, b:2} will be translated to something like {a: {value: {}}, b: {value: 2}}.
  * <p>Functions (except getters and setters), properties prefixed by "_", and constructor will be automatically marked as non-enumerable.
  * <p>You can prefix your property names by (get|set|const|final|hidden|writable).
- *     <li>(get) - define getter
- *     <li>(set) - define setter
- *     <li>(const) - make property unwritable
- *     <li>(final) - make property unwritable, and prevent it descriptor modifications and deleting
- *     <li>(hidden) - make property non-enumerable
- *     <li>(writable) - make property writable (use with final)
+ *     <li>(get) - define getter, if string passed, the getter will be auto generated.
+ *     <li>(set) - define setter, if string passed, the setter will be auto generated.
+ *     <li>(const) - make property unwritable.
+ *     <li>(final) - make property unwritable, and prevent it deleting and descriptor modifications.
+ *     <li>(hidden) - make property non-enumerable.
+ *     <li>(writable) - make property writable (use with final).
  *
  * @param {Object} properties
  * @param {PropertyDescriptor=} defaultDescriptor The default property descriptor.
