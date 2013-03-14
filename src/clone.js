@@ -329,7 +329,7 @@ Object.defineProperties(Clone.prototype, Clone.describe(
      *
      * @see Clone.defineType
      * @type {Function}
-     * @memberof Clone#
+     * @fieldOf Clone#
      */
     constructor: Clone,
 //    get constructor(){
@@ -345,9 +345,9 @@ Object.defineProperties(Clone.prototype, Clone.describe(
 //    },
 
     /**
-     * Create a clone of this. See {@link Object.create} for details.
+     * Create a clone of this. See <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create</a> for details.
      * @see Clone
-     * @see Object.create
+     * @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create</a>
      * @returns {Clone}
      * @memberof Clone#
      */
@@ -365,10 +365,10 @@ Object.defineProperties(Clone.prototype, Clone.describe(
     /**
      * Use this method to create an instances of prototype objects.
      * <p>Behaves like a clone method, but also call constructor.
-     * And, the created instance are sealed ({@link Object.seal}): to prevent it, override the create method.
+     * And, the created instance are sealed (<a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal">Object.seal</a>): to prevent it, override the create method.
      * @see Clone#clone
      * @see Clone#constructor
-     * @see Object.seal
+     * @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal">Object.seal</a>
      * @returns {Clone}
      * @memberof Clone#
      */
@@ -403,7 +403,7 @@ Object.defineProperties(Clone.prototype, Clone.describe(
              * @name  __super__
              * @type  {?Object}
              * @see Clone#applySuper
-             * @memberof Clone#
+             * @fieldOf Clone#
              */
             '__super__', {value: Object.getPrototypeOf(Object.getPrototypeOf(this)), writable:!0,configurable:!0}
         );
@@ -556,58 +556,58 @@ Object.defineProperties(Clone.prototype, Clone.describe(
 
     // Some sugar:
 
-    /** @see Object.getPrototypeOf
+    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getPrototypeOf">Object.getPrototypeOf</a>
      * @memberof Clone# */
     getPrototype: function(){
         return Object.getPrototypeOf(this) },
-    /** @see Object.keys
+    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys">Object.keys</a>
      * @memberof Clone# */
     getEnumerableOwnPropertyNames: function(){
         return Object.keys(this) },
-    /** @see Object.getOwnPropertyNames
+    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames">Object.getOwnPropertyNames</a>
      * @memberof Clone# */
     getOwnPropertyNames: function(){
         return Object.getOwnPropertyNames(this) },
 
-    /** @see Object.preventExtensions
+    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/preventExtensions">Object.preventExtensions</a>
      * @memberof Clone# */
     preventExtensions: function(){
         return Object.preventExtensions(this) },
-    /** @see Object.isExtensible
+    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isExtensible">Object.isExtensible</a>
      * @memberof Clone# */
         isExtensible: function(){
         return Object.isExtensible(this) },
-    /** @see Object.seal
+    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal">Object.seal</a>
      * @memberof Clone# */
     seal: function(){
         return Object.seal(this) },
-    /** @see Object.isSealed
+    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isSealed">Object.isSealed</a>
      * @memberof Clone# */
         isSealed: function(){
         return Object.isSealed(this) },
-    /** @see Object.freeze
+    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/freeze">Object.freeze</a>
      * @memberof Clone# */
     freeze: function(){
         return Object.freeze(this) },
-    /** @see Object.isFrozen
+    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isFrozen">Object.isFrozen</a>
      * @memberof Clone# */
         isFrozen: function(){
         return Object.isFrozen(this) },
 
-    /** @see Object.getOwnPropertyDescriptor
+    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor">Object.getOwnPropertyDescriptor</a>
      * @memberof Clone# */
     getOwnPropertyDescriptor: function(/** string */propertyName){
         return Object.getOwnPropertyDescriptor(this, propertyName);
     },
 
-    /** @see Object.defineProperties
+    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperties">Object.defineProperties</a>
      *  @see Clone.describe
      *  @memberof Clone# */
     defineProperties: function(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
         return Object.defineProperties(this, Clone.describe.apply(null, arguments));
     },
 
-    /** @see Object.defineProperty
+    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty</a>
      *  @memberof Clone# */
     defineProperty: function(/** string */name, /** PropertyDescriptor */propertyDescriptor){
         return Object.defineProperty(this, name, propertyDescriptor);

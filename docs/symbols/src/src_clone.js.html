@@ -336,7 +336,7 @@
 <span class='line'>329</span>      *
 <span class='line'>330</span>      * @see Clone.defineType
 <span class='line'>331</span>      * @type {Function}
-<span class='line'>332</span>      * @memberof Clone#
+<span class='line'>332</span>      * @fieldOf Clone#
 <span class='line'>333</span>      */</span><span class="WHIT">
 <span class='line'>334</span> </span><span class="WHIT">    </span><span class="NAME">constructor</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Clone</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'>335</span> </span><span class="COMM">//    get constructor(){</span><span class="WHIT">
@@ -352,9 +352,9 @@
 <span class='line'>345</span> </span><span class="COMM">//    },</span><span class="WHIT">
 <span class='line'>346</span> 
 <span class='line'>347</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'>348</span>      * Create a clone of this. See {@link Object.create} for details.
+<span class='line'>348</span>      * Create a clone of this. See &lt;a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create&lt;/a> for details.
 <span class='line'>349</span>      * @see Clone
-<span class='line'>350</span>      * @see Object.create
+<span class='line'>350</span>      * @see &lt;a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create&lt;/a>
 <span class='line'>351</span>      * @returns {Clone}
 <span class='line'>352</span>      * @memberof Clone#
 <span class='line'>353</span>      */</span><span class="WHIT">
@@ -372,10 +372,10 @@
 <span class='line'>365</span> </span><span class="WHIT">    </span><span class="COMM">/**
 <span class='line'>366</span>      * Use this method to create an instances of prototype objects.
 <span class='line'>367</span>      * &lt;p>Behaves like a clone method, but also call constructor.
-<span class='line'>368</span>      * And, the created instance are sealed ({@link Object.seal}): to prevent it, override the create method.
+<span class='line'>368</span>      * And, the created instance are sealed (&lt;a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal">Object.seal&lt;/a>): to prevent it, override the create method.
 <span class='line'>369</span>      * @see Clone#clone
 <span class='line'>370</span>      * @see Clone#constructor
-<span class='line'>371</span>      * @see Object.seal
+<span class='line'>371</span>      * @see &lt;a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal">Object.seal&lt;/a>
 <span class='line'>372</span>      * @returns {Clone}
 <span class='line'>373</span>      * @memberof Clone#
 <span class='line'>374</span>      */</span><span class="WHIT">
@@ -410,7 +410,7 @@
 <span class='line'>403</span>              * @name  __super__
 <span class='line'>404</span>              * @type  {?Object}
 <span class='line'>405</span>              * @see Clone#applySuper
-<span class='line'>406</span>              * @memberof Clone#
+<span class='line'>406</span>              * @fieldOf Clone#
 <span class='line'>407</span>              */</span><span class="WHIT">
 <span class='line'>408</span> </span><span class="WHIT">            </span><span class="STRN">'__super__'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">value</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Object.getPrototypeOf</span><span class="PUNC">(</span><span class="NAME">Object.getPrototypeOf</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">writable</span><span class="PUNC">:</span><span class="PUNC">!</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="NAME">configurable</span><span class="PUNC">:</span><span class="PUNC">!</span><span class="NUMB">0</span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>409</span> </span><span class="WHIT">        </span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
@@ -563,58 +563,58 @@
 <span class='line'>556</span> 
 <span class='line'>557</span> </span><span class="WHIT">    </span><span class="COMM">// Some sugar:</span><span class="WHIT">
 <span class='line'>558</span> 
-<span class='line'>559</span> </span><span class="WHIT">    </span><span class="COMM">/** @see Object.getPrototypeOf
+<span class='line'>559</span> </span><span class="WHIT">    </span><span class="COMM">/** @see &lt;a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getPrototypeOf">Object.getPrototypeOf&lt;/a>
 <span class='line'>560</span>      * @memberof Clone# */</span><span class="WHIT">
 <span class='line'>561</span> </span><span class="WHIT">    </span><span class="NAME">getPrototype</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>562</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.getPrototypeOf</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>563</span> </span><span class="WHIT">    </span><span class="COMM">/** @see Object.keys
+<span class='line'>563</span> </span><span class="WHIT">    </span><span class="COMM">/** @see &lt;a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys">Object.keys&lt;/a>
 <span class='line'>564</span>      * @memberof Clone# */</span><span class="WHIT">
 <span class='line'>565</span> </span><span class="WHIT">    </span><span class="NAME">getEnumerableOwnPropertyNames</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>566</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.keys</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>567</span> </span><span class="WHIT">    </span><span class="COMM">/** @see Object.getOwnPropertyNames
+<span class='line'>567</span> </span><span class="WHIT">    </span><span class="COMM">/** @see &lt;a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames">Object.getOwnPropertyNames&lt;/a>
 <span class='line'>568</span>      * @memberof Clone# */</span><span class="WHIT">
 <span class='line'>569</span> </span><span class="WHIT">    </span><span class="NAME">getOwnPropertyNames</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>570</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.getOwnPropertyNames</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'>571</span> 
-<span class='line'>572</span> </span><span class="WHIT">    </span><span class="COMM">/** @see Object.preventExtensions
+<span class='line'>572</span> </span><span class="WHIT">    </span><span class="COMM">/** @see &lt;a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/preventExtensions">Object.preventExtensions&lt;/a>
 <span class='line'>573</span>      * @memberof Clone# */</span><span class="WHIT">
 <span class='line'>574</span> </span><span class="WHIT">    </span><span class="NAME">preventExtensions</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>575</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.preventExtensions</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>576</span> </span><span class="WHIT">    </span><span class="COMM">/** @see Object.isExtensible
+<span class='line'>576</span> </span><span class="WHIT">    </span><span class="COMM">/** @see &lt;a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isExtensible">Object.isExtensible&lt;/a>
 <span class='line'>577</span>      * @memberof Clone# */</span><span class="WHIT">
 <span class='line'>578</span> </span><span class="WHIT">        </span><span class="NAME">isExtensible</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>579</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.isExtensible</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>580</span> </span><span class="WHIT">    </span><span class="COMM">/** @see Object.seal
+<span class='line'>580</span> </span><span class="WHIT">    </span><span class="COMM">/** @see &lt;a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal">Object.seal&lt;/a>
 <span class='line'>581</span>      * @memberof Clone# */</span><span class="WHIT">
 <span class='line'>582</span> </span><span class="WHIT">    </span><span class="NAME">seal</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>583</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.seal</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>584</span> </span><span class="WHIT">    </span><span class="COMM">/** @see Object.isSealed
+<span class='line'>584</span> </span><span class="WHIT">    </span><span class="COMM">/** @see &lt;a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isSealed">Object.isSealed&lt;/a>
 <span class='line'>585</span>      * @memberof Clone# */</span><span class="WHIT">
 <span class='line'>586</span> </span><span class="WHIT">        </span><span class="NAME">isSealed</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>587</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.isSealed</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>588</span> </span><span class="WHIT">    </span><span class="COMM">/** @see Object.freeze
+<span class='line'>588</span> </span><span class="WHIT">    </span><span class="COMM">/** @see &lt;a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/freeze">Object.freeze&lt;/a>
 <span class='line'>589</span>      * @memberof Clone# */</span><span class="WHIT">
 <span class='line'>590</span> </span><span class="WHIT">    </span><span class="NAME">freeze</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>591</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.freeze</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>592</span> </span><span class="WHIT">    </span><span class="COMM">/** @see Object.isFrozen
+<span class='line'>592</span> </span><span class="WHIT">    </span><span class="COMM">/** @see &lt;a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isFrozen">Object.isFrozen&lt;/a>
 <span class='line'>593</span>      * @memberof Clone# */</span><span class="WHIT">
 <span class='line'>594</span> </span><span class="WHIT">        </span><span class="NAME">isFrozen</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>595</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.isFrozen</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'>596</span> 
-<span class='line'>597</span> </span><span class="WHIT">    </span><span class="COMM">/** @see Object.getOwnPropertyDescriptor
+<span class='line'>597</span> </span><span class="WHIT">    </span><span class="COMM">/** @see &lt;a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor">Object.getOwnPropertyDescriptor&lt;/a>
 <span class='line'>598</span>      * @memberof Clone# */</span><span class="WHIT">
 <span class='line'>599</span> </span><span class="WHIT">    </span><span class="NAME">getOwnPropertyDescriptor</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** string */</span><span class="NAME">propertyName</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>600</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.getOwnPropertyDescriptor</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">propertyName</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>601</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'>602</span> 
-<span class='line'>603</span> </span><span class="WHIT">    </span><span class="COMM">/** @see Object.defineProperties
+<span class='line'>603</span> </span><span class="WHIT">    </span><span class="COMM">/** @see &lt;a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperties">Object.defineProperties&lt;/a>
 <span class='line'>604</span>      *  @see Clone.describe
 <span class='line'>605</span>      *  @memberof Clone# */</span><span class="WHIT">
 <span class='line'>606</span> </span><span class="WHIT">    </span><span class="NAME">defineProperties</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** Object= */</span><span class="NAME">properties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** PropertyDescriptor= */</span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>607</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.defineProperties</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Clone.describe.apply</span><span class="PUNC">(</span><span class="KEYW">null</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>608</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'>609</span> 
-<span class='line'>610</span> </span><span class="WHIT">    </span><span class="COMM">/** @see Object.defineProperty
+<span class='line'>610</span> </span><span class="WHIT">    </span><span class="COMM">/** @see &lt;a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty&lt;/a>
 <span class='line'>611</span>      *  @memberof Clone# */</span><span class="WHIT">
 <span class='line'>612</span> </span><span class="WHIT">    </span><span class="NAME">defineProperty</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** string */</span><span class="NAME">name</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** PropertyDescriptor */</span><span class="NAME">propertyDescriptor</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>613</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.defineProperty</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">propertyDescriptor</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
