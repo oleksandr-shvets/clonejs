@@ -162,9 +162,9 @@ Clone.describe = function(properties, defaultDescriptor){
 //        }
         descriptors[name] = descriptor;
     }
-    if( descriptors.hasOwnProperty('constructor')){
-        descriptors.constructor.enumerable = false;
-    }
+//    if( descriptors.hasOwnProperty('constructor')){
+//        descriptors.constructor.enumerable = false;
+//    }
     return descriptors;
 };
 
