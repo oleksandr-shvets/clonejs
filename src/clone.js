@@ -122,7 +122,7 @@ Clone.describe = function(properties, defaultDescriptor){
 
                 if(descriptors[name]) descriptor = descriptors[name];
 
-                for(var prefix in prefixes) switch(prefix){
+                for(var i in prefixes) switch(prefixes[i]){
                     case    'const': descriptor.writable     = false; break;
                     case    'final': descriptor.configurable = false; descriptor.writable = false; break;
                     case      'get': descriptor.get          = value; break;
