@@ -251,7 +251,7 @@ Clone.cant = function(/** Object */obj1, /** string */method){
  *        Set this to Infinity if you want to copy all objectToMix parents properties up to Object.prototype.
  *
  * @param copyNesting
- *        Should be true if objectsToMix have methods, that call {@link Clone#applyParent}
+ *        Should be true if objectsToMix have methods, that call {@link Clone#applySuper}
  *        If not true, all own properties of all objects will be directly attached to the one root object.
  *
  * @returns {Object} Modified root object if copyNesting, else - the new object based on objectsToMix copies and root.
