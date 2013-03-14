@@ -314,7 +314,7 @@ Clone.mix = function(
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Clone.prototype =
+Object.defineProperties(Clone.prototype, Clone.describe(
     /** @lands Clone.prototype */{
 
     /**
@@ -329,6 +329,7 @@ Clone.prototype =
      *
      * @see Clone.defineType
      * @type {Function}
+     * @memberof Clone#
      */
     constructor: Clone,
 //    get constructor(){
@@ -348,6 +349,7 @@ Clone.prototype =
      * @see Clone
      * @see Object.create
      * @returns {Clone}
+     * @memberof Clone#
      */
     clone: function(/** Object= */properties, /** Object= */defaultDescriptor){
         if(arguments.length){
@@ -368,6 +370,7 @@ Clone.prototype =
      * @see Clone#constructor
      * @see Object.seal
      * @returns {Clone}
+     * @memberof Clone#
      */
     create: function(/** ...?= */constructorArguments){
         var newObj = this.clone();
@@ -382,8 +385,9 @@ Clone.prototype =
     /**
      * Apply method of super object (prototype) to this object.
      * @returns {*}
+     * @memberof Clone#
      */
-    applySuper: function(/** string=constructor|Array */ methodName, /** Array= */args){
+    applySuper: function(/** string='constructor'|Array */ methodName, /** Array= */args){
         if(typeof(methodName) != 'string'){
             if( arguments[0] instanceof Array){
                 args = arguments[0];
@@ -395,10 +399,11 @@ Clone.prototype =
             /**
              * Link to the object prototype.
              * Dynamically changed to next (by prototype chain), while applySuper method run.
-             * System property. Use it only for debug purposes.
-             * @name  Clone#__super__
+             * System property. <b>Use it only for debug purposes</b>.
+             * @name  __super__
              * @type  {?Object}
              * @see Clone#applySuper
+             * @memberof Clone#
              */
             '__super__', {value: Object.getPrototypeOf(Object.getPrototypeOf(this)), writable:!0,configurable:!0}
         );
@@ -415,7 +420,8 @@ Clone.prototype =
         return returned;
     },
 
-    /** @see Clone#applySuper */
+    /** @see Clone#applySuper
+     *  @memberof Clone# */
     callSuper: function(/** string */methodName, /** ?= */ arg1, /** ?= */argN){
         var args = Array.prototype.slice.call(arguments, 1);
         return this.applySuper(methodName, args);
@@ -447,6 +453,7 @@ Clone.prototype =
      * Use this method to wrap callback, that can call "applySuper" method.
      * @see Clone#applySuper
      * @returns {Function}
+     * @memberof Clone#
      */
     createSuperSafeCallback: function(/** Function|string */functionOrMethodName, /** Object= */boundThis){
         if(typeof functionOrMethodName == 'string'){
@@ -480,6 +487,7 @@ Clone.prototype =
      * Separate object from its prototype and return it.<br>
      * Private meens non-enumerable properties.
      * @returns {Clone}
+     * @memberof Clone#
      */
     getState: function(/** boolean=false */listPrivate){
         var currentState  = new Clone;
@@ -501,14 +509,16 @@ Clone.prototype =
 
     /**
      * Mix this object with another.
-     * @see Clone.mix */
+     * @see Clone.mix
+     * @memberof Clone# */
     mixWith: function(/** Object|FunctionType */mixinObject, /** number=0 */parentsLevel){
         Clone.mix(this, mixinObject, parentsLevel, false);
     },
 
     /**
      * Returns the current state of this object in JSON format.
-     * @see Clone#getState */
+     * @see Clone#getState
+     * @memberof Clone# */
     toString: function(){
         return JSON.stringify( this.getState() );
     },
@@ -546,47 +556,59 @@ Clone.prototype =
 
     // Some sugar:
 
-    /** @see Object.getPrototypeOf */
+    /** @see Object.getPrototypeOf
+     * @memberof Clone# */
     getPrototype: function(){
         return Object.getPrototypeOf(this) },
-    /** @see Object.keys */
+    /** @see Object.keys
+     * @memberof Clone# */
     getEnumerableOwnPropertyNames: function(){
         return Object.keys(this) },
-    /** @see Object.getOwnPropertyNames */
+    /** @see Object.getOwnPropertyNames
+     * @memberof Clone# */
     getOwnPropertyNames: function(){
         return Object.getOwnPropertyNames(this) },
 
-    /** @see Object.preventExtensions */
+    /** @see Object.preventExtensions
+     * @memberof Clone# */
     preventExtensions: function(){
         return Object.preventExtensions(this) },
-    /** @see Object.isExtensible */
+    /** @see Object.isExtensible
+     * @memberof Clone# */
         isExtensible: function(){
         return Object.isExtensible(this) },
-    /** @see Object.seal */
+    /** @see Object.seal
+     * @memberof Clone# */
     seal: function(){
         return Object.seal(this) },
-    /** @see Object.isSealed */
+    /** @see Object.isSealed
+     * @memberof Clone# */
         isSealed: function(){
         return Object.isSealed(this) },
-    /** @see Object.freeze */
+    /** @see Object.freeze
+     * @memberof Clone# */
     freeze: function(){
         return Object.freeze(this) },
-    /** @see Object.isFrozen */
+    /** @see Object.isFrozen
+     * @memberof Clone# */
         isFrozen: function(){
         return Object.isFrozen(this) },
 
-    /** @see Object.getOwnPropertyDescriptor */
+    /** @see Object.getOwnPropertyDescriptor
+     * @memberof Clone# */
     getOwnPropertyDescriptor: function(/** string */propertyName){
         return Object.getOwnPropertyDescriptor(this, propertyName);
     },
 
     /** @see Object.defineProperties
-     *  @see Clone.describe */
+     *  @see Clone.describe
+     *  @memberof Clone# */
     defineProperties: function(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
         return Object.defineProperties(this, Clone.describe.apply(null, arguments));
     },
 
-    /** @see Object.defineProperty */
+    /** @see Object.defineProperty
+     *  @memberof Clone# */
     defineProperty: function(/** string */name, /** PropertyDescriptor */propertyDescriptor){
         return Object.defineProperty(this, name, propertyDescriptor);
     }
@@ -596,30 +618,20 @@ Clone.prototype =
 //        set configurable(preventExtensions){ if(preventExtensions) Object.preventExtensions(this) }
 //    }
 
-};
+}));
 
+Clone.defineType('Clone', Clone);
 
-(function(){
-    var protoDescriptor = Clone.describe(Clone.prototype);
-    Clone.prototype = {};
-    Object.defineProperties(Clone.prototype, protoDescriptor);
+//export for nodejs:
+if(typeof(module)!='undefined' && module.exports) module.exports = Clone;
 
-    Clone.defineType('Clone', Clone);
+/**
+ * Object, that has at least one of the following property: <br>
+ * value, get, set, writable, configurable, enumerable.
+ * @name PropertyDescriptor
+ * @typedef {({value:*}|{get:{function():*}}|{set:{function(*):void}}|{writable:boolean}|{configurable:boolean}|{enumerable:boolean})} */
 
-    //export for nodejs:
-    if(typeof(module)!='undefined' && module.exports) module.exports = Clone;
-
-    return;
-    ;//unreachable code, for jsdoc:
-
-    /**
-     * Object, that has at least one of the following property: <br>
-     * value, get, set, writable, configurable, enumerable.
-     * @typedef {({value:*}|{get:{function():*}}|{set:{function(*):void}}|{writable:boolean}|{configurable:boolean}|{enumerable:boolean})} */
-    PropertyDescriptor = Object;
-
-    /**
-     * JavaScript class. Function, that can be called by "new" operator and/or have modified prototype property.
-     * @typedef {Function} */
-    FunctionType = Function;
-})();
+/**
+ * JavaScript class. Function, that can be called by "new" operator and/or have modified prototype property.
+ * @name FunctionType
+ * @typedef {Function} */
