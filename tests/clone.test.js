@@ -5,6 +5,30 @@ var Clone = require('../src/clone.js');
 
 module.exports = {
 
+    Clone: function(test){
+        var $proto = {a: 1};
+        var clone = Clone($proto);
+
+        test.equal( Object.getPrototypeOf(clone), $proto,
+            'check prototype');
+
+        clone = Clone($proto, {b:2});
+        test.ok( clone.hasOwnProperty('b') );
+
+        clone = Clone($proto, {b:2}, {});
+        test.ok( clone.hasOwnProperty('b') );
+
+        test.done();
+    },
+
+    constructor: function(test){
+        var clone = new Clone({a:1});
+
+        test.ok( clone.hasOwnProperty('a') );
+
+        test.done();
+    },
+
     describe: function(test){
 
         //test.expect(2);
@@ -23,6 +47,7 @@ module.exports = {
             },
             'private properties, functions, constructor should be not enumerable'
         );
+
 
         test.done();
     }

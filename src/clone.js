@@ -62,8 +62,7 @@
  * @return {Object} The new clone.
  */
 var Clone = function Clone(baseObj, /** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
-
-    if(this && this !== (window || global) ){
+    if(this && this !== (global || window) ){
     // Called as constructor (by new operator or used call/apply):
         // We assume that the new object is already created,
         // and we need only to set its own properties (if specified).
