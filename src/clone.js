@@ -83,7 +83,14 @@ var Clone = function Clone(baseObj, /** Object= */properties, /** PropertyDescri
 /**
  * Translate object to property descriptors.
  * <p>For example, {a:{}, b:2} will be translated to something like {a: {value: {}}, b: {value: 2}}.
- * <p>Functions, properties prefixed by "_", and constructor will be automatically marked as non-enumerable.
+ * <p>Functions (except getters and setters), properties prefixed by "_", and constructor will be automatically marked as non-enumerable.
+ * <p>You can prefix your property names by (get|set|const|final|hidden|writable).
+ *     <li>(get) - define getter
+ *     <li>(set) - define setter
+ *     <li>(const) - make property unwritable
+ *     <li>(final) - make property unwritable, and prevent it descriptor modifications and deleting
+ *     <li>(hidden) - make property non-enumerable
+ *     <li>(writable) - make property writable (use with final)
  *
  * @param {Object} properties
  * @param {PropertyDescriptor=} defaultDescriptor The default property descriptor.
@@ -107,7 +114,7 @@ Clone.describe = function(properties, defaultDescriptor){
         var descriptor = Object.create($defaultDescriptor);
 
         if( name[0]=='(' ){
-            var matches = name.match(/^\((((get|set|const|hidden|final) *)+)\) +(.+)$/);
+            var matches = name.match(/^\((((get|set|const|hidden|final|writable) *)+)\) +(.+)$/);
             if( matches ){
                 var prefixes = matches[1].split(' ').sort();
                 name = matches[4];
@@ -127,7 +134,7 @@ Clone.describe = function(properties, defaultDescriptor){
 
         if(descriptor.get || descriptor.set){
             descriptor.value = undefined;
-            value = undefined;// do not hide it
+            value = undefined;// do not allow to hide
         }else{
             descriptor.value = value;
         }
