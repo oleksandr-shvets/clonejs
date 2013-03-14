@@ -1,7 +1,7 @@
 'use strict';
 /**
  * @title   clone.js - The true prototype-based OOP framework.
- * @version 0.4.5
+ * @version 0.5.0
  * @author  Alex Shvets
  * @see     https://github.com/quadroid/clonejs
  *
@@ -26,6 +26,14 @@
  *             this.applySuper(arguments);
  *             // do something with this...
  *         }),
+ *         _item: null,//private property (not enumerable)
+ *         '(get) item': function(){return this._item},
+ *         '(set) item': function(v){this._item = v},
+ *         '(const) constant': 'not writable',
+ *         '(final) notConfigurableAndNotWritable': true,
+ *         '(hidden) notEnumerable': true,
+ *         '(writable final) notConfigurable': null,
+ *         '(hidden final get) notEnumerableGetter': function(){},
  *         property: 1
  *     });
  *     var myTypeInstance = $myType.create();
@@ -86,23 +94,53 @@ var Clone = function Clone(baseObj, /** Object= */properties, /** PropertyDescri
 Clone.describe = function(properties, defaultDescriptor){
     var descriptors = {};
 
-    if(!defaultDescriptor) defaultDescriptor =
-    {
-               value: undefined,
+    var $defaultDescriptor = defaultDescriptor ? defaultDescriptor : {
         configurable: true,
-            writable: true,
-          enumerable: true
+        enumerable: true,
+        writable: true
     };
 
-    for(var property in properties){
-        var value = properties[property];
-        var descriptor = descriptors[property] = Object.create(defaultDescriptor);
-        descriptor.value = value;
+    var hidingAllowed = !(defaultDescriptor && defaultDescriptor.enumerable);
 
-        // methods and private properties should be non-enumerable:
-        if(typeof(value)=='function' || property[0]=='_'){
+    for(var name in properties){
+        var value = properties[name];
+        var descriptor = Object.create($defaultDescriptor);
+
+        if( name[0]=='(' ){
+            var matches = name.match(/^\((((get|set|const|hidden|final) *)+)\) +(.+)$/);
+            if( matches ){
+                var prefixes = matches[1].split(' ').sort();
+                name = matches[4];
+
+                if(descriptors[name]) descriptor = descriptors[name];
+
+                for(var prefix in prefixes) switch(prefix){
+                    case    'const': descriptor.writable     = false; break;
+                    case    'final': descriptor.configurable = false; descriptor.writable = false; break;
+                    case      'get': descriptor.get          = value; break;
+                    case   'hidden': descriptor.enumerable   = false; break;
+                    case      'set': descriptor.set          = value; break;
+                    case 'writable': descriptor.writable     = true;  break;
+                }
+            }
+        }
+
+        if(descriptor.get || descriptor.set){
+            descriptor.value = undefined;
+            value = undefined;// do not hide it
+        }else{
+            descriptor.value = value;
+        }
+
+        // hide methods and private properties:
+        if(hidingAllowed && typeof(value)=='function' || name[0]=='_'){
             descriptor.enumerable = false;
         }
+//        // constants:
+//        if(name.toUpperCase() == name){
+//            descriptor.writable = false;
+//        }
+        descriptors[name] = descriptor;
     }
     if( descriptors.hasOwnProperty('constructor')){
         descriptors.constructor.enumerable = false;
