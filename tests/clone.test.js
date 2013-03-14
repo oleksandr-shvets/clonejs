@@ -22,9 +22,22 @@ module.exports = {
     },
 
     constructor: function(test){
-        var clone = new Clone({a:1});
 
+        var clone = new Clone({a:1});
         test.ok( clone.hasOwnProperty('a') );
+        test.strictEqual( Object.getOwnPropertyNames(clone).length, 1);
+
+        clone = Clone.make({a:1});
+        test.ok( clone.hasOwnProperty('a') );
+        test.equal( Object.getPrototypeOf(clone), Clone.prototype);
+        test.strictEqual( Object.getOwnPropertyNames(clone).length, 1);
+
+        clone = new Clone;
+        test.strictEqual( Object.getOwnPropertyNames(clone).length, 0);
+
+        clone - Clone.make();
+        test.strictEqual( Object.getOwnPropertyNames(clone).length, 0);
+        test.equal( Object.getPrototypeOf(clone), Clone.prototype);
 
         test.done();
     },
