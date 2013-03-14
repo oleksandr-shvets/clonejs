@@ -1,7 +1,7 @@
 'use strict';
 /**
  * @title   clone.js - The true prototype-based OOP framework.
- * @version 0.5.0
+ * @version 0.5.1
  * @author  Alex Shvets
  * @see     https://github.com/quadroid/clonejs
  *
@@ -29,12 +29,13 @@
  *         _item: null,//private property (not enumerable)
  *         '(get) item': function(){return this._item},
  *         '(set) item': function(v){this._item = v},
+ *         '(get) publicPropertyAlias': 'publicProperty',
  *         '(const) constant': 'not writable',
  *         '(final) notConfigurableAndNotWritable': true,
  *         '(hidden) notEnumerable': true,
  *         '(writable final) notConfigurableOnly': null,
  *         '(hidden final get) notEnumerableGetter': function(){},
- *         property: 1
+ *         publicProperty: 1
  *     });
  *     var myTypeInstance = $myType.create();
  *     assert( $myType.isPrototypeOf(myTypeInstance) );
@@ -133,6 +134,18 @@ Clone.describe = function(properties, defaultDescriptor){
         }
 
         if(descriptor.get || descriptor.set){
+            if(typeof value == 'string'){
+                var hiddenPropertyName = value;
+                if(typeof descriptor.get == 'string'){
+                    descriptor.get = function getter(){
+                        return this[hiddenPropertyName];
+                    }
+                }else{
+                    descriptor.set = function setter(newValue){
+                        this[hiddenPropertyName] = newValue;
+                    }
+                }
+            }
             descriptor.value = undefined;
             value = undefined;// do not allow to hide getters/setters by default
         }else{
