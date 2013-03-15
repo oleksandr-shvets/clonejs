@@ -258,10 +258,14 @@ Clone.makeFrom = function(
 /**
  * Use this to check if method of one object is the same as in the another object.
  * @example
- *     var myObj = {split: function(){} };
- *     Clone.can(myObj, 'split').like(new Array);
+ *     var myObj1 = Clone.make({join: function(sep){} });
+ *     var myObj2 = Clone.make({join: function(){}    });
+ *     assert( myObj1.can('split').like( Array.prototype ) === true  );
+ *     assert( myObj2.can('split').like( Array.prototype ) === false );
+ *     assert( myObj1.can('split').as(   Array.prototype ) === false );
+ *     assert( Clone.can(new Array, 'split').as(new Array) === true  );
  *
- * @returns {{valueOf: Function, like: function(Object), as: function(Object)}}
+ * @returns {{like: function(Object):boolean, as: function(Object):boolean}}
  */
 Clone.can = function(/** Object */obj1, /** string */method, /** number=false */not){
     return {
@@ -559,6 +563,20 @@ Object.defineProperties(Clone.prototype, Clone.describe(
      * @memberof Clone# */
     mixWith: function(/** Object|FunctionType */mixinObject, /** number=0 */parentsLevel){
         Clone.mix(this, mixinObject, parentsLevel, false);
+    },
+
+    /**
+     * @see  Clone.can
+     * @memberof Clone# */
+    can: function(/** string */method){
+        return Clone.can(this, method);
+    },
+
+    /**
+     * @see Clone.can
+     * @memberof Clone# */
+    cant: function(/** string */method){
+        return Clone.can(this, method, 1);
     },
 
     /**
