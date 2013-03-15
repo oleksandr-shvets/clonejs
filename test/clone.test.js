@@ -115,8 +115,6 @@ module.exports = {
 
     template: function(test){
 
-        
-
         test.done();
     },
 
