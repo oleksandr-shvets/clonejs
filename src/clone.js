@@ -29,7 +29,7 @@
  *         _item: null,//private property (not enumerable)
  *         '(get) item': function(){return this._item},
  *         '(set) item': function(v){this._item = v},
- *         '(get) publicPropertyAlias': 'publicProperty',
+ *         '(get) publicPropertyAlias': 'publicProperty',// automatically create getter for publicProperty
  *         '(const) constant': 'not writable',
  *         '(final) notConfigurableAndNotWritable': true,
  *         '(hidden) notEnumerable': true,
@@ -39,6 +39,7 @@
  *     });
  *     var myTypeInstance = $myType.create();
  *     assert( $myType.isPrototypeOf(myTypeInstance) );
+ *     assert( $myType.publicPropertyAlias === publicProperty );
  *
  *     var $myArray1 = Clone(Array.prototype, {customMethod: function(){}});
  *     var $myArray2 = Clone.makeFom(Array, {customMethod: function(){}});
@@ -46,9 +47,6 @@
  *     var myObj = {a:1, b:2, c:3};
  *     var cloneOfMyObj = Clone(myObj);
  *     cloneOfMyObj.a = 11; // myObj.a still == 1
- *
- *     var myClone = new Clone();
- *     myClone.defineProperties({a:1, b:2, c:3});
  *
  *     @param {Object} baseObj
  *            Does not used, if called by new operator.
@@ -114,6 +112,7 @@ Clone.describe = function(properties, defaultDescriptor){
         var descriptor = Object.create($defaultDescriptor);
 
         if( name[0]=='(' ){
+            //TODO: fix regexp to not mach the '(getset) property'
             var matches = name.match(/^\((((get|set|const|hidden|final|writable) *)+)\) +(.+)$/);
             if( matches ){
                 var prefixes = matches[1].split(' ').sort();
@@ -456,7 +455,7 @@ Object.defineProperties(Clone.prototype, Clone.describe(
             '__super__', {value: Object.getPrototypeOf(Object.getPrototypeOf(this)), writable:!0,configurable:!0}
             /**
              * Link to the object prototype.
-             * Dynamically changed to next (by prototype chain), while applySuper method run.
+             * Dynamically changed to next by prototype chain, while applySuper method executing.
              * System property. <b>Use it only for debug purposes</b>.
              * @name  __super__
              * @type  {?Object}
@@ -519,6 +518,7 @@ Object.defineProperties(Clone.prototype, Clone.describe(
         }else{
             fn = functionOrMethodName;
         }
+        //</arguments>
 
         var self = this;
         var callbackSuper = this.__super__;
