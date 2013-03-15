@@ -6,8 +6,10 @@
  * @see     https://github.com/quadroid/clonejs
  *
  * @class
- *     This is the framework that implements the true prototype-based OOP paradigm in JS.
- *     It based on the new ECMA Script 5 features like Object.create and property descriptors.
+ *     This is the framework that implements the true prototype-based OOP paradigm in JS.<br>
+ *     It's based on the new ECMA Script 5 features like Object.create and property descriptors.
+ *
+ *     <p><a href="https://github.com/quadroid/clonejs">Project on GitHub</a>
  *
  *     <p><b>Naming conventions</b>
  *     <p><b>Var names, prefixed by "$"</b>, contain object, used as prototype for other objects. For example:<br>
@@ -22,20 +24,20 @@
  *
  * @example
  *     var $myType = Clone.make({
- *         constructor: Clone.defineType('MyType', function(){
- *             this.applySuper(arguments);
- *             // do something...
- *         }),
- *         _item: null,//private property (not enumerable)
- *         '(get) item': function(){return this._item},
- *         '(set) item': function(v){this._item = v},
- *         '(get) publicPropertyAlias': 'publicProperty',// automatically create getter for publicProperty
- *         '(const) constant': 'not writable',
- *         '(final) notConfigurableAndNotWritable': true,
- *         '(hidden) notEnumerable': true,
- *         '(writable final) notConfigurableOnly': null,
+ *         '(final)  notConfigurableAndNotWritable': true,
+ *         '(writable final)   notConfigurableOnly': null,
  *         '(hidden final get) notEnumerableGetter': function(){},
- *         publicProperty: 1
+ *         '(hidden)                 notEnumerable': true,
+ *         '(const)                       constant': 'not writable',
+ *                                  publicProperty : 1,
+ *                                           _item : null,// private property (not enumerable)
+ *                                     '(get) item': function() { return this._item },
+ *                                     '(set) item': function(v){ this._item = v },
+ *                      '(get) publicPropertyAlias': 'publicProperty',// automatically create getter for publicProperty
+ *                                     constructor : Clone.defineType('MyType', function(){
+ *                                                       this.applySuper(arguments);
+ *                                                       // do something...
+ *                                                   })
  *     });
  *     var myTypeInstance = $myType.create();
  *     assert( $myType.isPrototypeOf(myTypeInstance) );
