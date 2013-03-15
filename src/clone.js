@@ -83,7 +83,7 @@ var Clone = function Clone(baseObj, /** Object= */properties, /** PropertyDescri
 /**
  * Translate object to property descriptors.
  * <p>For example, {a:{}, b:2} will be translated to something like {a: {value: {}}, b: {value: 2}}.
- * <p>Functions (except getters and setters), properties prefixed by "_", and constructor will be automatically marked as non-enumerable.
+ * <p>Functions (except getters) and properties prefixed by "_" will be automatically marked as non-enumerable.
  * <p>You can prefix your property names by (get|set|const|final|hidden|writable).
  *     <li>(get) - define getter, if string passed, the getter will be auto generated.
  *     <li>(set) - define setter, if string passed, the setter will be auto generated.
@@ -146,7 +146,7 @@ Clone.describe = function(properties, defaultDescriptor){
                 }
             }
             descriptor.value = undefined;
-            value = undefined;// do not allow to hide getters/setters by default
+            if(descriptor.get) value = undefined;// do not allow to hide getter by default
         }else{
             descriptor.value = value;
         }
