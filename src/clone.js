@@ -392,27 +392,27 @@ var $object = /** @lands $object# */{
     },
 
 
-    /**
-     * Apply method from one object to another object.
-     * @example
-     *     var array = $object.do('mix', Array.prototype);
-     *     var  args = $object.do.call(Array, 'slice',[1], arguments);
-     * @returns {*}
-     */
-    do: function(/** string */methodName, /** Array */args, /** Object */withObj, asObj){
-        if(arguments.length == 2){
-            withObj = args;
-            args = undefined;
-        }
-        if(!asObj){
-            asObj = this;
-
-        }else if( asObj.prototype && typeof asObj == 'function' ){
-            asObj = asObj.prototype;
-        }
-
-        return asObj[methodName].apply(withObj, args);
-    },
+//    /**
+//     * Apply method from one object to another object.
+//     * @example
+//     *     var array = $object.do('mix', Array.prototype);
+//     *     var  args = $object.do.call(Array, 'slice',[1], arguments);
+//     * @returns {*}
+//     */
+//    do: function(/** string */methodName, /** Array */args, /** Object */withObj, asObj){
+//        if(arguments.length == 2){
+//            withObj = args;
+//            args = undefined;
+//        }
+//        if(!asObj){
+//            asObj = this;
+//
+//        }else if( asObj.prototype && typeof asObj == 'function' ){
+//            asObj = asObj.prototype;
+//        }
+//
+//        return asObj[methodName].apply(withObj, args);
+//    },
 
     /**
      * Use this to check if method of one object is the same as in the another object.
