@@ -54,7 +54,7 @@
 <span class='line'> 47</span>  *     var cloneOfMyObj = $object.clone.call(myObj);
 <span class='line'> 48</span>  *     cloneOfMyObj.a = 11; // myObj.a still == 1
 <span class='line'> 49</span>  */</span><span class="WHIT">
-<span class='line'> 50</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">$object</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 50</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">$object</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="COMM">/** @lands $object# */</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 51</span> </span><span class="WHIT">    </span><span class="COMM">/**
 <span class='line'> 52</span>      * Create a clone of object. See &lt;a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create&lt;/a> for details.
 <span class='line'> 53</span>      * @see &lt;a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create&lt;/a>
@@ -93,45 +93,45 @@
 <span class='line'> 86</span>      *     assert( myTypeInstance.constructor === $myType.constructor );
 <span class='line'> 87</span>      *     assert( $myType.isPrototypeOf(myTypeInstance) );
 <span class='line'> 88</span>      *
-<span class='line'> 89</span>      * @constructor
-<span class='line'> 90</span>      * @memberOf $object#
-<span class='line'> 91</span>      */</span><span class="WHIT">
-<span class='line'> 92</span> </span><span class="WHIT">    </span><span class="NAME">create</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** Object= */</span><span class="NAME">properties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** PropertyDescriptor= */</span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 93</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">obj</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.clone</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 94</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">obj.constructor</span><span class="PUNC">(</span><span class="NAME">properties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">obj</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 95</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 89</span>      * @memberOf $object#
+<span class='line'> 90</span>      */</span><span class="WHIT">
+<span class='line'> 91</span> </span><span class="WHIT">    </span><span class="NAME">create</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** Object= */</span><span class="NAME">properties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** PropertyDescriptor= */</span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 92</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">obj</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.clone</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 93</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">obj.constructor</span><span class="PUNC">(</span><span class="NAME">properties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">obj</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 94</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 95</span> 
 <span class='line'> 96</span> 
-<span class='line'> 97</span> 
-<span class='line'> 98</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'> 99</span>      * Default constructor. Override it if you want to create custom type.
-<span class='line'>100</span>      * @constructor
-<span class='line'>101</span>      * @memberOf $object#
-<span class='line'>102</span>      */</span><span class="WHIT">
-<span class='line'>103</span> </span><span class="WHIT">    </span><span class="NAME">constructor</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">CloneObject</span><span class="PUNC">(</span><span class="COMM">/** Object= */</span><span class="NAME">properties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** PropertyDescriptor= */</span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>104</span> </span><span class="WHIT">        </span><span class="NAME">properties</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">this.defineProperties</span><span class="PUNC">(</span><span class="NAME">properties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>105</span> 
-<span class='line'>106</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">this.constructor</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">CloneObject</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>107</span> </span><span class="WHIT">            </span><span class="NAME">this.seal</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>108</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>109</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>110</span> 
-<span class='line'>111</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'>112</span>      * Translate object to property descriptors.
-<span class='line'>113</span>      * &lt;p>For example, {a:{}, b:2} will be translated to something like {a: {value: {}}, b: {value: 2}}.
-<span class='line'>114</span>      * &lt;p>Functions (except getters) and properties prefixed by "_" will be automatically marked as non-enumerable.
-<span class='line'>115</span>      * &lt;p>You can prefix your property names by (get|set|const|final|hidden|writable).
-<span class='line'>116</span>      *     &lt;li>(get) - define getter, if string passed, the getter will be auto generated.
-<span class='line'>117</span>      *     &lt;li>(set) - define setter, if string passed, the setter will be auto generated.
-<span class='line'>118</span>      *     &lt;li>(const) - make property unwritable.
-<span class='line'>119</span>      *     &lt;li>(final) - make property unwritable, and prevent it deleting and descriptor modifications.
-<span class='line'>120</span>      *     &lt;li>(hidden) - make property non-enumerable.
-<span class='line'>121</span>      *     &lt;li>(writable) - make property writable (use with final).
-<span class='line'>122</span>      *
-<span class='line'>123</span>      * @param {Object} properties
-<span class='line'>124</span>      * @param {PropertyDescriptor=} defaultDescriptor The default property descriptor.
-<span class='line'>125</span>      * @returns {{PropertyDescriptor}} Property descriptors.
-<span class='line'>126</span>      *
-<span class='line'>127</span>      * @static
+<span class='line'> 97</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 98</span>      * Default constructor. Override it if you want to create custom type.
+<span class='line'> 99</span>      * @field
+<span class='line'>100</span>      * @memberOf $object#
+<span class='line'>101</span>      */</span><span class="WHIT">
+<span class='line'>102</span> </span><span class="WHIT">    </span><span class="NAME">constructor</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">CloneObject</span><span class="PUNC">(</span><span class="COMM">/** Object= */</span><span class="NAME">properties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** PropertyDescriptor= */</span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>103</span> </span><span class="WHIT">        </span><span class="NAME">properties</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">this.defineProperties</span><span class="PUNC">(</span><span class="NAME">properties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>104</span> 
+<span class='line'>105</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">this.constructor</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">CloneObject</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>106</span> </span><span class="WHIT">            </span><span class="NAME">this.seal</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>107</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>108</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>109</span> 
+<span class='line'>110</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>111</span>      * Translate object to property descriptors.
+<span class='line'>112</span>      * &lt;p>For example, {a:{}, b:2} will be translated to something like {a: {value: {}}, b: {value: 2}}.
+<span class='line'>113</span>      * &lt;p>Functions (except getters) and properties prefixed by "_" will be automatically marked as non-enumerable.
+<span class='line'>114</span>      * &lt;p>You can prefix your property names by (get|set|const|final|hidden|writable).
+<span class='line'>115</span>      *     &lt;li>(get) - define getter, if string passed, the getter will be auto generated.
+<span class='line'>116</span>      *     &lt;li>(set) - define setter, if string passed, the setter will be auto generated.
+<span class='line'>117</span>      *     &lt;li>(const) - make property unwritable.
+<span class='line'>118</span>      *     &lt;li>(final) - make property unwritable, and prevent it deleting and descriptor modifications.
+<span class='line'>119</span>      *     &lt;li>(hidden) - make property non-enumerable.
+<span class='line'>120</span>      *     &lt;li>(writable) - make property writable (use with final).
+<span class='line'>121</span>      *
+<span class='line'>122</span>      * @param {Object} properties
+<span class='line'>123</span>      * @param {PropertyDescriptor=} defaultDescriptor The default property descriptor.
+<span class='line'>124</span>      * @returns {{PropertyDescriptor}} Property descriptors.
+<span class='line'>125</span>      *
+<span class='line'>126</span>      * @static
+<span class='line'>127</span>      * @memberOf $object
 <span class='line'>128</span>      */</span><span class="WHIT">
 <span class='line'>129</span> </span><span class="WHIT">    </span><span class="NAME">describe</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">properties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>130</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">descriptors</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
@@ -556,7 +556,7 @@
 <span class='line'>549</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'>550</span> 
 <span class='line'>551</span> </span><span class="WHIT">    </span><span class="COMM">/** @see &lt;a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty&lt;/a>
-<span class='line'>552</span>      *  @memberof $object# */</span><span class="WHIT">
+<span class='line'>552</span>      *   */</span><span class="WHIT">
 <span class='line'>553</span> </span><span class="WHIT">    </span><span class="NAME">defineProperty</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** string */</span><span class="NAME">name</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** PropertyDescriptor */</span><span class="NAME">propertyDescriptor</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>554</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.defineProperty</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">propertyDescriptor</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>555</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
@@ -590,16 +590,18 @@
 <span class='line'>583</span> </span><span class="COMM">//export for nodejs:</span><span class="WHIT">
 <span class='line'>584</span> </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="PUNC">(</span><span class="NAME">module</span><span class="PUNC">)</span><span class="PUNC">!=</span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">module.exports</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="NAME">module.exports</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$object</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>585</span> 
-<span class='line'>586</span> </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">)</span><span class="COMM">//need for IDEA code inspections</span><span class="WHIT">
-<span class='line'>587</span> </span><span class="COMM">/**
-<span class='line'>588</span>  * Object, that has at least one of the following property: &lt;br>
-<span class='line'>589</span>  * value, get, set, writable, configurable, enumerable.
-<span class='line'>590</span>  * @name PropertyDescriptor
-<span class='line'>591</span>  * @typedef {({value:*}|{get:{function():*}}|{set:{function(*):void}}|{writable:boolean}|{configurable:boolean}|{enumerable:boolean})} */</span><span class="WHIT">
-<span class='line'>592</span> </span><span class="NAME">PropertyDescriptor</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>593</span> 
-<span class='line'>594</span> </span><span class="COMM">/**
-<span class='line'>595</span>  * JavaScript class. Function, that can be called by "new" operator and/or have modified prototype property.
-<span class='line'>596</span>  * @name FunctionType
-<span class='line'>597</span>  * @typedef {Function} */</span><span class="WHIT">
-<span class='line'>598</span> </span></pre></body></html>
+<span class='line'>586</span> 
+<span class='line'>587</span> </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">)</span><span class="COMM">//need for IDEA code inspections</span><span class="WHIT">
+<span class='line'>588</span> </span><span class="COMM">/**
+<span class='line'>589</span>  * Object, that has at least one of the following property: &lt;br>
+<span class='line'>590</span>  * value, get, set, writable, configurable, enumerable.
+<span class='line'>591</span>  * @name PropertyDescriptor
+<span class='line'>592</span>  * @typedef {({value:*}|{get:{function():*}}|{set:{function(*):void}}|{writable:boolean}|{configurable:boolean}|{enumerable:boolean})} */</span><span class="WHIT">
+<span class='line'>593</span> </span><span class="NAME">PropertyDescriptor</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>594</span> 
+<span class='line'>595</span> </span><span class="COMM">/**
+<span class='line'>596</span>  * JavaScript class. Function, that can be called by "new" operator and/or have modified prototype property.
+<span class='line'>597</span>  * @name FunctionType
+<span class='line'>598</span>  * @typedef {Function} */</span><span class="WHIT">
+<span class='line'>599</span> 
+<span class='line'>600</span> </span></pre></body></html>

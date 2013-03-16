@@ -47,7 +47,8 @@
  *     var cloneOfMyObj = $object.clone.call(myObj);
  *     cloneOfMyObj.a = 11; // myObj.a still == 1
  */
-var $object = {
+var $object = /** @lands $object# */{
+
     /**
      * Create a clone of object. See <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create</a> for details.
      * @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create</a>
@@ -86,7 +87,6 @@ var $object = {
      *     assert( myTypeInstance.constructor === $myType.constructor );
      *     assert( $myType.isPrototypeOf(myTypeInstance) );
      *
-     * @constructor
      * @memberOf $object#
      */
     create: function(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
@@ -97,7 +97,7 @@ var $object = {
 
     /**
      * Default constructor. Override it if you want to create custom type.
-     * @constructor
+     * @field
      * @memberOf $object#
      */
     constructor: function CloneObject(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
@@ -125,6 +125,7 @@ var $object = {
      * @returns {{PropertyDescriptor}} Property descriptors.
      *
      * @static
+     * @memberOf $object
      */
     describe: function(properties, defaultDescriptor){
         var descriptors = {};
@@ -583,6 +584,7 @@ $object./*re*/defineProperties($object);
 //export for nodejs:
 if(typeof(module)!='undefined' && module.exports) module.exports = $object;
 
+
 if(0)//need for IDEA code inspections
 /**
  * Object, that has at least one of the following property: <br>
@@ -595,3 +597,4 @@ PropertyDescriptor;
  * JavaScript class. Function, that can be called by "new" operator and/or have modified prototype property.
  * @name FunctionType
  * @typedef {Function} */
+
