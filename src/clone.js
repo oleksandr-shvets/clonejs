@@ -2,13 +2,14 @@
  * @title   clone.js - The true prototype-based OOP framework.
  * @version 0.6.0 alpha
  * @author  Alex Shvets
- * @see     https://github.com/quadroid/clonejs
+ * @see     <a href="http://quadronet.mk.ua/clonejs/">Documentation</a>
+ * @see     <a href="http://github.com/quadroid/clonejs/">GitHub</a>
  *
  * @class
  *     This is the framework that implements the true prototype-based OOP paradigm in JS.<br>
  *     It's based on the new ECMA Script 5 features like Object.create and property descriptors.
  *
- *     <p><a href="https://github.com/quadroid/clonejs">Project on GitHub</a>
+ *     <p><a href="http://github.com/quadroid/clonejs">Project on GitHub</a>
  *
  *     <p><b>Naming conventions</b>
  *     <p>Var names, prefixed by "<b>$</b>", contain object, used as prototype for other objects. For example:<br>
@@ -18,6 +19,7 @@
  *     <p>
  * @description
  *     With this library you should forget about classes. Use prototypes instead.
+ *
  * @example
  *     var $myType = $object.clone({
  *         '(final)  notConfigurableAndNotWritable': true,
@@ -585,7 +587,7 @@ $object./*re*/defineProperties($object);
 if(typeof(module)!='undefined' && module.exports) module.exports = $object;
 
 
-if(0)//need for IDEA code inspections
+if(0)//need for IDEa code inspections
 /**
  * Object, that has at least one of the following property: <br>
  * value, get, set, writable, configurable, enumerable.
