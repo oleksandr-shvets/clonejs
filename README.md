@@ -5,6 +5,8 @@ It's based on the new ECMA Script 5 features like Object.create and property des
 
 ### See [Documentation](http://quadronet.mk.ua/clonejs/)
 
+Quick example:
+
      var $myType = $object.clone({
          '(final)  notConfigurableAndNotWritable': true,
          '(writable final)   notConfigurableOnly': null,
