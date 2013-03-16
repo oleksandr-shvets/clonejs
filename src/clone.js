@@ -12,18 +12,17 @@
  *     <p><a href="https://github.com/quadroid/clonejs">Project on GitHub</a>
  *
  *     <p><b>Naming conventions</b>
- *     <p><b>Var names, prefixed by "$"</b>, contain object, used as prototype for other objects. For example:<br>
+ *     <p>Var names, prefixed by "<b>$</b>", contain object, used as prototype for other objects. For example:<br>
  *        var $array = Array.prototype, $myType = {}, <br>
  *            myTypeInstance = Clone($myType);
- *     <p>
- *     <p><b>properties, prefixed by "_"</b>, are private.
+ *     <p>Properties, prefixed by "<b>_</b>", are private.
  *     <p>
  * @description
  *     If called as function, return a clone of <i>baseObj</i>, and set it's own properties.
- *     If called by <i>new</i> operator, constructor will take no more than 2 arguments (properties and defaultDescriptor).
+ *     If called by <i>new</i> operator, the first argument will be properties and second - defaultDescriptor.
  *
  * @example
- *     var $myType = Clone.make({
+ *     var $myType = $clone.create({
  *         '(final)  notConfigurableAndNotWritable': true,
  *         '(writable final)   notConfigurableOnly': null,
  *         '(hidden final get) notEnumerableGetter': function(){},
@@ -39,9 +38,9 @@
  *                                                       // do something...
  *                                                   })
  *     });
- *     var myTypeInstance = $myType.create();
+ *     var myTypeInstance = $myType.create({publicProperty: 2});
  *     assert( $myType.isPrototypeOf(myTypeInstance) );
- *     assert( $myType.publicPropertyAlias === publicProperty );
+ *     assert( $myType.publicPropertyAlias === $myType.publicProperty );
  *
  *     var $myArray1 = Clone(Array.prototype, {customMethod: function(){}});
  *     var $myArray2 = Clone.makeFom(Array, {customMethod: function(){}});
@@ -67,8 +66,10 @@ var Clone = function Clone(baseObj, /** Object= */properties, /** PropertyDescri
         // We assume that the new object is already created,
         // and we need only to set its own properties (if specified).
         if(arguments.length){
-            Array.prototype.unshift.call(arguments, this);
-            Function.call.apply(Clone.prototype.defineProperties, arguments);
+            this.defineProperties(arguments[0], arguments[1]);
+            //Clone.prototype.defineProperties.call(this, arguments[0], arguments[1]);
+            //Array.prototype.unshift.call(arguments, this);
+            //Function.call.apply(Clone.prototype.defineProperties, arguments);
         }
         return this;// need for call/apply
 
@@ -214,7 +215,7 @@ Clone.describe = function(properties, defaultDescriptor){
  *
  * @static
  */
-Clone.defineType = function(/** string|*=CustomTypeN */name, /** Object= */prototype, /** Function= */constructor){
+Clone.defineType = function(/** string='CustomTypeN'|* */name, /** Object= */prototype, /** Function= */constructor){
     if(typeof(name) != 'string'){
         prototype = name;
         name = undefined;
@@ -478,6 +479,8 @@ Object.defineProperties(Clone.prototype, Clone.describe(
     /**
      * Apply method of super object (prototype) to this object.
      * @returns {*}
+     * @see Clone#__super__
+     * @see Clone#callSuper
      * @memberof Clone#
      */
     applySuper: function(/** string='constructor'|Array */ methodName, /** Array= */args){
@@ -514,6 +517,7 @@ Object.defineProperties(Clone.prototype, Clone.describe(
     },
 
     /** @see Clone#applySuper
+     *  @see Clone#__super__
      *  @memberof Clone# */
     callSuper: function(/** string */methodName, /** ?= */ arg1, /** ...?= */argN){
         var args = Array.prototype.slice.call(arguments, 1);
@@ -722,6 +726,8 @@ Object.defineProperties(Clone.prototype, Clone.describe(
 }));
 
 Clone.defineType('Clone', Clone);
+
+
 
 //export for nodejs:
 if(typeof(module)!='undefined' && module.exports) module.exports = Clone;
