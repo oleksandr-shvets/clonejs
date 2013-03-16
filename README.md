@@ -1,3 +1,5 @@
+## clone.js
+
 This is the framework that implements the true prototype-based OOP paradigm in JS.
 It's based on the new ECMA Script 5 features like Object.create and property descriptors.
 
