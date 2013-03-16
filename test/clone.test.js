@@ -1,140 +1,117 @@
 // nodeunit
 
-var Clone = require('../src/clone.js');
+var $object = require('../src/clone.js');
 
 
 module.exports = {
 
-    static: {
 
-        Clone: function(test){
-            var $proto = {a: 1};
-            var clone = Clone($proto);
-
-            test.equal( Object.getPrototypeOf(clone), $proto,
-                'check prototype');
-
-            clone = Clone($proto, {b:2});
-            test.ok( clone.hasOwnProperty('b') );
-
-            clone = Clone($proto, {b:2}, {});
-            test.ok( clone.hasOwnProperty('b') );
-
-            test.done();
-        },
-
-        make: function(test){
-
-            var clone = new Clone({a:1});
-            test.ok( clone.hasOwnProperty('a') );
-            test.strictEqual( Object.getOwnPropertyNames(clone).length, 1);
-
-            clone = Clone.make({a:1});
-            test.ok( clone.hasOwnProperty('a') );
-            test.equal( Object.getPrototypeOf(clone), Clone.prototype);
-            test.strictEqual( Object.getOwnPropertyNames(clone).length, 1);
-
-            clone = new Clone({a:1}, {});
-            test.ok( clone.hasOwnProperty('a') );
-            test.strictEqual( Object.getOwnPropertyNames(clone).length, 1);
-
-            clone = Clone.make({a:1}, {});
-            test.ok( clone.hasOwnProperty('a') );
-            test.equal( Object.getPrototypeOf(clone), Clone.prototype);
-            test.strictEqual( Object.getOwnPropertyNames(clone).length, 1);
-
-            clone = new Clone;
-            test.strictEqual( Object.getOwnPropertyNames(clone).length, 0);
-
-            clone = Clone.make();
-            test.strictEqual( Object.getOwnPropertyNames(clone).length, 0);
-            test.equal( Object.getPrototypeOf(clone), Clone.prototype);
-
-            test.done();
-        },
-
-        describe: function(test){
-
-            //test.expect(2);
-
-            test.deepEqual(
-                Clone.describe({
-                    _p: undefined,
-                    '(const) _unwritable': 231,
-                    method: Function,
-                    constructor: Clone
-                }),{
-                    _p: {value: undefined, enumerable:false},
-                    _unwritable: {value: 231, enumerable:false, writable: false},
-                    method: {value: Function, enumerable:false},
-                    constructor: {value: Clone, enumerable:false}
-                },
-                'private properties, functions, constructor should be not enumerable'
-            );
-
-            //todo
+    clone: function(test){
 
 
-            test.done();
-        },
+        var clone = $object.clone({a:1});
+        test.ok( clone.hasOwnProperty('a') );
+        test.equal( Object.getPrototypeOf(clone), $object);
+        test.strictEqual( Object.getOwnPropertyNames(clone).length, 1);
 
-        defineType: function(test){
-            var fn = function(){};
+        clone = $object.clone({a:1}, {});
+        test.ok( clone.hasOwnProperty('a') );
+        test.equal( Object.getPrototypeOf(clone), $object);
+        test.strictEqual( Object.getOwnPropertyNames(clone).length, 1);
 
-            var constructor = Clone.defineType();
-                test.notEqual(constructor, Clone.defineType());
-                test.equal(typeof constructor, 'function');
+        clone = $object.clone();
+        test.strictEqual( Object.getOwnPropertyNames(clone).length, 0);
+        test.equal( Object.getPrototypeOf(clone), $object);
 
-            constructor = Clone.defineType('MyName');
-                test.equal(constructor.typeName, 'MyName');
-                test.equal(typeof constructor, 'function');
-
-            //Object.freeze(fn);
-            constructor = Clone.defineType(fn);
-
-            //todo
-
-            test.done();
-        },
-
-        can: function(test){
-
-            var $clone = Clone.make({
-                fly: function(){},
-                swim: function(a,b,c){}
-            });
-            var clone = $clone.create();
-
-
-            test.ok( Clone.can(clone, 'fly').like($clone) );
-            test.ok( Clone.can(clone, 'swim').as($clone) );
-
-            //todo
-
-            test.done();
-        },
-
-
-        template: function(test){
-
-            test.done();
-        },
-
+        test.done();
     },
 
-    prototype: {
+    'clone.call': function(test){
+        var $proto = {a: 1};
+        var clone = $object.clone.call($proto);
 
-        constructor: function(test){
+        test.equal( Object.getPrototypeOf(clone), $proto,
+            'check prototype');
+
+        clone = $object.clone.call($proto, {b:2});
+        test.ok( clone.hasOwnProperty('b') );
+
+        clone = $object.clone.call($proto, {b:2}, {});
+        test.ok( clone.hasOwnProperty('b') );
+
+        test.done();
+    },
+
+    'clone.constructor': function(test){
+        var fn = function(){};
+
+        var constructor = $object.clone({constructor: ''}).constructor;
+        var c = $object.clone({constructor: ''});
+        test.ok(constructor !== c.constructor);
+        test.ok(constructor !== $object.clone().constructor);
+        test.equal(typeof constructor, 'function');
+
+        //Object.freeze(fn);
+//        constructor = $object.clone({create: fn}).constructor;
+
+        //todo
+
+        test.done();
+    },
 
 
-            test.done();
-        },
+    create: function(test){
+
+        test.done();
+    },
+
+    describe: function(test){
+
+        //test.expect(2);
+
+        test.deepEqual(
+            $object.describe({
+                _p: undefined,
+                '(const) _unwritable': 231,
+                method: Function,
+                constructor: Function
+            }),{
+                _p: {value: undefined, enumerable:false},
+                _unwritable: {value: 231, enumerable:false, writable: false},
+                method: {value: Function, enumerable:false},
+                constructor: {value: Function, enumerable:false}
+            },
+            'private properties, functions, constructor should be not enumerable'
+        );
+
+        //todo
 
 
-        template: function(test){
+        test.done();
+    },
 
-            test.done();
-        },
-    }
+    can: function(test){
+
+        var $myObj = $object.clone({
+            fly: function(){},
+            swim: function(a,b,c){}
+        });
+        var myObj = $myObj.create();
+
+
+        test.ok(!! myObj.can('swim').as($myObj) );
+        test.ok(!! $object.can.call(myObj, 'fly').like($myObj) );
+
+        //todo
+
+        test.done();
+    },
+
+    template: function(test){
+
+        test.done();
+    },
+
+
 };
 
