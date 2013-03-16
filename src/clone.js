@@ -81,6 +81,41 @@ var Clone = function Clone(baseObj, /** Object= */properties, /** PropertyDescri
 };
 
 /**
+ * Apply method from one object to another object.
+ * @example
+ *     var array = Clone.do('mixWith', Array.prototype);
+ *     var  args = Clone.do(Array, 'slice',[1], arguments);
+ * @returns {*}
+ */
+Clone.do = function(/** string */methodName, /** Array */args, /** Object */withObj, asObj){
+    if(arguments.length == 2){
+        withObj = args;
+        args = undefined;
+    }
+    if(!asObj){
+        asObj = Clone.prototype;
+    }else if(asObj.prototype && typeof asObj == 'function'){
+        asObj = asObj.prototype;
+    }
+
+    return asObj[methodName].apply(withObj, args);
+};
+
+//Clone.do = function(/** string */methodName, /** Array|?... */args){
+//    if(!(args instanceof Array)) args = [args];
+//    //</arguments>
+//    var self = this;
+//    return {
+//        with: function(withObj){
+//            return self.prototype[methodName].apply(withObj, args);
+//        }
+//    };
+//};
+//Clone.do('clone').with(new Array);
+//Clone.do('slice', [1])(arguments).as(Array);
+
+
+/**
  * Translate object to property descriptors.
  * <p>For example, {a:{}, b:2} will be translated to something like {a: {value: {}}, b: {value: 2}}.
  * <p>Functions (except getters) and properties prefixed by "_" will be automatically marked as non-enumerable.
