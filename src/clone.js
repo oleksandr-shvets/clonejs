@@ -93,7 +93,7 @@ var $object = /** @lands $object# */{
      */
     create: function(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
         var obj = this.clone();
-        return obj.constructor(properties, defaultDescriptor) || obj;
+        return obj.constructor.apply(obj, arguments) || obj;
     },
 
 
