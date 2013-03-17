@@ -65,7 +65,7 @@ var $object = /** @lands $object# */{
                 var constructor = descriptors.constructor.value;
                 if(typeof constructor == 'string'){
                     descriptors.constructor.value = function CustomType(){
-                        return this.applySuper(arguments);
+                        return this._applySuper(arguments);
                     }
                 }
                 descriptors.constructor.value.prototype = this;
@@ -206,7 +206,7 @@ var $object = /** @lands $object# */{
      * @see $object#callSuper
      * @memberof $object#
      */
-    applySuper: function(/** string='constructor'|Array */ methodName, /** Array= */args){
+    _applySuper: function(/** string='constructor'|Array */ methodName, /** Array= */args){
         if(typeof(methodName) != 'string'){
             if( arguments[0] instanceof Array){
                 args = arguments[0];
@@ -218,18 +218,18 @@ var $object = /** @lands $object# */{
             '__super__', {value: Object.getPrototypeOf(Object.getPrototypeOf(this)), writable:!0,configurable:!0}
             /**
              * Link to the object prototype.
-             * Dynamically changed to next by prototype chain, while applySuper method executing.
+             * Dynamically changed to next by prototype chain, while _applySuper method executing.
              * System property. <b>Use it only for debug purposes</b>.
              * @name  __super__
              * @type  {?Object}
-             * @see $object#applySuper
+             * @see $object#_applySuper
              * @memberOf $object#
              */
         );
 
         // save super
         var savedSuper = this.__super__;
-        // set super to next by prototype chain, in case if method also call applySuper
+        // set super to next by prototype chain, in case if method also call _applySuper
         this.__super__ = Object.getPrototypeOf(savedSuper);
         // apply method
         var returned   = savedSuper[methodName].apply(this, args);
@@ -239,19 +239,19 @@ var $object = /** @lands $object# */{
         return returned;
     },
 
-    /** @see $object#applySuper
+    /** @see $object#_applySuper
      *  @see $object#__super__
      *  @memberof $object# */
     callSuper: function(/** string */methodName, /** ?= */ arg1, /** ...?= */argN){
         var args = Array.prototype.slice.call(arguments, 1);
-        return this.applySuper(methodName, args);
+        return this._applySuper(methodName, args);
     },
 
 //        /**
-//         * Async safe version of {@link $object#applySuper}.
+//         * Async safe version of {@link $object#_applySuper}.
 //         * @param {string} methodName
 //         * @param {Array} args
-//         * @param {...number=} callbackArgIdx1 Indexes of arguments, that is a callbacks, that can call applySuper.
+//         * @param {...number=} callbackArgIdx1 Indexes of arguments, that is a callbacks, that can call _applySuper.
 //         *     Default value is the last arg index.
 //         * @param callbackArgIdxN
 //         * @returns {*}
@@ -266,12 +266,12 @@ var $object = /** @lands $object# */{
 //                safeArgs[i] = indexOf.call(arguments, i, 2+i) ? this.createSuperSafeCallback(args[i]) : args[i];
 //            }
 //
-//            return this.applySuper(methodName, safeArgs);
+//            return this._applySuper(methodName, safeArgs);
 //        },
 
     /**
-     * Use this method to wrap callback, that can call "applySuper" method.
-     * @see $object#applySuper
+     * Use this method to wrap callback, that can call "_applySuper" method.
+     * @see $object#_applySuper
      * @returns {Function}
      * @memberof $object#
      */

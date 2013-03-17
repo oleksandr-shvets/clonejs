@@ -197,7 +197,7 @@
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/%24object.html#applySuper">applySuper</a></b>(methodName, args)
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#applySuper">_applySuper</a></b>(methodName, args)
 													</div>
 													<div class="description">Apply method of super object (prototype) to this object.</div>
 												</td>
@@ -265,7 +265,7 @@
 												<td class="nameDescription">
 													<div class="fixedFont"><b><a href="../symbols/%24object.html#createSuperSafeCallback">createSuperSafeCallback</a></b>(functionOrMethodName, boundThis)
 													</div>
-													<div class="description">Use this method to wrap callback, that can call "applySuper" method.</div>
+													<div class="description">Use this method to wrap callback, that can call "_applySuper" method.</div>
 												</td>
 											</tr>
 										
@@ -493,7 +493,7 @@
                                     '(set) item': function(v){ this._item = v },
                      '(get) publicPropertyAlias': 'publicProperty',// automatically create getter for publicProperty
                                     constructor : function MyType(){
-                                                      var obj = this.applySuper(arguments);
+                                                      var obj = this._applySuper(arguments);
                                                       // do something with obj...
                                                       return obj;
                                                   }
@@ -563,7 +563,7 @@
 								
 								<div class="description">
 									Link to the object prototype.
-Dynamically changed to next by prototype chain, while applySuper method executing.
+Dynamically changed to next by prototype chain, while _applySuper method executing.
 System property. <b>Use it only for debug purposes</b>.
 									
 									
@@ -579,7 +579,7 @@ System property. <b>Use it only for debug purposes</b>.
 										
 											<dt class="heading">See:</dt>
 											
-												<dd><a href="../symbols/%24object.html#applySuper">$object#applySuper</a></dd>
+												<dd><a href="../symbols/%24object.html#applySuper">$object#_applySuper</a></dd>
 											
 										
 										
@@ -638,7 +638,7 @@ System property. <b>Use it only for debug purposes</b>.
 											
 											<span class="light">{*}</span>
 											
-											<b>applySuper</b>(methodName, args)
+											<b>_applySuper</b>(methodName, args)
 										</div>
 										
 										<div class="description">
@@ -766,7 +766,7 @@ System property. <b>Use it only for debug purposes</b>.
 												
 													<dt class="heading">See:</dt>
 													
-														<dd><a href="../symbols/%24object.html#applySuper">$object#applySuper</a></dd>
+														<dd><a href="../symbols/%24object.html#applySuper">$object#_applySuper</a></dd>
 													
 														<dd><a href="../symbols/%24object.html#__super__">$object#__super__</a></dd>
 													
@@ -1084,7 +1084,7 @@ System property. <b>Use it only for debug purposes</b>.
 										</div>
 										
 										<div class="description">
-											Use this method to wrap callback, that can call "applySuper" method.
+											Use this method to wrap callback, that can call "_applySuper" method.
 											
 											
 											
@@ -1133,7 +1133,7 @@ System property. <b>Use it only for debug purposes</b>.
 												
 													<dt class="heading">See:</dt>
 													
-														<dd><a href="../symbols/%24object.html#applySuper">$object#applySuper</a></dd>
+														<dd><a href="../symbols/%24object.html#applySuper">$object#_applySuper</a></dd>
 													
 												
 											
@@ -1871,7 +1871,7 @@ Private meens non-enumerable properties.
 														<span class="light fixedFont">{boolean=true}</span> <b>copyNesting</b>
 														
 													</dt>
-													<dd>Should be true if objectsToMix have methods, that call <a href="../symbols/%24object.html#applySuper">$object#applySuper</a>
+													<dd>Should be true if objectsToMix have methods, that call <a href="../symbols/%24object.html#applySuper">$object#_applySuper</a>
        If not true, all own properties of all objects will be directly attached to the one root object.</dd>
 												
 											</dl>
