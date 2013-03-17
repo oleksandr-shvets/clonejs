@@ -203,7 +203,7 @@ var $object = /** @lands $object# */{
      * Apply method of super object (prototype) to this object.
      * @returns {*}
      * @see $object#__super__
-     * @see $object#callSuper
+     * @see $object#_callSuper
      * @memberof $object#
      */
     _applySuper: function(/** string='constructor'|Array */ methodName, /** Array= */args){
@@ -242,7 +242,7 @@ var $object = /** @lands $object# */{
     /** @see $object#_applySuper
      *  @see $object#__super__
      *  @memberof $object# */
-    callSuper: function(/** string */methodName, /** ?= */ arg1, /** ...?= */argN){
+    _callSuper: function(/** string */methodName, /** ?= */ arg1, /** ...?= */argN){
         var args = Array.prototype.slice.call(arguments, 1);
         return this._applySuper(methodName, args);
     },
