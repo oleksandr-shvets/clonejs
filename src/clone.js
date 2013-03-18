@@ -368,6 +368,7 @@ var $object = /** @lands $object# */{
      *        False by default.
      *
      * @returns {Object}
+     * @memberОf $object#
      */
     copy: function(
         /** ?('deepClone'|'deepCopy') */deepMethod,
@@ -430,6 +431,7 @@ var $object = /** @lands $object# */{
      * @see $object#copy
      * @see $object#deepClone
      * @returns {$object}
+     * @memberОf $object#
      */
     deepCopy: function deepCopy(){
         var obj = arguments.length ? $object.do('copy', arguments, this) : {};
@@ -454,6 +456,7 @@ var $object = /** @lands $object# */{
      * @see $object#clone
      * @see $object#deepCopy
      * @returns {$object}
+     * @memberОf $object#
      */
     deepClone: function deepClone(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
         var obj = $object.do('clone', arguments, this);
@@ -477,6 +480,7 @@ var $object = /** @lands $object# */{
      *     var  args = $object.do('slice',[1], arguments, Array);
      *     var  args = $object.do.call(Array, 'slice',[1], arguments);
      * @returns {*}
+     * @memberОf $object#
      */
     'do': function(/** string */methodName, /** Array|Object= */args, /** Object= */withObj, /** Object= */asObj){
         if(arguments.length == 2){
