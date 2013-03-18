@@ -21,7 +21,7 @@ Quick example:
                                      '(set) item': function(v){ this._item = v },
                       '(get) publicPropertyAlias': 'publicProperty',// automatically create getter for publicProperty
                                      constructor : function MyType(){
-                                                       var obj = this._applySuper(arguments);
+                                                       var obj = this.applySuper(arguments);
                                                        // do something with obj...
                                                        return obj;
                                                    }

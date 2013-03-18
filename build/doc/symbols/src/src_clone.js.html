@@ -22,7 +22,7 @@
 <span class='line'> 15</span>  *     &lt;p>Var names, prefixed by "&lt;b>$&lt;/b>", contain object, used as prototype for other objects. For example:&lt;br>
 <span class='line'> 16</span>  *        var $array = Array.prototype, $myType = {}, &lt;br>
 <span class='line'> 17</span>  *            myTypeInstance = Clone($myType);
-<span class='line'> 18</span>  *     &lt;p>Properties, prefixed by "&lt;b>_&lt;/b>", are private (or protected).
+<span class='line'> 18</span>  *     &lt;p>Properties, prefixed by "&lt;b>_&lt;/b>", are private.
 <span class='line'> 19</span>  *     &lt;p>
 <span class='line'> 20</span>  * @description
 <span class='line'> 21</span>  *     With this library you should forget about classes. Use prototypes instead.
@@ -73,7 +73,7 @@
 <span class='line'> 66</span> </span><span class="WHIT">                </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">constructor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">descriptors.constructor.value</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 67</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">constructor</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="STRN">'string'</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 68</span> </span><span class="WHIT">                    </span><span class="NAME">descriptors.constructor.value</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">CustomType</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 69</span> </span><span class="WHIT">                        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._applySuper</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 69</span> </span><span class="WHIT">                        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.applySuper</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 70</span> </span><span class="WHIT">                    </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'> 71</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'> 72</span> </span><span class="WHIT">                </span><span class="NAME">descriptors.constructor.value.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
@@ -215,7 +215,7 @@
 <span class='line'>208</span>      * @protected
 <span class='line'>209</span>      * @memberOf $object#
 <span class='line'>210</span>      */</span><span class="WHIT">
-<span class='line'>211</span> </span><span class="WHIT">    </span><span class="NAME">_applySuper</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** string='constructor'|Array */</span><span class="WHIT"> </span><span class="NAME">methodName</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** Array= */</span><span class="NAME">args</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>211</span> </span><span class="WHIT">    </span><span class="NAME">applySuper</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** string='constructor'|Array */</span><span class="WHIT"> </span><span class="NAME">methodName</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** Array= */</span><span class="NAME">args</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>212</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="PUNC">(</span><span class="NAME">methodName</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="STRN">'string'</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>213</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">arguments</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="KEYW">instanceof</span><span class="WHIT"> </span><span class="NAME">Array</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>214</span> </span><span class="WHIT">                </span><span class="NAME">args</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">arguments</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
@@ -227,11 +227,11 @@
 <span class='line'>220</span> </span><span class="WHIT">            </span><span class="STRN">'__super__'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">value</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Object.getPrototypeOf</span><span class="PUNC">(</span><span class="NAME">Object.getPrototypeOf</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">writable</span><span class="PUNC">:</span><span class="PUNC">!</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="NAME">configurable</span><span class="PUNC">:</span><span class="PUNC">!</span><span class="NUMB">0</span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>221</span> </span><span class="WHIT">            </span><span class="COMM">/**
 <span class='line'>222</span>              * Link to the object prototype.
-<span class='line'>223</span>              * Dynamically changed to next by prototype chain, while _applySuper method executing.
+<span class='line'>223</span>              * Dynamically changed to next by prototype chain, while applySuper method executing.
 <span class='line'>224</span>              * System property. &lt;b>Use it only for debug purposes&lt;/b>.
 <span class='line'>225</span>              * @name  __super__
 <span class='line'>226</span>              * @type  {?Object}
-<span class='line'>227</span>              * @see $object#_applySuper
+<span class='line'>227</span>              * @see $object#applySuper
 <span class='line'>228</span>              * @private
 <span class='line'>229</span>              * @memberOf $object#
 <span class='line'>230</span>              */</span><span class="WHIT">
@@ -239,7 +239,7 @@
 <span class='line'>232</span> 
 <span class='line'>233</span> </span><span class="WHIT">        </span><span class="COMM">// save super</span><span class="WHIT">
 <span class='line'>234</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">savedSuper</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.__super__</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>235</span> </span><span class="WHIT">        </span><span class="COMM">// set super to next by prototype chain, in case if method also call _applySuper</span><span class="WHIT">
+<span class='line'>235</span> </span><span class="WHIT">        </span><span class="COMM">// set super to next by prototype chain, in case if method also call applySuper</span><span class="WHIT">
 <span class='line'>236</span> </span><span class="WHIT">        </span><span class="NAME">this.__super__</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Object.getPrototypeOf</span><span class="PUNC">(</span><span class="NAME">savedSuper</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>237</span> </span><span class="WHIT">        </span><span class="COMM">// apply method</span><span class="WHIT">
 <span class='line'>238</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">returned</span><span class="WHIT">   </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">savedSuper</span><span class="PUNC">[</span><span class="NAME">methodName</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">apply</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
@@ -253,16 +253,16 @@
 <span class='line'>246</span>      *  @see $object#__super__
 <span class='line'>247</span>      *  @protected
 <span class='line'>248</span>      *  @memberOf $object# */</span><span class="WHIT">
-<span class='line'>249</span> </span><span class="WHIT">    </span><span class="NAME">_callSuper</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** string */</span><span class="NAME">methodName</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** ?= */</span><span class="WHIT"> </span><span class="NAME">arg1</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** ...?= */</span><span class="NAME">argN</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>249</span> </span><span class="WHIT">    </span><span class="NAME">callSuper</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** string */</span><span class="NAME">methodName</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** ?= */</span><span class="WHIT"> </span><span class="NAME">arg1</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** ...?= */</span><span class="NAME">argN</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>250</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">args</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Array.prototype.slice.call</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>251</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._applySuper</span><span class="PUNC">(</span><span class="NAME">methodName</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>251</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.applySuper</span><span class="PUNC">(</span><span class="NAME">methodName</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>252</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'>253</span> 
 <span class='line'>254</span> </span><span class="COMM">//        /**</span><span class="WHIT">
-<span class='line'>255</span> </span><span class="COMM">//         * Async safe version of {@link $object#_applySuper}.</span><span class="WHIT">
+<span class='line'>255</span> </span><span class="COMM">//         * Async safe version of {@link $object#applySuper}.</span><span class="WHIT">
 <span class='line'>256</span> </span><span class="COMM">//         * @param {string} methodName</span><span class="WHIT">
 <span class='line'>257</span> </span><span class="COMM">//         * @param {Array} args</span><span class="WHIT">
-<span class='line'>258</span> </span><span class="COMM">//         * @param {...number=} callbackArgIdx1 Indexes of arguments, that is a callbacks, that can call _applySuper.</span><span class="WHIT">
+<span class='line'>258</span> </span><span class="COMM">//         * @param {...number=} callbackArgIdx1 Indexes of arguments, that is a callbacks, that can call applySuper.</span><span class="WHIT">
 <span class='line'>259</span> </span><span class="COMM">//         *     Default value is the last arg index.</span><span class="WHIT">
 <span class='line'>260</span> </span><span class="COMM">//         * @param callbackArgIdxN</span><span class="WHIT">
 <span class='line'>261</span> </span><span class="COMM">//         * @returns {*}</span><span class="WHIT">
@@ -277,12 +277,12 @@
 <span class='line'>270</span> </span><span class="COMM">//                safeArgs[i] = indexOf.call(arguments, i, 2+i) ? this.createSuperSafeCallback(args[i]) : args[i];</span><span class="WHIT">
 <span class='line'>271</span> </span><span class="COMM">//            }</span><span class="WHIT">
 <span class='line'>272</span> </span><span class="COMM">//</span><span class="WHIT">
-<span class='line'>273</span> </span><span class="COMM">//            return this._applySuper(methodName, safeArgs);</span><span class="WHIT">
+<span class='line'>273</span> </span><span class="COMM">//            return this.applySuper(methodName, safeArgs);</span><span class="WHIT">
 <span class='line'>274</span> </span><span class="COMM">//        },</span><span class="WHIT">
 <span class='line'>275</span> 
 <span class='line'>276</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'>277</span>      * Use this method to wrap callback, that can call "_applySuper" method.
-<span class='line'>278</span>      * @see $object#_applySuper
+<span class='line'>277</span>      * Use this method to wrap callback, that can call "applySuper" method.
+<span class='line'>278</span>      * @see $object#applySuper
 <span class='line'>279</span>      * @returns {Function}
 <span class='line'>280</span>      * @memberOf $object#
 <span class='line'>281</span>      */</span><span class="WHIT">
