@@ -2,7 +2,7 @@
  * @title   clone.js - The true prototype-based OOP framework.
  * @version 0.6.1 alpha
  * @author  Alex Shvets
- * @see     <a href="http://quadronet.mk.ua/clonejs/">Documentation</a>
+ * @see     <a href="http://quadroid.github.com/clonejs/">Documentation</a>
  * @see     <a href="http://github.com/quadroid/clonejs/">GitHub</a>
  *
  * @class
@@ -205,7 +205,8 @@ var $object = /** @lands $object# */{
      * @returns {*}
      * @see $object#__super__
      * @see $object#_callSuper
-     * @memberof $object#
+     * @private
+     * @memberOf $object#
      */
     _applySuper: function(/** string='constructor'|Array */ methodName, /** Array= */args){
         if(typeof(methodName) != 'string'){
@@ -224,6 +225,7 @@ var $object = /** @lands $object# */{
              * @name  __super__
              * @type  {?Object}
              * @see $object#_applySuper
+             * @private
              * @memberOf $object#
              */
         );
@@ -242,7 +244,8 @@ var $object = /** @lands $object# */{
 
     /** @see $object#_applySuper
      *  @see $object#__super__
-     *  @memberof $object# */
+     *  @private
+     *  @memberOf $object# */
     _callSuper: function(/** string */methodName, /** ?= */ arg1, /** ...?= */argN){
         var args = Array.prototype.slice.call(arguments, 1);
         return this._applySuper(methodName, args);
@@ -274,7 +277,7 @@ var $object = /** @lands $object# */{
      * Use this method to wrap callback, that can call "_applySuper" method.
      * @see $object#_applySuper
      * @returns {Function}
-     * @memberof $object#
+     * @memberOf $object#
      */
     createSuperSafeCallback: function(/** Function|string */functionOrMethodName, /** Object= */boundThis){
         if(typeof functionOrMethodName == 'string'){
@@ -309,7 +312,7 @@ var $object = /** @lands $object# */{
      * Separate object from its prototype and return it.<br>
      * Private meens non-enumerable properties.
      * @returns {$object}
-     * @memberof $object#
+     * @memberOf $object#
      */
     getState: function(/** boolean=false */listPrivate){
         var currentState  = $object.create();
@@ -368,7 +371,7 @@ var $object = /** @lands $object# */{
      *        False by default.
      *
      * @returns {Object}
-     * @memberОf $object#
+     * @memberOf $object#
      */
     copy: function(
         /** ?('deepClone'|'deepCopy') */deepMethod,
@@ -431,7 +434,7 @@ var $object = /** @lands $object# */{
      * @see $object#copy
      * @see $object#deepClone
      * @returns {$object}
-     * @memberОf $object#
+     * @memberOf $object#
      */
     deepCopy: function deepCopy(){
         var obj = arguments.length ? $object.do('copy', arguments, this) : {};
@@ -456,7 +459,7 @@ var $object = /** @lands $object# */{
      * @see $object#clone
      * @see $object#deepCopy
      * @returns {$object}
-     * @memberОf $object#
+     * @memberOf $object#
      */
     deepClone: function deepClone(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
         var obj = $object.do('clone', arguments, this);
