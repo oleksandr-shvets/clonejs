@@ -107,6 +107,18 @@ module.exports = {
         test.done();
     },
 
+    copy: function(test){
+        //var $myArray1 = $object.clone.call(Array.prototype, {customMethod: function(){}});
+        var myArray = $object.copy(Array);//.defineProperties({test: 'T'});
+        myArray[0] = 11;
+        myArray[1] = 22;
+        test.deepEqual(myArray, [11 ,22]);
+
+        //concat($collection, ['next','prev'])
+
+        test.done();
+    },
+
     template: function(test){
 
         test.done();
@@ -114,4 +126,3 @@ module.exports = {
 
 
 };
-

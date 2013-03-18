@@ -1,6 +1,6 @@
 /**
  * @title   clone.js - The true prototype-based OOP framework.
- * @version 0.6.0 alpha
+ * @version 0.6.1 alpha
  * @author  Alex Shvets
  * @see     <a href="http://quadronet.mk.ua/clonejs/">Documentation</a>
  * @see     <a href="http://github.com/quadroid/clonejs/">GitHub</a>
@@ -43,10 +43,11 @@
  *     assert( $myType.publicPropertyAlias === $myType.publicProperty );
  *
  *     var $myArray1 = $object.clone.call(Array.prototype, {customMethod: function(){}});
- *     var $myArray2 = Clone.makeFom(Array, {customMethod: function(){}});
+ *     var $myArray2 = $object.copy(Array).setProperties({customMethod: function(){}});
+ *     var myArray2 = $myArray2.create(11 ,22, 33);
  *
  *     var myObj = {a:1, b:2, c:3};
- *     var cloneOfMyObj = $object.clone.call(myObj);
+ *     var cloneOfMyObj = $object.do('clone', myObj);
  *     cloneOfMyObj.a = 11; // myObj.a still == 1
  */
 var $object = /** @lands $object# */{
@@ -317,102 +318,180 @@ var $object = /** @lands $object# */{
         for(var i=0; i < ownProperties.length; i++){var name = ownProperties[i];
             currentState[name] = this[name];
         }
-
         return currentState;
     },
 
     /**
-     * Mix two or more objects.
+     * Return new object, that have a copies of all own properties of this object. <br>
+     * Arguments can be passed in any order (recognized by type).
+     * @example
+     *    var $collection = $object.clone(),
+     *        $users = $collection.clone();
      *
-     * @param objectToMix
-     *        Object(s) to mix. If it is FunctionType, FunctionType.prototype will be used instead.
+     *    // $users full prototype chain:
+     *    $users -> $collection -> $object -> Object.prototype -> null
+     *
+     *    // see prototype chains produced by copy:
+     *
+     *    $users.copy():
+     *        ~$users -> $object
+     *
+     *    $users.copy(rootPrototype:Array):
+     *        ~$users -> Array.prototype
+     *
+     *    $users.copy(rootPrototype:$parent, parentsLevel:Infinity):
+     *        ~$users -> ~$collection -> ~$object -> $parent
+     *
+     *    $users.copy(rootPrototype:$parent, parentsLevel:Infinity, mixParents:true):
+     *        ~($users + $collection + $object) -> $parent
+     *
+     *    // where ~$users:
+     *    New plain object, that have a copy of every own $user property.
+     *
+     * @param deepMethod
+     *        How to process inner objects. Can be:         <br>
+     *        "deepCopy"  - see {@link $object#deepCopy}    <br>
+     *        "deepClone" - see {@link $object#deepClone}   <br>
+     *        null - do nothing (default).
+     *
+     * @param rootPrototype
+     *        The root prototype for created object prototype chain. If it is FunctionType, FunctionType.prototype will be used instead. <br>
+     *        By default - $object;
      *
      * @param parentsLevel
-     *        Set this to Infinity if you want to copy all objectToMix parents properties up to Object.prototype.
+     *        How many parents should be included. By default - zero. <br>
+     *        Set this to Infinity if you want to copy all object parents properties up to $object.
      *
-     * @param copyNesting
-     *        Should be true if objectsToMix have methods, that call {@link $object#applySuper}
-     *        If not true, all own properties of all objects will be directly attached to the one root object.
+     * @param mixParents
+     *        Should be false if objects have methods, that call {@link $object#_applySuper} <br>
+     *        If true, all own properties of all objects will be directly attached to the one returned object. <br>
+     *        False by default.
      *
-     * @returns {Object} Modified root object if copyNesting, else - the new object based on objectsToMix copies and root.
-     * @memberOf $object#
+     * @returns {Object}
      */
-    mix: function(
-        /** Object|FunctionType|Array.<(Object|FunctionType)> */
-        objectToMix,
-        /**            number=0 */parentsLevel,
-        /**        boolean=true */copyNesting
+    copy: function(
+        /** ?('deepClone'|'deepCopy') */deepMethod,
+        /**    ?(Object|FunctionType) */rootPrototype,
+        /**                  number=0 */parentsLevel,
+        /**             boolean=false */mixParents
     ){
-//        if( typeof(this)=='function' && Object.getOwnPropertyNames(this.prototype) ){
-//            this = this.prototype;
-//        }
-        if( copyNesting === undefined ){
-            if(typeof parentsLevel == 'boolean'){
-                copyNesting   = parentsLevel;
-                parentsLevel  = 0;
-            }else copyNesting = true;
+        for(var i=0, value=arguments[i]; i < arguments.length; value=arguments[++i]) switch(typeof value){
+            case 'string':  deepMethod    = value; break;
+            case 'object':  rootPrototype = value; break;
+            case 'number':  parentsLevel  = value; break;
+            case 'boolean': mixParents    = value; break;
         }
 
-        if(objectToMix instanceof Array){
-            mixedObjects = objectToMix;
-        }else{
-            // get parents:
-            var obj = objectToMix;
-            var mixedObjects = [];
-            do  mixedObjects.push(obj);
-            while( parentsLevel-- && (obj = Object.getPrototypeOf(obj)) != Object.prototype);
+        if( deepMethod != 'deepCopy' || deepMethod != 'deepClone'){
+            deepMethod = null;
         }
 
-        mixedObjects = mixedObjects.reverse();
+        if(typeof rootPrototype == 'undefined'){
+            rootPrototype = $object;
+        }else if( typeof(rootPrototype)=='function' && Object.getOwnPropertyNames(rootPrototype.prototype) ){
+            rootPrototype = rootPrototype.prototype;
+        }
 
-        var updateObj = this;
+        var sourceObj = this;
+        var newObj    = Object.create(rootPrototype);
+        var updateObj = newObj;
 
-        for(var objIdx in mixedObjects){
-            obj = mixedObjects[objIdx];
-
-            if( typeof(obj)=='function' && Object.getOwnPropertyNames(obj.prototype) ){
-                obj = obj.prototype;
+        do{
+            if( typeof(sourceObj)=='function' && Object.getOwnPropertyNames(sourceObj.prototype) ){
+                sourceObj = sourceObj.prototype;
             }
 
-            var ownPropertyNames = Object.getOwnPropertyNames(obj);
+            var ownPropertyNames = Object.getOwnPropertyNames(sourceObj);
 
-            if(copyNesting && ownPropertyNames.length){
-                updateObj = $object.clone.call(updateObj);
+            if(!mixParents  && ownPropertyNames.length){
+                updateObj = $object.do('clone', updateObj);
             }
 
-            // copy all own properties from obj to updateObj:
+            // copy all own properties:
             for(var i=0; i < ownPropertyNames.length; i++){
                 var name = ownPropertyNames[i];
-                var descriptor = Object.getOwnPropertyDescriptor(obj, name);
+                var descriptor = Object.getOwnPropertyDescriptor(sourceObj, name);
+
+                if( deepMethod && typeof sourceObj[name] == 'object'){
+                    descriptor.value = $object[deepMethod].call(sourceObj[name]);
+                }
+
                 Object.defineProperty(updateObj, name, descriptor);
             }
-        }
 
-        return updateObj;
+            sourceObj = Object.getPrototypeOf(sourceObj);
+        }while( parentsLevel-- && sourceObj != Object.prototype );
+
+        return newObj;
     },
 
+    /**
+     * Create a copy of this and all inner objects.
+     * @see $object#copy
+     * @see $object#deepClone
+     * @returns {$object}
+     */
+    deepCopy: function deepCopy(){
+        var obj = arguments.length ? $object.do('copy', arguments, this) : {};
 
-//    /**
-//     * Apply method from one object to another object.
-//     * @example
-//     *     var array = $object.do('mix', Array.prototype);
-//     *     var  args = $object.do.call(Array, 'slice',[1], arguments);
-//     * @returns {*}
-//     */
-//    do: function(/** string */methodName, /** Array */args, /** Object */withObj, asObj){
-//        if(arguments.length == 2){
-//            withObj = args;
-//            args = undefined;
-//        }
-//        if(!asObj){
-//            asObj = this;
-//
-//        }else if( asObj.prototype && typeof asObj == 'function' ){
-//            asObj = asObj.prototype;
-//        }
-//
-//        return asObj[methodName].apply(withObj, args);
-//    },
+        var ownPropertyNames = Object.getOwnPropertyNames(this);
+        for(var i=0; i < ownPropertyNames.length; i++){
+            var name = ownPropertyNames[i];
+            var descriptor = Object.getOwnPropertyDescriptor(this, name);
+            if(typeof this[name] == 'object'){
+                descriptor.value = deepCopy.call(this[name]);
+            }
+            Object.defineProperty(obj, name, descriptor);
+        }
+
+        return obj;
+    },
+
+    /**
+     * Create a clone of this, and also create a clones of all inner objects.
+     * So, if you modify any inner object of deep clone, it will not affect parent (this) object.
+     * But, if you modify parent (this), it can affect deep clone(s).
+     * @see $object#clone
+     * @see $object#deepCopy
+     * @returns {$object}
+     */
+    deepClone: function deepClone(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
+        var obj = $object.do('clone', arguments, this);
+
+        var ownPropertyNames = Object.getOwnPropertyNames(this);
+        for(var i=0; i < ownPropertyNames.length; i++){
+            var name = ownPropertyNames[i];
+            if(typeof this[name] == 'object'){
+                var descriptor = Object.getOwnPropertyDescriptor(this, name);
+                descriptor.value = deepClone.call(this[name]);
+                Object.defineProperty(obj, name, descriptor);
+            }
+        }
+        return obj;
+    },
+
+    /**
+     * Apply method from one object to another object.
+     * @example
+     *     var array = $object.do('mix', Array);
+     *     var  args = $object.do('slice',[1], arguments, Array);
+     *     var  args = $object.do.call(Array, 'slice',[1], arguments);
+     * @returns {*}
+     */
+    'do': function(/** string */methodName, /** Array|Object= */args, /** Object= */withObj, /** Object= */asObj){
+        if(arguments.length == 2){
+            withObj = args;
+            args = undefined;
+        }
+        if(!asObj){
+            asObj = typeof(withObj[methodName])=='function' && withObj[methodName].length == this[methodName].length && withObj || this;
+
+        }else if( asObj.prototype && typeof asObj == 'function' ){
+            asObj = asObj.prototype;
+        }
+
+        return asObj[methodName].apply(withObj, args);
+    },
 
     /**
      * Use this to check if method of one object is the same as in the another object.
@@ -459,13 +538,13 @@ var $object = /** @lands $object# */{
         return this.can(method, 1);
     },
 
-    /**
-     * Returns the current state of this object in JSON format.
-     * @see $object#getState
-     * @memberof $object# */
-    toString: function(){
-        return JSON.stringify( this.getState() );
-    },
+//    /**
+//     * Returns the current state of this object in JSON format.
+//     * @see $object#getState
+//     * @memberof $object# */
+//    toString: function(){
+//        return JSON.stringify( this.getState() );
+//    },
 
 //        /**
 //         * Returns true if all enumerable properties of this present in obj.
@@ -556,6 +635,27 @@ var $object = /** @lands $object# */{
     defineProperty: function(/** string */name, /** PropertyDescriptor */propertyDescriptor){
         return Object.defineProperty(this, name, propertyDescriptor);
     }
+
+//    /**
+//     *
+//     * @memberof $object# */
+//    forEach: function(/** function(*,string) */callback, /** Object= */thisArg){
+//        for(var name in this){
+//            callback.call(thisArg, this[name], name);
+//        }
+//    },
+//
+//    /**
+//     * Creates a new array with the results of calling a provided function on every enumerable property in this object.
+//     * @returns {Array}
+//     * @memberof $object# */
+//    map: function(/** function(*,string):boolean */callback, /** Object= */thisArg){
+//        var result = [];
+//        for(var name in this){
+//            callback.call(thisArg, this[name], name);
+//        }
+//        return result;
+//    }
 
 //    descriptor: {
 //        get configurable(){return Object.isExtensible(this)},
