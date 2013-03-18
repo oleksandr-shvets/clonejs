@@ -2,8 +2,8 @@
  * @title   clone.js - The true prototype-based OOP framework.
  * @version 0.6.1 alpha
  * @author  Alex Shvets
- * @see     <a href="http://quadroid.github.com/clonejs/">Documentation</a>
- * @see     <a href="http://github.com/quadroid/clonejs/">GitHub</a>
+ * @see     <a href="http://quadroid.github.com/clonejs/" >Documentation</a>
+ * @see     <a href="http://github.com/quadroid/clonejs/" >GitHub</a>
  *
  * @class
  *     This is the framework that implements the true prototype-based OOP paradigm in JS.<br>
@@ -205,7 +205,7 @@ var $object = /** @lands $object# */{
      * @returns {*}
      * @see $object#__super__
      * @see $object#_callSuper
-     * @private
+     * @protected
      * @memberOf $object#
      */
     _applySuper: function(/** string='constructor'|Array */ methodName, /** Array= */args){
@@ -244,7 +244,7 @@ var $object = /** @lands $object# */{
 
     /** @see $object#_applySuper
      *  @see $object#__super__
-     *  @private
+     *  @protected
      *  @memberOf $object# */
     _callSuper: function(/** string */methodName, /** ?= */ arg1, /** ...?= */argN){
         var args = Array.prototype.slice.call(arguments, 1);
@@ -453,8 +453,8 @@ var $object = /** @lands $object# */{
     },
 
     /**
-     * Create a clone of this, and also create a clones of all inner objects.
-     * So, if you modify any inner object of deep clone, it will not affect parent (this) object.
+     * Create a clone of this, and also create a clones of all inner objects. <br>
+     * So, if you modify any inner object of deep clone, it will not affect parent (this) object. <br>
      * But, if you modify parent (this), it can affect deep clone(s).
      * @see $object#clone
      * @see $object#deepCopy
@@ -483,7 +483,10 @@ var $object = /** @lands $object# */{
      *     var  args = $object.do('slice',[1], arguments, Array);
      *     var  args = $object.do.call(Array, 'slice',[1], arguments);
      * @returns {*}
-     * @memberОf $object#
+     * @static
+     * @function
+     * @name do
+     * @memberOf $object#
      */
     'do': function(/** string */methodName, /** Array|Object= */args, /** Object= */withObj, /** Object= */asObj){
         if(arguments.length == 2){
