@@ -5,7 +5,7 @@ It's based on the new ECMA Script 5 features like Object.create and property des
 
 [Download](http://github.com/quadroid/clonejs/archive/master.zip)
 
-### See [Documentation](http://quadronet.mk.ua/clonejs/)
+### See [Documentation](http://quadroid.github.com/clonejs/symbols/%24object.html)
 
 Quick example:
 
@@ -29,10 +29,3 @@ Quick example:
      var myTypeInstance = $myType.create({publicProperty: 2});
      assert( $myType.isPrototypeOf(myTypeInstance) );
      assert( $myType.publicPropertyAlias === $myType.publicProperty );
-
-     var $myArray1 = $object.clone.call(Array.prototype, {customMethod: function(){}});
-     var $myArray2 = Clone.makeFom(Array, {customMethod: function(){}});
-
-     var myObj = {a:1, b:2, c:3};
-     var cloneOfMyObj = $object.clone.call(myObj);
-     cloneOfMyObj.a = 11; // myObj.a still == 1
