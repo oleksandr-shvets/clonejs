@@ -1,0 +1,2093 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="generator" content="JsDoc Toolkit" />
+		<title>$object | JsDoc Reference</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+		<meta name="mobileoptimized" content="0" />
+	
+		<link rel="stylesheet" href="../css/all.css" media="all" />
+		<link rel="stylesheet" href="../css/handheld.css" media="only screen and (max-width: 660px)" />
+		<link rel="stylesheet" href="../css/handheld.css" media="handheld" />
+		<link rel="stylesheet" href="../css/screen.css" media="screen and (min-width: 661px)" />
+
+		<script src="../javascript/all.js"></script>
+		<!--[if lt IE 9]>
+			<script src="../javascript/html5.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+<div class="index">
+	<div class="menu">
+		<div class="indexLinks">
+			<a href="../index.html">Classes</a>
+			<a href="../files.html">Files</a>
+		</div>
+	
+		<h2 class="heading1">Classes</h2>
+		
+		<input type="text" name="classFilter" class="classFilter" id="ClassFilter" placeholder="Filter"></input>
+		
+		<nav>
+			<ul class="classList" id="ClassList">
+				
+					<li><a href="../symbols/%24object.html">$object</a></li>
+				
+					<li><a href="../symbols/_global_.html">_global_</a></li>
+				
+			</ul>
+		</nav>
+	</div>
+	<div class="fineprint" style="clear:both">
+		<footer>
+			
+			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
+			Template: <a href="http://www.thebrightlines.com/2010/05/06/new-template-for-jsdoctoolkit-codeview/" target="_blank">Codeview</a> 1.2<br />
+			Generated on:
+			<time datetime='2013-2-18' pubdate>2013-2-18 18:14</time>
+		</footer>
+	</div>
+</div>
+
+<div class="index indexStatic"></div>
+
+<div class="content">
+	<div class="innerContent">
+		<article>
+			<header>
+				<h1 class="classTitle">
+					
+					Class <span>$object</span>
+				</h1>
+				
+				<div class="intro">
+					<p class="description summary">
+						This is the framework that implements the true prototype-based OOP paradigm in JS.<br>
+    It's based on the new ECMA Script 5 features like Object.create and property descriptors.
+
+    <p><a href="http://github.com/quadroid/clonejs">Project on GitHub</a>
+
+    <p><b>Naming conventions</b>
+    <p>Var names, prefixed by "<b>$</b>", contain object, used as prototype for other objects. For example:<br>
+       var $array = Array.prototype, $myType = {}, <br>
+           myTypeInstance = Clone($myType);
+    <p>Properties, prefixed by "<b>_</b>", are private.
+    <p>
+					</p>
+						
+					
+						<ul class="summary">
+							
+								<li>Version 0.6.1 alpha</li>
+							
+							
+							
+								<li>Defined in: <a href="../symbols/src/src_clone.js.html">clone.js</a></li>
+							
+							
+						</ul>
+					
+				</div>
+			</header>
+			
+			
+				<section>
+					<div class="props">
+						<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class $object.">
+							<caption class="sectionTitle">Class Summary</caption>
+							<thead>
+								<tr>
+									<th scope="col">Constructor Attributes</th>
+									<th scope="col">Constructor Name and Description</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td class="attributes">&nbsp;</td>
+									<td class="nameDescription" >
+										<div class="fixedFont">
+											<b><a href="../symbols/%24object.html#constructor">$object</a></b>()
+										</div>
+										<div class="description">With this library you should forget about classes.</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</section>
+			
+			
+			
+				
+				<section>
+					
+						<nav>
+							<div class="props">
+								<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class $object.">
+									<caption class="sectionTitle">Field Summary</caption>
+									
+									<thead>
+										<tr>
+											<th scope="col">Field Attributes</th>
+											<th scope="col">Field Name and Description</th>
+										</tr>
+									</thead>
+									
+									<tbody>
+										
+											<tr>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont">
+													<b><a href="../symbols/%24object.html#__super__">__super__</a></b>
+													</div>
+													<div class="description">Link to the object prototype.</div>
+												</td>
+											</tr>
+										
+											<tr>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont">
+													<b><a href="../symbols/%24object.html#constructor">constructor</a></b>
+													</div>
+													<div class="description">Default constructor.</div>
+												</td>
+											</tr>
+										
+									</tbody>
+								</table>
+							</div>
+						</nav>
+					
+					
+					
+				</section>
+			
+	<!--
+	#### METHODS SUMMARY
+	-->
+			
+				<section>
+					
+					
+					<div class="props">
+						<h2 class="sectionTitle">Method Summary</h2>
+						
+						
+							<nav>
+								<table class="summaryTable" id="MethodsList" cellspacing="0" summary="A summary of the methods documented in the class $object.">
+									<thead>
+										<tr>
+											<th scope="col">Method Attributes</th>
+											<th scope="col">Method Name and Description</th>
+										</tr>
+									</thead>
+									
+									<tbody>
+										
+										
+											<tr
+												 class='item0'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#_applySuper">_applySuper</a></b>(methodName, args)
+													</div>
+													<div class="description">Apply method of super object (prototype) to this object.</div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item1'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#_callSuper">_callSuper</a></b>(methodName, arg1, argN)
+													</div>
+													<div class="description"></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item2'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#can">can</a></b>(method, not)
+													</div>
+													<div class="description">Use this to check if method of one object is the same as in the another object.</div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item3'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#cant">cant</a></b>(method)
+													</div>
+													<div class="description"></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item4'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#clone">clone</a></b>(properties, defaultDescriptor)
+													</div>
+													<div class="description">Create a clone of object.</div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item5'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#concat">concat</a></b>(objects, parentsLevel, copyPrototypeChain, deepMethod, deepMethod)
+													</div>
+													<div class="description">Join this with one or more objects.</div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item6'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#create">create</a></b>(properties, defaultDescriptor)
+													</div>
+													<div class="description">Use this method to create an instances of prototype objects.</div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item7'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#createSuperSafeCallback">createSuperSafeCallback</a></b>(functionOrMethodName, boundThis)
+													</div>
+													<div class="description">Use this method to wrap callback, that can call "_applySuper" method.</div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item8'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#defineProperties">defineProperties</a></b>(properties, defaultDescriptor)
+													</div>
+													<div class="description"></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item9'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#defineProperty">defineProperty</a></b>(name, propertyDescriptor)
+													</div>
+													<div class="description"></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item10'
+											>
+												<td class="attributes">&lt;static&gt; &nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont">$object.<b><a href="../symbols/%24object.html#.describe">describe</a></b>(properties, defaultDescriptor)
+													</div>
+													<div class="description">Translate object to property descriptors.</div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item11'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#freeze">freeze</a></b>()
+													</div>
+													<div class="description"></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item12'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#getEnumerableOwnPropertyNames">getEnumerableOwnPropertyNames</a></b>()
+													</div>
+													<div class="description"></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item13'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#getOwnPropertyDescriptor">getOwnPropertyDescriptor</a></b>(name)
+													</div>
+													<div class="description"></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item14'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#getOwnPropertyNames">getOwnPropertyNames</a></b>()
+													</div>
+													<div class="description"></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item15'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#getPrototype">getPrototype</a></b>()
+													</div>
+													<div class="description"></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item16'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#getState">getState</a></b>(listPrivate)
+													</div>
+													<div class="description">Returns all changed properties, since cloning of object.</div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item17'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#isExtensible">isExtensible</a></b>()
+													</div>
+													<div class="description"></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item18'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#isFrozen">isFrozen</a></b>()
+													</div>
+													<div class="description"></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item19'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#isSealed">isSealed</a></b>()
+													</div>
+													<div class="description"></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item20'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#preventExtensions">preventExtensions</a></b>()
+													</div>
+													<div class="description"></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item21'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#seal">seal</a></b>()
+													</div>
+													<div class="description"></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item22'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#toString">toString</a></b>()
+													</div>
+													<div class="description">Returns the current state of this object in JSON format.</div>
+												</td>
+											</tr>
+										
+									</tbody>
+								</table>
+							</nav>
+						
+					
+						
+					</div>
+				</section>
+			
+			
+	<!--
+	#### EVENTS SUMMARY
+	-->
+			
+	<!--
+	#### CONSTRUCTOR DETAILS
+	-->
+			
+				<section>
+					<div class="details props">
+						<div class="innerProps">
+							<h2 class="sectionTitle" id="constructor">
+								Class Detail
+							</h2>
+							
+							<div class="fixedFont">
+								<b>$object</b>()
+							</div>
+							
+							<div class="description">
+								With this library you should forget about classes. Use prototypes instead.
+								<br /><i>Author: </i>Alex Shvets.
+							</div>
+							
+							
+								
+									<pre class="code">    var $myType = $object.clone({
+        '(final)  notConfigurableAndNotWritable': true,
+        '(writable final)   notConfigurableOnly': null,
+        '(hidden final get) notEnumerableGetter': function(){},
+        '(hidden)                 notEnumerable': true,
+        '(const)                       constant': 'not writable',
+                                 publicProperty : 1,
+                                          _item : null,// private property (not enumerable)
+                                    '(get) item': function() { return this._item },
+                                    '(set) item': function(v){ this._item = v },
+                     '(get) publicPropertyAlias': 'publicProperty',// automatically create getter for publicProperty
+                                    constructor : function MyType(){
+                                                      var obj = this.applySuper(arguments);
+                                                      // do something with obj...
+                                                      return obj;
+                                                  }
+    });
+    var myTypeInstance = $myType.create({publicProperty: 2});
+    assert( $myType.isPrototypeOf(myTypeInstance) );
+    assert( $myType.publicPropertyAlias === $myType.publicProperty );
+
+    var $myArray1 = $object.clone.call(Array.prototype, {customMethod: function(){}});
+    var $myArray2 = $object.copy(Array).setProperties({customMethod: function(){}});
+    var myArray2 = $myArray2.create(11 ,22, 33);
+
+    var myObj = {a:1, b:2, c:3};
+    var cloneOfMyObj = $object.clone(myObj);
+    cloneOfMyObj.a = 11; // myObj.a still == 1</pre>
+								
+							
+						
+							
+							
+							
+								<dl class="detailList nomargin">
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+										<dt class="heading">See:</dt>
+										
+											<dd><a href="http://quadronet.mk.ua/clonejs/">Documentation</a></dd>
+										
+											<dd><a href="http://github.com/quadroid/clonejs/">GitHub</a></dd>
+										
+									
+								</dl>
+							
+						</div>
+					</div>
+				</section>
+			
+	<!--
+	#### FIELD DETAILS
+	-->
+			
+				<section>
+					<div class="details props">
+						<div class="innerProps">
+							<h2 class="sectionTitle">
+								Field Detail
+							</h2>
+							
+							
+								<div class="fixedFont heading" id="__super__">
+									<span class='lighter'>
+									
+									</span>
+									
+									
+									
+									<b>__super__</b>							
+								</div>
+								
+								<div class="description">
+									Link to the object prototype.
+Dynamically changed to next by prototype chain, while _applySuper method executing.
+System property. <b>Use it only for debug purposes</b>.
+									
+									
+									
+								</div>
+								
+								
+									
+									<dl class="detailList nomargin">
+									
+										
+										
+										
+											<dt class="heading">See:</dt>
+											
+												<dd><a href="../symbols/%24object.html#_applySuper">$object#_applySuper</a></dd>
+											
+										
+										
+									</dl>
+								
+								
+								<div class="hr"></div>
+							
+								<div class="fixedFont heading" id="constructor">
+									<span class='lighter'>
+									
+									</span>
+									
+									
+									
+									<b>constructor</b>							
+								</div>
+								
+								<div class="description">
+									Default constructor. Override it if you want to create custom type.
+									
+									
+									
+								</div>
+								
+								
+									
+								
+								
+							
+						</div>
+					</div>
+				</section>
+			
+	<!--
+	#### METHOD DETAILS
+	-->		
+			
+				<section>
+					<div class="details props">
+						<div class="innerProps">
+							<h2 class="sectionTitle">
+								Method Detail
+							</h2>
+							
+							<ul class="methodDetail" id="MethodDetail">
+								
+								
+									<li 
+										 class='item0'
+									>
+										<div class="fixedFont heading" id="_applySuper">
+											<span class='lighter'>
+											
+											</span>
+											
+											<span class="light">{*}</span>
+											
+											<b>_applySuper</b>(methodName, args)
+										</div>
+										
+										<div class="description">
+											Apply method of super object (prototype) to this object.
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{string='constructor'|Array}</span> <b>methodName</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
+														<span class="light fixedFont">{Array=}</span> <b>args</b>
+														
+													</dt>
+													<dd></dd>
+												
+											</dl>
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">Returns:</dt>
+													
+														<dd><span class="light fixedFont">{*}</span> </dd>
+													
+												
+												
+												
+												
+												
+													<dt class="heading">See:</dt>
+													
+														<dd><a href="../symbols/%24object.html#__super__">$object#__super__</a></dd>
+													
+														<dd><a href="../symbols/%24object.html#_callSuper">$object#_callSuper</a></dd>
+													
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item1'
+									>
+										<div class="fixedFont heading" id="_callSuper">
+											<span class='lighter'>
+											
+											</span>
+											
+											
+											
+											<b>_callSuper</b>(methodName, arg1, argN)
+										</div>
+										
+										<div class="description">
+											
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{string}</span> <b>methodName</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
+														<span class="light fixedFont">{?=}</span> <b>arg1</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
+														<span class="light fixedFont">{...?=}</span> <b>argN</b>
+														
+													</dt>
+													<dd></dd>
+												
+											</dl>
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">See:</dt>
+													
+														<dd><a href="../symbols/%24object.html#_applySuper">$object#_applySuper</a></dd>
+													
+														<dd><a href="../symbols/%24object.html#__super__">$object#__super__</a></dd>
+													
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item2'
+									>
+										<div class="fixedFont heading" id="can">
+											<span class='lighter'>
+											
+											</span>
+											
+											<span class="light">{{like: function(Object):boolean|as: function(Object):boolean}}</span>
+											
+											<b>can</b>(method, not)
+										</div>
+										
+										<div class="description">
+											Use this to check if method of one object is the same as in the another object.
+											
+											
+											
+											
+										</div>
+										
+										
+											
+												<pre class="code">    var myObj1 = $object.clone({join: function(sep){} });
+    var myObj2 = $object.clone({join: function(){}    });
+    assert( myObj1.can('split').like( Array.prototype ) === true  );
+    assert( myObj2.can('split').like( Array.prototype ) === false );
+    assert( myObj1.can('split').as(   Array.prototype ) === false );
+    assert( $object.can.call(new Array, 'split').as(new Array) === true  );</pre>
+											
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{string}</span> <b>method</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
+														<span class="light fixedFont">{number=false}</span> <b>not</b>
+														
+													</dt>
+													<dd></dd>
+												
+											</dl>
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">Returns:</dt>
+													
+														<dd><span class="light fixedFont">{{like: function(Object):boolean|as: function(Object):boolean}}</span> </dd>
+													
+												
+												
+												
+												
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item3'
+									>
+										<div class="fixedFont heading" id="cant">
+											<span class='lighter'>
+											
+											</span>
+											
+											
+											
+											<b>cant</b>(method)
+										</div>
+										
+										<div class="description">
+											
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{string}</span> <b>method</b>
+														
+													</dt>
+													<dd></dd>
+												
+											</dl>
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">See:</dt>
+													
+														<dd><a href="../symbols/%24object.html#can">$object#can</a></dd>
+													
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item4'
+									>
+										<div class="fixedFont heading" id="clone">
+											<span class='lighter'>
+											
+											</span>
+											
+											<span class="light">{<a href="../symbols/%24object.html">$object</a>}</span>
+											
+											<b>clone</b>(properties, defaultDescriptor)
+										</div>
+										
+										<div class="description">
+											Create a clone of object. See <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create</a> for details.
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{Object=}</span> <b>properties</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
+														<span class="light fixedFont">{<a href="../symbols/_global_.html#PropertyDescriptor">PropertyDescriptor</a>=}</span> <b>defaultDescriptor</b>
+														
+													</dt>
+													<dd></dd>
+												
+											</dl>
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">Returns:</dt>
+													
+														<dd><span class="light fixedFont">{<a href="../symbols/%24object.html">$object</a>}</span> </dd>
+													
+												
+												
+												
+												
+												
+													<dt class="heading">See:</dt>
+													
+														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create</a></dd>
+													
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item5'
+									>
+										<div class="fixedFont heading" id="concat">
+											<span class='lighter'>
+											
+											</span>
+											
+											<span class="light">{Object}</span>
+											
+											<b>concat</b>(objects, parentsLevel, copyPrototypeChain, deepMethod, deepMethod)
+										</div>
+										
+										<div class="description">
+											Join this with one or more objects.
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<b>objects</b>
+														
+													</dt>
+													<dd>Object(s) to mix. If it is FunctionType, FunctionType.prototype will be used instead.</dd>
+												
+													<dt>
+														<span class="light fixedFont">{Object|<a href="../symbols/_global_.html#FunctionType">FunctionType</a>|Array.<(Object|FunctionType)>}</span> <b>parentsLevel</b>
+														
+													</dt>
+													<dd>How many parents should be included. By default - zero. <br>
+       Set this to Infinity if you want to copy all object parents properties up to $object.</dd>
+												
+													<dt>
+														<span class="light fixedFont">{number=0}</span> <b>copyPrototypeChain</b>
+														
+													</dt>
+													<dd>Should be true if objects have methods, that call <a href="../symbols/%24object.html#_applySuper">$object#_applySuper</a> <br>
+       If not true, all own properties of all objects will be directly attached to the one returned object. <br>
+       False by default.</dd>
+												
+													<dt>
+														<span class="light fixedFont">{boolean=true}</span> <b>deepMethod</b>
+														
+													</dt>
+													<dd>How to process inner objects. Can be:         <br>
+       "deepCopy"  - see $object#deepCopy    <br>
+       "deepClone" - see $object#deepClone   <br>
+       null - by default.</dd>
+												
+													<dt>
+														<span class="light fixedFont">{?('<a href="../symbols/_global_.html#deepClone">deepClone</a>'|'deepCopy')}</span> <b>deepMethod</b>
+														
+													</dt>
+													<dd></dd>
+												
+											</dl>
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">Returns:</dt>
+													
+														<dd><span class="light fixedFont">{Object}</span> if copyPrototypeChain - the new object based on objects copies, else - modified this object.</dd>
+													
+												
+												
+												
+												
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item6'
+									>
+										<div class="fixedFont heading" id="create">
+											<span class='lighter'>
+											
+											</span>
+											
+											<span class="light">{<a href="../symbols/%24object.html">$object</a>}</span>
+											
+											<b>create</b>(properties, defaultDescriptor)
+										</div>
+										
+										<div class="description">
+											Use this method to create an instances of prototype objects.
+<p>Behaves like a clone method. But, also apply constructor, and the created instance will be sealed (<a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal">Object.seal</a>): to prevent it, override the constructor.
+											
+											
+											
+											
+										</div>
+										
+										
+											
+												<pre class="code">    var $myType = $object.clone({
+        create: 'MyType',
+    });
+    var myTypeInstance = $myType.create();
+    assert( myTypeInstance.constructor === $myType.constructor );
+    assert( $myType.isPrototypeOf(myTypeInstance) );</pre>
+											
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{Object=}</span> <b>properties</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
+														<span class="light fixedFont">{<a href="../symbols/_global_.html#PropertyDescriptor">PropertyDescriptor</a>=}</span> <b>defaultDescriptor</b>
+														
+													</dt>
+													<dd></dd>
+												
+											</dl>
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">Returns:</dt>
+													
+														<dd><span class="light fixedFont">{<a href="../symbols/%24object.html">$object</a>}</span> </dd>
+													
+												
+												
+												
+												
+												
+													<dt class="heading">See:</dt>
+													
+														<dd><a href="../symbols/%24object.html#clone">$object#clone</a></dd>
+													
+														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal">Object.seal</a></dd>
+													
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item7'
+									>
+										<div class="fixedFont heading" id="createSuperSafeCallback">
+											<span class='lighter'>
+											
+											</span>
+											
+											<span class="light">{Function}</span>
+											
+											<b>createSuperSafeCallback</b>(functionOrMethodName, boundThis)
+										</div>
+										
+										<div class="description">
+											Use this method to wrap callback, that can call "_applySuper" method.
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{Function|string}</span> <b>functionOrMethodName</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
+														<span class="light fixedFont">{Object=}</span> <b>boundThis</b>
+														
+													</dt>
+													<dd></dd>
+												
+											</dl>
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">Returns:</dt>
+													
+														<dd><span class="light fixedFont">{Function}</span> </dd>
+													
+												
+												
+												
+												
+												
+													<dt class="heading">See:</dt>
+													
+														<dd><a href="../symbols/%24object.html#_applySuper">$object#_applySuper</a></dd>
+													
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item8'
+									>
+										<div class="fixedFont heading" id="defineProperties">
+											<span class='lighter'>
+											
+											</span>
+											
+											
+											
+											<b>defineProperties</b>(properties, defaultDescriptor)
+										</div>
+										
+										<div class="description">
+											
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{Object=}</span> <b>properties</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
+														<span class="light fixedFont">{<a href="../symbols/_global_.html#PropertyDescriptor">PropertyDescriptor</a>=}</span> <b>defaultDescriptor</b>
+														
+													</dt>
+													<dd></dd>
+												
+											</dl>
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">See:</dt>
+													
+														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperties">Object.defineProperties</a></dd>
+													
+														<dd><a href="../symbols/%24object.html#.describe">$object.describe</a></dd>
+													
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item9'
+									>
+										<div class="fixedFont heading" id="defineProperty">
+											<span class='lighter'>
+											
+											</span>
+											
+											
+											
+											<b>defineProperty</b>(name, propertyDescriptor)
+										</div>
+										
+										<div class="description">
+											
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{string}</span> <b>name</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
+														<span class="light fixedFont">{<a href="../symbols/_global_.html#PropertyDescriptor">PropertyDescriptor</a>}</span> <b>propertyDescriptor</b>
+														
+													</dt>
+													<dd></dd>
+												
+											</dl>
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">See:</dt>
+													
+														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty</a></dd>
+													
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item10'
+									>
+										<div class="fixedFont heading" id=".describe">
+											<span class='lighter'>
+											&lt;static&gt; 
+											</span>
+											
+											<span class="light">{{<a href="../symbols/_global_.html#PropertyDescriptor">PropertyDescriptor</a>}}</span>
+											
+											<span class="light">$object.</span><b>describe</b>(properties, defaultDescriptor)
+										</div>
+										
+										<div class="description">
+											Translate object to property descriptors.
+<p>For example, {a:{}, b:2} will be translated to something like {a: {value: {}}, b: {value: 2}}.
+<p>Functions (except getters) and properties prefixed by "_" will be automatically marked as non-enumerable.
+<p>You can prefix your property names by (get|set|const|final|hidden|writable).
+    <li>(get) - define getter, if string passed, the getter will be auto generated.
+    <li>(set) - define setter, if string passed, the setter will be auto generated.
+    <li>(const) - make property unwritable.
+    <li>(final) - make property unwritable, and prevent it deleting and descriptor modifications.
+    <li>(hidden) - make property non-enumerable.
+    <li>(writable) - make property writable (use with final).
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{Object}</span> <b>properties</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
+														<span class="light fixedFont">{<a href="../symbols/_global_.html#PropertyDescriptor">PropertyDescriptor</a>=}</span> <b>defaultDescriptor</b>
+														
+													</dt>
+													<dd>The default property descriptor.</dd>
+												
+											</dl>
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">Returns:</dt>
+													
+														<dd><span class="light fixedFont">{{<a href="../symbols/_global_.html#PropertyDescriptor">PropertyDescriptor</a>}}</span> Property descriptors.</dd>
+													
+												
+												
+												
+												
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item11'
+									>
+										<div class="fixedFont heading" id="freeze">
+											<span class='lighter'>
+											
+											</span>
+											
+											
+											
+											<b>freeze</b>()
+										</div>
+										
+										<div class="description">
+											
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">See:</dt>
+													
+														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/freeze">Object.freeze</a></dd>
+													
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item12'
+									>
+										<div class="fixedFont heading" id="getEnumerableOwnPropertyNames">
+											<span class='lighter'>
+											
+											</span>
+											
+											
+											
+											<b>getEnumerableOwnPropertyNames</b>()
+										</div>
+										
+										<div class="description">
+											
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">See:</dt>
+													
+														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys">Object.keys</a></dd>
+													
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item13'
+									>
+										<div class="fixedFont heading" id="getOwnPropertyDescriptor">
+											<span class='lighter'>
+											
+											</span>
+											
+											
+											
+											<b>getOwnPropertyDescriptor</b>(name)
+										</div>
+										
+										<div class="description">
+											
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{string}</span> <b>name</b>
+														
+													</dt>
+													<dd></dd>
+												
+											</dl>
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">See:</dt>
+													
+														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor">Object.getOwnPropertyDescriptor</a></dd>
+													
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item14'
+									>
+										<div class="fixedFont heading" id="getOwnPropertyNames">
+											<span class='lighter'>
+											
+											</span>
+											
+											
+											
+											<b>getOwnPropertyNames</b>()
+										</div>
+										
+										<div class="description">
+											
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">See:</dt>
+													
+														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames">Object.getOwnPropertyNames</a></dd>
+													
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item15'
+									>
+										<div class="fixedFont heading" id="getPrototype">
+											<span class='lighter'>
+											
+											</span>
+											
+											
+											
+											<b>getPrototype</b>()
+										</div>
+										
+										<div class="description">
+											
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">See:</dt>
+													
+														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getPrototypeOf">Object.getPrototypeOf</a></dd>
+													
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item16'
+									>
+										<div class="fixedFont heading" id="getState">
+											<span class='lighter'>
+											
+											</span>
+											
+											<span class="light">{<a href="../symbols/%24object.html">$object</a>}</span>
+											
+											<b>getState</b>(listPrivate)
+										</div>
+										
+										<div class="description">
+											Returns all changed properties, since cloning of object.<br>
+Separate object from its prototype and return it.<br>
+Private meens non-enumerable properties.
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{boolean=false}</span> <b>listPrivate</b>
+														
+													</dt>
+													<dd></dd>
+												
+											</dl>
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">Returns:</dt>
+													
+														<dd><span class="light fixedFont">{<a href="../symbols/%24object.html">$object</a>}</span> </dd>
+													
+												
+												
+												
+												
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item17'
+									>
+										<div class="fixedFont heading" id="isExtensible">
+											<span class='lighter'>
+											
+											</span>
+											
+											
+											
+											<b>isExtensible</b>()
+										</div>
+										
+										<div class="description">
+											
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">See:</dt>
+													
+														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isExtensible">Object.isExtensible</a></dd>
+													
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item18'
+									>
+										<div class="fixedFont heading" id="isFrozen">
+											<span class='lighter'>
+											
+											</span>
+											
+											
+											
+											<b>isFrozen</b>()
+										</div>
+										
+										<div class="description">
+											
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">See:</dt>
+													
+														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isFrozen">Object.isFrozen</a></dd>
+													
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item19'
+									>
+										<div class="fixedFont heading" id="isSealed">
+											<span class='lighter'>
+											
+											</span>
+											
+											
+											
+											<b>isSealed</b>()
+										</div>
+										
+										<div class="description">
+											
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">See:</dt>
+													
+														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isSealed">Object.isSealed</a></dd>
+													
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item20'
+									>
+										<div class="fixedFont heading" id="preventExtensions">
+											<span class='lighter'>
+											
+											</span>
+											
+											
+											
+											<b>preventExtensions</b>()
+										</div>
+										
+										<div class="description">
+											
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">See:</dt>
+													
+														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/preventExtensions">Object.preventExtensions</a></dd>
+													
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item21'
+									>
+										<div class="fixedFont heading" id="seal">
+											<span class='lighter'>
+											
+											</span>
+											
+											
+											
+											<b>seal</b>()
+										</div>
+										
+										<div class="description">
+											
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">See:</dt>
+													
+														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal">Object.seal</a></dd>
+													
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item22'
+									>
+										<div class="fixedFont heading" id="toString">
+											<span class='lighter'>
+											
+											</span>
+											
+											
+											
+											<b>toString</b>()
+										</div>
+										
+										<div class="description">
+											Returns the current state of this object in JSON format.
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">See:</dt>
+													
+														<dd><a href="../symbols/%24object.html#getState">$object#getState</a></dd>
+													
+												
+											
+											</dl>
+										
+										
+									</li>
+								
+							</ul>
+						</div>
+					</div>
+				</section>
+			
+			
+	<!--
+	#### EVENT DETAILS
+	-->		
+			
+		</article>
+	</div>
+</div>
+
+		<script type="text/javascript">
+			wbos.CssTools.MediaQueryFallBack.LoadCss('../css/screen.css', '../css/handheld.css', 660)
+			codeview.classFilter.Init()
+		</script>
+	</body>
+</html>
+
