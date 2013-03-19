@@ -358,7 +358,7 @@ var $object = /** @lands $object# */{
      *        null - do nothing (default).
      *
      * @param rootPrototype
-     *        The root prototype for created object prototype chain. If it is FunctionType, FunctionType.prototype will be used instead. <br>
+     *        The root prototype for created object prototype chain. If it is Constructor, Constructor.prototype will be used instead. <br>
      *        By default - $object;
      *
      * @param parentsLevel
@@ -375,7 +375,7 @@ var $object = /** @lands $object# */{
      */
     copy: function(
         /** ?('deepClone'|'deepCopy') */deepMethod,
-        /**    ?(Object|FunctionType) */rootPrototype,
+        /**    ?(Object|Constructor) */rootPrototype,
         /**                  number=0 */parentsLevel,
         /**             boolean=false */mixParents
     ){
@@ -693,6 +693,6 @@ PropertyDescriptor;
 
 /**
  * JavaScript class. Function, that can be called by "new" operator and/or have modified prototype property.
- * @name FunctionType
+ * @name Constructor
  * @typedef {Function} */
 
