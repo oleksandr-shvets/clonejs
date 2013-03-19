@@ -165,6 +165,24 @@ module.exports = {
         test.done();
     },
 
+    deepClone: function(test){
+        var obj = $object.clone({
+            l1: {
+                l2: {
+                    l3: null
+                }
+            }
+        });
+        var deepClone = obj.deepClone();
+        test.strictEqual(deepClone.l1.l2.l3, null);
+        obj.l1.l2.l3 = 11;
+        test.strictEqual(deepClone.l1.l2.l3, 11);
+        deepClone.l1.l2.l3 = 22;
+        test.strictEqual(obj.l1.l2.l3, 11);
+
+        test.done();
+    },
+
     template: function(test){
 
         test.done();
