@@ -426,7 +426,7 @@ var $object = /** @lands $object# */{
                 var name = ownPropertyNames[p];
                 var descriptor = Object.getOwnPropertyDescriptor(sourceObj, name);
 
-                if( deepMethod && typeof sourceObj[name] == 'object'){
+                if( deepMethod && typeof sourceObj[name] == 'object' && sourceObj[name] !== null){
                     descriptor.value = $object[deepMethod].call(sourceObj[name]);
                 }
 
@@ -451,7 +451,7 @@ var $object = /** @lands $object# */{
         for(var i=0; i < ownPropertyNames.length; i++){
             var name = ownPropertyNames[i];
             var descriptor = Object.getOwnPropertyDescriptor(this, name);
-            if(typeof this[name] == 'object'){
+            if(typeof this[name] == 'object' && this[name] !== null){
                 descriptor.value = deepCopy.call(this[name]);
             }
             Object.defineProperty(obj, name, descriptor);
@@ -475,7 +475,7 @@ var $object = /** @lands $object# */{
         var ownPropertyNames = Object.getOwnPropertyNames(this);
         for(var i=0; i < ownPropertyNames.length; i++){
             var name = ownPropertyNames[i];
-            if(typeof this[name] == 'object'){
+            if(typeof this[name] == 'object' && this[name] !== null){
                 var descriptor = Object.getOwnPropertyDescriptor(this, name);
                 descriptor.value = deepClone.call(this[name]);
                 Object.defineProperty(obj, name, descriptor);
@@ -507,7 +507,7 @@ var $object = /** @lands $object# */{
         if(!asObj){
             asObj = typeof(withObj[methodName])=='function' && withObj[methodName].length == $object[methodName].length && withObj || $object;
 
-        }else if( asObj.prototype && typeof asObj == 'function' ){
+        }else if(typeof asObj == 'function' && asObj.prototype){
             asObj = asObj.prototype;
         }
 
