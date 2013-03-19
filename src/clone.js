@@ -56,7 +56,7 @@ var $object = /** @lands $object# */{
      * Create a clone of object. See <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create</a> for details.
      * @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create</a>
      * @returns {$object}
-     * @memberof $object#
+     * @memberOf $object#
      */
     clone: function(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
         if(arguments.length){
@@ -683,16 +683,18 @@ $object./*re*/defineProperties($object);
 if(typeof(module)!='undefined' && module.exports) module.exports = $object;
 
 
-if(0)//need for IDEa code inspections
+if(0)// (need for IDEa code inspections)
 /**
  * Object, that has at least one of the following property: <br>
  * value, get, set, writable, configurable, enumerable.
+ * @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty</a>
  * @name PropertyDescriptor
  * @typedef {({value:*}|{get:{function():*}}|{set:{function(*):void}}|{writable:boolean}|{configurable:boolean}|{enumerable:boolean})} */
 PropertyDescriptor;
 
 /**
- * JavaScript class. Function, that can be called by "new" operator and/or have modified prototype property.
+ * JavaScript class. Function, that can be called by "new" operator and/or have modified prototype property. <br>
+ * For example: Object, Array, RegExp.
  * @name Constructor
  * @typedef {Function} */
 
