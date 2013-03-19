@@ -125,60 +125,70 @@ module.exports = {
             test.strictEqual(myArray.test, 'T');
 
 
-        var $collection = $object.clone({items: []}),
-            $users = $collection.clone({name: ''});
+        var $collection = $object.clone({items: []});
+        var $users = $collection.clone({name: ''});
 
-        // $users full prototype chain:
-        //$users -> $collection -> $object -> Object.prototype -> null
+            // $users full prototype chain:
+            //$users -> $collection -> $object -> Object.prototype -> null
 
-        // see prototype chains produced by copy:
+            // see prototype chains produced by copy:
 
-        var userCopy = $users.copy();
-        //~$users -> $object
-            test.equal(Object.getPrototypeOf(userCopy), $object);
-            test.ok(userCopy.hasOwnProperty('name'));
-            test.ok(userCopy.items === undefined);
+            var userCopy = $users.copy();
+            //~$users -> $object
+                test.equal(Object.getPrototypeOf(userCopy), $object);
+                test.ok(userCopy.hasOwnProperty('name'));
+                test.ok(userCopy.items === undefined);
 
-        userCopy = $users.copy(Array);
-        //~$users -> Array.prototype
-            test.equal(Object.getPrototypeOf(userCopy), Array.prototype);
-            test.ok(userCopy.hasOwnProperty('name'));
-            test.ok(userCopy.items === undefined);
-            test.ok(userCopy.clone === undefined);
+            userCopy = $users.copy(Array);
+            //~$users -> Array.prototype
+                test.equal(Object.getPrototypeOf(userCopy), Array.prototype);
+                test.ok(userCopy.hasOwnProperty('name'));
+                test.ok(userCopy.items === undefined);
+                test.ok(userCopy.clone === undefined);
 
-        userCopy = $users.copy(Array, Infinity);
-        //~$users -> ~$collection -> ~$object -> Array.prototype
-            test.ok(userCopy.hasOwnProperty('name'));
-            test.ok(userCopy.getPrototype().hasOwnProperty('items'));
-            test.ok(userCopy.getPrototype().getPrototype().hasOwnProperty('clone'));
-            test.ok(userCopy.getPrototype().getPrototype().getPrototype() === Array.prototype);
+            userCopy = $users.copy(Array, Infinity);
+            //~$users -> ~$collection -> ~$object -> Array.prototype
+                test.ok(userCopy.hasOwnProperty('name'));
+                test.ok(userCopy.getPrototype().hasOwnProperty('items'));
+                test.ok(userCopy.getPrototype().getPrototype().hasOwnProperty('clone'));
+                test.ok(userCopy.getPrototype().getPrototype().getPrototype() === Array.prototype);
 
-        userCopy = $users.copy(Array, Infinity, true);
-        //~($users + $collection + $object) -> Array.prototype
-            test.equal(Object.getPrototypeOf(userCopy), Array.prototype);
-            test.ok(userCopy.hasOwnProperty('name'));
-            test.ok(userCopy.hasOwnProperty('items'));
-            test.ok(userCopy.hasOwnProperty('clone'));
+            userCopy = $users.copy(Array, Infinity, true);
+            //~($users + $collection + $object) -> Array.prototype
+                test.equal(Object.getPrototypeOf(userCopy), Array.prototype);
+                test.ok(userCopy.hasOwnProperty('name'));
+                test.ok(userCopy.hasOwnProperty('items'));
+                test.ok(userCopy.hasOwnProperty('clone'));
 
         //TODO: add tests for deepCopy/deepClone
 
         test.done();
     },
 
+    deepCopy: function(test){
+        var obj = $object.clone({l1: {l2: {l3: null}}});
+        var deepCopy = obj.deepCopy();
+        test.strictEqual(deepCopy.l1.l2.l3, null);
+
+            obj.l1.l2.l3 = 11;
+                test.strictEqual(deepCopy.l1.l2.l3, null);
+
+            deepCopy.l1.l2.l3 = 22;
+                test.strictEqual(obj.l1.l2.l3, 11);
+
+        test.done();
+    },
+
     deepClone: function(test){
-        var obj = $object.clone({
-            l1: {
-                l2: {
-                    l3: null
-                }
-            }
-        });
+        var obj = $object.clone({l1: {l2: {l3: null}}});
         var deepClone = obj.deepClone();
-        test.strictEqual(deepClone.l1.l2.l3, null);
-        obj.l1.l2.l3 = 11;
-        test.strictEqual(deepClone.l1.l2.l3, 11);
-        deepClone.l1.l2.l3 = 22;
-        test.strictEqual(obj.l1.l2.l3, 11);
+            test.strictEqual(deepClone.l1.l2.l3, null);
+
+            obj.l1.l2.l3 = 11;
+                test.strictEqual(deepClone.l1.l2.l3, 11);
+
+            deepClone.l1.l2.l3 = 22;
+                test.strictEqual(obj.l1.l2.l3, 11);
 
         test.done();
     },
