@@ -209,6 +209,38 @@ module.exports = {
         test.done();
     },
 
+    createSuperSafeCallback: function(test){
+
+        test.expect(2);
+
+        var $parent = $object.clone({
+            constructor: function(){},
+            asyncMethod: function(){
+                var args = arguments;
+                var callback = function(){
+                    this.applySuper(args);
+                    test.equal(this.__super__, $object);
+                }
+                setTimeout( this.createSuperSafeCallback(callback, this) );
+            }
+        });
+        var $child = $parent.clone({
+            constructor: function(){
+                this.applySuper('asyncMethod', [{a:11}]);
+                test.equal(this.__super__, $parent);
+            }
+        });
+
+        var child = $child.create();
+
+        setTimeout(function(){
+//            console.log(child.a);
+//            test.equal(11, child.a);
+            test.done();
+        });
+    },
+
+
     apply: function(test){
         //methodName, args, withObj, asObj
         var asObj = {defineProperties: function(){
