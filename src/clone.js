@@ -13,10 +13,12 @@
  *     <p><a href="http://github.com/quadroid/clonejs">Project on GitHub</a>
  *
  *     <p><b>Naming conventions</b>
- *     <p>Var names, prefixed by "<b>$</b>", contain object, used as prototype for other objects. For example:<br>
- *        var $array = Array.prototype, $myType = {}, <br>
- *            myTypeInstance = Object.create($myType);// $object.apply('create', $myType);
- *     <p>Properties, prefixed by "<b>_</b>", are private.
+ *     <p>Var names, <b>prefixed by "$"</b>, contain object, used as prototype for other objects. For example:
+ *     <code>
+ *     var $array = Array.prototype, $myType = {},
+ *         myTypeInstance = Object.create($myType);// $object.apply('create', $myType);
+ *     </code>
+ *     <p>Properties, <b>prefixed by "_"</b>, are private.
  *     <p>
  * @description
  *     With this library you should forget about classes. Use prototypes instead.
@@ -99,7 +101,8 @@ var $object = /** @lands $object# */{
 
 
     /**
-     * Default constructor. Override it if you want to create custom type.
+     * $object constructor.
+     * Override it if you want to create custom type.
      * @field
      * @memberOf $object#
      */
@@ -374,8 +377,8 @@ var $object = /** @lands $object# */{
      * @memberOf $object#
      */
     copy: function(
-        /** ?('deepClone'|'deepCopy') */deepMethod,
-        /**    ?(Object|Constructor) */rootPrototype,
+        /** ('deepClone'|'deepCopy')= */deepMethod,
+        /**     (Object|Constructor)= */rootPrototype,
         /**                  number=0 */parentsLevel,
         /**             boolean=false */mixParents
     ){
