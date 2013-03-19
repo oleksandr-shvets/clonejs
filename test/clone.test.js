@@ -186,7 +186,24 @@ module.exports = {
         test.done();
     },
 
-    template: function(test){
+    callSuper: function(test){
+        var calls = [];
+        var $parent = $object.clone({
+            constructor: function(arg){
+                calls.push('collection');
+                this.callSuper('constructor', arg);
+            }
+        });
+        var $child = $parent.clone({
+            constructor: function(arg){
+                calls.push('users');
+                this.callSuper('constructor', arg);
+            }
+        });
+
+        var child = $child.create({setBy$objectConstructor: 11});
+            test.deepEqual(calls, ['users','collection']);
+            test.equal(child.setBy$objectConstructor, 11, '$object.constructor called');
 
         test.done();
     },
