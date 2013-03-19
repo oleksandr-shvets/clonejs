@@ -53,7 +53,7 @@
 					</if>
 				</div>
 			</header>
-			
+			<!--
 			<if test="!data.isBuiltin() && (data.isNamespace || data.is('CONSTRUCTOR'))">
 				<section>
 					<div class="props">
@@ -83,7 +83,7 @@
 					</div>
 				</section>
 			</if>
-			
+			-->
 			<if test="data.properties.length">
 				{! var ownProperties = data.properties.filter(function($){return $.memberOf == data.alias && !$.isNamespace}).sort(makeSortby("name")); !}
 				<section>
