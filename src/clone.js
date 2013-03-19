@@ -384,10 +384,11 @@ var $object = /** @lands $object# */{
         //**                Array=all */propertiesList
         ){
         for(var i=0, value=arguments[i]; i < arguments.length; value=arguments[++i]) switch(typeof value){
-            case 'string':  deepMethod    = value; break;
-            case 'object':  rootPrototype = value; break;
-            case 'number':  parentsLevel  = value; break;
-            case 'boolean': mixParents    = value; break;
+            case 'string':   deepMethod    = value; break;
+            case 'function': rootPrototype = value.prototype; break;
+            case 'object':   rootPrototype = value; break;
+            case 'number':   parentsLevel  = value; break;
+            case 'boolean':  mixParents    = value; break;
         }
 
         if( deepMethod != 'deepCopy' || deepMethod != 'deepClone'){
@@ -396,28 +397,33 @@ var $object = /** @lands $object# */{
 
         if(typeof rootPrototype == 'undefined'){
             rootPrototype = $object;
-        }else if( typeof(rootPrototype)=='function' && Object.getOwnPropertyNames(rootPrototype.prototype) ){
-            rootPrototype = rootPrototype.prototype;
         }
 
         var sourceObj = this;
+        if( typeof(sourceObj)=='function' && Object.getOwnPropertyNames(sourceObj.prototype) ){
+            sourceObj = sourceObj.prototype;
+        }
         var newObj    = Object.create(rootPrototype);
         var updateObj = newObj;
 
+        var sourceObjects = [];
         do{
-            if( typeof(sourceObj)=='function' && Object.getOwnPropertyNames(sourceObj.prototype) ){
-                sourceObj = sourceObj.prototype;
-            }
+            sourceObjects.push(sourceObj);
+            sourceObj = Object.getPrototypeOf(sourceObj);
+        }while(parentsLevel-- && sourceObj != Object.prototype);
 
+        sourceObjects = sourceObjects.reverse();
+
+        for(var i=0; i < sourceObjects.length; i++){
+            sourceObj = sourceObjects[i];
             var ownPropertyNames = Object.getOwnPropertyNames(sourceObj);
-
-            if(!mixParents  && ownPropertyNames.length){
+            if (!mixParents && i && ownPropertyNames.length){
                 updateObj = $object.apply('clone', updateObj);
             }
 
             // copy all own properties:
-            for(var i=0; i < ownPropertyNames.length; i++){
-                var name = ownPropertyNames[i];
+            for(var p=0; p < ownPropertyNames.length; p++){
+                var name = ownPropertyNames[p];
                 var descriptor = Object.getOwnPropertyDescriptor(sourceObj, name);
 
                 if( deepMethod && typeof sourceObj[name] == 'object'){
@@ -426,11 +432,9 @@ var $object = /** @lands $object# */{
 
                 Object.defineProperty(updateObj, name, descriptor);
             }
+        }
 
-            sourceObj = Object.getPrototypeOf(sourceObj);
-        }while( parentsLevel-- && sourceObj != Object.prototype );
-
-        return newObj;
+        return updateObj;
     },
 
     /**
