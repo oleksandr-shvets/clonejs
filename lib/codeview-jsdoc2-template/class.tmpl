@@ -53,8 +53,8 @@
 					</if>
 				</div>
 			</header>
-			<!--
-			<if test="!data.isBuiltin() && (data.isNamespace || data.is('CONSTRUCTOR'))">
+
+			<if test="!data.isBuiltin() && (data.isNamespace)">
 				<section>
 					<div class="props">
 						<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class {+data.alias+}.">
@@ -83,7 +83,7 @@
 					</div>
 				</section>
 			</if>
-			-->
+
 			<if test="data.properties.length">
 				{! var ownProperties = data.properties.filter(function($){return $.memberOf == data.alias && !$.isNamespace}).sort(makeSortby("name")); !}
 				<section>
@@ -319,12 +319,12 @@
 								{+classType+}Detail
 							</h2>
 							
-							<div class="fixedFont">{!
+							<if test="!data.is('CONSTRUCTOR')"><div class="fixedFont">{!
 								if (data.isPrivate) output += "&lt;private&gt; ";
 								if (data.isInner) output += "&lt;inner&gt; ";
 							!}
 								<b>{+ data.alias +}</b><if test="classType != 'Namespace '">{+ makeSignature(data.params) +}</if>
-							</div>
+							</div></if>
 							
 							<div class="description">
 								{+resolveLinks(data.desc)+}
