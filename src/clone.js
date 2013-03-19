@@ -408,7 +408,7 @@ var $object = /** @lands $object# */{
             var ownPropertyNames = Object.getOwnPropertyNames(sourceObj);
 
             if(!mixParents  && ownPropertyNames.length){
-                updateObj = $object.do('clone', updateObj);
+                updateObj = $object.apply('clone', updateObj);
             }
 
             // copy all own properties:
@@ -437,7 +437,7 @@ var $object = /** @lands $object# */{
      * @memberOf $object#
      */
     deepCopy: function deepCopy(){
-        var obj = arguments.length ? $object.do('copy', arguments, this) : {};
+        var obj = arguments.length ? $object.apply('copy', arguments, this) : {};
 
         var ownPropertyNames = Object.getOwnPropertyNames(this);
         for(var i=0; i < ownPropertyNames.length; i++){
@@ -462,7 +462,7 @@ var $object = /** @lands $object# */{
      * @memberOf $object#
      */
     deepClone: function deepClone(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
-        var obj = $object.do('clone', arguments, this);
+        var obj = $object.apply('clone', arguments, this);
 
         var ownPropertyNames = Object.getOwnPropertyNames(this);
         for(var i=0; i < ownPropertyNames.length; i++){
@@ -479,22 +479,20 @@ var $object = /** @lands $object# */{
     /**
      * Apply method from one object to another object.
      * @example
-     *     var array = $object.do('mix', Array);
-     *     var  args = $object.do('slice',[1], arguments, Array);
-     *     var  args = $object.do.call(Array, 'slice',[1], arguments);
+     *     var array = $object.apply('mix', Array);
+     *     var  args = $object.apply('slice',[1], arguments, Array);
+     *     var  args = $object.apply.call(Array, 'slice',[1], arguments);
      * @returns {*}
      * @static
-     * @function
-     * @name do
-     * @memberOf $object#
+     * @memberOf $object
      */
-    'do': function(/** string */methodName, /** Array|Object= */args, /** Object= */withObj, /** Object= */asObj){
+    apply: function(/** string */methodName, /** Array|Object= */args, /** Object= */withObj, /** Object= */asObj){
         if(arguments.length == 2){
             withObj = args;
             args = undefined;
         }
         if(!asObj){
-            asObj = typeof(withObj[methodName])=='function' && withObj[methodName].length == this[methodName].length && withObj || this;
+            asObj = typeof(withObj[methodName])=='function' && withObj[methodName].length == $object[methodName].length && withObj || $object;
 
         }else if( asObj.prototype && typeof asObj == 'function' ){
             asObj = asObj.prototype;
