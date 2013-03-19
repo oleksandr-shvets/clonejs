@@ -14,7 +14,7 @@
  *     <p><b>Naming conventions</b>
  *     <p>Var names, prefixed by "<b>$</b>", contain object, used as prototype for other objects. For example:<br>
  *        var $array = Array.prototype, $myType = {}, <br>
- *            myTypeInstance = Clone($myType);
+ *            myTypeInstance = Object.create($myType);// $object.apply('create', $myType);
  *     <p>Properties, prefixed by "<b>_</b>", are private.
  *     <p>
  * @description
