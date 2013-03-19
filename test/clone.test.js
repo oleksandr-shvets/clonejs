@@ -108,13 +108,48 @@ module.exports = {
     },
 
     copy: function(test){
-        //var $myArray1 = $object.clone.call(Array.prototype, {customMethod: function(){}});
-        var myArray = $object.copy(Array);//.defineProperties({test: 'T'});
-        myArray[0] = 11;
-        myArray[1] = 22;
-        test.deepEqual(myArray, [11 ,22]);
+        var myArray = $object.copy(Array);
+            myArray[0] = 11;
+            myArray[1] = 22;
+            test.deepEqual(myArray, [11 ,22]);
+        myArray.defineProperties({test: 'T'});
+            test.strictEqual(myArray.test, 'T');
 
-        //concat($collection, ['next','prev'])
+
+        var $collection = $object.clone({items: []}),
+            $users = $collection.clone({name: ''});
+
+        // $users full prototype chain:
+        //$users -> $collection -> $object -> Object.prototype -> null
+
+        // see prototype chains produced by copy:
+
+        var userCopy = $users.copy();
+        //~$users -> $object
+            test.equal(Object.getPrototypeOf(userCopy), $object);
+            test.ok(userCopy.hasOwnProperty('name'));
+            test.ok(userCopy.items === undefined);
+
+        userCopy = $users.copy(Array);
+        //~$users -> Array.prototype
+            test.equal(Object.getPrototypeOf(userCopy), Array.prototype);
+            test.ok(userCopy.hasOwnProperty('name'));
+            test.ok(userCopy.items === undefined);
+            test.ok(userCopy.clone === undefined);
+
+        userCopy = $users.copy(Array, Infinity);
+        //~$users -> ~$collection -> ~$object -> Array.prototype
+            test.ok(userCopy.hasOwnProperty('name'));
+            test.ok(userCopy.getPrototype().hasOwnProperty('items'));
+            test.ok(userCopy.getPrototype().getPrototype().hasOwnProperty('clone'));
+            test.ok(userCopy.getPrototype().getPrototype().getPrototype() === Array.prototype);
+
+        userCopy = $users.copy(Array, Infinity, true);
+        //~($users + $collection + $object) -> Array.prototype
+            test.equal(Object.getPrototypeOf(userCopy), Array.prototype);
+            test.ok(userCopy.hasOwnProperty('name'));
+            test.ok(userCopy.hasOwnProperty('items'));
+            test.ok(userCopy.hasOwnProperty('clone'));
 
         test.done();
     },
