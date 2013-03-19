@@ -187,7 +187,7 @@ module.exports = {
         test.done();
     },
 
-    callSuper: function(test){
+    'callSuper, applySuper': function(test){
         var calls = [];
         var $parent = $object.clone({
             constructor: function(arg){
