@@ -208,5 +208,31 @@ module.exports = {
         test.done();
     },
 
+    apply: function(test){
+        //methodName, args, withObj, asObj
+        var asObj = {defineProperties: function(){
+            this.called = true;
+            return this;
+        }};
+        var obj = $object.apply('defineProperties',[{a:11}], Array(22,33), asObj);
+            test.equal(obj.a, undefined);
+            test.ok(obj.called);
+            test.equal(obj[0], 22);
+            test.equal(Object.getPrototypeOf(obj), Array.prototype);
+
+        //methodName, args, withObj
+        obj = $object.apply('defineProperties',[{a:11}], Array(22,33) );
+            test.equal(obj.a,  11);
+            test.equal(obj[0], 22);
+            test.equal(Object.getPrototypeOf(obj), Array.prototype);
+
+        //methodName, withObj
+        obj = $object.apply('defineProperties', Array(22,33) );
+            test.equal(obj[0], 22);
+            test.equal(Object.getPrototypeOf(obj), Array.prototype);
+
+        test.done();
+    }
+
 
 };
