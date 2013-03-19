@@ -10,51 +10,45 @@ module.exports = {
 
 
         var clone = $object.clone({a:1});
-        test.ok( clone.hasOwnProperty('a') );
-        test.equal( Object.getPrototypeOf(clone), $object);
-        test.strictEqual( Object.getOwnPropertyNames(clone).length, 1);
+            test.ok( clone.hasOwnProperty('a') );
+            test.equal( Object.getPrototypeOf(clone), $object);
+            test.strictEqual( Object.getOwnPropertyNames(clone).length, 1);
 
         clone = $object.clone({a:1}, {});
-        test.ok( clone.hasOwnProperty('a') );
-        test.equal( Object.getPrototypeOf(clone), $object);
-        test.strictEqual( Object.getOwnPropertyNames(clone).length, 1);
+            test.ok( clone.hasOwnProperty('a') );
+            test.equal( Object.getPrototypeOf(clone), $object);
+            test.strictEqual( Object.getOwnPropertyNames(clone).length, 1);
 
         clone = $object.clone();
-        test.strictEqual( Object.getOwnPropertyNames(clone).length, 0);
-        test.equal( Object.getPrototypeOf(clone), $object);
+            test.strictEqual( Object.getOwnPropertyNames(clone).length, 0);
+            test.equal( Object.getPrototypeOf(clone), $object);
 
         test.done();
     },
 
     'clone.call': function(test){
         var $proto = {a: 1};
-        var clone = $object.clone.call($proto);
 
-        test.equal( Object.getPrototypeOf(clone), $proto,
-            'check prototype');
+            var clone = $object.clone.call($proto);
+                test.equal( Object.getPrototypeOf(clone), $proto,
+                    'check prototype');
 
-        clone = $object.clone.call($proto, {b:2});
-        test.ok( clone.hasOwnProperty('b') );
+            clone = $object.clone.call($proto, {b:2});
+                test.ok( clone.hasOwnProperty('b') );
 
-        clone = $object.clone.call($proto, {b:2}, {});
-        test.ok( clone.hasOwnProperty('b') );
+            clone = $object.clone.call($proto, {b:2}, {});
+                test.ok( clone.hasOwnProperty('b') );
 
         test.done();
     },
 
     'clone.constructor': function(test){
-        var fn = function(){};
-
         var constructor = $object.clone({constructor: ''}).constructor;
         var c = $object.clone({constructor: ''});
-        test.ok(constructor !== c.constructor);
-        test.ok(constructor !== $object.clone().constructor);
-        test.equal(typeof constructor, 'function');
+            test.ok(constructor !== c.constructor);
+            test.ok(constructor !== $object.clone().constructor);
+            test.equal(typeof constructor, 'function');
 
-        //Object.freeze(fn);
-//        constructor = $object.clone({create: fn}).constructor;
-
-        //todo
 
         test.done();
     },
@@ -68,8 +62,8 @@ module.exports = {
             }
         });
         var instance = $myType.create({ignored: true});
-        test.ok(constructorCalled);
-        test.ok(typeof instance.ignored == 'undefined');
+            test.ok(constructorCalled);
+            test.ok(typeof instance.ignored == 'undefined');
 
         test.done();
     },
@@ -80,14 +74,14 @@ module.exports = {
 
         test.deepEqual(
             $object.describe({
-                _p: undefined,
-                '(const) _unwritable': 231,
-                method: Function,
+                         _p: undefined,
+      '(const) _unwritable': 231,
+                     method: Function,
                 constructor: Function
             }),{
-                _p: {value: undefined, enumerable:false},
+                         _p: {value: undefined, enumerable:false},
                 _unwritable: {value: 231, enumerable:false, writable: false},
-                method: {value: Function, enumerable:false},
+                     method: {value: Function, enumerable:false},
                 constructor: {value: Function, enumerable:false}
             },
             'private properties, functions, constructor should be not enumerable'
@@ -106,10 +100,8 @@ module.exports = {
             swim: function(a,b,c){}
         });
         var myObj = $myObj.create();
-
-
-        test.ok(!! myObj.can('swim').as($myObj) );
-        test.ok(!! $object.can.call(myObj, 'fly').like($myObj) );
+            test.ok(!! myObj.can('swim').as($myObj) );
+            test.ok(!! $object.can.call(myObj, 'fly').like($myObj) );
 
         //todo
 
@@ -118,11 +110,12 @@ module.exports = {
 
     copy: function(test){
         var myArray = $object.copy(Array);
-            myArray[0] = 11;
-            myArray[1] = 22;
+        myArray[0] = 11;
+        myArray[1] = 22;
             test.deepEqual(myArray, [11 ,22]);
-        myArray.defineProperties({test: 'T'});
-            test.strictEqual(myArray.test, 'T');
+
+            myArray.defineProperties({test: 'T'});
+                test.strictEqual(myArray.test, 'T');
 
 
         var $collection = $object.clone({items: []});
