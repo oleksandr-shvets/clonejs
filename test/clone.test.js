@@ -93,17 +93,18 @@ module.exports = {
         test.done();
     },
 
-    can: function(test){
+    'can, cant': function(test){
 
         var $myObj = $object.clone({
             fly: function(){},
             swim: function(a,b,c){}
         });
         var myObj = $myObj.create();
-            test.ok(!! myObj.can('swim').as($myObj) );
+            test.ok(!!   myObj.can('swim').as($myObj) );
             test.ok(!! $object.can.call(myObj, 'fly').like($myObj) );
 
-        //todo
+            test.ok(!    myObj.cant('swim').as($myObj) );
+            test.ok(!  $object.cant.call(myObj, 'fly').like($myObj) );
 
         test.done();
     },
