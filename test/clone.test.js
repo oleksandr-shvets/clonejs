@@ -61,6 +61,15 @@ module.exports = {
 
 
     create: function(test){
+        var constructorCalled = false;
+        var $myType = $object.clone({
+            constructor: function(){
+                constructorCalled = true;
+            }
+        });
+        var instance = $myType.create({ignored: true});
+        test.ok(constructorCalled);
+        test.ok(typeof instance.ignored == 'undefined');
 
         test.done();
     },
@@ -150,6 +159,8 @@ module.exports = {
             test.ok(userCopy.hasOwnProperty('name'));
             test.ok(userCopy.hasOwnProperty('items'));
             test.ok(userCopy.hasOwnProperty('clone'));
+
+        //TODO: add tests for deepCopy/deepClone
 
         test.done();
     },
