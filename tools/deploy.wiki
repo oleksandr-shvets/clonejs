@@ -1,0 +1,7 @@
+#/usr/bin/bash -v
+
+cd  ../wiki
+cp ../README.md Home.md
+git commit -a -m "deploy wiki"
+git push
+cd ../tools
