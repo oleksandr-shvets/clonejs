@@ -1,0 +1,3 @@
+#/usr/bin/bash -v
+
+closure-compiler --js ../src/clone.js --js_output_file ../build/clone.min.js
