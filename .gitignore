@@ -1,7 +1,6 @@
 .DS_Store
 .idea
 wiki
-lib
 build/docs3
 build/jsduck
 node_modules
