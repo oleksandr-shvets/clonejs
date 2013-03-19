@@ -1,3 +1,4 @@
+'use strict';
 /**
  * @title   clone.js - The true prototype-based OOP framework.
  * @version 0.6.1 alpha
