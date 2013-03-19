@@ -44,10 +44,9 @@
  *
  *     var $myArray1 = $object.clone.call(Array.prototype, {customMethod: function(){}});
  *     var $myArray2 = $object.copy(Array).setProperties({customMethod: function(){}});
- *     var myArray2 = $myArray2.create(11 ,22, 33);
  *
  *     var myObj = {a:1, b:2, c:3};
- *     var cloneOfMyObj = $object.do('clone', myObj);
+ *     var cloneOfMyObj = $object.apply('clone', myObj);
  *     cloneOfMyObj.a = 11; // myObj.a still == 1
  */
 var $object = /** @lands $object# */{
