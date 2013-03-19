@@ -49,7 +49,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="http://www.thebrightlines.com/2010/05/06/new-template-for-jsdoctoolkit-codeview/" target="_blank">Codeview</a> 1.2<br />
 			Generated on:
-			<time datetime='2013-2-19' pubdate>2013-2-19 3:42</time>
+			<time datetime='2013-2-19' pubdate>2013-2-19 3:58</time>
 		</footer>
 	</div>
 </div>
@@ -75,7 +75,7 @@
     <p><b>Naming conventions</b>
     <p>Var names, prefixed by "<b>$</b>", contain object, used as prototype for other objects. For example:<br>
        var $array = Array.prototype, $myType = {}, <br>
-           myTypeInstance = Clone($myType);
+           myTypeInstance = Object.create($myType);// $object.apply('create', $myType);
     <p>Properties, prefixed by "<b>_</b>", are private.
     <p>
 					</p>
@@ -94,7 +94,7 @@
 					
 				</div>
 			</header>
-			
+			<!--
 			
 				<section>
 					<div class="props">
@@ -121,7 +121,7 @@
 					</div>
 				</section>
 			
-			
+			-->
 			
 				
 				<section>
