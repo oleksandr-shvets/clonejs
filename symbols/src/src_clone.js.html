@@ -21,7 +21,7 @@
 <span class='line'> 14</span>  *     &lt;p>&lt;b>Naming conventions&lt;/b>
 <span class='line'> 15</span>  *     &lt;p>Var names, prefixed by "&lt;b>$&lt;/b>", contain object, used as prototype for other objects. For example:&lt;br>
 <span class='line'> 16</span>  *        var $array = Array.prototype, $myType = {}, &lt;br>
-<span class='line'> 17</span>  *            myTypeInstance = Clone($myType);
+<span class='line'> 17</span>  *            myTypeInstance = Object.create($myType);// $object.apply('create', $myType);
 <span class='line'> 18</span>  *     &lt;p>Properties, prefixed by "&lt;b>_&lt;/b>", are private.
 <span class='line'> 19</span>  *     &lt;p>
 <span class='line'> 20</span>  * @description
