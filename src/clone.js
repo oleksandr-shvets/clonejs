@@ -381,7 +381,8 @@ var $object = /** @lands $object# */{
         /**     (Object|Constructor)= */rootPrototype,
         /**                  number=0 */parentsLevel,
         /**             boolean=false */mixParents
-    ){
+        //**                Array=all */propertiesList
+        ){
         for(var i=0, value=arguments[i]; i < arguments.length; value=arguments[++i]) switch(typeof value){
             case 'string':  deepMethod    = value; break;
             case 'object':  rootPrototype = value; break;
@@ -478,6 +479,11 @@ var $object = /** @lands $object# */{
         }
         return obj;
     },
+
+//    paste: function(pasteTo, /** Array */propertiesList){
+//        if(!propertiesList) propertiesList = this.getOwnPropertyNames();
+//
+//    },
 
     /**
      * Apply method from one object to another object.
