@@ -49,7 +49,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="http://www.thebrightlines.com/2010/05/06/new-template-for-jsdoctoolkit-codeview/" target="_blank">Codeview</a> 1.2<br />
 			Generated on:
-			<time datetime='2013-2-19' pubdate>2013-2-19 2:49</time>
+			<time datetime='2013-2-19' pubdate>2013-2-19 3:17</time>
 		</footer>
 	</div>
 </div>
@@ -526,10 +526,9 @@
 
     var $myArray1 = $object.clone.call(Array.prototype, {customMethod: function(){}});
     var $myArray2 = $object.copy(Array).setProperties({customMethod: function(){}});
-    var myArray2 = $myArray2.create(11 ,22, 33);
 
     var myObj = {a:1, b:2, c:3};
-    var cloneOfMyObj = $object.do('clone', myObj);
+    var cloneOfMyObj = $object.apply('clone', myObj);
     cloneOfMyObj.a = 11; // myObj.a still == 1</pre>
 								
 							
