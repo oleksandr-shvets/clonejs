@@ -203,7 +203,7 @@ var $object = /** @lands $object# */{
      * Apply method of super object (prototype) to this object.
      * @returns {*}
      * @see $object#__super__
-     * @see $object#_callSuper
+     * @see $object#callSuper
      * @protected
      * @memberOf $object#
      */
@@ -241,7 +241,7 @@ var $object = /** @lands $object# */{
         return returned;
     },
 
-    /** @see $object#_applySuper
+    /** @see $object#applySuper
      *  @see $object#__super__
      *  @protected
      *  @memberOf $object# */
@@ -365,7 +365,7 @@ var $object = /** @lands $object# */{
      *        Set this to Infinity if you want to copy all object parents properties up to $object.
      *
      * @param mixParents
-     *        Should be false if objects have methods, that call {@link $object#_applySuper} <br>
+     *        Should be false if objects have methods, that call {@link $object#applySuper} <br>
      *        If true, all own properties of all objects will be directly attached to the one returned object. <br>
      *        False by default.
      *
