@@ -356,3 +356,7 @@ span.break {
 /*
  * END JSDOC
  */
+
+CODE{
+    white-space: pre;
+}

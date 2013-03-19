@@ -49,7 +49,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="http://www.thebrightlines.com/2010/05/06/new-template-for-jsdoctoolkit-codeview/" target="_blank">Codeview</a> 1.2<br />
 			Generated on:
-			<time datetime='2013-2-19' pubdate>2013-2-19 5:32</time>
+			<time datetime='2013-2-19' pubdate>2013-2-19 18:28</time>
 		</footer>
 	</div>
 </div>
@@ -73,10 +73,12 @@
     <p><a href="http://github.com/quadroid/clonejs">Project on GitHub</a>
 
     <p><b>Naming conventions</b>
-    <p>Var names, prefixed by "<b>$</b>", contain object, used as prototype for other objects. For example:<br>
-       var $array = Array.prototype, $myType = {}, <br>
-           myTypeInstance = Object.create($myType);// $object.apply('create', $myType);
-    <p>Properties, prefixed by "<b>_</b>", are private.
+    <p>Var names, <b>prefixed by "$"</b>, contain object, used as prototype for other objects. For example:
+    <code>
+    var $array = Array.prototype, $myType = {},
+        myTypeInstance = Object.create($myType);// $object.apply('create', $myType);
+    </code>
+    <p>Properties, <b>prefixed by "_"</b>, are private.
     <p>
 					</p>
 						
@@ -131,7 +133,7 @@
 													<div class="fixedFont">
 													<b><a href="../symbols/%24object.html#constructor">constructor</a></b>
 													</div>
-													<div class="description">Default constructor.</div>
+													<div class="description">$object constructor.</div>
 												</td>
 											</tr>
 										
@@ -594,7 +596,8 @@ System property. <b>Use it only for debug purposes</b>.
 								</div>
 								
 								<div class="description">
-									Default constructor. Override it if you want to create custom type.
+									$object constructor.
+Override it if you want to create custom type.
 									
 									
 									
@@ -1120,7 +1123,7 @@ Arguments can be passed in any order (recognized by type).
 												<dt class="heading">Parameters:</dt>
 												
 													<dt>
-														<span class="light fixedFont">{?('deepClone'|'deepCopy')}</span> <b>deepMethod</b>
+														<span class="light fixedFont">{('deepClone'|'deepCopy')=}</span> <b>deepMethod</b>
 														
 													</dt>
 													<dd>How to process inner objects. Can be:         <br>
@@ -1129,7 +1132,7 @@ Arguments can be passed in any order (recognized by type).
        null - do nothing (default).</dd>
 												
 													<dt>
-														<span class="light fixedFont">{?(Object|<a href="../symbols/_global_.html#Constructor">Constructor</a>)}</span> <b>rootPrototype</b>
+														<span class="light fixedFont">{(Object|<a href="../symbols/_global_.html#Constructor">Constructor</a>)=}</span> <b>rootPrototype</b>
 														
 													</dt>
 													<dd>The root prototype for created object prototype chain. If it is Constructor, Constructor.prototype will be used instead. <br>
