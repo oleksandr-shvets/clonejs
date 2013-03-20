@@ -1,0 +1,4 @@
+#/usr/bin/bash -v
+
+find ./build.* -exec {} \;
+find ./deploy.* -exec {} \;
