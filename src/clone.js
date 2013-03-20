@@ -484,10 +484,18 @@ var $object = /** @lands $object# */{
         return obj;
     },
 
-//    paste: function(pasteTo, /** Array */propertiesList){
-//        if(!propertiesList) propertiesList = this.getOwnPropertyNames();
-//
-//    },
+    /**
+     * Add all own properties to other object.
+     * @memberOf $object#
+     */
+    paste: function(/** Object */pasteTo, /** Array= */propertiesList){
+        if(!propertiesList) propertiesList = this.getOwnPropertyNames();
+
+        for(var i=0; i < propertiesList.length; i++){
+            var descriptor = Object.getOwnPropertyDescriptor(this, propertiesList[i]);
+            Object.defineProperties(pasteTo, descriptor);
+        }
+    },
 
     /**
      * Apply method from one object to another object.
