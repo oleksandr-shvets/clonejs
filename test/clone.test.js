@@ -1,14 +1,10 @@
 // nodeunit
 
-var $object = require('../src/clone.js');
+if(typeof $object=='undefined') $object = require('../src/clone.js');
 
-
-module.exports = {
-
+this['clone.js'] = {
 
     clone: function(test){
-
-
         var clone = $object.clone({a:1});
             test.ok( clone.hasOwnProperty('a') );
             test.equal( Object.getPrototypeOf(clone), $object);
@@ -266,6 +262,5 @@ module.exports = {
 
         test.done();
     }
-
 
 };
