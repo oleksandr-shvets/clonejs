@@ -1,6 +1,6 @@
 ## clone.js
 
-This is the framework that implements the true [prototype-based OOP](http://en.wikipedia.org/wiki/Prototype-based_programming) in JS.
+This is the micro-framework that implements the true [prototype-based OOP](http://en.wikipedia.org/wiki/Prototype-based_programming) in JS.
 It's based on the new ECMA Script 5 features like [Object.create](https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create) and [property descriptors](https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty).
 
 [Download](http://github.com/quadroid/clonejs/archive/master.zip)

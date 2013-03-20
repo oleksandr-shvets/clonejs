@@ -1,6 +1,6 @@
 'use strict';
 /**
- * @title   clone.js - The true prototype-based OOP framework.
+ * @title   clone.js - the true prototype-based JavaScript micro-framework.
  * @version 0.6.2 alpha
  * @author  Alex Shvets
  * @see     <a href="http://quadroid.github.com/clonejs/" >Documentation</a>
