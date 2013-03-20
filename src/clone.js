@@ -382,7 +382,7 @@ var $object = /** @lands $object# */{
         /**                  number=0 */parentsLevel,
         /**             boolean=false */mixParents
         //**                Array=all */propertiesList
-        ){
+    ){
         for(var i=0, value=arguments[i]; i < arguments.length; value=arguments[++i]) switch(typeof value){
             case 'string':   deepMethod    = value; break;
             case 'function': rootPrototype = value.prototype; break;
@@ -445,7 +445,10 @@ var $object = /** @lands $object# */{
      * @memberOf $object#
      */
     deepCopy: function deepCopy(){
-        var obj = arguments.length ? $object.apply('copy', arguments, this) : {};
+//        var args = arguments;
+//        $object.apply('unshift',['deepCopy'], args, Array);
+//        return this.copy.apply(this, args);
+        var obj = arguments.length ? $object.apply('copy', arguments, this) : $object.clone();
 
         var ownPropertyNames = Object.getOwnPropertyNames(this);
         for(var i=0; i < ownPropertyNames.length; i++){
@@ -718,4 +721,3 @@ PropertyDescriptor;
  * For example: Object, Array, RegExp.
  * @name Constructor
  * @typedef {Function} */
-
