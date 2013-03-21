@@ -488,16 +488,34 @@ var $object = /** @lands $object# */{
     },
 
     /**
-     * Add all own properties to other object.
+     * Copy properties to other object.
      * @memberOf $object#
      */
     paste: function(/** Object */pasteTo, /** Array= */propertiesList){
-        if(!propertiesList) propertiesList = this.getOwnPropertyNames();
+        return $object.apply(pasteTo, 'concat', [this, propertiesList]);
+    },
 
-        for(var i=0; i < propertiesList.length; i++){
-            var descriptor = Object.getOwnPropertyDescriptor(this, propertiesList[i]);
-            Object.defineProperties(pasteTo, descriptor);
+    /**
+     * Copy properties from given object.
+     * @returns {$object}
+     * @memberOf $object#
+     */
+    concat: function(/** Object */obj, /** (Array|boolean)= */allProperties){
+        if(allProperties == 'undefined') allProperties = this.getOwnPropertyNames();
+        else if(typeof allProperties != 'object' && allProperties){
+            allProperties = this.getOwnPropertyNames();
+            var proto = this;
+            while( (proto = Object.getPrototypeOf(proto)) !== Object.prototype){
+                allProperties = allProperties.concat( proto.getOwnPropertyNames() );
+            }
         }
+
+        for(var i=0; i < allProperties.length; i++){
+            var descriptor = Object.getOwnPropertyDescriptor(obj, allProperties[i]);
+            Object.defineProperties(this, descriptor);
+        }
+
+        return this;
     },
 
     /**
