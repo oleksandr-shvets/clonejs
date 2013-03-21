@@ -16,7 +16,7 @@
  *     <p>Var names, <b>prefixed by "$"</b>, contain object, used as prototype for other objects. For example:
  *     <code>
  *     var $array = Array.prototype, $myType = {},
- *         myTypeInstance = Object.create($myType);// $object.apply('create', $myType);
+ *         myTypeInstance = Object.create($myType);// $object.apply($myType, 'create');
  *     </code>
  *     <p>Properties, <b>prefixed by "_"</b>, are private.
  *     <p>
@@ -49,7 +49,7 @@
  *     var $myArray2 = $object.copy(Array).setProperties({customMethod: function(){}});
  *
  *     var myObj = {a:1, b:2, c:3};
- *     var cloneOfMyObj = $object.apply('clone', myObj);
+ *     var cloneOfMyObj = $object.apply(myObj, 'clone');
  *     cloneOfMyObj.a = 11; // myObj.a still == 1
  */
 var $object = /** @lands $object# */{
@@ -418,7 +418,7 @@ var $object = /** @lands $object# */{
             sourceObj = sourceObjects[i];
             var ownPropertyNames = Object.getOwnPropertyNames(sourceObj);
             if (!mixParents && i && ownPropertyNames.length){
-                updateObj = $object.apply('clone', updateObj);
+                updateObj = $object.apply(updateObj, 'clone');
             }
 
             // copy all own properties:
@@ -446,9 +446,9 @@ var $object = /** @lands $object# */{
      */
     deepCopy: function deepCopy(){
 //        var args = arguments;
-//        $object.apply('unshift',['deepCopy'], args, Array);
+//        $object.apply(args, 'unshift',['deepCopy'], Array);
 //        return this.copy.apply(this, args);
-        var obj = arguments.length ? $object.apply('copy', arguments, this) : $object.clone();
+        var obj = arguments.length ? $object.apply(this, 'copy', arguments) : $object.clone();
 
         var ownPropertyNames = Object.getOwnPropertyNames(this);
         for(var i=0; i < ownPropertyNames.length; i++){
@@ -473,7 +473,7 @@ var $object = /** @lands $object# */{
      * @memberOf $object#
      */
     deepClone: function deepClone(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
-        var obj = $object.apply('clone', arguments, this);
+        var obj = $object.apply(this, 'clone', arguments);
 
         var ownPropertyNames = Object.getOwnPropertyNames(this);
         for(var i=0; i < ownPropertyNames.length; i++){
@@ -503,18 +503,13 @@ var $object = /** @lands $object# */{
     /**
      * Apply method from one object to another object.
      * @example
-     *     var array = $object.apply('mix', Array);
-     *     var  args = $object.apply('slice',[1], arguments, Array);
-     *     var  args = $object.apply.call(Array, 'slice',[1], arguments);
+     *     var  args = $object.apply(arguments, 'slice',[1], Array);
+     *     var  args = $object.apply.call(Array, arguments, 'slice',[1]);
      * @returns {*}
      * @static
      * @memberOf $object
      */
-    apply: function(/** string */methodName, /** Array|Object= */args, /** Object= */withObj, /** Object= */asObj){
-        if(arguments.length == 2){
-            withObj = args;
-            args = undefined;
-        }
+    apply: function(/** Object */withObj, /** string */methodName, /** Array= */args, /** Object= */asObj){
         if(!asObj){
             asObj = typeof(withObj[methodName])=='function' && withObj[methodName].length == $object[methodName].length && withObj || $object;
 
