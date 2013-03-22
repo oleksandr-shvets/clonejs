@@ -1,14 +1,14 @@
 ## clone.js
 
-This is the micro-framework that implements the true [prototype-based OOP](http://en.wikipedia.org/wiki/Prototype-based_programming) in JS.
-It's based on the new ECMA Script 5 features like [Object.create](https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create) and [property descriptors](https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty).
+This is the micro-framework that implements the true [prototype-based OOP⠙](http://en.wikipedia.org/wiki/Prototype-based_programming) in JS.
+It's based on the new ECMA Script 5 features like [`Object.create`⠙](https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create) and [property descriptors⠙](https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty).
 
-[Download](http://github.com/quadroid/clonejs/archive/master.zip)
+[(Download clonejs.zip)](http://github.com/quadroid/clonejs/archive/master.zip)
 
 ### See [API Documentation](http://quadroid.github.com/clonejs/symbols/%24object.html)
 
-The main difference with other class-producing tools like Ext.define, dojo.declare, Backbone.Model.extend
-is that $object.clone will return an object (prototype with defined constructor-function) instead of function (with defined prototype-object). So, you don't need for instantiation, you can just start using the created object right now.
+The main difference with other class-producing tools like `Ext.define`, `dojo.declare`, `Backbone.Model.extend`
+is that `$object.clone` will return an object (prototype with defined constructor-function) instead of function (with defined prototype-object). So, you don't need for instantiation, you can just start using the created object right now.
 
 Quick example:
 
