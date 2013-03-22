@@ -51,15 +51,19 @@ this['clone.js'] = {
 
 
     create: function(test){
-        var constructorCalled = false;
+        var customConstructorCalled = false;
         var $myType = $object.clone({
             constructor: function(){
-                constructorCalled = true;
+                customConstructorCalled = true;
             }
         });
         var instance = $myType.create({ignored: true});
-            test.ok(constructorCalled);
+            test.ok(customConstructorCalled);
             test.ok(typeof instance.ignored == 'undefined');
+            test.ok(!Object.isSealed(instance));//default constructor does not called
+
+        instance = $object.create();
+            test.ok( Object.isSealed(instance), 'the created object should be sealed by default');
 
         test.done();
     },
