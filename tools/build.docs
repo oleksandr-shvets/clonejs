@@ -1,3 +1,7 @@
 #/usr/bin/bash -v
 
-jsdoc -v -a -p -r=2 -d=../build/doc/ -t=../lib/codeview-jsdoc2-template/ ../src/
+cd ../lib/jsdoc-toolkit/
+
+./jsrun.sh -v -a -p -r=2 -d=../../build/doc/ -t=./templates/codeview-jsdoc2-template/ ../../src/
+
+cd ../../tools/
