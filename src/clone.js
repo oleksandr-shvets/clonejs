@@ -127,12 +127,13 @@ var $object = /** @lands $object# */{
      * Functions (except getters) and properties prefixed by "_" will be automatically marked as non-enumerable.<br>
      *
      * You can prefix your property names by `(get|set|const|final|hidden|writable)`:
-     * <li> `(get)`      - define getter, if string passed, the getter will be auto generated.
-     * <li> `(set)`      - define setter, if string passed, the setter will be auto generated.
-     * <li> `(const)`    - make property unwritable.
-     * <li> `(final)`    - make property unwritable, and prevent it deleting and descriptor modifications.
-     * <li> `(hidden)`   - make property non-enumerable.
-     * <li> `(writable)` - make property writable (use with final).
+     *
+     * + `(get)`      - define getter, if string passed, the getter will be auto generated.
+     * + `(set)`      - define setter, if string passed, the setter will be auto generated.
+     * + `(const)`    - make property unwritable.
+     * + `(final)`    - make property unwritable, and prevent it deleting and descriptor modifications.
+     * + `(hidden)`   - make property non-enumerable.
+     * + `(writable)` - make property writable (use with final).
      *
      * @param {Object} properties
      * @param {PropertyDescriptor=} defaultDescriptor The default property descriptor.

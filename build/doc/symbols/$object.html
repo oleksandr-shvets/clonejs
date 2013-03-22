@@ -49,7 +49,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="http://www.thebrightlines.com/2010/05/06/new-template-for-jsdoctoolkit-codeview/" target="_blank">Codeview</a> 1.2<br />
 			Generated on:
-			<time datetime='2013-2-22' pubdate>2013-2-22 22:48</time>
+			<time datetime='2013-2-22' pubdate>2013-2-22 23:10</time>
 		</footer>
 	</div>
 </div>
@@ -1720,13 +1720,16 @@ But, if you modify parent (this), it can affect deep clone(s).</p>
 <p>For example, <code>{a:{}, b:2}</code> will be translated to something like <code>{a: {value: {}}, b: {value: 2}}</code>.
 Functions (except getters) and properties prefixed by "_" will be automatically marked as non-enumerable.<br></p>
 
-<p>You can prefix your property names by <code>(get|set|const|final|hidden|writable)</code>:
-<li> <code>(get)</code>      - define getter, if string passed, the getter will be auto generated.
-<li> <code>(set)</code>      - define setter, if string passed, the setter will be auto generated.
-<li> <code>(const)</code>    - make property unwritable.
-<li> <code>(final)</code>    - make property unwritable, and prevent it deleting and descriptor modifications.
-<li> <code>(hidden)</code>   - make property non-enumerable.
-<li> <code>(writable)</code> - make property writable (use with final).</p>
+<p>You can prefix your property names by <code>(get|set|const|final|hidden|writable)</code>:</p>
+
+<ul>
+<li><code>(get)</code>      - define getter, if string passed, the getter will be auto generated.</li>
+<li><code>(set)</code>      - define setter, if string passed, the setter will be auto generated.</li>
+<li><code>(const)</code>    - make property unwritable.</li>
+<li><code>(final)</code>    - make property unwritable, and prevent it deleting and descriptor modifications.</li>
+<li><code>(hidden)</code>   - make property non-enumerable.</li>
+<li><code>(writable)</code> - make property writable (use with final).</li>
+</ul>
 											
 											
 											
