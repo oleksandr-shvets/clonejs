@@ -102,7 +102,7 @@ html {
 }
 
 body {
-	font-size: 0.75em;
+	font-size: 0.9em;
 	padding: 15px 0;
 	background: #eee;
 	background-image: -moz-linear-gradient(left, #dddddd, #f9f9f9) fixed;
@@ -121,12 +121,13 @@ a:link,
 a:hover,
 a:active,
 a:visited {
-	color: #19199e;
+	color: #4183c4;
+    text-decoration: none;
 }
 a:hover,
 a:focus {
-	color: #00f;
-	text-decoration: none;
+	color: #4183c4;
+    text-decoration: underline;
 }
 
 p {
@@ -316,12 +317,13 @@ dl.inheritsList dd {
 }
 
 .fixedFont.heading {
-	font-size: 1.25em;
-	line-height: 1.1em
+	font-size: 1em;
+	line-height: 1.1em;
+    border-bottom: 1px solid #c0c0c0;
 }
 
 .fixedFont.heading + .description {
-	font-size: 1.2em;
+	/*font-size: 1.2em;*/
 }
 
 .fixedFont.heading .light,
@@ -359,4 +361,8 @@ span.break {
 
 CODE{
     white-space: pre;
+}
+
+.detailList{
+    font-size: 0.8em;
 }
