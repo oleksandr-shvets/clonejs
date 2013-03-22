@@ -3,58 +3,59 @@
  * @title   clone.js - the true prototype-based JavaScript micro-framework.
  * @version 0.6.2 alpha
  * @author  Alex Shvets
- * @see     <a href="http://quadroid.github.com/clonejs/" >Documentation</a>
+ * @see     <a href="http://quadroid.github.com/clonejs/" >API documentation</a>
  * @see     <a href="http://github.com/quadroid/clonejs/" >GitHub</a>
  *
  * @class
- *     This is the framework that implements the true prototype-based OOP paradigm in JS.<br>
- *     It's based on the new ECMA Script 5 features like Object.create and property descriptors.
+ * This is the framework that implements the true prototype-based OOP paradigm in JS.
+ * It's based on the new ECMA Script 5 features like Object.create and property descriptors.
  *
- *     <p><a href="http://github.com/quadroid/clonejs">Project on GitHub</a>
+ * [Project on GitHub](http://github.com/quadroid/clonejs#readme)
  *
- *     <p><b>Naming conventions</b>
- *     <p>Var names, <b>prefixed by "$"</b>, contain object, used as prototype for other objects. For example:
- *     <code>
- *     var $array = Array.prototype, $myType = {},
- *         myTypeInstance = Object.create($myType);// $object.apply($myType, 'create');
- *     </code>
- *     <p>Properties, <b>prefixed by "_"</b>, are private.
- *     <p>
+ * ## **Naming conventions**
+ * <br>
+ * Var names, **prefixed by "$"**, contain object, used as prototype for other objects. For example:
+ * <code>
+ * var $array = Array.prototype, $myType = {},
+ *     myTypeInstance = Object.create($myType);// $object.apply($myType, 'create');
+ * </code>
+ *
+ * Properties, **prefixed by "_"**, are private.
  *
  * @description
- *     With this library you should forget about classes. Use prototypes instead.
- *     The main difference with other class-producing tools like Ext.define, dojo.declare, Backbone.Model.extend
- *     is that $object.clone will return an object (prototype with defined constructor-function) instead of function (with defined prototype-object).
- *     So, you don't need for instantiation, you can just start using the created object right now.
+ * The main difference with other class-producing tools like `Ext.define`, `dojo.declare`, `Backbone.Model.extend`
+ * is that `$object.clone` will return an object (prototype with defined constructor-function) instead of function
+ * (with defined prototype-object). So, you don't need for instantiation, you can just start using the cloned object right now.
+ * But, if you need more than one instance, you can create it by `$yourProto.create`.
  *
  * @example
- *     var $myType = $object.clone({
- *         '(final)  notConfigurableAndNotWritable': true,
- *         '(writable final)   notConfigurableOnly': null,
- *         '(hidden final get) notEnumerableGetter': function(){},
- *         '(hidden)                 notEnumerable': true,
- *         '(const)                       constant': 'not writable',
- *                                  publicProperty : 1,
- *                                           _item : null,// private property (not enumerable)
- *                                     '(get) item': function() { return this._item },
- *                                     '(set) item': function(v){ this._item = v },
- *                      '(get) publicPropertyAlias': 'publicProperty',// automatically create getter for publicProperty
- *                                     constructor : function MyType(){
- *                                                       var obj = this.applySuper(arguments);
- *                                                       // do something with obj...
- *                                                       return obj;
- *                                                   }
- *     });
- *     var myTypeInstance = $myType.create({publicProperty: 2});
- *     assert( $myType.isPrototypeOf(myTypeInstance) );
- *     assert( $myType.publicPropertyAlias === $myType.publicProperty );
+ * var $myType = $object.clone({
+ *     '(final)  notConfigurableAndNotWritable': true,
+ *     '(writable final)   notConfigurableOnly': null,
+ *     '(hidden final get) notEnumerableGetter': function(){},
+ *     '(hidden)                 notEnumerable': true,
+ *     '(const)                       constant': 'not writable',
+ *                              publicProperty : 1,
+ *                                       _item : null,// private property (not enumerable)
+ *                                 '(get) item': function() { return this._item },
+ *                                 '(set) item': function(v){ this._item = v },
+ *                  '(get) publicPropertyAlias': 'publicProperty',// automatically create getter for publicProperty
+ *                                 constructor : function MyType(){
+ *                                                   var obj = this.applySuper(arguments);
+ *                                                   // do something with obj...
+ *                                                   return obj;
+ *                                               }
+ * });
+ * var myTypeInstance = $myType.create({publicProperty: 2});
+ * assert( $myType.isPrototypeOf(myTypeInstance) );
+ * assert( $myType.publicPropertyAlias === $myType.publicProperty );
  *
- *     var $myArray1 = $object.clone.call(Array.prototype, {customMethod: function(){}});
- *     var $myArray2 = $object.copy(Array).setProperties({customMethod: function(){}});
+ * var $myArray1 = $object.clone.call(Array.prototype, {customMethod: function(){}});
+ * var $myArray2 = $object.copy(Array).setProperties({customMethod: function(){}});
  *
- *     var myObj = {a:1, b:2, c:3};
- *     var cloneOfMyObj = $object.apply(myObj, 'clone');
- *     cloneOfMyObj.a = 11; // myObj.a still == 1
+ * var myObj = {a:1, b:2, c:3};
+ * var cloneOfMyObj = $object.apply(myObj, 'clone');
+ * cloneOfMyObj.a = 11; // myObj.a still == 1
  */
 var $object = /** @lands $object# */{
 
@@ -91,7 +92,7 @@ var $object = /** @lands $object# */{
      *
      * @example
      *     var $myType = $object.clone({
-     *         create: 'MyType',
+     *         constructor: 'MyType',
      *     });
      *     var myTypeInstance = $myType.create();
      *     assert( myTypeInstance.constructor === $myType.constructor );
@@ -121,20 +122,21 @@ var $object = /** @lands $object# */{
 
     /**
      * Translate object to property descriptors.
-     * <p>For example, {a:{}, b:2} will be translated to something like {a: {value: {}}, b: {value: 2}}.
-     * <p>Functions (except getters) and properties prefixed by "_" will be automatically marked as non-enumerable.
-     * <p>You can prefix your property names by (get|set|const|final|hidden|writable).
-     *     <li>(get) - define getter, if string passed, the getter will be auto generated.
-     *     <li>(set) - define setter, if string passed, the setter will be auto generated.
-     *     <li>(const) - make property unwritable.
-     *     <li>(final) - make property unwritable, and prevent it deleting and descriptor modifications.
-     *     <li>(hidden) - make property non-enumerable.
-     *     <li>(writable) - make property writable (use with final).
+     *
+     * For example, `{a:{}, b:2}` will be translated to something like `{a: {value: {}}, b: {value: 2}}`.
+     * Functions (except getters) and properties prefixed by "_" will be automatically marked as non-enumerable.<br>
+     *
+     * You can prefix your property names by `(get|set|const|final|hidden|writable)`:
+     * <li> `(get)`      - define getter, if string passed, the getter will be auto generated.
+     * <li> `(set)`      - define setter, if string passed, the setter will be auto generated.
+     * <li> `(const)`    - make property unwritable.
+     * <li> `(final)`    - make property unwritable, and prevent it deleting and descriptor modifications.
+     * <li> `(hidden)`   - make property non-enumerable.
+     * <li> `(writable)` - make property writable (use with final).
      *
      * @param {Object} properties
      * @param {PropertyDescriptor=} defaultDescriptor The default property descriptor.
      * @returns {{PropertyDescriptor}} Property descriptors.
-     *
      * @static
      * @memberOf $object
      */
@@ -282,7 +284,7 @@ var $object = /** @lands $object# */{
 //        },
 
     /**
-     * Use this method to wrap callback, that can call "applySuper" method.
+     * Use this method to wrap callback, that can call `applySuper` method.
      * @see $object#applySuper
      * @returns {Function}
      * @memberOf $object#
