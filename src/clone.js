@@ -502,19 +502,25 @@ var $object = /** @lands $object# */{
      * @memberOf $object#
      */
     concat: function(/** Object */obj, /** (Array|boolean)= */allProperties){
-        if(allProperties == 'undefined') allProperties = this.getOwnPropertyNames();
-        else if(typeof allProperties != 'object' && allProperties){
-            allProperties = this.getOwnPropertyNames();
-            var proto = this;
-            while( (proto = Object.getPrototypeOf(proto)) !== Object.prototype){
+        if(allProperties == undefined) allProperties = obj.getOwnPropertyNames();
+        else if(typeof allProperties != 'object' && allProperties == true){
+            allProperties = obj.getOwnPropertyNames();
+            var proto = obj;
+            while( (proto = Object.getPrototypeOf(proto)) !== Object.prototype ){
                 allProperties = allProperties.concat( proto.getOwnPropertyNames() );
             }
         }
 
-        for(var i=0; i < allProperties.length; i++){
-            var descriptor = Object.getOwnPropertyDescriptor(obj, allProperties[i]);
-            Object.defineProperties(this, descriptor);
+        proto = obj;
+        do for(var i=0; i < allProperties.length; i++){
+            var name = allProperties[i];
+            var descriptor = Object.getOwnPropertyDescriptor(proto, name);
+            if( descriptor ){
+                Object.defineProperty(this, name, descriptor);
+                delete allProperties[i];
+            }
         }
+        while(allProperties.length && (proto = Object.getPrototypeOf(proto)) !== Object.prototype);
 
         return this;
     },
