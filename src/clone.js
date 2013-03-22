@@ -79,8 +79,9 @@ var $object = /** @lands $object# */{
 
     /**
      * Use this method to create an instances of prototype objects.
-     * <p>Behaves like a clone method. But, also apply constructor, and the created instance will be sealed (<a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal">Object.seal</a>): to prevent it, override the constructor.
+     * <p>Behaves like a clone method. But, also apply constructor, and, if default constructor applied, the created instance will be sealed (<a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal">Object.seal</a>): to prevent it, override the constructor.
      * @see $object#clone
+     * @see $object#constructor
      * @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal">Object.seal</a>
      * @returns {$object}
      *
