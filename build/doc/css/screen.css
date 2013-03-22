@@ -81,7 +81,7 @@ div.index ul.classList a + a {
 div.index div.fineprint {
 	margin: 1em 0 0 15px;
 	color: #777;
-	font-size: 0.9em;
+	font-size: 0.75em;
 }
 
 div.index div.fineprint a {
@@ -258,6 +258,7 @@ pre.code {
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
 	border-radius: 2px;
+    font-size: 0.8em;
 }
 /* End content */
 
