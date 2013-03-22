@@ -1,0 +1,6 @@
+#/usr/bin/bash -v
+
+cd  ../wiki
+git pull
+cp Home.md ../README.md
+cd ../tools
