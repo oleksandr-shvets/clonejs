@@ -20,8 +20,12 @@
  *     </code>
  *     <p>Properties, <b>prefixed by "_"</b>, are private.
  *     <p>
+ *
  * @description
  *     With this library you should forget about classes. Use prototypes instead.
+ *     The main difference with other class-producing tools like Ext.define, dojo.declare, Backbone.Model.extend
+ *     is that $object.clone will return an object (prototype with defined constructor-function) instead of function (with defined prototype-object).
+ *     So, you don't need for instantiation, you can just start using the created object right now.
  *
  * @example
  *     var $myType = $object.clone({
@@ -492,13 +496,13 @@ var $object = /** @lands $object# */{
      * Copy properties to other object.
      * @memberOf $object#
      */
-    paste: function(/** Object */pasteTo, /** Array= */propertiesList){
-        return $object.apply(pasteTo, 'concat', [this, propertiesList]);
+    paste: function(/** Object */pasteTo, /** (Array|boolean)= */allProperties){
+        return $object.apply(pasteTo, 'concat', [this, allProperties]);
     },
 
     /**
      * Copy properties from given object.
-     * @returns {$object}
+     * @returns {$object} this
      * @memberOf $object#
      */
     concat: function(/** Object */obj, /** (Array|boolean)= */allProperties){
