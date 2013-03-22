@@ -265,6 +265,32 @@ this['clone.js'] = {
             test.equal(Object.getPrototypeOf(obj), Array.prototype);
 
         test.done();
+    },
+
+    concat: function(test){
+        var $parent = $object.clone({a: 1});
+        var $child  = $parent.clone({b: 2});
+        var toMerge = $child .clone({c: 3, _c: 33});
+
+            var obj = $object.clone().concat(toMerge);
+                test.strictEqual(obj._c, 33);
+                test.strictEqual(obj.c,  3);
+                test.strictEqual(obj.b,  undefined);
+                test.strictEqual(obj.a,  undefined);
+
+            obj = $object.clone().concat(toMerge, ['a','_c']);
+                test.strictEqual(obj._c, 33);
+                test.strictEqual(obj.c,  undefined);
+                test.strictEqual(obj.b,  undefined);
+                test.strictEqual(obj.a,  1);
+
+            obj = $object.clone().concat(toMerge, true);
+                test.strictEqual(obj._c, 33);
+                test.strictEqual(obj.c,  3);
+                test.strictEqual(obj.b,  2);
+                test.strictEqual(obj.a,  1);
+
+        test.done();
     }
 
 };
