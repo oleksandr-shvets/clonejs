@@ -49,7 +49,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="http://www.thebrightlines.com/2010/05/06/new-template-for-jsdoctoolkit-codeview/" target="_blank">Codeview</a> 1.2<br />
 			Generated on:
-			<time datetime='2013-2-20' pubdate>2013-2-20 15:09</time>
+			<time datetime='2013-2-22' pubdate>2013-2-22 2:54</time>
 		</footer>
 	</div>
 </div>
@@ -76,7 +76,7 @@
     <p>Var names, <b>prefixed by "$"</b>, contain object, used as prototype for other objects. For example:
     <code>
     var $array = Array.prototype, $myType = {},
-        myTypeInstance = Object.create($myType);// $object.apply('create', $myType);
+        myTypeInstance = Object.create($myType);// $object.apply($myType, 'create');
     </code>
     <p>Properties, <b>prefixed by "_"</b>, are private.
     <p>
@@ -174,7 +174,7 @@
 											>
 												<td class="attributes">&lt;static&gt; &nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont">$object.<b><a href="../symbols/%24object.html#.apply">apply</a></b>(methodName, args, withObj, asObj)
+													<div class="fixedFont">$object.<b><a href="../symbols/%24object.html#.apply">apply</a></b>(withObj, methodName, args, asObj)
 													</div>
 													<div class="description">Apply method from one object to another object.</div>
 												</td>
@@ -240,6 +240,17 @@
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#concat">concat</a></b>(obj, allProperties)
+													</div>
+													<div class="description">Copy properties from given object.</div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item7'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
 													<div class="fixedFont"><b><a href="../symbols/%24object.html#copy">copy</a></b>(deepMethod, rootPrototype, parentsLevel, mixParents)
 													</div>
 													<div class="description">Return new object, that have a copies of all own properties of this object.</div>
@@ -247,7 +258,7 @@
 											</tr>
 										
 											<tr
-												 class='item7'
+												 class='item8'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -258,7 +269,7 @@
 											</tr>
 										
 											<tr
-												 class='item8'
+												 class='item9'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -269,7 +280,7 @@
 											</tr>
 										
 											<tr
-												 class='item9'
+												 class='item10'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -280,7 +291,7 @@
 											</tr>
 										
 											<tr
-												 class='item10'
+												 class='item11'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -291,7 +302,7 @@
 											</tr>
 										
 											<tr
-												 class='item11'
+												 class='item12'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -302,7 +313,7 @@
 											</tr>
 										
 											<tr
-												 class='item12'
+												 class='item13'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -313,7 +324,7 @@
 											</tr>
 										
 											<tr
-												 class='item13'
+												 class='item14'
 											>
 												<td class="attributes">&lt;static&gt; &nbsp;</td>
 												<td class="nameDescription">
@@ -324,7 +335,7 @@
 											</tr>
 										
 											<tr
-												 class='item14'
+												 class='item15'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -335,7 +346,7 @@
 											</tr>
 										
 											<tr
-												 class='item15'
+												 class='item16'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -346,7 +357,7 @@
 											</tr>
 										
 											<tr
-												 class='item16'
+												 class='item17'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -357,7 +368,7 @@
 											</tr>
 										
 											<tr
-												 class='item17'
+												 class='item18'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -368,7 +379,7 @@
 											</tr>
 										
 											<tr
-												 class='item18'
+												 class='item19'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -379,7 +390,7 @@
 											</tr>
 										
 											<tr
-												 class='item19'
+												 class='item20'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -390,7 +401,7 @@
 											</tr>
 										
 											<tr
-												 class='item20'
+												 class='item21'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -401,7 +412,7 @@
 											</tr>
 										
 											<tr
-												 class='item21'
+												 class='item22'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -412,7 +423,7 @@
 											</tr>
 										
 											<tr
-												 class='item22'
+												 class='item23'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -423,18 +434,18 @@
 											</tr>
 										
 											<tr
-												 class='item23'
+												 class='item24'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
 													<div class="fixedFont"><b><a href="../symbols/%24object.html#paste">paste</a></b>(pasteTo, propertiesList)
 													</div>
-													<div class="description">Add all own properties to other object.</div>
+													<div class="description">Copy properties to other object.</div>
 												</td>
 											</tr>
 										
 											<tr
-												 class='item24'
+												 class='item25'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -445,7 +456,7 @@
 											</tr>
 										
 											<tr
-												 class='item25'
+												 class='item26'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -514,7 +525,7 @@
     var $myArray2 = $object.copy(Array).setProperties({customMethod: function(){}});
 
     var myObj = {a:1, b:2, c:3};
-    var cloneOfMyObj = $object.apply('clone', myObj);
+    var cloneOfMyObj = $object.apply(myObj, 'clone');
     cloneOfMyObj.a = 11; // myObj.a still == 1</pre>
 								
 							
@@ -647,7 +658,7 @@ Override it if you want to create custom type.
 											
 											<span class="light">{*}</span>
 											
-											<span class="light">$object.</span><b>apply</b>(methodName, args, withObj, asObj)
+											<span class="light">$object.</span><b>apply</b>(withObj, methodName, args, asObj)
 										</div>
 										
 										<div class="description">
@@ -660,9 +671,8 @@ Override it if you want to create custom type.
 										
 										
 											
-												<pre class="code">    var array = $object.apply('mix', Array);
-    var  args = $object.apply('slice',[1], arguments, Array);
-    var  args = $object.apply.call(Array, 'slice',[1], arguments);</pre>
+												<pre class="code">    var  args = $object.apply(arguments, 'slice',[1], Array);
+    var  args = $object.apply.call(Array, arguments, 'slice',[1]);</pre>
 											
 										
 										
@@ -671,19 +681,19 @@ Override it if you want to create custom type.
 												<dt class="heading">Parameters:</dt>
 												
 													<dt>
+														<span class="light fixedFont">{Object}</span> <b>withObj</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
 														<span class="light fixedFont">{string}</span> <b>methodName</b>
 														
 													</dt>
 													<dd></dd>
 												
 													<dt>
-														<span class="light fixedFont">{Array|Object=}</span> <b>args</b>
-														
-													</dt>
-													<dd></dd>
-												
-													<dt>
-														<span class="light fixedFont">{Object=}</span> <b>withObj</b>
+														<span class="light fixedFont">{Array=}</span> <b>args</b>
 														
 													</dt>
 													<dd></dd>
@@ -1083,6 +1093,73 @@ Override it if you want to create custom type.
 									<li 
 										 class='item6'
 									>
+										<div class="fixedFont heading" id="concat">
+											<span class='lighter'>
+											
+											</span>
+											
+											<span class="light">{<a href="../symbols/%24object.html">$object</a>}</span>
+											
+											<b>concat</b>(obj, allProperties)
+										</div>
+										
+										<div class="description">
+											Copy properties from given object.
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{Object}</span> <b>obj</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
+														<span class="light fixedFont">{(Array|boolean)=}</span> <b>allProperties</b>
+														
+													</dt>
+													<dd></dd>
+												
+											</dl>
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">Returns:</dt>
+													
+														<dd><span class="light fixedFont">{<a href="../symbols/%24object.html">$object</a>}</span> </dd>
+													
+												
+												
+												
+												
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item7'
+									>
 										<div class="fixedFont heading" id="copy">
 											<span class='lighter'>
 											
@@ -1193,7 +1270,7 @@ Arguments can be passed in any order (recognized by type).
 									</li>
 								
 									<li 
-										 class='item7'
+										 class='item8'
 									>
 										<div class="fixedFont heading" id="create">
 											<span class='lighter'>
@@ -1207,7 +1284,7 @@ Arguments can be passed in any order (recognized by type).
 										
 										<div class="description">
 											Use this method to create an instances of prototype objects.
-<p>Behaves like a clone method. But, also apply constructor, and the created instance will be sealed (<a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal">Object.seal</a>): to prevent it, override the constructor.
+<p>Behaves like a clone method. But, also apply constructor, and, if default constructor called, the created instance will be sealed (<a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal">Object.seal</a>): to prevent it, override the constructor.
 											
 											
 											
@@ -1267,6 +1344,8 @@ Arguments can be passed in any order (recognized by type).
 													
 														<dd><a href="../symbols/%24object.html#clone">$object#clone</a></dd>
 													
+														<dd><a href="../symbols/%24object.html#constructor">$object#constructor</a></dd>
+													
 														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal">Object.seal</a></dd>
 													
 												
@@ -1277,7 +1356,7 @@ Arguments can be passed in any order (recognized by type).
 									</li>
 								
 									<li 
-										 class='item8'
+										 class='item9'
 									>
 										<div class="fixedFont heading" id="createSuperSafeCallback">
 											<span class='lighter'>
@@ -1349,7 +1428,7 @@ Arguments can be passed in any order (recognized by type).
 									</li>
 								
 									<li 
-										 class='item9'
+										 class='item10'
 									>
 										<div class="fixedFont heading" id="deepClone">
 											<span class='lighter'>
@@ -1425,7 +1504,7 @@ But, if you modify parent (this), it can affect deep clone(s).
 									</li>
 								
 									<li 
-										 class='item10'
+										 class='item11'
 									>
 										<div class="fixedFont heading" id="deepCopy">
 											<span class='lighter'>
@@ -1482,7 +1561,7 @@ But, if you modify parent (this), it can affect deep clone(s).
 									</li>
 								
 									<li 
-										 class='item11'
+										 class='item12'
 									>
 										<div class="fixedFont heading" id="defineProperties">
 											<span class='lighter'>
@@ -1551,7 +1630,7 @@ But, if you modify parent (this), it can affect deep clone(s).
 									</li>
 								
 									<li 
-										 class='item12'
+										 class='item13'
 									>
 										<div class="fixedFont heading" id="defineProperty">
 											<span class='lighter'>
@@ -1618,7 +1697,7 @@ But, if you modify parent (this), it can affect deep clone(s).
 									</li>
 								
 									<li 
-										 class='item13'
+										 class='item14'
 									>
 										<div class="fixedFont heading" id=".describe">
 											<span class='lighter'>
@@ -1694,7 +1773,7 @@ But, if you modify parent (this), it can affect deep clone(s).
 									</li>
 								
 									<li 
-										 class='item14'
+										 class='item15'
 									>
 										<div class="fixedFont heading" id="freeze">
 											<span class='lighter'>
@@ -1744,7 +1823,7 @@ But, if you modify parent (this), it can affect deep clone(s).
 									</li>
 								
 									<li 
-										 class='item15'
+										 class='item16'
 									>
 										<div class="fixedFont heading" id="getEnumerableOwnPropertyNames">
 											<span class='lighter'>
@@ -1794,7 +1873,7 @@ But, if you modify parent (this), it can affect deep clone(s).
 									</li>
 								
 									<li 
-										 class='item16'
+										 class='item17'
 									>
 										<div class="fixedFont heading" id="getOwnPropertyDescriptor">
 											<span class='lighter'>
@@ -1855,7 +1934,7 @@ But, if you modify parent (this), it can affect deep clone(s).
 									</li>
 								
 									<li 
-										 class='item17'
+										 class='item18'
 									>
 										<div class="fixedFont heading" id="getOwnPropertyNames">
 											<span class='lighter'>
@@ -1905,7 +1984,7 @@ But, if you modify parent (this), it can affect deep clone(s).
 									</li>
 								
 									<li 
-										 class='item18'
+										 class='item19'
 									>
 										<div class="fixedFont heading" id="getPrototype">
 											<span class='lighter'>
@@ -1955,7 +2034,7 @@ But, if you modify parent (this), it can affect deep clone(s).
 									</li>
 								
 									<li 
-										 class='item19'
+										 class='item20'
 									>
 										<div class="fixedFont heading" id="getState">
 											<span class='lighter'>
@@ -2018,7 +2097,7 @@ Private meens non-enumerable properties.
 									</li>
 								
 									<li 
-										 class='item20'
+										 class='item21'
 									>
 										<div class="fixedFont heading" id="isExtensible">
 											<span class='lighter'>
@@ -2068,7 +2147,7 @@ Private meens non-enumerable properties.
 									</li>
 								
 									<li 
-										 class='item21'
+										 class='item22'
 									>
 										<div class="fixedFont heading" id="isFrozen">
 											<span class='lighter'>
@@ -2118,7 +2197,7 @@ Private meens non-enumerable properties.
 									</li>
 								
 									<li 
-										 class='item22'
+										 class='item23'
 									>
 										<div class="fixedFont heading" id="isSealed">
 											<span class='lighter'>
@@ -2168,7 +2247,7 @@ Private meens non-enumerable properties.
 									</li>
 								
 									<li 
-										 class='item23'
+										 class='item24'
 									>
 										<div class="fixedFont heading" id="paste">
 											<span class='lighter'>
@@ -2181,7 +2260,7 @@ Private meens non-enumerable properties.
 										</div>
 										
 										<div class="description">
-											Add all own properties to other object.
+											Copy properties to other object.
 											
 											
 											
@@ -2214,7 +2293,7 @@ Private meens non-enumerable properties.
 									</li>
 								
 									<li 
-										 class='item24'
+										 class='item25'
 									>
 										<div class="fixedFont heading" id="preventExtensions">
 											<span class='lighter'>
@@ -2264,7 +2343,7 @@ Private meens non-enumerable properties.
 									</li>
 								
 									<li 
-										 class='item25'
+										 class='item26'
 									>
 										<div class="fixedFont heading" id="seal">
 											<span class='lighter'>
