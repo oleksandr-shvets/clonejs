@@ -8,7 +8,7 @@ It's based on the new ECMA Script 5 features like [`Object.create`⠙](https://d
 ### See [API Documentation](http://quadroid.github.com/clonejs/symbols/%24object.html)
 
 The main difference with other class-producing tools like `Ext.define`, `dojo.declare`, `Backbone.Model.extend`
-is that `$object.clone` will return an object (prototype with defined constructor-function) instead of function (with defined prototype-object). So, you don't need for instantiation, you can just start using the created object right now. But, if you need more than one instance, you can create it by `$yourProto.create`.
+is that `$object.clone` will return an object (prototype with defined constructor-function) instead of function (with defined prototype-object). So, you don't need for instantiation, you can just start using the cloned object right now. But, if you need more than one instance, you can create it by `$yourProto.create`.
 
 Quick example:
 
@@ -24,9 +24,8 @@ Quick example:
                                      '(set) item': function(v){ this._item = v },
                       '(get) publicPropertyAlias': 'publicProperty',// automatically create getter for publicProperty
                                      constructor : function MyType(){
-                                                       var obj = this.applySuper(arguments);
-                                                       // do something with obj...
-                                                       return obj;
+                                                       this.applySuper(arguments);
+                                                       // do something...
                                                    }
      });
      var myTypeInstance = $myType.create({publicProperty: 2}/* constructor argument */);
