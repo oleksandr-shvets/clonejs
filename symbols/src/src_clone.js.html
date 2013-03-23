@@ -396,10 +396,10 @@
 <span class='line'>389</span>      * @memberOf $object#
 <span class='line'>390</span>      */</span><span class="WHIT">
 <span class='line'>391</span> </span><span class="WHIT">    </span><span class="NAME">copy</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="WHIT">
-<span class='line'>392</span> </span><span class="WHIT">        </span><span class="COMM">/** ('deepClone'|'deepCopy')=""    */</span><span class="NAME">deepMethod</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>393</span> </span><span class="WHIT">        </span><span class="COMM">/**     (Object|Constructor)=null  */</span><span class="NAME">rootPrototype</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>394</span> </span><span class="WHIT">        </span><span class="COMM">/**                   number=0     */</span><span class="NAME">parentsLevel</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>395</span> </span><span class="WHIT">        </span><span class="COMM">/**                  boolean=false */</span><span class="NAME">mixParents</span><span class="WHIT">
+<span class='line'>392</span> </span><span class="WHIT">        </span><span class="COMM">/** ('deepClone'|'deepCopy')=""      */</span><span class="NAME">deepMethod</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>393</span> </span><span class="WHIT">        </span><span class="COMM">/**     (Object|Constructor)=$object */</span><span class="NAME">rootPrototype</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>394</span> </span><span class="WHIT">        </span><span class="COMM">/**                   number=0       */</span><span class="NAME">parentsLevel</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>395</span> </span><span class="WHIT">        </span><span class="COMM">/**                  boolean=false   */</span><span class="NAME">mixParents</span><span class="WHIT">
 <span class='line'>396</span> </span><span class="WHIT">        </span><span class="COMM">//**                Array=all */propertiesList</span><span class="WHIT">
 <span class='line'>397</span> </span><span class="WHIT">    </span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>398</span> </span><span class="WHIT">        </span><span class="KEYW">for</span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">=</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">=</span><span class="NAME">arguments</span><span class="PUNC">[</span><span class="NAME">i</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">arguments.length</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">=</span><span class="NAME">arguments</span><span class="PUNC">[</span><span class="PUNC">++</span><span class="NAME">i</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="KEYW">switch</span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
@@ -745,17 +745,23 @@
 <span class='line'>738</span> </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="PUNC">(</span><span class="NAME">module</span><span class="PUNC">)</span><span class="PUNC">!=</span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">module.exports</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="NAME">module.exports</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$object</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>739</span> 
 <span class='line'>740</span> 
-<span class='line'>741</span> </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">)</span><span class="COMM">// (need for IDEa code inspections)</span><span class="WHIT">
-<span class='line'>742</span> </span><span class="COMM">/**
-<span class='line'>743</span>  * Object, that has at least one of the following property:  
-<span class='line'>744</span>  * value, get, set, writable, configurable, enumerable.
-<span class='line'>745</span>  * @see &lt;a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty⠙&lt;/a>
-<span class='line'>746</span>  * @name PropertyDescriptor
-<span class='line'>747</span>  * @typedef {({value:*}|{get:{function():*}}|{set:{function(*):void}}|{writable:boolean}|{configurable:boolean}|{enumerable:boolean})} */</span><span class="WHIT">
-<span class='line'>748</span> </span><span class="NAME">PropertyDescriptor</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>749</span> 
-<span class='line'>750</span> </span><span class="COMM">/**
-<span class='line'>751</span>  * JavaScript class. Function, that can be called by "new" operator and/or have modified prototype property.  
-<span class='line'>752</span>  * For example: Object, Array, RegExp.
-<span class='line'>753</span>  * @name Constructor
-<span class='line'>754</span>  * @typedef {Function} */</span></pre></body></html>
+<span class='line'>741</span> </span><span class="COMM">/**
+<span class='line'>742</span>  * @name _global_
+<span class='line'>743</span>  * @namespace
+<span class='line'>744</span>  *    Description of some native types.  
+<span class='line'>745</span>  *    Listed objects does not present in global (window) object, it's only descriptions. 
+<span class='line'>746</span>  */</span><span class="WHIT">
+<span class='line'>747</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">)</span><span class="COMM">// (need for IDEa code inspections)</span><span class="WHIT">
+<span class='line'>748</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>749</span>      * Object, that has at least one of the following property:  
+<span class='line'>750</span>      * value, get, set, writable, configurable, enumerable.
+<span class='line'>751</span>      * @see &lt;a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty⠙&lt;/a>
+<span class='line'>752</span>      * @name PropertyDescriptor
+<span class='line'>753</span>      * @typedef {({value:*}|{get:{function():*}}|{set:{function(*):void}}|{writable:boolean}|{configurable:boolean}|{enumerable:boolean})} */</span><span class="WHIT">
+<span class='line'>754</span> </span><span class="WHIT">    </span><span class="NAME">PropertyDescriptor</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>755</span> </span><span class="WHIT">    
+<span class='line'>756</span>     </span><span class="COMM">/**
+<span class='line'>757</span>      * JavaScript class. Function, that can be called by "new" operator and/or have modified prototype property.  
+<span class='line'>758</span>      * For example: Object, Array, RegExp.
+<span class='line'>759</span>      * @name Constructor
+<span class='line'>760</span>      * @typedef {Function} */</span></pre></body></html>
