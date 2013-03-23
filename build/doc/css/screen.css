@@ -247,9 +247,6 @@ DL.detailList.nomargin{
 DL.detailList.nomargin DT{
     float: left;
     clear: both;
-    width: 12ex;
-    text-align: right;
-    padding-right: 1ex;
 }
 DL.detailList.nomargin DD{
     float: left;
@@ -260,9 +257,18 @@ DIV.hr{
     clear: both;
 }
 
+DL.detailList.nomargin DT,
+DL.detailList.params   DT.heading{
+    padding-right: 1ex;
+    width: 12ex;
+    text-align: right;
+}
+*:not(DL) + 
+DL.detailList.nomargin DT:only-of-type{
+    width: auto !important;
+}
 
-
-DL.detailList.params DT B{
+DL.detailList.params DT > B{
     float: left;
     padding-right: 1ex;
     min-width: 17ex;
@@ -270,9 +276,20 @@ DL.detailList.params DT B{
     font-style: italic;
     font-weight: normal;
 }
+DL.detailList.params DT.heading + DT:last-of-type > B{
+    min-width: 12ex;
+}
+
+
+
+.light{
+    font-weight: normal !important;
+}
 DL.detailList.params DD{
     margin-left: 18ex;
 }
+
+
 
 
 

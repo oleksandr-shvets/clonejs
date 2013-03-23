@@ -247,9 +247,6 @@ DL.detailList.nomargin{
 DL.detailList.nomargin DT{
     float: left;
     clear: both;
-    width: 12ex;
-    text-align: right;
-    padding-right: 1ex;
 }
 DL.detailList.nomargin DD{
     float: left;
@@ -285,6 +282,14 @@ DL.detailList.params DT.heading + DT:last-of-type > B{
 DL.detailList.params DD{
     margin-left: 18ex;
 }
+
+
+
+.light{
+    font-weight: normal !important;
+}
+
+
 
 
 
