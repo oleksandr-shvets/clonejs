@@ -49,7 +49,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="http://www.thebrightlines.com/2010/05/06/new-template-for-jsdoctoolkit-codeview/" target="_blank">Codeview</a> 1.2<br />
 			Generated on:
-			<time datetime='2013-2-23' pubdate>2013-2-23 17:10</time>
+			<time datetime='2013-2-23' pubdate>2013-2-23 17:12</time>
 		</footer>
 	</div>
 </div>
@@ -254,7 +254,7 @@ var $array = Array.prototype, $myType = {},
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/%24object.html#copy">copy</a></b>(deepMethod<sup>opt</sup>, rootPrototype<sup>opt</sup>, parentsLevel<sup>=0</sup>, mixParents<sup>=false</sup>)
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#copy">copy</a></b>(deepMethod<sup>=""</sup>, rootPrototype<sup>=null</sup>, parentsLevel<sup>=0</sup>, mixParents<sup>=false</sup>)
 													</div>
 													<div class="description"><p>Return new object, that have a copies of all own properties of this object.</div>
 												</td>
@@ -1151,7 +1151,7 @@ assert( $object.can.call(new Array, 'split').as(new Array) === true  );</pre>
 											
 											<span class="light">{Object}</span>
 											
-											<b>copy</b>(deepMethod<sup>opt</sup>, rootPrototype<sup>opt</sup>, parentsLevel<sup>=0</sup>, mixParents<sup>=false</sup>)
+											<b>copy</b>(deepMethod<sup>=""</sup>, rootPrototype<sup>=null</sup>, parentsLevel<sup>=0</sup>, mixParents<sup>=false</sup>)
 										</div>
 										
 										<div class="description">
@@ -1195,7 +1195,7 @@ New plain object, that have a copy of every own $user property.</pre>
 												<dt class="heading">Parameters:</dt>
 												
 													<dt>
-														<span class="light fixedFont">{('deepClone'|'deepCopy')=}</span> <b>deepMethod</b>
+														<span class="light fixedFont">{('deepClone'|'deepCopy')=""}</span> <b>deepMethod</b>
 														
 													</dt>
 													<dd><p>How to process inner objects. Can be: <br />
@@ -1204,7 +1204,7 @@ New plain object, that have a copy of every own $user property.</pre>
        "" - do nothing (default).</p></dd>
 												
 													<dt>
-														<span class="light fixedFont">{(Object|<a href="../symbols/_global_.html#Constructor">Constructor</a>)=}</span> <b>rootPrototype</b>
+														<span class="light fixedFont">{(Object|<a href="../symbols/_global_.html#Constructor">Constructor</a>)=null}</span> <b>rootPrototype</b>
 														
 													</dt>
 													<dd><p>The root prototype for created object prototype chain. If it is Constructor, Constructor.prototype will be used instead. <br />
