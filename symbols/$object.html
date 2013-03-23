@@ -49,7 +49,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="http://www.thebrightlines.com/2010/05/06/new-template-for-jsdoctoolkit-codeview/" target="_blank">Codeview</a> 1.2<br />
 			Generated on:
-			<time datetime='2013-2-22' pubdate>2013-2-22 23:24</time>
+			<time datetime='2013-2-23' pubdate>2013-2-23 5:17</time>
 		</footer>
 	</div>
 </div>
@@ -67,15 +67,14 @@
 				
 				<div class="intro">
 					<p class="description summary">
-						<p>This is the framework that implements the true prototype-based OOP paradigm in JS.
-It's based on the new ECMA Script 5 features like Object.create and property descriptors.</p>
-
+						<p>This is the framework that implements the true <a href="http://en.wikipedia.org/wiki/Prototype-based_programming">prototype-based OOP⠙</a> paradigm in JS. <br />
+It's based on the ECMA Script 5 features like <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create⠙</a> and <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">property descriptors⠙</a>.
 <p><a href="http://github.com/quadroid/clonejs#readme">Project on GitHub</a></p>
 
-<h2 id="namingconventions"><strong>Naming conventions</strong></h2>
+<h3 id="namingconventions">Naming conventions</h3>
 
-<p><br>
-Var names, <strong>prefixed by "$"</strong>, contain object, used as prototype for other objects. For example:
+<p>Var names, <strong>prefixed by "$"</strong>, contain object, used as prototype for other objects. <br />
+For example:
 <code>
 var $array = Array.prototype, $myType = {},
     myTypeInstance = Object.create($myType);// $object.apply($myType, 'create');
@@ -87,11 +86,13 @@ var $array = Array.prototype, $myType = {},
 					
 						<ul class="summary">
 							
-								<li>Version 0.6.2 alpha</li>
+								<li><i>Version: </i> 0.6.2 alpha</li>
 							
 							
+							    <li><i>Author: </i>Alex Shvets</li>
 							
-								<li>Defined in: <a href="../symbols/src/src_clone.js.html">clone.js</a></li>
+							
+								<li><i>Defined in: </i> <a href="../symbols/src/src_clone.js.html">clone.js</a></li>
 							
 							
 						</ul>
@@ -176,7 +177,7 @@ var $array = Array.prototype, $myType = {},
 											>
 												<td class="attributes">&lt;static&gt; &nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont">$object.<b><a href="../symbols/%24object.html#.apply">apply</a></b>(withObj, methodName, args, asObj)
+													<div class="fixedFont">$object.<b><a href="../symbols/%24object.html#.apply">apply</a></b>(withObj, methodName, args<sup>opt</sup>, asObj<sup>opt</sup>)
 													</div>
 													<div class="description"><p>Apply method from one object to another object.</div>
 												</td>
@@ -187,7 +188,7 @@ var $array = Array.prototype, $myType = {},
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/%24object.html#applySuper">applySuper</a></b>(methodName, args)
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#applySuper">applySuper</a></b>(methodName<sup>='constructor'</sup>, args<sup>opt</sup>)
 													</div>
 													<div class="description"><p>Apply method of super object (prototype) to this object.</div>
 												</td>
@@ -198,7 +199,7 @@ var $array = Array.prototype, $myType = {},
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/%24object.html#callSuper">callSuper</a></b>(methodName, arg1, argN)
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#callSuper">callSuper</a></b>(methodName, arg1<sup>opt</sup>, argN<sup>opt</sup>)
 													</div>
 													<div class="description"></div>
 												</td>
@@ -209,7 +210,7 @@ var $array = Array.prototype, $myType = {},
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/%24object.html#can">can</a></b>(method, not)
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#can">can</a></b>(method, not<sup>=false</sup>)
 													</div>
 													<div class="description"><p>Use this to check if method of one object is the same as in the another object.</div>
 												</td>
@@ -231,7 +232,7 @@ var $array = Array.prototype, $myType = {},
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/%24object.html#clone">clone</a></b>(properties, defaultDescriptor)
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#clone">clone</a></b>(properties<sup>opt</sup>, defaultDescriptor<sup>opt</sup>)
 													</div>
 													<div class="description"><p>Create a clone of object.</div>
 												</td>
@@ -242,7 +243,7 @@ var $array = Array.prototype, $myType = {},
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/%24object.html#concat">concat</a></b>(obj, allProperties)
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#concat">concat</a></b>(obj, allProperties<sup>opt</sup>)
 													</div>
 													<div class="description"><p>Copy properties from given object.</div>
 												</td>
@@ -253,7 +254,7 @@ var $array = Array.prototype, $myType = {},
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/%24object.html#copy">copy</a></b>(deepMethod, rootPrototype, parentsLevel, mixParents)
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#copy">copy</a></b>(deepMethod<sup>opt</sup>, rootPrototype<sup>opt</sup>, parentsLevel<sup>=0</sup>, mixParents<sup>=false</sup>)
 													</div>
 													<div class="description"><p>Return new object, that have a copies of all own properties of this object.</div>
 												</td>
@@ -264,7 +265,7 @@ var $array = Array.prototype, $myType = {},
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/%24object.html#create">create</a></b>(properties, defaultDescriptor)
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#create">create</a></b>(properties<sup>opt</sup>, defaultDescriptor<sup>opt</sup>)
 													</div>
 													<div class="description"><p>Use this method to create an instances of prototype objects.</div>
 												</td>
@@ -275,7 +276,7 @@ var $array = Array.prototype, $myType = {},
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/%24object.html#createSuperSafeCallback">createSuperSafeCallback</a></b>(functionOrMethodName, boundThis)
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#createSuperSafeCallback">createSuperSafeCallback</a></b>(functionOrMethodName, boundThis<sup>opt</sup>)
 													</div>
 													<div class="description"><p>Use this method to wrap callback, that can call <code>applySuper</code> method.</div>
 												</td>
@@ -286,7 +287,7 @@ var $array = Array.prototype, $myType = {},
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/%24object.html#deepClone">deepClone</a></b>(properties, defaultDescriptor)
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#deepClone">deepClone</a></b>(properties<sup>opt</sup>, defaultDescriptor<sup>opt</sup>)
 													</div>
 													<div class="description"><p>Create a clone of this, and also create a clones of all inner objects.</div>
 												</td>
@@ -308,7 +309,7 @@ var $array = Array.prototype, $myType = {},
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/%24object.html#defineProperties">defineProperties</a></b>(properties, defaultDescriptor)
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#defineProperties">defineProperties</a></b>(properties<sup>opt</sup>, defaultDescriptor<sup>opt</sup>)
 													</div>
 													<div class="description"></div>
 												</td>
@@ -330,7 +331,7 @@ var $array = Array.prototype, $myType = {},
 											>
 												<td class="attributes">&lt;static&gt; &nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont">$object.<b><a href="../symbols/%24object.html#.describe">describe</a></b>(properties, defaultDescriptor)
+													<div class="fixedFont">$object.<b><a href="../symbols/%24object.html#.describe">describe</a></b>(properties, defaultDescriptor<sup>opt</sup>)
 													</div>
 													<div class="description"><p>Translate object to property descriptors.</div>
 												</td>
@@ -396,7 +397,7 @@ var $array = Array.prototype, $myType = {},
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/%24object.html#getState">getState</a></b>(listPrivate)
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#getState">getState</a></b>(listPrivate<sup>=false</sup>)
 													</div>
 													<div class="description"><p>Returns all changed properties, since cloning of object.</div>
 												</td>
@@ -440,7 +441,7 @@ var $array = Array.prototype, $myType = {},
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/%24object.html#paste">paste</a></b>(pasteTo, allProperties)
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#paste">paste</a></b>(pasteTo, allProperties<sup>opt</sup>)
 													</div>
 													<div class="description"><p>Copy properties to other object.</div>
 												</td>
@@ -500,7 +501,6 @@ var $array = Array.prototype, $myType = {},
 is that <code>$object.clone</code> will return an object (prototype with defined constructor-function) instead of function
 (with defined prototype-object). So, you don't need for instantiation, you can just start using the cloned object right now.
 But, if you need more than one instance, you can create it by <code>$yourProto.create</code>.</p>
-								<br /><i>Author: </i>Alex Shvets.
 							</div>
 							
 							
@@ -538,27 +538,6 @@ cloneOfMyObj.a = 11; // myObj.a still == 1</pre>
 							
 							
 							
-								<dl class="detailList nomargin">
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-										<dt class="heading">See:</dt>
-										
-											<dd><a href="http://quadroid.github.com/clonejs/" >API documentation</a></dd>
-										
-											<dd><a href="http://github.com/quadroid/clonejs/" >GitHub</a></dd>
-										
-									
-								</dl>
-							
 						</div>
 					</div>
 				</section>
@@ -588,7 +567,7 @@ cloneOfMyObj.a = 11; // myObj.a still == 1</pre>
 								<div class="description">
 									<p>Link to the object prototype.
 Dynamically changed to next by prototype chain, while applySuper method executing.
-System property. <b>Use it only for debug purposes</b>.</p>
+System property. <strong>Use it only for debug purposes</strong>.</p>
 									
 									
 									
@@ -663,7 +642,7 @@ Override it if you want to create custom type.</p>
 											
 											<span class="light">{*}</span>
 											
-											<span class="light">$object.</span><b>apply</b>(withObj, methodName, args, asObj)
+											<span class="light">$object.</span><b>apply</b>(withObj, methodName, args<sup>opt</sup>, asObj<sup>opt</sup>)
 										</div>
 										
 										<div class="description">
@@ -747,7 +726,7 @@ Override it if you want to create custom type.</p>
 											
 											<span class="light">{*}</span>
 											
-											<b>applySuper</b>(methodName, args)
+											<b>applySuper</b>(methodName<sup>='constructor'</sup>, args<sup>opt</sup>)
 										</div>
 										
 										<div class="description">
@@ -821,7 +800,7 @@ Override it if you want to create custom type.</p>
 											
 											
 											
-											<b>callSuper</b>(methodName, arg1, argN)
+											<b>callSuper</b>(methodName, arg1<sup>opt</sup>, argN<sup>opt</sup>)
 										</div>
 										
 										<div class="description">
@@ -896,7 +875,7 @@ Override it if you want to create custom type.</p>
 											
 											<span class="light">{{like: function(Object):boolean|as: function(Object):boolean}}</span>
 											
-											<b>can</b>(method, not)
+											<b>can</b>(method, not<sup>=false</sup>)
 										</div>
 										
 										<div class="description">
@@ -909,12 +888,12 @@ Override it if you want to create custom type.</p>
 										
 										
 											
-												<pre class="code">    var myObj1 = $object.clone({join: function(sep){} });
-    var myObj2 = $object.clone({join: function(){}    });
-    assert( myObj1.can('split').like( Array.prototype ) === true  );
-    assert( myObj2.can('split').like( Array.prototype ) === false );
-    assert( myObj1.can('split').as(   Array.prototype ) === false );
-    assert( $object.can.call(new Array, 'split').as(new Array) === true  );</pre>
+												<pre class="code">var myObj1 = $object.clone({join: function(sep){} });
+var myObj2 = $object.clone({join: function(){}    });
+assert( myObj1.can('split').like( Array.prototype ) === true  );
+assert( myObj2.can('split').like( Array.prototype ) === false );
+assert( myObj1.can('split').as(   Array.prototype ) === false );
+assert( $object.can.call(new Array, 'split').as(new Array) === true  );</pre>
 											
 										
 										
@@ -1033,11 +1012,11 @@ Override it if you want to create custom type.</p>
 											
 											<span class="light">{<a href="../symbols/%24object.html">$object</a>}</span>
 											
-											<b>clone</b>(properties, defaultDescriptor)
+											<b>clone</b>(properties<sup>opt</sup>, defaultDescriptor<sup>opt</sup>)
 										</div>
 										
 										<div class="description">
-											<p>Create a clone of object. See <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create</a> for details.</p>
+											<p>Create a clone of object.</p>
 											
 											
 											
@@ -1086,7 +1065,7 @@ Override it if you want to create custom type.</p>
 												
 													<dt class="heading">See:</dt>
 													
-														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create</a></dd>
+														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create⠙</a></dd>
 													
 												
 											
@@ -1105,7 +1084,7 @@ Override it if you want to create custom type.</p>
 											
 											<span class="light">{<a href="../symbols/%24object.html">$object</a>}</span>
 											
-											<b>concat</b>(obj, allProperties)
+											<b>concat</b>(obj, allProperties<sup>opt</sup>)
 										</div>
 										
 										<div class="description">
@@ -1172,11 +1151,11 @@ Override it if you want to create custom type.</p>
 											
 											<span class="light">{Object}</span>
 											
-											<b>copy</b>(deepMethod, rootPrototype, parentsLevel, mixParents)
+											<b>copy</b>(deepMethod<sup>opt</sup>, rootPrototype<sup>opt</sup>, parentsLevel<sup>=0</sup>, mixParents<sup>=false</sup>)
 										</div>
 										
 										<div class="description">
-											<p>Return new object, that have a copies of all own properties of this object. <br>
+											<p>Return new object, that have a copies of all own properties of this object. <br />
 Arguments can be passed in any order (recognized by type).</p>
 											
 											
@@ -1186,28 +1165,28 @@ Arguments can be passed in any order (recognized by type).</p>
 										
 										
 											
-												<pre class="code">   var $collection = $object.clone(),
-       $users = $collection.clone();
+												<pre class="code">var $collection = $object.clone(),
+    $users = $collection.clone();
 
-   // $users full prototype chain:
-   $users -> $collection -> $object -> Object.prototype -> null
+// $users full prototype chain:
+$users -> $collection -> $object -> Object.prototype -> null
 
-   // see prototype chains produced by copy:
+// see prototype chains produced by copy:
 
-   $users.copy():
-       ~$users -> $object
+$users.copy():
+    ~$users -> $object
 
-   $users.copy(rootPrototype:Array):
-       ~$users -> Array.prototype
+$users.copy(rootPrototype:Array):
+    ~$users -> Array.prototype
 
-   $users.copy(rootPrototype:$parent, parentsLevel:Infinity):
-       ~$users -> ~$collection -> ~$object -> $parent
+$users.copy(rootPrototype:$parent, parentsLevel:Infinity):
+    ~$users -> ~$collection -> ~$object -> $parent
 
-   $users.copy(rootPrototype:$parent, parentsLevel:Infinity, mixParents:true):
-       ~($users + $collection + $object) -> $parent
+$users.copy(rootPrototype:$parent, parentsLevel:Infinity, mixParents:true):
+    ~($users + $collection + $object) -> $parent
 
-   // where ~$users:
-   New plain object, that have a copy of every own $user property.</pre>
+// where ~$users:
+New plain object, that have a copy of every own $user property.</pre>
 											
 										
 										
@@ -1219,31 +1198,31 @@ Arguments can be passed in any order (recognized by type).</p>
 														<span class="light fixedFont">{('deepClone'|'deepCopy')=}</span> <b>deepMethod</b>
 														
 													</dt>
-													<dd><p>How to process inner objects. Can be:         <br>
-       "deepCopy"  - see <a href="../symbols/%24object.html#deepCopy">$object#deepCopy</a>    <br>
-       "deepClone" - see <a href="../symbols/%24object.html#deepClone">$object#deepClone</a>   <br>
+													<dd><p>How to process inner objects. Can be: <br />
+       "deepCopy"  - see <a href="../symbols/%24object.html#deepCopy">$object#deepCopy</a> <br />
+       "deepClone" - see <a href="../symbols/%24object.html#deepClone">$object#deepClone</a> <br />
        null - do nothing (default).</p></dd>
 												
 													<dt>
 														<span class="light fixedFont">{(Object|<a href="../symbols/_global_.html#Constructor">Constructor</a>)=}</span> <b>rootPrototype</b>
 														
 													</dt>
-													<dd><p>The root prototype for created object prototype chain. If it is Constructor, Constructor.prototype will be used instead. <br>
+													<dd><p>The root prototype for created object prototype chain. If it is Constructor, Constructor.prototype will be used instead. <br />
        By default - $object;</p></dd>
 												
 													<dt>
 														<span class="light fixedFont">{number=0}</span> <b>parentsLevel</b>
 														
 													</dt>
-													<dd><p>How many parents should be included. By default - zero. <br>
+													<dd><p>How many parents should be included. By default - zero. <br />
        Set this to Infinity if you want to copy all object parents properties up to $object.</p></dd>
 												
 													<dt>
 														<span class="light fixedFont">{boolean=false}</span> <b>mixParents</b>
 														
 													</dt>
-													<dd><p>Should be false if objects have methods, that call <a href="../symbols/%24object.html#applySuper">$object#applySuper</a> <br>
-       If true, all own properties of all objects will be directly attached to the one returned object. <br>
+													<dd><p>Should be false if objects have methods, that call <a href="../symbols/%24object.html#applySuper">$object#applySuper</a> <br />
+       If true, all own properties of all objects will be directly attached to the one returned object. <br />
        False by default.</p></dd>
 												
 											</dl>
@@ -1284,12 +1263,14 @@ Arguments can be passed in any order (recognized by type).</p>
 											
 											<span class="light">{<a href="../symbols/%24object.html">$object</a>}</span>
 											
-											<b>create</b>(properties, defaultDescriptor)
+											<b>create</b>(properties<sup>opt</sup>, defaultDescriptor<sup>opt</sup>)
 										</div>
 										
 										<div class="description">
-											<p>Use this method to create an instances of prototype objects.
-<p>Behaves like a clone method. But, also apply constructor, and, if default constructor called, the created instance will be sealed (<a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal">Object.seal</a>): to prevent it, override the constructor.</p>
+											<p>Use this method to create an instances of prototype objects. <br />
+Behaves like a clone method. But, also apply constructor, and, if default constructor called,
+the created instance will be <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal">sealed⠙</a>. To prevent it, override the constructor. <br />
+All arguments will be passed to constructor. </p>
 											
 											
 											
@@ -1312,7 +1293,7 @@ Arguments can be passed in any order (recognized by type).</p>
 												<dt class="heading">Parameters:</dt>
 												
 													<dt>
-														<span class="light fixedFont">{Object=}</span> <b>properties</b>
+														<span class="light fixedFont">{Object|...?=}</span> <b>properties</b>
 														
 													</dt>
 													<dd></dd>
@@ -1351,8 +1332,6 @@ Arguments can be passed in any order (recognized by type).</p>
 													
 														<dd><a href="../symbols/%24object.html#constructor">$object#constructor</a></dd>
 													
-														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal">Object.seal</a></dd>
-													
 												
 											
 											</dl>
@@ -1370,7 +1349,7 @@ Arguments can be passed in any order (recognized by type).</p>
 											
 											<span class="light">{Function}</span>
 											
-											<b>createSuperSafeCallback</b>(functionOrMethodName, boundThis)
+											<b>createSuperSafeCallback</b>(functionOrMethodName, boundThis<sup>opt</sup>)
 										</div>
 										
 										<div class="description">
@@ -1442,12 +1421,12 @@ Arguments can be passed in any order (recognized by type).</p>
 											
 											<span class="light">{<a href="../symbols/%24object.html">$object</a>}</span>
 											
-											<b>deepClone</b>(properties, defaultDescriptor)
+											<b>deepClone</b>(properties<sup>opt</sup>, defaultDescriptor<sup>opt</sup>)
 										</div>
 										
 										<div class="description">
-											<p>Create a clone of this, and also create a clones of all inner objects. <br>
-So, if you modify any inner object of deep clone, it will not affect parent (this) object. <br>
+											<p>Create a clone of this, and also create a clones of all inner objects. <br />
+So, if you modify any inner object of deep clone, it will not affect parent (this) object. <br />
 But, if you modify parent (this), it can affect deep clone(s).</p>
 											
 											
@@ -1575,7 +1554,7 @@ But, if you modify parent (this), it can affect deep clone(s).</p>
 											
 											
 											
-											<b>defineProperties</b>(properties, defaultDescriptor)
+											<b>defineProperties</b>(properties<sup>opt</sup>, defaultDescriptor<sup>opt</sup>)
 										</div>
 										
 										<div class="description">
@@ -1623,7 +1602,7 @@ But, if you modify parent (this), it can affect deep clone(s).</p>
 												
 													<dt class="heading">See:</dt>
 													
-														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperties">Object.defineProperties</a></dd>
+														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperties">Object.defineProperties⠙</a></dd>
 													
 														<dd><a href="../symbols/%24object.html#.describe">$object.describe</a></dd>
 													
@@ -1692,7 +1671,7 @@ But, if you modify parent (this), it can affect deep clone(s).</p>
 												
 													<dt class="heading">See:</dt>
 													
-														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty</a></dd>
+														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty⠙</a></dd>
 													
 												
 											
@@ -1711,14 +1690,14 @@ But, if you modify parent (this), it can affect deep clone(s).</p>
 											
 											<span class="light">{{<a href="../symbols/_global_.html#PropertyDescriptor">PropertyDescriptor</a>}}</span>
 											
-											<span class="light">$object.</span><b>describe</b>(properties, defaultDescriptor)
+											<span class="light">$object.</span><b>describe</b>(properties, defaultDescriptor<sup>opt</sup>)
 										</div>
 										
 										<div class="description">
 											<p>Translate object to property descriptors.</p>
 
 <p>For example, <code>{a:{}, b:2}</code> will be translated to something like <code>{a: {value: {}}, b: {value: 2}}</code>.
-Functions (except getters) and properties prefixed by "_" will be automatically marked as non-enumerable.<br></p>
+Functions (except getters) and properties prefixed by "_" will be automatically marked as non-enumerable. </p>
 
 <p>You can prefix your property names by <code>(get|set|const|final|hidden|writable)</code>:</p>
 
@@ -1823,7 +1802,7 @@ Functions (except getters) and properties prefixed by "_" will be automatically 
 												
 													<dt class="heading">See:</dt>
 													
-														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/freeze">Object.freeze</a></dd>
+														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/freeze">Object.freeze⠙</a></dd>
 													
 												
 											
@@ -1873,7 +1852,7 @@ Functions (except getters) and properties prefixed by "_" will be automatically 
 												
 													<dt class="heading">See:</dt>
 													
-														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys">Object.keys</a></dd>
+														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys">Object.keys⠙</a></dd>
 													
 												
 											
@@ -1934,7 +1913,7 @@ Functions (except getters) and properties prefixed by "_" will be automatically 
 												
 													<dt class="heading">See:</dt>
 													
-														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor">Object.getOwnPropertyDescriptor</a></dd>
+														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor">Object.getOwnPropertyDescriptor⠙</a></dd>
 													
 												
 											
@@ -1984,7 +1963,7 @@ Functions (except getters) and properties prefixed by "_" will be automatically 
 												
 													<dt class="heading">See:</dt>
 													
-														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames">Object.getOwnPropertyNames</a></dd>
+														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames">Object.getOwnPropertyNames⠙</a></dd>
 													
 												
 											
@@ -2034,7 +2013,7 @@ Functions (except getters) and properties prefixed by "_" will be automatically 
 												
 													<dt class="heading">See:</dt>
 													
-														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getPrototypeOf">Object.getPrototypeOf</a></dd>
+														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getPrototypeOf">Object.getPrototypeOf⠙</a></dd>
 													
 												
 											
@@ -2053,12 +2032,12 @@ Functions (except getters) and properties prefixed by "_" will be automatically 
 											
 											<span class="light">{<a href="../symbols/%24object.html">$object</a>}</span>
 											
-											<b>getState</b>(listPrivate)
+											<b>getState</b>(listPrivate<sup>=false</sup>)
 										</div>
 										
 										<div class="description">
-											<p>Returns all changed properties, since cloning of object.<br>
-Separate object from its prototype and return it.<br>
+											<p>Returns all changed properties, since cloning of object. <br />
+Separate object from its prototype and return it. <br />
 Private meens non-enumerable properties.</p>
 											
 											
@@ -2147,7 +2126,7 @@ Private meens non-enumerable properties.</p>
 												
 													<dt class="heading">See:</dt>
 													
-														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isExtensible">Object.isExtensible</a></dd>
+														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isExtensible">Object.isExtensible⠙</a></dd>
 													
 												
 											
@@ -2197,7 +2176,7 @@ Private meens non-enumerable properties.</p>
 												
 													<dt class="heading">See:</dt>
 													
-														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isFrozen">Object.isFrozen</a></dd>
+														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isFrozen">Object.isFrozen⠙</a></dd>
 													
 												
 											
@@ -2247,7 +2226,7 @@ Private meens non-enumerable properties.</p>
 												
 													<dt class="heading">See:</dt>
 													
-														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isSealed">Object.isSealed</a></dd>
+														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isSealed">Object.isSealed⠙</a></dd>
 													
 												
 											
@@ -2266,7 +2245,7 @@ Private meens non-enumerable properties.</p>
 											
 											
 											
-											<b>paste</b>(pasteTo, allProperties)
+											<b>paste</b>(pasteTo, allProperties<sup>opt</sup>)
 										</div>
 										
 										<div class="description">
@@ -2343,7 +2322,7 @@ Private meens non-enumerable properties.</p>
 												
 													<dt class="heading">See:</dt>
 													
-														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/preventExtensions">Object.preventExtensions</a></dd>
+														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/preventExtensions">Object.preventExtensions⠙</a></dd>
 													
 												
 											
@@ -2393,7 +2372,7 @@ Private meens non-enumerable properties.</p>
 												
 													<dt class="heading">See:</dt>
 													
-														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal">Object.seal</a></dd>
+														<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal">Object.seal⠙</a></dd>
 													
 												
 											

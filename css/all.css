@@ -131,7 +131,7 @@ a:focus {
 }
 
 p {
-	margin: 0 0 1.5em 0;
+	margin: 0 0 0.5em 0;
 }
 
 /*
@@ -364,5 +364,27 @@ CODE{
 }
 
 .detailList{
-    font-size: 0.8em;
+    font-size: 0.85em;
+}
+
+.summaryTable > THEAD{
+    border-bottom: 1px dotted #c0c0c0;
+}
+
+.intro H3{
+    font-weight: bold; 
+    margin-bottom: 1em;
+}
+
+DL.detailList.nomargin{
+    margin-top: -1.5em;
+}
+
+.description P:last-child{
+    margin: 0px;
+}
+
+SUP{
+    font-size: 0.7em;
+    /*font-family: Arial;*/
 }
