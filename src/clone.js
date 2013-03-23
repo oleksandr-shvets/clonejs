@@ -7,14 +7,18 @@
  * @see     <a href="http://github.com/quadroid/clonejs/" >GitHub</a>
  *
  * @class
- * This is the framework that implements the true prototype-based OOP paradigm in JS.
- * It's based on the new ECMA Script 5 features like Object.create and property descriptors.
+ * This is the framework that implements the true [prototype-based OOP⠙][1] paradigm in JS. 
+ * It's based on the ECMA Script 5 features like [Object.create⠙][2] and [property descriptors⠙][3].
+ *    [1]: http://en.wikipedia.org/wiki/Prototype-based_programming
+ *    [2]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create
+ *    [3]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty
  *
- * [Project on GitHub](http://github.com/quadroid/clonejs#readme)
+ * <p>[Project on GitHub](http://github.com/quadroid/clonejs#readme)
  *
- * ## **Naming conventions**
- * <br>
- * Var names, **prefixed by "$"**, contain object, used as prototype for other objects. For example:
+ * ### Naming conventions
+ *  
+ * Var names, **prefixed by "$"**, contain object, used as prototype for other objects.  
+ * For example:
  * <code>
  * var $array = Array.prototype, $myType = {},
  *     myTypeInstance = Object.create($myType);// $object.apply($myType, 'create');
@@ -60,8 +64,8 @@
 var $object = /** @lands $object# */{
 
     /**
-     * Create a clone of object. See <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create</a> for details.
-     * @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create</a>
+     * Create a clone of object.
+     * @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create⠙</a>
      * @returns {$object}
      * @memberOf $object#
      */
@@ -83,11 +87,13 @@ var $object = /** @lands $object# */{
     },
 
     /**
-     * Use this method to create an instances of prototype objects.
-     * <p>Behaves like a clone method. But, also apply constructor, and, if default constructor called, the created instance will be sealed (<a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal">Object.seal</a>): to prevent it, override the constructor.
+     * Use this method to create an instances of prototype objects.  
+     * Behaves like a clone method. But, also apply constructor, and, if default constructor called,
+     * the created instance will be [sealed⠙][1]. To prevent it, override the constructor. 
+     * All arguments will be passed to constructor. 
+     * [1]: http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal
      * @see $object#clone
      * @see $object#constructor
-     * @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal">Object.seal</a>
      * @returns {$object}
      *
      * @example
@@ -100,7 +106,7 @@ var $object = /** @lands $object# */{
      *
      * @memberOf $object#
      */
-    create: function(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
+    create: function(/** Object|...?= */properties, /** PropertyDescriptor= */defaultDescriptor){
         var obj = this.clone();
         return obj.constructor.apply(obj, arguments) || obj;
     },
@@ -124,7 +130,7 @@ var $object = /** @lands $object# */{
      * Translate object to property descriptors.
      *
      * For example, `{a:{}, b:2}` will be translated to something like `{a: {value: {}}, b: {value: 2}}`.
-     * Functions (except getters) and properties prefixed by "_" will be automatically marked as non-enumerable.<br>
+     * Functions (except getters) and properties prefixed by "_" will be automatically marked as non-enumerable. 
      *
      * You can prefix your property names by `(get|set|const|final|hidden|writable)`:
      *
@@ -232,7 +238,7 @@ var $object = /** @lands $object# */{
             /**
              * Link to the object prototype.
              * Dynamically changed to next by prototype chain, while applySuper method executing.
-             * System property. <b>Use it only for debug purposes</b>.
+             * System property. **Use it only for debug purposes**.
              * @name  __super__
              * @type  {?Object}
              * @see $object#applySuper
@@ -319,8 +325,8 @@ var $object = /** @lands $object# */{
     },
 
     /**
-     * Returns all changed properties, since cloning of object.<br>
-     * Separate object from its prototype and return it.<br>
+     * Returns all changed properties, since cloning of object. 
+     * Separate object from its prototype and return it. 
      * Private meens non-enumerable properties.
      * @returns {$object}
      * @memberOf $object#
@@ -336,49 +342,49 @@ var $object = /** @lands $object# */{
     },
 
     /**
-     * Return new object, that have a copies of all own properties of this object. <br>
+     * Return new object, that have a copies of all own properties of this object.  
      * Arguments can be passed in any order (recognized by type).
      * @example
-     *    var $collection = $object.clone(),
-     *        $users = $collection.clone();
+     * var $collection = $object.clone(),
+     *     $users = $collection.clone();
      *
-     *    // $users full prototype chain:
-     *    $users -> $collection -> $object -> Object.prototype -> null
+     * // $users full prototype chain:
+     * $users -> $collection -> $object -> Object.prototype -> null
      *
-     *    // see prototype chains produced by copy:
+     * // see prototype chains produced by copy:
      *
-     *    $users.copy():
-     *        ~$users -> $object
+     * $users.copy():
+     *     ~$users -> $object
      *
-     *    $users.copy(rootPrototype:Array):
-     *        ~$users -> Array.prototype
+     * $users.copy(rootPrototype:Array):
+     *     ~$users -> Array.prototype
      *
-     *    $users.copy(rootPrototype:$parent, parentsLevel:Infinity):
-     *        ~$users -> ~$collection -> ~$object -> $parent
+     * $users.copy(rootPrototype:$parent, parentsLevel:Infinity):
+     *     ~$users -> ~$collection -> ~$object -> $parent
      *
-     *    $users.copy(rootPrototype:$parent, parentsLevel:Infinity, mixParents:true):
-     *        ~($users + $collection + $object) -> $parent
+     * $users.copy(rootPrototype:$parent, parentsLevel:Infinity, mixParents:true):
+     *     ~($users + $collection + $object) -> $parent
      *
-     *    // where ~$users:
-     *    New plain object, that have a copy of every own $user property.
+     * // where ~$users:
+     * New plain object, that have a copy of every own $user property.
      *
      * @param deepMethod
-     *        How to process inner objects. Can be:         <br>
-     *        "deepCopy"  - see {@link $object#deepCopy}    <br>
-     *        "deepClone" - see {@link $object#deepClone}   <br>
+     *        How to process inner objects. Can be:        
+     *        "deepCopy"  - see {@link $object#deepCopy}   
+     *        "deepClone" - see {@link $object#deepClone}  
      *        null - do nothing (default).
      *
      * @param rootPrototype
-     *        The root prototype for created object prototype chain. If it is Constructor, Constructor.prototype will be used instead. <br>
+     *        The root prototype for created object prototype chain. If it is Constructor, Constructor.prototype will be used instead.  
      *        By default - $object;
      *
      * @param parentsLevel
-     *        How many parents should be included. By default - zero. <br>
+     *        How many parents should be included. By default - zero.  
      *        Set this to Infinity if you want to copy all object parents properties up to $object.
      *
      * @param mixParents
-     *        Should be false if objects have methods, that call {@link $object#applySuper} <br>
-     *        If true, all own properties of all objects will be directly attached to the one returned object. <br>
+     *        Should be false if objects have methods, that call {@link $object#applySuper}  
+     *        If true, all own properties of all objects will be directly attached to the one returned object.  
      *        False by default.
      *
      * @returns {Object}
@@ -472,8 +478,8 @@ var $object = /** @lands $object# */{
     },
 
     /**
-     * Create a clone of this, and also create a clones of all inner objects. <br>
-     * So, if you modify any inner object of deep clone, it will not affect parent (this) object. <br>
+     * Create a clone of this, and also create a clones of all inner objects.  
+     * So, if you modify any inner object of deep clone, it will not affect parent (this) object.  
      * But, if you modify parent (this), it can affect deep clone(s).
      * @see $object#clone
      * @see $object#deepCopy
@@ -555,12 +561,12 @@ var $object = /** @lands $object# */{
     /**
      * Use this to check if method of one object is the same as in the another object.
      * @example
-     *     var myObj1 = $object.clone({join: function(sep){} });
-     *     var myObj2 = $object.clone({join: function(){}    });
-     *     assert( myObj1.can('split').like( Array.prototype ) === true  );
-     *     assert( myObj2.can('split').like( Array.prototype ) === false );
-     *     assert( myObj1.can('split').as(   Array.prototype ) === false );
-     *     assert( $object.can.call(new Array, 'split').as(new Array) === true  );
+     * var myObj1 = $object.clone({join: function(sep){} });
+     * var myObj2 = $object.clone({join: function(){}    });
+     * assert( myObj1.can('split').like( Array.prototype ) === true  );
+     * assert( myObj2.can('split').like( Array.prototype ) === false );
+     * assert( myObj1.can('split').as(   Array.prototype ) === false );
+     * assert( $object.can.call(new Array, 'split').as(new Array) === true  );
      *
      * @returns {{like: function(Object):boolean, as: function(Object):boolean}}
      * @memberOf $object#
@@ -638,58 +644,58 @@ var $object = /** @lands $object# */{
 
     // Some sugar:
 
-    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getPrototypeOf">Object.getPrototypeOf</a>
+    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getPrototypeOf">Object.getPrototypeOf⠙</a>
      * @memberof $object# */
     getPrototype: function(){
         return Object.getPrototypeOf(this) },
-    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys">Object.keys</a>
+    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys">Object.keys⠙</a>
      * @memberof $object# */
     getEnumerableOwnPropertyNames: function(){
         return Object.keys(this) },
-    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames">Object.getOwnPropertyNames</a>
+    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames">Object.getOwnPropertyNames⠙</a>
      * @memberof $object# */
     getOwnPropertyNames: function(){
         return Object.getOwnPropertyNames(this) },
 
-    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/preventExtensions">Object.preventExtensions</a>
+    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/preventExtensions">Object.preventExtensions⠙</a>
      * @memberof $object# */
     preventExtensions: function(){
         return Object.preventExtensions(this) },
-    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isExtensible">Object.isExtensible</a>
+    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isExtensible">Object.isExtensible⠙</a>
      * @memberof $object# */
     isExtensible: function(){
         return Object.isExtensible(this) },
-    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal">Object.seal</a>
+    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal">Object.seal⠙</a>
      * @memberof $object# */
     seal: function(){
         return Object.seal(this) },
-    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isSealed">Object.isSealed</a>
+    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isSealed">Object.isSealed⠙</a>
      * @memberof $object# */
     isSealed: function(){
         return Object.isSealed(this) },
-    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/freeze">Object.freeze</a>
+    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/freeze">Object.freeze⠙</a>
      * @memberof $object# */
     freeze: function(){
         return Object.freeze(this) },
-    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isFrozen">Object.isFrozen</a>
+    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isFrozen">Object.isFrozen⠙</a>
      * @memberof $object# */
     isFrozen: function(){
         return Object.isFrozen(this) },
 
-    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor">Object.getOwnPropertyDescriptor</a>
+    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor">Object.getOwnPropertyDescriptor⠙</a>
      * @memberof $object# */
     getOwnPropertyDescriptor: function(/** string */ name){
         return Object.getOwnPropertyDescriptor(this, name);
     },
 
-    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperties">Object.defineProperties</a>
+    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperties">Object.defineProperties⠙</a>
      *  @see $object.describe
      *  @memberof $object# */
     defineProperties: function(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
         return Object.defineProperties(this, $object.describe.apply(null, arguments));
     },
 
-    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty</a>
+    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty⠙</a>
      *  @memberof $object# */
     defineProperty: function(/** string */name, /** PropertyDescriptor */propertyDescriptor){
         return Object.defineProperty(this, name, propertyDescriptor);
@@ -736,15 +742,15 @@ if(typeof(module)!='undefined' && module.exports) module.exports = $object;
 
 if(0)// (need for IDEa code inspections)
 /**
- * Object, that has at least one of the following property: <br>
+ * Object, that has at least one of the following property:  
  * value, get, set, writable, configurable, enumerable.
- * @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty</a>
+ * @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty⠙</a>
  * @name PropertyDescriptor
  * @typedef {({value:*}|{get:{function():*}}|{set:{function(*):void}}|{writable:boolean}|{configurable:boolean}|{enumerable:boolean})} */
 PropertyDescriptor;
 
 /**
- * JavaScript class. Function, that can be called by "new" operator and/or have modified prototype property. <br>
+ * JavaScript class. Function, that can be called by "new" operator and/or have modified prototype property.  
  * For example: Object, Array, RegExp.
  * @name Constructor
  * @typedef {Function} */
