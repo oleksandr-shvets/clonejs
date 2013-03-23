@@ -108,7 +108,7 @@ div.innerContent {
 
 div.content ul,
 div.content ol {
-	margin-bottom: 3em;
+	/*margin-bottom: 3em;*/
 }
 
 div.content ul.methodDetail {
@@ -163,7 +163,7 @@ div.content div.props {
 
 div.content div.hr {
 	margin: 0 10px 0 0;
-	height: 4em;
+	height: 2em;
 }
 
 
@@ -199,13 +199,14 @@ table.summaryTable tr:last-child td {
 
 table.summaryTable td.attributes {
 	width: 35%;
+    text-align: right;
 }
 
 table.summaryTable td.nameDescription {
 	width: 65%
 }
 
-
+/*
 
 dl.detailList {
 	margin-top: 0.5em;
@@ -238,6 +239,40 @@ dl.detailList.params dd {
 	padding-bottom: 0.4em;
 }
 
+*/
+DL.detailList.nomargin{
+    margin-top: 1ex;
+}
+
+DL.detailList.nomargin DT{
+    float: left;
+    clear: both;
+    width: 12ex;
+    text-align: right;
+    padding-right: 1ex;
+}
+DL.detailList.nomargin DD{
+    float: left;
+    padding-right: 2ex;
+}
+
+DIV.hr{
+    clear: both;
+}
+
+
+
+DL.detailList.params DT B{
+    float: left;
+    padding-right: 1ex;
+    min-width: 17ex;
+    text-align: right;
+    font-style: italic;
+    font-weight: normal;
+}
+DL.detailList.params DD{
+    margin-left: 18ex;
+}
 
 
 
