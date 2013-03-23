@@ -78,7 +78,7 @@ section,article,header,footer,nav,aside,hgroup {
 @font-face {
 	font-family: 'M1m';
 	src: url('fonts/mplus-1m-regular-webfont.eot');
-	src: local('☺'), url('fonts/mplus-1m-regular-webfont.woff') format('woff'), url('fonts/mplus-1m-regular-webfont.ttf') format('truetype'), url('fonts/mplus-1m-regular-webfont.svg#webfontVd14f4NN') format('svg');
+	src: local('?'), url('fonts/mplus-1m-regular-webfont.woff') format('woff'), url('fonts/mplus-1m-regular-webfont.ttf') format('truetype'), url('fonts/mplus-1m-regular-webfont.svg#webfontVd14f4NN') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -86,7 +86,7 @@ section,article,header,footer,nav,aside,hgroup {
 @font-face {
 	font-family: 'M1m';
 	src: url('fonts/mplus-1m-bold-webfont.eot');
-	src: local('☺'), url('fonts/mplus-1m-bold-webfont.woff') format('woff'), url('fonts/mplus-1m-bold-webfont.ttf') format('truetype'), url('fonts/mplus-1m-bold-webfont.svg#webfontIjI5mZqE') format('svg');
+	src: local('?'), url('fonts/mplus-1m-bold-webfont.woff') format('woff'), url('fonts/mplus-1m-bold-webfont.ttf') format('truetype'), url('fonts/mplus-1m-bold-webfont.svg#webfontIjI5mZqE') format('svg');
 	font-weight: bold;
 	font-style: normal;
 }
@@ -377,7 +377,7 @@ CODE{
 }
 
 DL.detailList.nomargin{
-    margin-top: -1.5em;
+    /*margin-top: -1.5em;*/
 }
 
 .description P:last-child{

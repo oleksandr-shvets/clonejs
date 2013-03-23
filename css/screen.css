@@ -206,7 +206,7 @@ table.summaryTable td.nameDescription {
 	width: 65%
 }
 
-
+/*
 
 dl.detailList {
 	margin-top: 0.5em;
@@ -239,6 +239,39 @@ dl.detailList.params dd {
 	padding-bottom: 0.4em;
 }
 
+*/
+DL.detailList.nomargin{
+    margin-top: 1ex;
+}
+
+DL.detailList.nomargin DT{
+    float: left;
+    clear: both;
+    width: 10ex;
+    text-align: right;
+    padding-right: 1ex;
+}
+DL.detailList.nomargin DD{
+    float: left;
+    padding-right: 2ex;
+}
+
+DIV.hr{
+    clear: both;
+}
+
+
+
+DL.detailList.params DT B{
+    float: left;
+    padding-right: 1ex;
+    min-width: 10ex;
+    text-align: right;
+    font-style: italic;
+}
+DL.detailList.params DD{
+    margin-left: 11ex;
+}
 
 
 
