@@ -289,7 +289,7 @@ table.summaryTable td.attributes {
 }
 
 table.summaryTable td.nameDescription div.fixedFont {
-	font-weight: bold;
+	Хfont-weight: bold;
 }
 
 table.summaryTable div.description {
@@ -364,7 +364,7 @@ CODE{
 }
 
 .detailList{
-    font-size: 0.85em;
+    Xfont-size: 0.85em;
 }
 
 .summaryTable > THEAD{
@@ -387,4 +387,9 @@ DL.detailList.nomargin{
 SUP{
     font-size: 0.7em;
     /*font-family: Arial;*/
+}
+
+.description LI{
+    list-style-type: disc;
+    margin-left: 2em;
 }
