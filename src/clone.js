@@ -325,7 +325,7 @@ var $object = /** @lands $object# */{
     /**
      * Returns all changed properties, since cloning of object. 
      * Separate object from its prototype and return it. 
-     * Private meens non-enumerable properties.
+     * @param listPrivate Add non-enumerable properties.
      * @returns {$object}
      * @memberOf $object#
      */
