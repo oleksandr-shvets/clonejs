@@ -280,13 +280,16 @@ DL.detailList.params DT.heading + DT:last-of-type > B{
     min-width: 12ex;
 }
 
+DL.detailList.params DD{
+    margin-left: 18ex;
+}
+DL.detailList.params DT.heading + DT:last-of-type + DD{
+    margin-left: 13ex;
+}
 
 
 .light{
     font-weight: normal !important;
-}
-DL.detailList.params DD{
-    margin-left: 18ex;
 }
 
 

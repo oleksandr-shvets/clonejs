@@ -332,7 +332,7 @@
 <span class='line'>325</span> </span><span class="WHIT">    </span><span class="COMM">/**
 <span class='line'>326</span>      * Returns all changed properties, since cloning of object. 
 <span class='line'>327</span>      * Separate object from its prototype and return it. 
-<span class='line'>328</span>      * Private meens non-enumerable properties.
+<span class='line'>328</span>      * @param listPrivate Add non-enumerable properties.
 <span class='line'>329</span>      * @returns {$object}
 <span class='line'>330</span>      * @memberOf $object#
 <span class='line'>331</span>      */</span><span class="WHIT">
@@ -377,7 +377,7 @@
 <span class='line'>370</span>      *        How to process inner objects. Can be:        
 <span class='line'>371</span>      *        "deepCopy"  - see {@link $object#deepCopy}   
 <span class='line'>372</span>      *        "deepClone" - see {@link $object#deepClone}  
-<span class='line'>373</span>      *        null - do nothing (default).
+<span class='line'>373</span>      *        "" - do nothing (default).
 <span class='line'>374</span>      *
 <span class='line'>375</span>      * @param rootPrototype
 <span class='line'>376</span>      *        The root prototype for created object prototype chain. If it is Constructor, Constructor.prototype will be used instead.  

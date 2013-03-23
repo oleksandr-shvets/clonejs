@@ -49,7 +49,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="http://www.thebrightlines.com/2010/05/06/new-template-for-jsdoctoolkit-codeview/" target="_blank">Codeview</a> 1.2<br />
 			Generated on:
-			<time datetime='2013-2-23' pubdate>2013-2-23 16:39</time>
+			<time datetime='2013-2-23' pubdate>2013-2-23 17:10</time>
 		</footer>
 	</div>
 </div>
@@ -1201,7 +1201,7 @@ New plain object, that have a copy of every own $user property.</pre>
 													<dd><p>How to process inner objects. Can be: <br />
        "deepCopy"  - see <a href="../symbols/%24object.html#deepCopy">$object#deepCopy</a> <br />
        "deepClone" - see <a href="../symbols/%24object.html#deepClone">$object#deepClone</a> <br />
-       null - do nothing (default).</p></dd>
+       "" - do nothing (default).</p></dd>
 												
 													<dt>
 														<span class="light fixedFont">{(Object|<a href="../symbols/_global_.html#Constructor">Constructor</a>)=}</span> <b>rootPrototype</b>
@@ -2037,8 +2037,7 @@ Functions (except getters) and properties prefixed by "_" will be automatically 
 										
 										<div class="description">
 											<p>Returns all changed properties, since cloning of object. <br />
-Separate object from its prototype and return it. <br />
-Private meens non-enumerable properties.</p>
+Separate object from its prototype and return it.</p>
 											
 											
 											
@@ -2055,7 +2054,7 @@ Private meens non-enumerable properties.</p>
 														<span class="light fixedFont">{boolean=false}</span> <b>listPrivate</b>
 														
 													</dt>
-													<dd></dd>
+													<dd><p>Add non-enumerable properties.</p></dd>
 												
 											</dl>
 										
