@@ -33,11 +33,13 @@
 					<if test="data.version || !data.isBuiltin() || data.augments.length">
 						<ul class="summary">
 							<if test="data.version">
-								<li>Version {+ data.version +}</li>
+								<li><i>Version: </i> {+ data.version +}</li>
 							</if>
-							
+							<if test="data.author">
+							    <li><i>Author: </i>{+data.author+}</li>
+							</if>
 							<if test="!data.isBuiltin()">{# isn't defined in any file #}
-								<li>Defined in: {+new Link().toSrc(data.srcFile)+}</li>
+								<li><i>Defined in: </i> {+new Link().toSrc(data.srcFile)+}</li>
 							</if>
 							<if test="data.augments.length"><li>Extends <span class="fixedFont">
 								{+
@@ -328,7 +330,6 @@
 							
 							<div class="description">
 								{+resolveLinks(data.desc)+}
-								<if test="data.author"><br /><i>Author: </i>{+data.author+}.</if>
 							</div>
 							
 							<if test="data.example.length">
