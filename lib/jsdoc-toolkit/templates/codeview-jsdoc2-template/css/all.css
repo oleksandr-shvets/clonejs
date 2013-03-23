@@ -366,3 +366,20 @@ CODE{
 .detailList{
     font-size: 0.8em;
 }
+
+.summaryTable > THEAD{
+    border-bottom: 1px dotted #c0c0c0;
+}
+
+.intro H3{
+    font-weight: bold; 
+    margin-bottom: 1em;
+}
+
+DL.detailList.nomargin{
+    margin-top: -1.5em;
+}
+
+.description P:last-child{
+    margin: 0px;
+}
