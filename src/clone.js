@@ -3,8 +3,6 @@
  * @title   clone.js - the true prototype-based JavaScript micro-framework.
  * @version 0.6.2 alpha
  * @author  Alex Shvets
- * @see     <a href="http://quadroid.github.com/clonejs/" >API documentation</a>
- * @see     <a href="http://github.com/quadroid/clonejs/" >GitHub</a>
  *
  * @class
  * This is the framework that implements the true [prototype-based OOP⠙][1] paradigm in JS. 
