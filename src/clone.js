@@ -607,6 +607,24 @@ var $object = /** @lands $object# */{
         return this.can(method, 1);
     },
 
+    /**
+     * Returns array of object prototype chain.
+     * @returns {Array}
+     * @memberof $object#
+     */
+    getPrototypes: function(/** Object=$object */$last, /** boolean=false */notRevert){
+        var prototypes = [];
+        var proto = this;
+        var pushMethod = notRevert ? 'push' : 'unshift';
+        if(typeof $last == 'undefined') $last = $object;
+        
+        while((proto = Object.getPrototypeOf(proto)) != $last){
+            prototypes[pushMethod](proto);
+        }
+        
+        return prototypes;
+    },
+
 //    /**
 //     * Returns the current state of this object in JSON format.
 //     * @see $object#getState
