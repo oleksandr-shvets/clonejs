@@ -1,93 +1,93 @@
-
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="generator" content="JsDoc Toolkit" />
-		<title>Globals | JsDoc Reference</title>
+<html>
 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-		<meta name="mobileoptimized" content="0" />
-	
-		<link rel="stylesheet" href="css/all.css" media="all" />
-		<link rel="stylesheet" href="css/handheld.css" media="only screen and (max-width: 660px)" />
-		<link rel="stylesheet" href="css/handheld.css" media="handheld" />
-		<link rel="stylesheet" href="css/screen.css" media="screen and (min-width: 661px)" />
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Clonejs : The true prototype-based JavaScript micro-framework." />
 
-		<script src="javascript/all.js"></script>
-		<!--[if lt IE 9]>
-			<script src="javascript/html5.js"></script>
-		<![endif]-->
-	</head>
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-	<body>
+    <title>Clonejs</title>
+  </head>
 
-<div class="index">
-	<div class="menu">
-		<div class="indexLinks">
-			<a href="index.html">Globals</a>
-			<a href="files.html">Files</a>
-		</div>
-	
-		<h2 class="heading1">Globals</h2>
-		
-		<input type="text" name="classFilter" class="classFilter" id="ClassFilter" placeholder="Filter"></input>
-		
-		<nav>
-			<ul class="classList" id="ClassList">
-				
-					<li><a href="symbols/%24object.html">$object</a></li>
-				
-					<li><a href="symbols/_global_.html">_global_</a></li>
-				
-					<li><a href="symbols/ns.html">ns</a></li>
-				
-			</ul>
-		</nav>
-	</div>
-	<div class="fineprint" style="clear:both">
-		<footer>
-			
-			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
-			Template: <a href="https://github.com/quadroid/clonejs/tree/master/lib/jsdoc-toolkit/templates/codeview-jsdoc2-template" target="_blank">Codeview</a> 1.3<br />
-			Generated on:
-			<time datetime='2013-2-24' pubdate>2013-2-24 5:53</time>
-		</footer>
-	</div>
-</div>
+  <body>
 
-<div class="index indexStatic"></div>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/quadroid/clonejs">View on GitHub</a>
 
-<div class="content">
-	<div class="innerContent">
-		<article>
-			<h1 class="classTitle"><span>Global objects</span></h1>
-			
-			<ul id="ClassList2">
-				
-					<li>
-						<h2 class="classname"><a href="symbols/%24object.html">$object</a></h2>
-						<p><p>This is the framework that implements the true <a href="http://en.wikipedia.org/wiki/Prototype-based_programming">prototype-based OOP⠙</a> paradigm in JS.</p>
-					</li>
-				
-					<li>
-						<h2 class="classname"><a href="symbols/_global_.html">_global_</a></h2>
-						<p>Description of some native types.</p>
-					</li>
-				
-					<li>
-						<h2 class="classname"><a href="symbols/ns.html">ns</a></h2>
-						<p>The root namespace.</p>
-					</li>
-				
-			</ul>
-		</article>
-	</div>
-</div>
-		<script type="text/javascript">
-			wbos.CssTools.MediaQueryFallBack.LoadCss('css/screen.css', 'css/handheld.css', 660)
-			codeview.classFilter.Init()
-		</script>
-	</body>
+          <h1 id="project_title">Clonejs</h1>
+          <h2 id="project_tagline">The true prototype-based JavaScript micro-framework.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/quadroid/clonejs/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/quadroid/clonejs/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h2>clone.js</h2>
+
+<p>This is the micro-framework that implements the true <a href="http://en.wikipedia.org/wiki/Prototype-based_programming">prototype-based OOP⠙</a> in JS.
+It's based on the new ECMA Script 5 features like <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create"><code>Object.create</code>⠙</a> and <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">property descriptors⠙</a>.</p>
+
+<p><a href="http://github.com/quadroid/clonejs/archive/master.zip">Download clonejs-latest.zip</a></p>
+
+<h3>See <a href="http://quadroid.github.com/clonejs/symbols/%24object.html">API Documentation</a>
+</h3>
+
+<p>The main difference with other class-producing tools like <code>Ext.define</code>, <code>dojo.declare</code>, <code>Backbone.Model.extend</code>
+is that <code>$object.clone</code> will return an object (prototype with defined constructor-function) instead of function (with defined prototype-object). So, you don't need for instantiation, you can just start using the cloned object right now. But, if you need more than one instance, you can create it by <code>$yourProto.create</code>.</p>
+
+<p>Quick example:</p>
+
+<pre><code> var $myType = $object.clone({
+     '(final)  notConfigurableAndNotWritable': true,
+     '(writable final)   notConfigurableOnly': null,
+     '(hidden final get) notEnumerableGetter': function(){},
+     '(hidden)                 notEnumerable': true,
+     '(const)                       constant': 'not writable',
+                              publicProperty : 1,
+                                       _item : null,// private property (not enumerable)
+                                 '(get) item': function() { return this._item },
+                                 '(set) item': function(v){ this._item = v },
+                  '(get) publicPropertyAlias': 'publicProperty',// automatically create getter for publicProperty
+                                 constructor : function MyType(){
+                                                   this.applySuper(arguments);
+                                                   // do something...
+                                               }
+ });
+ var myTypeInstance = $myType.create({publicProperty: 2}/* constructor argument */);
+ assert( $myType.isPrototypeOf(myTypeInstance) );
+ assert( $myType.publicPropertyAlias === $myType.publicProperty );
+</code></pre>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Clonejs maintained by <a href="https://github.com/quadroid">quadroid</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-1886659-9");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+
+  </body>
 </html>
-
