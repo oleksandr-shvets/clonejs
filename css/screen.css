@@ -287,6 +287,17 @@ DL.detailList.params DT.heading + DT:last-of-type + DD{
     margin-left: 13ex;
 }
 
+DL.inheritsList DT{
+    font-weight: bold;
+    font-style: italic;
+    border-bottom: 1px dotted #c0c0c0;
+}
+DL.inheritsList DD:after{
+    content: ',';
+}
+DL.inheritsList DD:last-child:after{
+    content: '.';
+}
 
 .light{
     font-weight: normal !important;
