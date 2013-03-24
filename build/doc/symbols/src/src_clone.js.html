@@ -18,7 +18,7 @@
 <span class='line'> 11</span>  *    [2]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create
 <span class='line'> 12</span>  *    [3]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty
 <span class='line'> 13</span>  *
-<span class='line'> 14</span>  * &lt;p>[Project on GitHub](http://github.com/quadroid/clonejs#readme)
+<span class='line'> 14</span>  * &lt;p>[View on GitHub](http://github.com/quadroid/clonejs#readme)
 <span class='line'> 15</span>  *
 <span class='line'> 16</span>  * ### Naming conventions
 <span class='line'> 17</span>  *  
@@ -43,27 +43,27 @@
 <span class='line'> 36</span>  *
 <span class='line'> 37</span>  * var myObj = {a:1, b:2, c:3};
 <span class='line'> 38</span>  * var cloneOfMyObj = $object.apply(myObj, 'clone');
-<span class='line'> 39</span>  *   cloneOfMyObj.a = 11; // myObj.a still == 1
-<span class='line'> 40</span>  *          myObj.b = 22; // cloneOfMyObj.b will be also changed to 22
-<span class='line'> 41</span>  * 
+<span class='line'> 39</span>  * cloneOfMyObj.a = 11; // myObj.a still == 1
+<span class='line'> 40</span>  * myObj.b = 22; // cloneOfMyObj.b will be also changed to 22
+<span class='line'> 41</span>  *
 <span class='line'> 42</span>  * var $myType = $object.clone({
-<span class='line'> 43</span>  *     '(final)          propertyF': "not configurable and not writable",
-<span class='line'> 44</span>  *     '(writable final) propertyW': "not configurable only",
-<span class='line'> 45</span>  *     '(hidden)         propertyH': "not enumerable",
-<span class='line'> 46</span>  *     '(const)           constant': "not writable",
-<span class='line'> 47</span>  *                        property : "simple property",
-<span class='line'> 48</span>  *     '(get)      propertyH_alias': 'propertyH',// automatically create getter
-<span class='line'> 49</span>  *                           _item : "private property (not enumerable)",
-<span class='line'> 50</span>  *                    '(get)  item': function() { return this._item },
-<span class='line'> 51</span>  *                    '(set)  item': function(v){ this._item = v    },
-<span class='line'> 52</span>  *                     constructor : function MyType(){
-<span class='line'> 53</span>  *                                        this.applySuper(arguments);
-<span class='line'> 54</span>  *                                        // do something...
-<span class='line'> 55</span>  *                                    }
-<span class='line'> 56</span>  * });
-<span class='line'> 57</span>  * var myTypeInstance = $myType.create({publicProperty: 2});
-<span class='line'> 58</span>  *     assert( $myType.isPrototypeOf(myTypeInstance) );
-<span class='line'> 59</span>  *     assert( $myType.publicPropertyAlias === $myType.publicProperty );
+<span class='line'> 43</span>  *        '(final)          property1': "not configurable and not writable",
+<span class='line'> 44</span>  *        '(writable final) property2': "not configurable only",
+<span class='line'> 45</span>  *        '(hidden)         property3': "not enumerable",
+<span class='line'> 46</span>  *        '(const)           constant': "not writable",
+<span class='line'> 47</span>  *                          property4 : "simple property",
+<span class='line'> 48</span>  *        '(get)       property3alias': 'property3',// automatically create getter
+<span class='line'> 49</span>  *                              _item : "private property (not enumerable)",
+<span class='line'> 50</span>  *                       '(get)  item': function() { return this._item },
+<span class='line'> 51</span>  *                       '(set)  item': function(v){ this._item = v    },
+<span class='line'> 52</span>  *                        constructor : function MyType(){
+<span class='line'> 53</span>  *                                          this.applySuper(arguments);
+<span class='line'> 54</span>  *                                          // do something...
+<span class='line'> 55</span>  *                                      }
+<span class='line'> 56</span>  *    });
+<span class='line'> 57</span>  * var myTypeInstance = $myType.create({property4: "initialize simple property"});
+<span class='line'> 58</span>  * assert( $myType.isPrototypeOf(myTypeInstance) );
+<span class='line'> 59</span>  * assert( $myType.property3alias === $myType.property3 );
 <span class='line'> 60</span>  *
 <span class='line'> 61</span>  * var $myArray1 = $object.clone.call(Array.prototype, {customMethod: function(){}});
 <span class='line'> 62</span>  * var $myArray2 = $object.copy(Array).setProperties({customMethod: function(){}});

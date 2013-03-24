@@ -11,7 +11,7 @@
  *    [2]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create
  *    [3]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty
  *
- * <p>[Project on GitHub](http://github.com/quadroid/clonejs#readme)
+ * <p>[View on GitHub](http://github.com/quadroid/clonejs#readme)
  *
  * ### Naming conventions
  *  
