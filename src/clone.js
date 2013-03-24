@@ -370,7 +370,7 @@ var $object = /** @lands $object# */{
      *        How to process inner objects. Can be:        
      *        "deepCopy"  - see {@link $object#deepCopy}   
      *        "deepClone" - see {@link $object#deepClone}  
-     *        null - do nothing (default).
+     *        "" - do nothing (default).
      *
      * @param rootPrototype
      *        The root prototype for created object prototype chain. If it is Constructor, Constructor.prototype will be used instead.  
@@ -381,7 +381,7 @@ var $object = /** @lands $object# */{
      *        Set this to Infinity if you want to copy all object parents properties up to $object.
      *
      * @param mixParents
-     *        Should be false if objects have methods, that call {@link $object#applySuper}  
+     *        Should be false if objects have methods, that call {@link $object#applySuper}.
      *        If true, all own properties of all objects will be directly attached to the one returned object.  
      *        False by default.
      *
@@ -389,10 +389,10 @@ var $object = /** @lands $object# */{
      * @memberOf $object#
      */
     copy: function(
-        /** ('deepClone'|'deepCopy')= */deepMethod,
-        /**     (Object|Constructor)= */rootPrototype,
-        /**                  number=0 */parentsLevel,
-        /**             boolean=false */mixParents
+        /** ('deepClone'|'deepCopy')=""      */deepMethod,
+        /**     (Object|Constructor)=$object */rootPrototype,
+        /**                   number=0       */parentsLevel,
+        /**                  boolean=false   */mixParents
         //**                Array=all */propertiesList
     ){
         for(var i=0, value=arguments[i]; i < arguments.length; value=arguments[++i]) switch(typeof value){
