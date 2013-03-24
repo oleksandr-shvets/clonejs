@@ -74,11 +74,17 @@ var $object = /** @lands $object# */{
             if( descriptors.hasOwnProperty('constructor') ){
                 var constructor = descriptors.constructor.value;
                 if(typeof constructor == 'string'){
-                    descriptors.constructor.value = function CustomType(){
+                    var typeName = constructor;
+                    constructor = descriptors.constructor.value = function CustomType(){
                         return this.applySuper(arguments);
                     }
+                    constructor.typeName = typeName;
+                    
+                }else if(!constructor.typeName){
+                    constructor.typeName = constructor.name || this.constructor.typeName + '_clone';//+n
                 }
-                descriptors.constructor.value.prototype = this;
+
+                constructor.prototype = this;
             }
         }
         return Object.create(this, descriptors);
