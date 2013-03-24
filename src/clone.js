@@ -36,27 +36,27 @@
  *
  * var myObj = {a:1, b:2, c:3};
  * var cloneOfMyObj = $object.apply(myObj, 'clone');
- *   cloneOfMyObj.a = 11; // myObj.a still == 1
- *          myObj.b = 22; // cloneOfMyObj.b will be also changed to 22
- * 
+ * cloneOfMyObj.a = 11; // myObj.a still == 1
+ * myObj.b = 22; // cloneOfMyObj.b will be also changed to 22
+ *
  * var $myType = $object.clone({
- *     '(final)          propertyF': "not configurable and not writable",
- *     '(writable final) propertyW': "not configurable only",
- *     '(hidden)         propertyH': "not enumerable",
- *     '(const)           constant': "not writable",
- *                        property : "simple property",
- *     '(get)      propertyH_alias': 'propertyH',// automatically create getter
- *                           _item : "private property (not enumerable)",
- *                    '(get)  item': function() { return this._item },
- *                    '(set)  item': function(v){ this._item = v    },
- *                     constructor : function MyType(){
- *                                        this.applySuper(arguments);
- *                                        // do something...
- *                                    }
- * });
- * var myTypeInstance = $myType.create({publicProperty: 2});
- *     assert( $myType.isPrototypeOf(myTypeInstance) );
- *     assert( $myType.publicPropertyAlias === $myType.publicProperty );
+ *        '(final)          property1': "not configurable and not writable",
+ *        '(writable final) property2': "not configurable only",
+ *        '(hidden)         property3': "not enumerable",
+ *        '(const)           constant': "not writable",
+ *                          property4 : "simple property",
+ *        '(get)       property3alias': 'property3',// automatically create getter
+ *                              _item : "private property (not enumerable)",
+ *                       '(get)  item': function() { return this._item },
+ *                       '(set)  item': function(v){ this._item = v    },
+ *                        constructor : function MyType(){
+ *                                          this.applySuper(arguments);
+ *                                          // do something...
+ *                                      }
+ *    });
+ * var myTypeInstance = $myType.create({property4: "initialize simple property"});
+ * assert( $myType.isPrototypeOf(myTypeInstance) );
+ * assert( $myType.property3alias === $myType.property3 );
  *
  * var $myArray1 = $object.clone.call(Array.prototype, {customMethod: function(){}});
  * var $myArray2 = $object.copy(Array).setProperties({customMethod: function(){}});
