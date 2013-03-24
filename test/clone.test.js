@@ -1,8 +1,11 @@
 // nodeunit
 
-if(typeof $object=='undefined') $object = require('../src/clone.js');
+if(typeof $object=='undefined'){
+    var ns = require('../src/clone.js'),
+        $object = ns.prototype;
+}
 
-this['clone.js'] = {
+this.$object = {
 
     clone: function(test){
         var clone = $object.clone({a:1});

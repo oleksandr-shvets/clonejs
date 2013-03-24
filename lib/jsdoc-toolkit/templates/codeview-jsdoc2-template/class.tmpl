@@ -56,11 +56,11 @@
 				</div>
 			</header>
 
-			<if test="!data.isBuiltin() && (data.isNamespace)">
+			<if test="false && !data.isBuiltin() && (data.isNamespace)">
 				<section>
 					<div class="props">
 						<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class {+data.alias+}.">
-							<caption class="sectionTitle">{+classType+}Summary</caption>
+							<caption class="sectionTitle">{+classType+} Summary</caption>
 							<thead>
 								<tr>
 									<th scope="col">Constructor Attributes</th>
@@ -213,7 +213,7 @@
 									borrowedMembers.map(function($) {if (contributers.indexOf($.memberOf) < 0) contributers.push($.memberOf)});
 									for (var i = 0, l = contributers.length; i < l; i++) {
 										output +=
-											"<dt>Methods borrowed from class <span class='fixedFont'>"+new Link().toSymbol(contributers[i])+"</span>: </dt>"
+											"<dt>Methods borrowed from <span class='fixedFont'>"+new Link().toSymbol(contributers[i])+"</span>: </dt>"
 											+
 											borrowedMembers
 											.filter(
