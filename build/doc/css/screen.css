@@ -250,7 +250,7 @@ DL.detailList.nomargin DT{
 }
 DL.detailList.nomargin DD{
     float: left;
-    padding-right: 2ex;
+    padding-right: 1ex;
 }
 
 DIV.hr{
@@ -292,12 +292,19 @@ DL.inheritsList DT{
     font-style: italic;
     border-bottom: 1px dotted #c0c0c0;
 }
+
+DL.detailList.nomargin DT.heading:last-of-type ~ DD > *:last-child:after,
 DL.inheritsList DD:after{
     content: ',';
 }
+DL.detailList.nomargin DT.heading:last-of-type ~ DD:last-child > *:last-child:after,
 DL.inheritsList DD:last-child:after{
     content: '.';
 }
+DL.detailList.nomargin DT.heading:last-of-type + DD:last-child > *:last-child:after{
+    content: '';
+}
+
 
 .light{
     font-weight: normal !important;
