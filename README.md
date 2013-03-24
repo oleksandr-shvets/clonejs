@@ -15,25 +15,28 @@ is that `$object.clone` will return an object (prototype with defined constructo
 
 Quick example:
 
-     var $myType = $object.clone({
-         '(final)  notConfigurableAndNotWritable': true,
-         '(writable final)   notConfigurableOnly': null,
-         '(hidden final get) notEnumerableGetter': function(){},
-         '(hidden)                 notEnumerable': true,
-         '(const)                       constant': 'not writable',
-                                  publicProperty : 1,
-                                           _item : null,// private property (not enumerable)
-                                     '(get) item': function() { return this._item },
-                                     '(set) item': function(v){ this._item = v },
-                      '(get) publicPropertyAlias': 'publicProperty',// automatically create getter for publicProperty
-                                     constructor : function MyType(){
-                                                       this.applySuper(arguments);
-                                                       // do something...
-                                                   }
-     });
-     var myTypeInstance = $myType.create({publicProperty: 2}/* constructor argument */);
-     assert( $myType.isPrototypeOf(myTypeInstance) );
-     assert( $myType.publicPropertyAlias === $myType.publicProperty );
+    var myObj = {a:1, b:2, c:3};
+    var cloneOfMyObj = $object.apply(myObj, 'clone');
+      cloneOfMyObj.a = 11; // myObj.a still == 1
+             myObj.b = 22; // cloneOfMyObj.b will be also changed to 22
 
+    var $myType = $object.clone({
+        '(final)          property1': "not configurable and not writable",
+        '(writable final) property2': "not configurable only",
+        '(hidden)         property3': "not enumerable",
+        '(const)           constant': "not writable",
+                          property4 : "simple property",
+        '(get)       property3alias': 'property3',// automatically create getter
+                              _item : "private property (not enumerable)",
+                       '(get)  item': function() { return this._item },
+                       '(set)  item': function(v){ this._item = v    },
+                        constructor : function MyType(){
+                                          this.applySuper(arguments);
+                                          // do something...
+                                      }
+    });
+    var myTypeInstance = $myType.create({property4: "initialize simple property"});
+        assert( $myType.isPrototypeOf(myTypeInstance) );
+        assert( $myType.property3alias === $myType.property3 );
 
 [![githalytics.com alpha](https://cruel-carlota.pagodabox.com/3110be9614da5cb337ebd483c187010f "githalytics.com")](http://githalytics.com/quadroid/clonejs)
