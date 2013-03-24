@@ -23,6 +23,8 @@
  * </code>
  *
  * Properties, **prefixed by "_"**, are private.
+ * 
+ * [![githalytics.com alpha](https://cruel-carlota.pagodabox.com/3110be9614da5cb337ebd483c187010f "githalytics.com")](http://githalytics.com/quadroid/clonejs)
  *
  * @description
  * The main difference with other class-producing tools like `Ext.define`, `dojo.declare`, `Backbone.Model.extend`
@@ -145,13 +147,13 @@ var $object = /** @lands $object# */{
      * + `(hidden)`   - make property non-enumerable.
      * + `(writable)` - make property writable (use with final).
      *
-     * @param {Object} properties
-     * @param {PropertyDescriptor=} defaultDescriptor The default property descriptor.
+     * @param properties
+     * @param defaultDescriptor The default property descriptor.
      * @returns {{PropertyDescriptor}} Property descriptors.
      * @static
      * @memberOf $object
      */
-    describe: function(properties, defaultDescriptor){
+    describe: function(/** Object */properties, /** PropertyDescriptor= */defaultDescriptor){
         var descriptors = {};
 
         var $defaultDescriptor = defaultDescriptor ? defaultDescriptor : {
@@ -240,8 +242,8 @@ var $object = /** @lands $object# */{
         /* if not */('__super__' in this) || this.defineProperty(
             '__super__', {value: Object.getPrototypeOf(Object.getPrototypeOf(this)), writable:!0,configurable:!0}
             /**
-             * Link to the object prototype.
-             * Dynamically changed to next by prototype chain, while applySuper method executing.
+             * Link to the instance prototype.
+             * Dynamically changed to next by prototype chain, while `{@link #applySuper}` method executing.
              * System property. **Use it only for debug purposes**.
              * @name  __super__
              * @type  {?Object}
@@ -295,7 +297,7 @@ var $object = /** @lands $object# */{
 //        },
 
     /**
-     * Use this method to wrap callback, that can call `applySuper` method.
+     * Use this method to wrap callback, that can call `{@link #applySuper}` method.
      * @see $object#applySuper
      * @returns {Function}
      * @memberOf $object#
@@ -374,8 +376,8 @@ var $object = /** @lands $object# */{
      *
      * @param deepMethod
      *        How to process inner objects. Can be:        
-     *        "deepCopy"  - see {@link $object#deepCopy}   
-     *        "deepClone" - see {@link $object#deepClone}  
+     *        "deepCopy"  - see `{@link #deepCopy}`   
+     *        "deepClone" - see `{@link #deepClone}`  
      *        "" - do nothing (default).
      *
      * @param rootPrototype
@@ -387,7 +389,7 @@ var $object = /** @lands $object# */{
      *        Set this to Infinity if you want to copy all object parents properties up to $object.
      *
      * @param mixParents
-     *        Should be false if objects have methods, that call {@link $object#applySuper}.
+     *        Should be false if objects have methods, that call `{@link #applySuper}`.
      *        If true, all own properties of all objects will be directly attached to the one returned object.  
      *        False by default.
      *
@@ -507,6 +509,7 @@ var $object = /** @lands $object# */{
 
     /**
      * Copy properties to other object.
+     * @see $object#concat
      * @memberOf $object#
      */
     paste: function(/** Object */pasteTo, /** (Array|boolean)= */allProperties){
@@ -514,8 +517,13 @@ var $object = /** @lands $object# */{
     },
 
     /**
-     * Copy properties from given object.
+     * Copy properties from given object. 
+     * If allProperties does not specified, only own properties will be copied.
+     * @param obj
+     * @param allProperties Array of property names, or `true`. 
+     *        If true, all (own and parents) properties will be copied. 
      * @returns {$object} this
+     * @see $object#paste
      * @memberOf $object#
      */
     concat: function(/** Object */obj, /** (Array|boolean)= */allProperties){
@@ -666,58 +674,59 @@ var $object = /** @lands $object# */{
 
     // Some sugar:
 
-    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getPrototypeOf">Object.getPrototypeOf⠙</a>
+    /** Wrapper for [Object.getPrototypeOf⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getPrototypeOf)
      * @memberof $object# */
     getPrototype: function(){
         return Object.getPrototypeOf(this) },
-    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys">Object.keys⠙</a>
+    /** Wrapper for [Object.keys⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys)
      * @memberof $object# */
     getEnumerableOwnPropertyNames: function(){
         return Object.keys(this) },
-    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames">Object.getOwnPropertyNames⠙</a>
+    /** Wrapper for [Object.getOwnPropertyNames⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames)
      * @memberof $object# */
     getOwnPropertyNames: function(){
         return Object.getOwnPropertyNames(this) },
 
-    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/preventExtensions">Object.preventExtensions⠙</a>
+    /** Wrapper for [Object.preventExtensions⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/preventExtensions)
      * @memberof $object# */
     preventExtensions: function(){
         return Object.preventExtensions(this) },
-    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isExtensible">Object.isExtensible⠙</a>
+    /** Wrapper for [Object.isExtensible⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isExtensible)
      * @memberof $object# */
     isExtensible: function(){
         return Object.isExtensible(this) },
-    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal">Object.seal⠙</a>
+    /** Wrapper for [Object.seal⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal)
      * @memberof $object# */
     seal: function(){
         return Object.seal(this) },
-    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isSealed">Object.isSealed⠙</a>
+    /** Wrapper for [Object.isSealed⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isSealed)
      * @memberof $object# */
     isSealed: function(){
         return Object.isSealed(this) },
-    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/freeze">Object.freeze⠙</a>
+    /** Wrapper for [Object.freeze⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/freeze)
      * @memberof $object# */
     freeze: function(){
         return Object.freeze(this) },
-    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isFrozen">Object.isFrozen⠙</a>
+    /** Wrapper for [Object.isFrozen⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isFrozen)
      * @memberof $object# */
     isFrozen: function(){
         return Object.isFrozen(this) },
 
-    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor">Object.getOwnPropertyDescriptor⠙</a>
+    /** Wrapper for [Object.getOwnPropertyDescriptor⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor)
      * @memberof $object# */
     getOwnPropertyDescriptor: function(/** string */ name){
         return Object.getOwnPropertyDescriptor(this, name);
     },
 
-    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperties">Object.defineProperties⠙</a>
+    /** Define properties.
+     *  @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperties">Object.defineProperties⠙</a>
      *  @see $object.describe
      *  @memberof $object# */
     defineProperties: function(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
         return Object.defineProperties(this, $object.describe.apply(null, arguments));
     },
 
-    /** @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty⠙</a>
+    /** Wrapper for [Object.defineProperty⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty)
      *  @memberof $object# */
     defineProperty: function(/** string */name, /** PropertyDescriptor */propertyDescriptor){
         return Object.defineProperty(this, name, propertyDescriptor);
@@ -789,7 +798,7 @@ $object./*re*/defineProperties($object);
  */
 var ns = {
     /** 
-     * The prototype of every object in this namespace (default - {@link $object}).
+     * The prototype of every object in this namespace (default - `{@link $object}`).
      * @name prototype
      * @memberOf ns# */
     prototype: $object,
