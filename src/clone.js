@@ -33,33 +33,34 @@
  * But, if you need more than one instance, you can create it by `$yourProto.create`.
  *
  * @example
+ *
+ * var myObj = {a:1, b:2, c:3};
+ * var cloneOfMyObj = $object.apply(myObj, 'clone');
+ *   cloneOfMyObj.a = 11; // myObj.a still == 1
+ *          myObj.b = 22; // cloneOfMyObj.b will be also changed to 22
+ * 
  * var $myType = $object.clone({
- *     '(final)  notConfigurableAndNotWritable': true,
- *     '(writable final)   notConfigurableOnly': null,
- *     '(hidden final get) notEnumerableGetter': function(){},
- *     '(hidden)                 notEnumerable': true,
- *     '(const)                       constant': 'not writable',
- *                              publicProperty : 1,
- *                                       _item : null,// private property (not enumerable)
- *                                 '(get) item': function() { return this._item },
- *                                 '(set) item': function(v){ this._item = v },
- *                  '(get) publicPropertyAlias': 'publicProperty',// automatically create getter for publicProperty
- *                                 constructor : function MyType(){
- *                                                   var obj = this.applySuper(arguments);
- *                                                   // do something with obj...
- *                                                   return obj;
- *                                               }
+ *     '(final)          propertyF': "not configurable and not writable",
+ *     '(writable final) propertyW': "not configurable only",
+ *     '(hidden)         propertyH': "not enumerable",
+ *     '(const)           constant': "not writable",
+ *                        property : "simple property",
+ *     '(get)      propertyH_alias': 'propertyH',// automatically create getter
+ *                           _item : "private property (not enumerable)",
+ *                    '(get)  item': function() { return this._item },
+ *                    '(set)  item': function(v){ this._item = v    },
+ *                     constructor : function MyType(){
+ *                                        this.applySuper(arguments);
+ *                                        // do something...
+ *                                    }
  * });
  * var myTypeInstance = $myType.create({publicProperty: 2});
- * assert( $myType.isPrototypeOf(myTypeInstance) );
- * assert( $myType.publicPropertyAlias === $myType.publicProperty );
+ *     assert( $myType.isPrototypeOf(myTypeInstance) );
+ *     assert( $myType.publicPropertyAlias === $myType.publicProperty );
  *
  * var $myArray1 = $object.clone.call(Array.prototype, {customMethod: function(){}});
  * var $myArray2 = $object.copy(Array).setProperties({customMethod: function(){}});
  *
- * var myObj = {a:1, b:2, c:3};
- * var cloneOfMyObj = $object.apply(myObj, 'clone');
- * cloneOfMyObj.a = 11; // myObj.a still == 1
  */
 var $object = /** @lands $object# */{
 
