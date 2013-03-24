@@ -1,7 +1,10 @@
 ## clone.js
 
-This is the micro-framework that implements the true [prototype-based OOP⠙](http://en.wikipedia.org/wiki/Prototype-based_programming) in JS.
-It's based on the new ECMA Script 5 features like [`Object.create`⠙](https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create) and [property descriptors⠙](https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty).
+This is the micro-framework that implements the true [prototype-based OOP⠙][1] in JS.  
+It's based on the new ECMA Script 5 features like [`Object.create`⠙][2] and [property descriptors⠙][3].
+  [1]: http://en.wikipedia.org/wiki/Prototype-based_programming
+  [2]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create
+  [3]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty
 
 [Download clonejs-latest.zip](http://github.com/quadroid/clonejs/archive/master.zip)
 
@@ -31,3 +34,6 @@ Quick example:
      var myTypeInstance = $myType.create({publicProperty: 2}/* constructor argument */);
      assert( $myType.isPrototypeOf(myTypeInstance) );
      assert( $myType.publicPropertyAlias === $myType.publicProperty );
+
+
+[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/3110be9614da5cb337ebd483c187010f "githalytics.com")](http://githalytics.com/quadroid/clonejs)
