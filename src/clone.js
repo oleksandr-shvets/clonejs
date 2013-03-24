@@ -760,6 +760,96 @@ $object./*re*/defineProperties($object);
 
 
 /**
+ * @namespace
+ *    The root namespace.
+ * @description
+ * If you run the following code:
+ * <code>
+ * ns.extend('collection', {name: 'collection'});
+ * ns.collection.extend('arrayCollection', {name: 'arrayCollection'});
+ * </code>
+ * The structure of the namespace will be:
+ * <code>
+ * ns == {
+ *     $collection: {name: 'collection'},
+ *     collection: {
+ *         $arrayCollection: {name: 'arrayCollection'},
+ *         arrayCollection: {
+ *             prototype: {name: 'arrayCollection'},
+ *             extend: ns.extend
+ *         },
+ *         prototype: {name: 'collection'},
+ *         extend: ns.extend
+ *     },
+ *     prototype: $object,
+ *     extend: ns.extend,
+ *     put: ns.put
+ * }
+ * </code>
+ */
+var ns = {
+    /** 
+     * The prototype of every object in this namespace (default - {@link $object}).
+     * @name prototype
+     * @memberOf ns# */
+    prototype: $object,
+    
+    /**
+     * Create prototype as a part of namespace.
+     * @see $object#clone
+     * @memberOf ns# */
+    extend: function extend(/** string */nsName, /** Object */prototype, /** PropertyDescriptor= */defaultDescriptor){
+        if( nsName.indexOf('.') > 0 ){
+            var currentNS = this;
+            var nameParts = nsName.split('.');
+            nsName = nameParts.pop();
+            nameParts.forEach(function(namePart){
+                if(!(namePart in currentNS)){
+                    currentNS.extend(namePart);
+                }
+                currentNS = currentNS[namePart];
+            });
+        }
+
+        var typeName  = nsName[0].toUpperCase() + nsName.substr(1);
+        if(!prototype.hasOwnProperty('constructor')){
+            prototype.constructor = typeName;
+        }
+        var $newProto = $object.isPrototypeOf(prototype) ? prototype : this.prototype.clone(prototype, defaultDescriptor);
+        $newProto.constructor.typeName = typeName;
+    
+        var newNS = {
+            prototype: $newProto,
+            extend: extend
+        };
+        this['$'+nsName] =  $newProto;
+        this[nsName] = newNS;
+        
+        return newNS;
+    },
+
+    /**
+     * Put object (and all its parents) into this namespace.
+     * Name will be get from prototype.constructor.name.
+     * @returns {ns}
+     * @static */
+    put: function(/** Object */prototype){
+        var eachNS = this;
+
+        var prototypes = prototype.getPrototypes();
+        prototypes.push(prototype);
+        prototypes.forEach(function(proto){
+            var name = proto.constructor.typeName || proto.constructor.name;
+            name = name[0].toLowerCase() + name.substr(1);
+            if(!(name in eachNS)){
+                eachNS.extend(name, proto);
+            }
+            eachNS = eachNS[name];    
+        });
+        
+        return eachNS;
+    }
+};
 
 /**
  * @name _global_

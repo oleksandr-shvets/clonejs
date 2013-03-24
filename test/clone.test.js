@@ -294,3 +294,64 @@ this['clone.js'] = {
     }
 
 };
+
+
+this.ns = {
+    
+    extend: function(test){
+        var ns1 = $object.apply(ns, 'copy');
+        ns1.extend('collection',          {name: 'collection'})
+               .extend('arrayCollection', {name: 'arrayCollection'});
+
+            _ns_check(ns1, test);
+        
+        test.done();
+    },
+    
+    put: function(test){
+        var $collection = $object.clone({constructor: 'Collection'}),
+            $arrayCollection = $collection.clone({constructor: 'ArrayCollection'});
+        var ns2 = $object.apply(ns, 'copy');
+        ns2.put($arrayCollection);
+
+            _ns_check(ns2, test);
+        
+        test.done();
+    }
+};
+
+function _ns_check(newNS, test){
+    test.strictEqual(newNS.prototype, $object);
+    test.strictEqual(newNS.extend,    ns.extend);
+    test.strictEqual(newNS.put,       ns.put);
+    
+    test.ok( $object.isPrototypeOf(newNS.$collection) );
+    test.equal( newNS.$collection.constructor.typeName, 'Collection');
+    test.strictEqual(newNS.collection.prototype, newNS.$collection);
+    test.strictEqual(newNS.collection.extend,    ns.extend);
+
+    test.ok( newNS.$collection.isPrototypeOf(newNS.collection.$arrayCollection) );
+    test.equal( newNS.collection.$arrayCollection.constructor.typeName, 'ArrayCollection');
+    test.strictEqual(newNS.collection.arrayCollection.prototype, newNS.collection.$arrayCollection);
+    test.strictEqual(newNS.collection.arrayCollection.extend,    ns.extend);
+    
+//    test.strictEqual(newNS., );
+//    test.strictEqual(newNS., );
+//    test.strictEqual(newNS., );
+//    test.strictEqual(newNS., );
+//    test.deepEqual(newNS, {
+//        prototype: $object,
+//        extend: ns.extend,
+//        put: ns.put,
+//        $collection: {name: 'collection'},
+//        collection: {
+//            prototype: {name: 'collection'},
+//            extend: ns.extend,
+//            $arrayCollection: {name: 'arrayCollection'},
+//            arrayCollection: {
+//                prototype: {name: 'arrayCollection'},
+//                extend: ns.extend
+//            }
+//        }
+//    });
+}
