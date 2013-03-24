@@ -758,21 +758,30 @@ $object./*re*/defineProperties($object);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//export for nodejs:
-if(typeof(module)!='undefined' && module.exports) module.exports = $object;
-
-
-if(0)// (need for IDEa code inspections)
-/**
- * Object, that has at least one of the following property:  
- * value, get, set, writable, configurable, enumerable.
- * @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty⠙</a>
- * @name PropertyDescriptor
- * @typedef {({value:*}|{get:{function():*}}|{set:{function(*):void}}|{writable:boolean}|{configurable:boolean}|{enumerable:boolean})} */
-PropertyDescriptor;
 
 /**
- * JavaScript class. Function, that can be called by "new" operator and/or have modified prototype property.  
- * For example: Object, Array, RegExp.
- * @name Constructor
- * @typedef {Function} */
+
+/**
+ * @name _global_
+ * @namespace
+ *  Description of some native types.  
+ *  Listed objects does not present in global (window) object, it's only descriptions. 
+ */
+    if(0)// (need for IDEa code inspections)
+    /**
+     * Object, that has at least one of the following property:  
+     * value, get, set, writable, configurable, enumerable.
+     * @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty⠙</a>
+     * @name PropertyDescriptor
+     * @typedef {({value:*}|{get:{function():*}}|{set:{function(*):void}}|{writable:boolean}|{configurable:boolean}|{enumerable:boolean})} */
+    PropertyDescriptor;
+    
+    /**
+     * JavaScript class. Function, that can be called by "new" operator and/or have modified prototype property.  
+     * For example: Object, Array, RegExp.
+     * @name Constructor
+     * @typedef {Function} */
+
+
+// export ns module:
+if(typeof module != 'undefined' && module.exports) module.exports = ns;
