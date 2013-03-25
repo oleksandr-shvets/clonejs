@@ -321,7 +321,7 @@
 								{+classType+}Detail
 							</h2>
 							
-							<if test="!data.is('CONSTRUCTOR')"><div class="fixedFont">{!
+							<if test="!data.is('CONSTRUCTOR') && !data.isNamespace"><div class="fixedFont">{!
 								if (data.isPrivate) output += "&lt;private&gt; ";
 								if (data.isInner) output += "&lt;inner&gt; ";
 							!}
