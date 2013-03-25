@@ -771,93 +771,132 @@ $object./*re*/defineProperties($object);
 
 /**
  * @namespace
- *    The root namespace.
+ *    The namespace.
  * @description
  * If you run the following code:
  * <code>
- * ns.extend('collection', {name: 'collection'});
- * ns.collection.extend('arrayCollection', {name: 'arrayCollection'});
- * </code>
+ *     ns.extend('collection', {name: 'collection'});
+ *     ns.collection.extend('arrayCollection', {name: 'arrayCollection'});
+ * </code> 
  * The structure of the namespace will be:
  * <code>
- * ns == {
- *     $collection: {name: 'collection'},
- *     collection: {
- *         $arrayCollection: {name: 'arrayCollection'},
- *         arrayCollection: {
- *             prototype: {name: 'arrayCollection'},
- *             extend: ns.extend
+ *     ns == {
+ *         $collection: {name: 'collection'},
+ *         collection: {
+ *             $arrayCollection: {name: 'arrayCollection'},
+ *             arrayCollection: {
+ *                 prototype: {name: 'arrayCollection'},
+ *                 extend: ns.extend,
+ *                 put: ns.put
+ *             },
+ *             prototype: {name: 'collection'},
+ *             extend: ns.extend,
+ *             put: ns.put
  *         },
- *         prototype: {name: 'collection'},
- *         extend: ns.extend
- *     },
- *     prototype: $object,
- *     extend: ns.extend,
- *     put: ns.put
- * }
+ *         prototype: $object,
+ *         extend: ns.extend,
+ *         put: ns.put
+ *     }
  * </code>
  */
-var ns = {
+var ns = /** @lands ns# */{
     /** 
      * The prototype of every object in this namespace (default - `{@link $object}`).
      * @name prototype
+     * @type Object
      * @memberOf ns# */
     prototype: $object,
     
     /**
-     * Create prototype as a part of namespace.
+     * Extend namespace by prototype.
      * @see $object#clone
+     * @param nsItemName
+     *        The name of the new sub-namespace 
+     *        (begins with lower case letter).
+     * @param prototypeOrProperties
+     *        If this arg is not a clone (or sub-clone) of `ns.prototype`, 
+     *        the new object will be created (cloned from `ns.prototype`).
+     * @param defaultDescriptor
+     *        The default {@link PropertyDescriptor} for created prototype.
+     * @returns {ns} The created sub-namespace.
      * @memberOf ns# */
-    extend: function extend(/** string */nsName, /** Object */prototype, /** PropertyDescriptor= */defaultDescriptor){
-        if( nsName.indexOf('.') > 0 ){
-            var currentNS = this;
-            var nameParts = nsName.split('.');
-            nsName = nameParts.pop();
-            nameParts.forEach(function(namePart){
-                if(!(namePart in currentNS)){
-                    currentNS.extend(namePart);
-                }
-                currentNS = currentNS[namePart];
-            });
-        }
+    extend: function extend(/** string */nsItemName, /** Object */prototypeOrProperties, /** PropertyDescriptor= */defaultDescriptor){
 
-        var typeName  = nsName[0].toUpperCase() + nsName.substr(1);
-        if(!prototype.hasOwnProperty('constructor')){
-            prototype.constructor = typeName;
-        }
-        var $newProto = $object.isPrototypeOf(prototype) ? prototype : this.prototype.clone(prototype, defaultDescriptor);
-        $newProto.constructor.typeName = typeName;
+        var $parent = this.prototype, parentNS = this;
+        if( $parent.isPrototypeOf(prototypeOrProperties) ){
+            
+            var $newProto = prototypeOrProperties;
+            
+        }else{
+            
+            var properties = prototypeOrProperties;            
+            var typeName = nsItemName[0].toUpperCase() + nsItemName.substr(1);
+            if( properties.hasOwnProperty('constructor') ){
+                properties.constructor.typeName = typeName;
+            }else{
+                properties.constructor = typeName;
+            }
+            $newProto = $parent.clone(properties, defaultDescriptor);
+        }      
     
-        var newNS = {
-            prototype: $newProto,
-            extend: extend
-        };
-        this['$'+nsName] =  $newProto;
-        this[nsName] = newNS;
+        var newNS = $object.clone.call(parentNS, {prototype: $newProto});
+        this['$'+nsItemName] =  $newProto;
+        this[nsItemName] = newNS;
         
         return newNS;
     },
 
     /**
-     * Put object (and all its parents) into this namespace.
-     * Name will be get from prototype.constructor.name.
-     * @returns {ns}
-     * @static */
-    put: function(/** Object */prototype){
-        var eachNS = this;
+     * Put object into this namespace. 
+     * If `nsPathName` not specified, all prototype parents will be also pushed to this namespace.
+     * @param nsPathName 
+     *        If not specified, the value of `prototype.constructor.typeName` or `prototype.constructor.name` will be used. 
+     * @param prototype
+     * @returns {ns} The created sub-namespace.
+     * @memberOf ns# */
+    put: function(/** string= */nsPathName, /** Object */prototype){
+        if(typeof nsPathName != 'string'){
+            prototype  = nsPathName;
+            nsPathName = undefined;
+        }//</arguments>
 
-        var prototypes = prototype.getPrototypes();
-        prototypes.push(prototype);
-        prototypes.forEach(function(proto){
-            var name = proto.constructor.typeName || proto.constructor.name;
-            name = name[0].toLowerCase() + name.substr(1);
-            if(!(name in eachNS)){
-                eachNS.extend(name, proto);
-            }
-            eachNS = eachNS[name];    
-        });
+        if( nsPathName /*&& nsPathName.indexOf('.') > 0*/ ){
+            
+            var currentNS = this;
+            var nameParts = nsPathName.split('.');
+            var nsItemName = nameParts.pop();
+            nameParts.forEach(function(namePart){
+                if(!(namePart in currentNS)){
+                    currentNS.extend(namePart, {});
+                }
+                currentNS = currentNS[namePart];
+            });
+
+            return applyExtend(currentNS, prototype, nsItemName);
+            
+        }else{
+            
+            var prototypes = prototype.getPrototypes();
+            prototypes.push(prototype);
+
+            var eachNS = this;
+            prototypes.forEach(function(proto){
+                nsItemName = proto.constructor.typeName || proto.constructor.name;
+                nsItemName = nsItemName[0].toLowerCase() + nsItemName.substr(1);
+
+                applyExtend(eachNS, proto, nsItemName);
+
+                eachNS = eachNS[nsItemName];
+            });
+
+            return eachNS;
+        }
         
-        return eachNS;
+        function applyExtend(eachNS, proto, nsItemName){
+            if(!(nsItemName in eachNS) || eachNS[nsItemName] !== proto){
+                return eachNS.extend(nsItemName, proto);
+            }                
+        }
     }
 };
 
