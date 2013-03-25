@@ -8,7 +8,7 @@ It's based on the ECMA Script 5 features like [`Object.create`⠙][2] and [prope
 
 [Download clonejs-latest.zip](http://github.com/quadroid/clonejs/archive/master.zip)
 
-### See [API Documentation](http://quadroid.github.com/clonejs/symbols/%24object.html)
+### See [API Documentation](http://clonejs.org/symbols/%24object.html)
 
 The main difference with other class-producing tools like `Ext.define`, `dojo.declare`, `Backbone.Model.extend`
 is that `$object.clone` will return an object (prototype with defined constructor-function) instead of function (with defined prototype-object). So, you don't need for instantiation, you can just start using the cloned object right now. But, if you need more than one instance, you can create it by `$yourProto.create`.
@@ -74,23 +74,23 @@ See: [constructor][], [create][], [applySuper][], [callSuper][], [createSuperSaf
 
 See: [ns][], [ns.extend][], [ns.put][].
 
-[clone.js]:    http://quadroid.github.com/clonejs/
-[$object]:     http://quadroid.github.com/clonejs/symbols/%24object.html
+[clone.js]:    http://clonejs.org/
+[$object]:     http://clonejs.org/symbols/%24object.html
 
-[clone]:       http://quadroid.github.com/clonejs/symbols/%24object.html#clone
-[create]:      http://quadroid.github.com/clonejs/symbols/%24object.html#create
-[copy]:        http://quadroid.github.com/clonejs/symbols/%24object.html#copy
-[deepCopy]:    http://quadroid.github.com/clonejs/symbols/%24object.html#deepCopy
-[deepClone]:   http://quadroid.github.com/clonejs/symbols/%24object.html#deepClone
-[describe]:    http://quadroid.github.com/clonejs/symbols/%24object.html#.describe
-[constructor]: http://quadroid.github.com/clonejs/symbols/%24object.html#constructor
-[applySuper]:  http://quadroid.github.com/clonejs/symbols/%24object.html#applySuper
-[callSuper]:   http://quadroid.github.com/clonejs/symbols/%24object.html#callSuper
-[createSuperSafeCallback]: http://quadroid.github.com/clonejs/symbols/%24object.html#createSuperSafeCallback
+[clone]:       http://clonejs.org/symbols/%24object.html#clone
+[create]:      http://clonejs.org/symbols/%24object.html#create
+[copy]:        http://clonejs.org/symbols/%24object.html#copy
+[deepCopy]:    http://clonejs.org/symbols/%24object.html#deepCopy
+[deepClone]:   http://clonejs.org/symbols/%24object.html#deepClone
+[describe]:    http://clonejs.org/symbols/%24object.html#.describe
+[constructor]: http://clonejs.org/symbols/%24object.html#constructor
+[applySuper]:  http://clonejs.org/symbols/%24object.html#applySuper
+[callSuper]:   http://clonejs.org/symbols/%24object.html#callSuper
+[createSuperSafeCallback]: http://clonejs.org/symbols/%24object.html#createSuperSafeCallback
 
-[ns]:          http://quadroid.github.com/clonejs/symbols/ns.html
-[ns.extend]:   http://quadroid.github.com/clonejs/symbols/ns.html#extend
-[ns.put]:      http://quadroid.github.com/clonejs/symbols/ns.html#put
+[ns]:          http://clonejs.org/symbols/ns.html
+[ns.extend]:   http://clonejs.org/symbols/ns.html#extend
+[ns.put]:      http://clonejs.org/symbols/ns.html#put
 
 
 [![githalytics.com alpha](https://cruel-carlota.pagodabox.com/3110be9614da5cb337ebd483c187010f "githalytics.com")](http://githalytics.com/quadroid/clonejs)
