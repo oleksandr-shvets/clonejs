@@ -1,0 +1,3 @@
+[submodule "lib/es5-shim"]
+	path = lib/es5-shim
+	url = git@github.com:kriskowal/es5-shim.git
