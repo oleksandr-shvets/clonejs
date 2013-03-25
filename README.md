@@ -1,7 +1,7 @@
 ## [clone.js][]
 
 This is the micro-framework that implements the true [prototype-based OOP⠙][1] in JS.  
-It's based on the new ECMA Script 5 features like [`Object.create`⠙][2] and [property descriptors⠙][3].
+It's based on the ECMA Script 5 features like [`Object.create`⠙][2] and [property&nbsp;descriptors⠙][3].
   [1]: http://en.wikipedia.org/wiki/Prototype-based_programming
   [2]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create
   [3]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty
