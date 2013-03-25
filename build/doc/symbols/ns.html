@@ -28,8 +28,8 @@
 			<a href="../index.html">Home</a>
 			<a href="../files.html">Files</a>
 		</div>
-	
-		<h2 class="heading1">clone.js</h2>
+	        
+		<h2 class="heading1"><a href="../index.html">clone.js</a></h2>
 		
 		<input type="text" name="classFilter" class="classFilter" id="ClassFilter" placeholder="Filter"></input>
 		
@@ -51,7 +51,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="https://github.com/quadroid/clonejs/tree/master/lib/jsdoc-toolkit/templates/codeview-jsdoc2-template" target="_blank">Codeview</a> 1.3<br />
 			Generated on:
-			<time datetime='2013-2-24' pubdate>2013-2-24 22:40</time>
+			<time datetime='2013-2-25' pubdate>2013-2-25 18:02</time>
 		</footer>
 	</div>
 </div>
@@ -69,7 +69,7 @@
 				
 				<div class="intro">
 					<p class="description summary">
-						The root namespace.
+						The namespace.
 					</p>
 						
 					
@@ -152,20 +152,20 @@
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/ns.html#ns.extend">ns.extend</a></b>(nsName, prototype, defaultDescriptor<sup>opt</sup>)
+													<div class="fixedFont"><b><a href="../symbols/ns.html#extend">extend</a></b>(nsItemName, prototypeOrProperties, defaultDescriptor<sup>opt</sup>)
 													</div>
-													<div class="description"><p>Create prototype as a part of namespace.</div>
+													<div class="description"><p>Extend namespace by prototype.</div>
 												</td>
 											</tr>
 										
 											<tr
 												 class='item1'
 											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
+												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont">ns.<b><a href="../symbols/ns.html#.put">put</a></b>(prototype)
+													<div class="fixedFont"><b><a href="../symbols/ns.html#put">put</a></b>(nsPathName<sup>opt</sup>, prototype)
 													</div>
-													<div class="description"><p>Put object (and all its parents) into this namespace.</div>
+													<div class="description"><p>Put object into this namespace.</div>
 												</td>
 											</tr>
 										
@@ -194,33 +194,33 @@
 								Namespace Detail
 							</h2>
 							
-							<div class="fixedFont">
-								<b>ns</b>
-							</div>
+							
 							
 							<div class="description">
 								<p>If you run the following code:
 <code>
-ns.extend('collection', {name: 'collection'});
-ns.collection.extend('arrayCollection', {name: 'arrayCollection'});
-</code>
+    ns.extend('collection', {name: 'collection'});
+    ns.collection.extend('arrayCollection', {name: 'arrayCollection'});
+</code> <br />
 The structure of the namespace will be:
 <code>
-ns == {
-    $collection: {name: 'collection'},
-    collection: {
-        $arrayCollection: {name: 'arrayCollection'},
-        arrayCollection: {
-            prototype: {name: 'arrayCollection'},
-            extend: ns.extend
+    ns == {
+        $collection: {name: 'collection'},
+        collection: {
+            $arrayCollection: {name: 'arrayCollection'},
+            arrayCollection: {
+                prototype: {name: 'arrayCollection'},
+                extend: ns.extend,
+                put: ns.put
+            },
+            prototype: {name: 'collection'},
+            extend: ns.extend,
+            put: ns.put
         },
-        prototype: {name: 'collection'},
-        extend: ns.extend
-    },
-    prototype: $object,
-    extend: ns.extend,
-    put: ns.put
-}
+        prototype: $object,
+        extend: ns.extend,
+        put: ns.put
+    }
 </code></p>
 							</div>
 							
@@ -250,7 +250,7 @@ ns == {
 									
 									</span>
 									
-									
+									<span class="light">{Object}</span>
 									
 									<b>prototype</b>							
 								</div>
@@ -288,18 +288,18 @@ ns == {
 									<li 
 										 class='item0'
 									>
-										<div class="fixedFont heading" id="ns.extend">
+										<div class="fixedFont heading" id="extend">
 											<span class='lighter'>
 											
 											</span>
 											
+											<span class="light">{<a href="../symbols/ns.html">ns</a>}</span>
 											
-											
-											<b>ns.extend</b>(nsName, prototype, defaultDescriptor<sup>opt</sup>)
+											<b>extend</b>(nsItemName, prototypeOrProperties, defaultDescriptor<sup>opt</sup>)
 										</div>
 										
 										<div class="description">
-											<p>Create prototype as a part of namespace.</p>
+											<p>Extend namespace by prototype.</p>
 											
 											
 											
@@ -313,22 +313,24 @@ ns == {
 												<dt class="heading">Parameters:</dt>
 												
 													<dt>
-														<span class="light fixedFont">{string}</span> <b>nsName</b>
+														<span class="light fixedFont">{string}</span> <b>nsItemName</b>
 														
 													</dt>
-													<dd></dd>
+													<dd><p>The name of the new sub-namespace <br />
+       (begins with lower case letter).</p></dd>
 												
 													<dt>
-														<span class="light fixedFont">{Object}</span> <b>prototype</b>
+														<span class="light fixedFont">{Object}</span> <b>prototypeOrProperties</b>
 														
 													</dt>
-													<dd></dd>
+													<dd><p>If this arg is not a clone (or sub-clone) of <code>ns.prototype</code>, <br />
+       the new object will be created (cloned from <code>ns.prototype</code>).</p></dd>
 												
 													<dt>
 														<span class="light fixedFont">{<a href="../symbols/_global_.html#PropertyDescriptor">PropertyDescriptor</a>=}</span> <b>defaultDescriptor</b>
 														
 													</dt>
-													<dd></dd>
+													<dd><p>The default <a href="../symbols/_global_.html#PropertyDescriptor">PropertyDescriptor</a> for created prototype.</p></dd>
 												
 											</dl>
 										
@@ -342,6 +344,11 @@ ns == {
 												
 												
 												
+												
+													<dt class="heading">Returns:</dt>
+													
+														<dd><span class="light fixedFont">{<a href="../symbols/ns.html">ns</a>}</span> The created sub-namespace.</dd>
+													
 												
 												
 												
@@ -361,19 +368,19 @@ ns == {
 									<li 
 										 class='item1'
 									>
-										<div class="fixedFont heading" id=".put">
+										<div class="fixedFont heading" id="put">
 											<span class='lighter'>
-											&lt;static&gt; 
+											
 											</span>
 											
 											<span class="light">{<a href="../symbols/ns.html">ns</a>}</span>
 											
-											<span class="light">ns.</span><b>put</b>(prototype)
+											<b>put</b>(nsPathName<sup>opt</sup>, prototype)
 										</div>
 										
 										<div class="description">
-											<p>Put object (and all its parents) into this namespace.
-Name will be get from prototype.constructor.name.</p>
+											<p>Put object into this namespace. <br />
+If <code>nsPathName</code> not specified, all prototype parents will be also pushed to this namespace.</p>
 											
 											
 											
@@ -385,6 +392,12 @@ Name will be get from prototype.constructor.name.</p>
 										
 											<dl class="detailList params">
 												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{string=}</span> <b>nsPathName</b>
+														
+													</dt>
+													<dd><p>If not specified, the value of <code>prototype.constructor.typeName</code> or <code>prototype.constructor.name</code> will be used.</p></dd>
 												
 													<dt>
 														<span class="light fixedFont">{Object}</span> <b>prototype</b>
@@ -407,7 +420,7 @@ Name will be get from prototype.constructor.name.</p>
 												
 													<dt class="heading">Returns:</dt>
 													
-														<dd><span class="light fixedFont">{<a href="../symbols/ns.html">ns</a>}</span> </dd>
+														<dd><span class="light fixedFont">{<a href="../symbols/ns.html">ns</a>}</span> The created sub-namespace.</dd>
 													
 												
 												
