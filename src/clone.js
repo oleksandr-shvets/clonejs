@@ -5,7 +5,7 @@
  * @author  Alex Shvets
  *
  * @class
- * This is the framework that implements the true [prototype-based OOP⠙][1] paradigm in JS. 
+ * This is the framework that implements the true [prototype-based OOP⠙][1] paradigm in JS.
  * It's based on the ECMA Script 5 features like [Object.create⠙][2] and [property descriptors⠙][3].
  *    [1]: http://en.wikipedia.org/wiki/Prototype-based_programming
  *    [2]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create
@@ -14,8 +14,8 @@
  * <p>[View on GitHub](http://github.com/quadroid/clonejs#readme)
  *
  * ### Naming conventions
- *  
- * Var names, **prefixed by "$"**, contain object, used as prototype for other objects.  
+ *
+ * Var names, **prefixed by "$"**, contain object, used as prototype for other objects. 
  * For example:
  * <code>
  * var $array = Array.prototype, $myType = {},
@@ -23,7 +23,7 @@
  * </code>
  *
  * Properties, **prefixed by "_"**, are private.
- * 
+ *
  * [![githalytics.com alpha](https://cruel-carlota.pagodabox.com/3110be9614da5cb337ebd483c187010f "githalytics.com")](http://githalytics.com/quadroid/clonejs)
  *
  * @description
@@ -40,23 +40,24 @@
  * myObj.b = 22; // cloneOfMyObj.b will be also changed to 22
  *
  * var $myType = $object.clone({
- *        '(final)          property1': "not configurable and not writable",
- *        '(writable final) property2': "not configurable only",
- *        '(hidden)         property3': "not enumerable",
- *        '(const)           constant': "not writable",
- *                          property4 : "simple property",
- *        '(get)       property3alias': 'property3',// automatically create getter
- *                              _item : "private property (not enumerable)",
- *                       '(get)  item': function() { return this._item },
- *                       '(set)  item': function(v){ this._item = v    },
- *                        constructor : function MyType(){
- *                                          this.applySuper(arguments);
- *                                          // do something...
- *                                      }
- *    });
+ *     '(final)          property1': "not configurable and not writable",
+ *     '(writable final) property2': "not configurable only",
+ *     '(hidden)         property3': "not enumerable",
+ *     '(const)           constant': "not writable",
+ *                       property4 : "simple property",
+ *     '(get)       property3alias': 'property3',// automatically create getter
+ *                           _item : "private property (not enumerable)",
+ *                    '(get)  item': function() { return this._item },
+ *                    '(set)  item': function(v){ this._item = v    },
+ *                     constructor : function MyType(){
+ *                                       this.applySuper(arguments);
+ *                                       // do something...
+ *                                   }
+ * });
+ * assert( $myType.property3alias === $myType.property3 );
+ * 
  * var myTypeInstance = $myType.create({property4: "initialize simple property"});
  * assert( $myType.isPrototypeOf(myTypeInstance) );
- * assert( $myType.property3alias === $myType.property3 );
  *
  * var $myArray1 = $object.clone.call(Array.prototype, {customMethod: function(){}});
  * var $myArray2 = $object.copy(Array).setProperties({customMethod: function(){}});
@@ -125,10 +126,10 @@ var $object = /** @lands $object# */{
      * @field
      * @memberOf $object#
      */
-    constructor: function CloneObject(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
+    constructor: function Object$(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
         properties && this.defineProperties(properties, defaultDescriptor);
 
-        if( this.constructor === CloneObject ){
+        if( this.constructor === Object$ ){
             this.seal();
         }
     },
@@ -909,7 +910,7 @@ var ns = /** @lands ns# */{
     if(0)// (need for IDEa code inspections)
     /**
      * Object, that has at least one of the following property:  
-     * value, get, set, writable, configurable, enumerable.
+     * `value`, `get`, `set`, `writable`, `configurable`, `enumerable`.
      * @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty⠙</a>
      * @name PropertyDescriptor
      * @typedef {({value:*}|{get:{function():*}}|{set:{function(*):void}}|{writable:boolean}|{configurable:boolean}|{enumerable:boolean})} */
@@ -917,7 +918,7 @@ var ns = /** @lands ns# */{
     
     /**
      * JavaScript class. Function, that can be called by "new" operator and/or have modified prototype property.  
-     * For example: Object, Array, RegExp.
+     * For example: `Object`, `Array`, `RegExp`.
      * @name Constructor
      * @typedef {Function} */
 
