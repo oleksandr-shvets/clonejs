@@ -1,14 +1,27 @@
+function require(fileName){}
+console = jstestdriver.console;
+
+
+
 function runNodeUnit(tests, groupName){
-    var NewTestCase = TestCase(groupName||'clone.js');
+    
+    console.log(111, groupName);
+
+    var $newTestCase = {};
 
     for(var name in tests){
         var test = tests[name];
         if(typeof test == 'function'){
-            NewTestCase.prototype['test ' + name] = test.bind(tests, runNodeUnit.testArg);
+            $newTestCase['test ' + name] = test.bind(tests, runNodeUnit.testArg);
 
         }else if(typeof test == 'object'){
-            runNodeUnit(test, groupName ? groupName +'.'+ name : name);
+            runNodeUnit(test, groupName ? groupName+'.'+name : name);
         }
+    }
+
+    if($newTestCase.length){
+        var NewTestCase = TestCase(groupName);
+        NewTestCase.prototype = $newTestCase;
     }
 }
 
@@ -30,7 +43,11 @@ runNodeUnit.testArg = {
     done: function(){}
 }
 
-function require(fileName){}
-console = jstestdriver.console;
 
-runNodeUnit( this['clone.js'] );
+
+//runNodeUnit({
+//    'test $object': this['test $object'],
+//    'test ns': this['test ns']
+//},'t');
+
+runNodeUnit(this['test $object'], 'test');
