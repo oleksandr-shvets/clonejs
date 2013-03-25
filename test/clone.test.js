@@ -5,7 +5,7 @@ if(typeof $object=='undefined'){
         $object = ns.prototype;
 }
 
-this.$object = {
+this['test $object'] = {
 
     clone: function(test){
         var clone = $object.clone({a:1});
@@ -299,7 +299,7 @@ this.$object = {
 };
 
 
-this.ns = {
+this['test ns'] = {
     
     extend: function(test){
         var ns1 = $object.apply(ns, 'copy');
