@@ -36,7 +36,7 @@
 <p>This is the micro-framework that implements the true <a href="http://en.wikipedia.org/wiki/Prototype-based_programming">prototype-based OOP⠙</a> in JS.<br>
 It's based on the ECMA Script 5 features like <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create"><code>Object.create</code>⠙</a> and <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">property descriptors⠙</a>.</p>
 
-<h3>See <a href="/symbols/%24object.html">API Documentation</a>
+<h3>See <a href="./symbols/%24object.html">API Documentation</a>
 </h3>
 
 <p>The main difference with other class-producing tools like <code>Ext.define</code>, <code>dojo.declare</code>, <code>Backbone.Model.extend</code> is that <code>$object.clone</code> will return an object (prototype with defined constructor-function) instead of function (with defined prototype-object).<br>
@@ -51,7 +51,7 @@ var    clone = $object.clone.apply($myProto);
   $myProto.b = 22; // clone.b will be also changed to 22
 </code></pre>
 
-<p>See: <a href="/symbols/%24object.html#clone">clone</a>, <a href="/symbols/%24object.html#create">create</a>, <a href="/symbols/%24object.html#copy">copy</a>, <a href="/symbols/%24object.html#deepCopy">deepCopy</a>, <a href="/symbols/%24object.html#deepClone">deepClone</a>.</p>
+<p>See: <a href="./symbols/%24object.html#clone">clone</a>, <a href="./symbols/%24object.html#create">create</a>, <a href="./symbols/%24object.html#copy">copy</a>, <a href="./symbols/%24object.html#deepCopy">deepCopy</a>, <a href="./symbols/%24object.html#deepClone">deepClone</a>.</p>
 
 <h6>Property modificators:</h6>
 
@@ -73,7 +73,7 @@ var    clone = $object.clone.apply($myProto);
 assert( $myType.property3alias === $myType.property3 );
 </code></pre>
 
-<p>See: <a href="/symbols/%24object.html#.describe">describe</a>.</p>
+<p>See: <a href="./symbols/%24object.html#.describe">describe</a>.</p>
 
 <h6>Constructors &amp; instantiation:</h6>
 
@@ -81,7 +81,7 @@ assert( $myType.property3alias === $myType.property3 );
     assert( $myType.isPrototypeOf(myTypeInstance) );
 </code></pre>
 
-<p>See: <a href="/symbols/%24object.html#constructor">constructor</a>, <a href="/symbols/%24object.html#create">create</a>, <a href="/symbols/%24object.html#applySuper">applySuper</a>, <a href="/symbols/%24object.html#callSuper">callSuper</a>, <a href="/symbols/%24object.html#createSuperSafeCallback">createSuperSafeCallback</a>.</p>
+<p>See: <a href="./symbols/%24object.html#constructor">constructor</a>, <a href="./symbols/%24object.html#create">create</a>, <a href="./symbols/%24object.html#applySuper">applySuper</a>, <a href="./symbols/%24object.html#callSuper">callSuper</a>, <a href="./symbols/%24object.html#createSuperSafeCallback">createSuperSafeCallback</a>.</p>
 
 <h6>Namespaces:</h6>
 
@@ -105,7 +105,7 @@ ns.put('models.users', $users);
 var users = ns.models.$users.create([{name: 'User1'}]);
 </code></pre>
 
-<p>See: <a href="/symbols/ns.html">ns</a>, <a href="/symbols/ns.html#extend">ns.extend</a>, <a href="/symbols/ns.html#put">ns.put</a>.</p>
+<p>See: <a href="./symbols/ns.html">ns</a>, <a href="./symbols/ns.html#extend">ns.extend</a>, <a href="./symbols/ns.html#put">ns.put</a>.</p>
       </section>
     </div>
 
