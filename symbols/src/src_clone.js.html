@@ -21,7 +21,7 @@
 <span class='line'> 14</span>  *
 <span class='line'> 15</span>  * ### Naming conventions
 <span class='line'> 16</span>  *
-<span class='line'> 17</span>  * Var names, **prefixed by "$"**, contain object, used as prototype for other objects.
+<span class='line'> 17</span>  * Var names, **prefixed by "$"**, contain object, used as prototype for other objects. 
 <span class='line'> 18</span>  * For example:
 <span class='line'> 19</span>  * &lt;code>
 <span class='line'> 20</span>  * var $array = Array.prototype, $myType = {},
@@ -822,7 +822,7 @@
 <span class='line'>815</span>      *        The name of the new sub-namespace 
 <span class='line'>816</span>      *        (begins with lower case letter).
 <span class='line'>817</span>      * @param prototypeOrProperties
-<span class='line'>818</span>      *        If this arg is not clone of `ns.prototype`, 
+<span class='line'>818</span>      *        If this arg is not a clone (or sub-clone) of `ns.prototype`, 
 <span class='line'>819</span>      *        the new object will be created (cloned from `ns.prototype`).
 <span class='line'>820</span>      * @param defaultDescriptor
 <span class='line'>821</span>      *        The default {@link PropertyDescriptor} for created prototype.
@@ -858,7 +858,7 @@
 <span class='line'>851</span>      * Put object into this namespace. 
 <span class='line'>852</span>      * If `nsPathName` not specified, all prototype parents will be also pushed to this namespace.
 <span class='line'>853</span>      * @param nsPathName 
-<span class='line'>854</span>      *        If not specified, `prototype.constructor.typeName` or `prototype.constructor.name` will be used. 
+<span class='line'>854</span>      *        If not specified, the value of `prototype.constructor.typeName` or `prototype.constructor.name` will be used. 
 <span class='line'>855</span>      * @param prototype
 <span class='line'>856</span>      * @returns {ns} The created sub-namespace.
 <span class='line'>857</span>      * @memberOf ns# */</span><span class="WHIT">
@@ -880,7 +880,7 @@
 <span class='line'>873</span> </span><span class="WHIT">                </span><span class="NAME">currentNS</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">currentNS</span><span class="PUNC">[</span><span class="NAME">namePart</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>874</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>875</span> 
-<span class='line'>876</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">applyExtend</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">prototype</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">nsItemName</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>876</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">applyExtend</span><span class="PUNC">(</span><span class="NAME">currentNS</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">prototype</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">nsItemName</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>877</span> </span><span class="WHIT">            
 <span class='line'>878</span>         </span><span class="PUNC">}</span><span class="KEYW">else</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>879</span> </span><span class="WHIT">            
@@ -917,7 +917,7 @@
 <span class='line'>910</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">)</span><span class="COMM">// (need for IDEa code inspections)</span><span class="WHIT">
 <span class='line'>911</span> </span><span class="WHIT">    </span><span class="COMM">/**
 <span class='line'>912</span>      * Object, that has at least one of the following property:  
-<span class='line'>913</span>      * value, get, set, writable, configurable, enumerable.
+<span class='line'>913</span>      * `value`, `get`, `set`, `writable`, `configurable`, `enumerable`.
 <span class='line'>914</span>      * @see &lt;a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty⠙&lt;/a>
 <span class='line'>915</span>      * @name PropertyDescriptor
 <span class='line'>916</span>      * @typedef {({value:*}|{get:{function():*}}|{set:{function(*):void}}|{writable:boolean}|{configurable:boolean}|{enumerable:boolean})} */</span><span class="WHIT">
@@ -925,7 +925,7 @@
 <span class='line'>918</span> </span><span class="WHIT">    
 <span class='line'>919</span>     </span><span class="COMM">/**
 <span class='line'>920</span>      * JavaScript class. Function, that can be called by "new" operator and/or have modified prototype property.  
-<span class='line'>921</span>      * For example: Object, Array, RegExp.
+<span class='line'>921</span>      * For example: `Object`, `Array`, `RegExp`.
 <span class='line'>922</span>      * @name Constructor
 <span class='line'>923</span>      * @typedef {Function} */</span><span class="WHIT">
 <span class='line'>924</span> 

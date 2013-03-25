@@ -51,7 +51,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="https://github.com/quadroid/clonejs/tree/master/lib/jsdoc-toolkit/templates/codeview-jsdoc2-template" target="_blank">Codeview</a> 1.3<br />
 			Generated on:
-			<time datetime='2013-2-25' pubdate>2013-2-25 16:30</time>
+			<time datetime='2013-2-25' pubdate>2013-2-25 18:02</time>
 		</footer>
 	</div>
 </div>
@@ -323,7 +323,7 @@ The structure of the namespace will be:
 														<span class="light fixedFont">{Object}</span> <b>prototypeOrProperties</b>
 														
 													</dt>
-													<dd><p>If this arg is not clone of <code>ns.prototype</code>, <br />
+													<dd><p>If this arg is not a clone (or sub-clone) of <code>ns.prototype</code>, <br />
        the new object will be created (cloned from <code>ns.prototype</code>).</p></dd>
 												
 													<dt>
@@ -397,7 +397,7 @@ If <code>nsPathName</code> not specified, all prototype parents will be also pus
 														<span class="light fixedFont">{string=}</span> <b>nsPathName</b>
 														
 													</dt>
-													<dd><p>If not specified, <code>prototype.constructor.typeName</code> or <code>prototype.constructor.name</code> will be used.</p></dd>
+													<dd><p>If not specified, the value of <code>prototype.constructor.typeName</code> or <code>prototype.constructor.name</code> will be used.</p></dd>
 												
 													<dt>
 														<span class="light fixedFont">{Object}</span> <b>prototype</b>
