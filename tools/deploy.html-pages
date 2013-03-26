@@ -2,5 +2,5 @@
 
 cd  ../build/html
 git commit -a -m "deploy html"
-git push
+git push -u origin gh-pages
 cd ../../tools
