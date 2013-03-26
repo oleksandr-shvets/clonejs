@@ -87,7 +87,7 @@ assert( $myType.property3alias === $myType.property3 );
 <h6>Properties iteration:</h6>
 
 <pre><code>var $obj = $object.clone({a: 11, b: 22, c: 33}),
-     obj = $object.create({d: 44});
+     obj = $obj.create({d: 44}); // mapped only own property
 
 var mappedObj = obj.map(function(value){return 100 + value}, obj, true);
     // mappedObj == {d: 144}
