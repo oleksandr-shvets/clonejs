@@ -739,6 +739,64 @@ var $object = /** @lands $object# */{
         return result;
     },
 
+    /**
+     * @returns {Array} All own enumerable property values.
+     * @memberof $object# */
+    getValues: function(/** boolean=true */ownOnly, /** boolean=true */enumerableOnly){
+        var keys = $object.getKeys.apply(this, arguments);
+        return keys.map(function(key){
+            return this[key];
+        }, this);
+    },
+
+    /**
+     * Set values for own enumerable properties. Order of values should be the same as `{@link $object#getValues}()` produce.
+     * @memberof $object# */
+    setValues: function(/** Array */values, /** boolean=true */ownOnly, /** boolean=true */enumerableOnly){
+        var keys = $object.getKeys.call(this, ownOnly, enumerableOnly);
+        keys.forEach(function(key, i){
+            if(i in values) this[key] = values[i];
+        });
+    },
+
+    /**
+     *  
+     * See [Object.keys⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys)
+     * and [Object.getOwnPropertyNames⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys)
+     * @returns {Array} All own enumerable property names.
+     * @memberof $object# */
+    getKeys: function(/** boolean=true */ownOnly, /** boolean=true */enumerableOnly){
+               ownOnly =        ownOnly === undefined || Boolean(ownOnly);
+        enumerableOnly = enumerableOnly === undefined || Boolean(enumerableOnly);
+        
+        var method = ownOnly &&  enumerableOnly && 'keys'
+                  || ownOnly && !enumerableOnly && 'getOwnPropertyNames';        
+        
+        if( method ){
+
+            return Object[method](this);
+            
+        }else{
+            var keys = [];
+            
+            if(!ownOnly && enumerableOnly){
+                
+                $object.forEach.call(this, function(value, key){
+                    keys.push(key);
+                },false);
+
+            }else{// get all properties:
+                
+                keys = Object.getOwnPropertyNames(this);
+                $object.getPrototypes.call(this).forEach(function(proto){
+                    keys = keys.concat(Object.getOwnPropertyNames(proto));
+                });
+            }
+
+            return keys;
+        }
+    },
+
 //    /**
 //     * Returns the current state of this object in JSON format.
 //     * @see $object#getState
@@ -786,10 +844,6 @@ var $object = /** @lands $object# */{
      * @memberof $object# */
     getPrototype: function(){
         return Object.getPrototypeOf(this) },
-    /** Wrapper for [Object.keys⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys)
-     * @memberof $object# */
-    getEnumerableOwnPropertyNames: function(){
-        return Object.keys(this) },
     /** Wrapper for [Object.getOwnPropertyNames⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames)
      * @memberof $object# */
     getOwnPropertyNames: function(){
