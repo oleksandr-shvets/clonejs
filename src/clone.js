@@ -637,7 +637,8 @@ var $object = /** @lands $object# */{
 
 
     /**
-     * Executes a provided function once per every enumerable property.
+     * Executes a provided function once per every enumerable property. 
+     * Is identical to `for in`.
      * @memberof $object# */
     forEach: function(/** function(*=,string=,Object=) */callback, /** Object= */thisArg, /** boolean=false */ownOnly){
         if(ownOnly || typeof thisArg === 'boolean' && !thisArg){
@@ -718,7 +719,7 @@ var $object = /** @lands $object# */{
     },
 
     /**
-     * Creates a clone of this object with all enumerable properties that pass the test implemented by the provided function.
+     * Creates a new object with all enumerable properties that pass the test implemented by the provided function.
      * @returns {Object}
      * @memberof $object# */
     filter: function(
