@@ -123,4 +123,5 @@ See: [ns][], [ns.extend][], [ns.put][].
 [ns.put]:      http://clonejs.org/symbols/ns.html#put
 
 
+![yandex metrika](http://mc.yandex.ru/watch/20738752)
 [![githalytics.com alpha](https://cruel-carlota.pagodabox.com/3110be9614da5cb337ebd483c187010f "githalytics.com")](http://githalytics.com/quadroid/clonejs)
