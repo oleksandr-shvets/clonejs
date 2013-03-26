@@ -1,7 +1,7 @@
 ## [clone.js][]
 
 This is the micro-framework that implements the true [prototype-based OOP⠙][1] in JS.  
-It's based on the ECMA Script 5 features like [`Object.create`⠙][2] and [property&nbsp;descriptors⠙][3].
+It's based on the ECMA Script 5 features like [Object.create⠙][2] and [property descriptors⠙][3].
   [1]: http://en.wikipedia.org/wiki/Prototype-based_programming
   [2]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create
   [3]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty
@@ -11,7 +11,9 @@ It's based on the ECMA Script 5 features like [`Object.create`⠙][2] and [prope
 ### See [API Documentation](http://clonejs.org/symbols/%24object.html)
 
 The main difference with other class-producing tools like `Ext.define`, `dojo.declare`, `Backbone.Model.extend`
-is that `$object.clone` will return an object (prototype with defined constructor-function) instead of function (with defined prototype-object). So, you don't need for instantiation, you can just start using the cloned object right now. But, if you need more than one instance, you can create it by `$yourProto.create`.
+is that `$object.clone` will return an object (prototype with defined constructor-function) instead of function (with defined prototype-object).  
+So, you don't need for instantiation, you can just start using the cloned object right now.  
+But, if you need more than one instance, you can create it by `$yourProto.create`.
 
 
 ###### Quick example (cloning):

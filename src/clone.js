@@ -5,7 +5,7 @@
  * @author  Alex Shvets
  *
  * @class
- * This is the framework that implements the true [prototype-based OOP⠙][1] paradigm in JS.
+ * This is the framework that implements the true [prototype-based OOP⠙][1] paradigm in JS.  
  * It's based on the ECMA Script 5 features like [Object.create⠙][2] and [property descriptors⠙][3].
  *    [1]: http://en.wikipedia.org/wiki/Prototype-based_programming
  *    [2]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create
@@ -233,7 +233,7 @@ var $object = /** @lands $object# */{
      * @protected
      * @memberOf $object#
      */
-    applySuper: function(/** string='constructor'|Array */ methodName, /** Array= */args){
+    applySuper: function(/** Array|string='constructor' */ methodName, /** Array= */args){
         if(typeof(methodName) != 'string'){
             if( arguments[0] instanceof Array){
                 args = arguments[0];
