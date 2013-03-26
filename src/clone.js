@@ -1,7 +1,7 @@
 'use strict';
 /**
  * @title   clone.js - the true prototype-based JavaScript micro-framework.
- * @version 0.7.1 beta
+ * @version 0.7.2 beta
  * @author  Alex Shvets
  *
  * @class
@@ -635,6 +635,109 @@ var $object = /** @lands $object# */{
         return prototypes;
     },
 
+
+    /**
+     * Executes a provided function once per every enumerable property.
+     * @memberof $object# */
+    forEach: function(/** function(*=,string=,Object=) */callback, /** Object= */thisArg, /** boolean=false */ownOnly){
+        if(ownOnly || typeof thisArg === 'boolean' && !thisArg){
+            var properties = Object.keys(this);
+            for(var i=0; i < properties.length; i++){
+                name = properties[i];
+                callback.call(thisArg, this[name], name, this);
+            }
+        }else{
+            for(var name in this){
+                callback.call(thisArg, this[name], name, this);
+            }
+        }
+    },
+
+    /**
+     * Tests whether all enumerable properties in the object pass the test implemented by the provided function.
+     * @returns {boolean}
+     * @memberof $object# */
+    every: function(/** function(*=,string=,Object=) */callback, /** Object= */thisArg, /** boolean=false */ownOnly){
+        if(ownOnly || typeof thisArg === 'boolean' && !thisArg){
+            var properties = Object.keys(this);
+            for(var i=0; i < properties.length; i++){
+                name = properties[i];
+                if(! callback.call(thisArg, this[name], name, this) ) return false;
+            }
+        }else{
+            for(var name in this){
+                if(! callback.call(thisArg, this[name], name, this) ) return false;
+            }
+        }
+        
+        return true;
+    },
+
+    /**
+     * Tests whether some enumerable properties in the object pass the test implemented by the provided function.
+     * @returns {boolean}
+     * @memberof $object# */
+    some: function(/** function(*=,string=,Object=) */callback, /** Object= */thisArg, /** boolean=false */ownOnly){
+        if(ownOnly || typeof thisArg === 'boolean' && !thisArg){
+            var properties = Object.keys(this);
+            for(var i=0; i < properties.length; i++){
+                name = properties[i];
+                if( callback.call(thisArg, this[name], name, this) ) return true;
+            }
+        }else{
+            for(var name in this){
+                if( callback.call(thisArg, this[name], name, this) ) return true;
+            }
+        }
+        
+        return false;
+    },
+
+    /**
+     * Creates a new object with the results of calling a provided function on every enumerable property.
+     * @returns {Object}
+     * @memberof $object# */
+    map: function(
+        /** function(?=,string=,Object=):? */callback, 
+        /**                 Object=        */thisArg, 
+        /**                boolean=false   */ownOnly, 
+        /**                 Object=$object */prototype
+    ){
+        var result = $object.apply(prototype || $object, 'clone');
+
+        $object.forEach.call(this, function(value, name, self){
+            
+            var returned = callback.call(this, value, name, self);
+            if( typeof returned === 'undefined' ){
+                Object.defineProperty(result, name, {value: undefined});
+            }else result[name] = returned;
+            
+        }, thisArg || result, ownOnly);
+ 
+        return result;
+    },
+
+    /**
+     * Creates a clone of this object with all enumerable properties that pass the test implemented by the provided function.
+     * @returns {Object}
+     * @memberof $object# */
+    filter: function(
+        /** function(?=,string=,Object=):? */callback,
+        /**                 Object=        */thisArg,
+        /**                boolean=false   */ownOnly,
+        /**                 Object=$object */prototype
+    ){
+        var result = $object.apply(prototype || $object, 'clone');
+
+        $object.forEach.call(this, function(value, name, self){
+            if(! callback.call(this, value, name, self) ){
+                Object.defineProperty(result, name, {value: undefined});
+            }
+        }, thisArg || result, ownOnly);
+        
+        return result;
+    },
+
 //    /**
 //     * Returns the current state of this object in JSON format.
 //     * @see $object#getState
@@ -674,7 +777,9 @@ var $object = /** @lands $object# */{
 //            return true;
 //        },
 
-    // Some sugar:
+      /////////////////
+     // Some sugar:
+    ///////////////////////////////////////////
 
     /** Wrapper for [Object.getPrototypeOf⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getPrototypeOf)
      * @memberof $object# */
@@ -733,32 +838,6 @@ var $object = /** @lands $object# */{
     defineProperty: function(/** string */name, /** PropertyDescriptor */propertyDescriptor){
         return Object.defineProperty(this, name, propertyDescriptor);
     }
-
-//    /**
-//     *
-//     * @memberof $object# */
-//    forEach: function(/** function(*,string) */callback, /** Object= */thisArg){
-//        for(var name in this){
-//            callback.call(thisArg, this[name], name);
-//        }
-//    },
-//
-//    /**
-//     * Creates a new array with the results of calling a provided function on every enumerable property in this object.
-//     * @returns {Array}
-//     * @memberof $object# */
-//    map: function(/** function(*,string):boolean */callback, /** Object= */thisArg){
-//        var result = [];
-//        for(var name in this){
-//            callback.call(thisArg, this[name], name);
-//        }
-//        return result;
-//    }
-
-//    descriptor: {
-//        get configurable(){return Object.isExtensible(this)},
-//        set configurable(preventExtensions){ if(preventExtensions) Object.preventExtensions(this) }
-//    }
 
 };
 

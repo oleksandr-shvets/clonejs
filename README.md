@@ -51,6 +51,22 @@ See: [describe][].
 
 See: [constructor][], [create][], [applySuper][], [callSuper][], [createSuperSafeCallback][].
 
+###### Properties iteration:
+
+    var $obj = $object.clone({a: 11, b: 22, c: 33}),
+         obj = $object.create({d: 44});
+
+    var mappedObj = obj.map(function(value){return 100 + value}, obj, true);
+        // mappedObj == {d: 144}
+
+    var proto = {e: 55};
+    mappedObj = obj.map(function(value){return 100 + value}, obj, false, proto);
+        // mappedObj == {a: 111, b: 122, c: 133, d: 144, e: 155}
+    proto.f = 66;
+        // mappedObj == {a: 111, b: 122, c: 133, d: 144, e: 155, f: 66}
+
+See: [forEach][], [map][], [filter][], [every][], [some][].
+
 ###### Namespaces:
 
     ns.extend('collection', {
@@ -74,6 +90,10 @@ See: [constructor][], [create][], [applySuper][], [callSuper][], [createSuperSaf
 
 See: [ns][], [ns.extend][], [ns.put][].
 
+
+
+
+
 [clone.js]:    http://clonejs.org/
 [$object]:     http://clonejs.org/symbols/%24object.html
 
@@ -82,7 +102,15 @@ See: [ns][], [ns.extend][], [ns.put][].
 [copy]:        http://clonejs.org/symbols/%24object.html#copy
 [deepCopy]:    http://clonejs.org/symbols/%24object.html#deepCopy
 [deepClone]:   http://clonejs.org/symbols/%24object.html#deepClone
+
 [describe]:    http://clonejs.org/symbols/%24object.html#.describe
+
+[forEach]:     http://clonejs.org/symbols/%24object.html#forEach
+[every]:       http://clonejs.org/symbols/%24object.html#every
+[some]:        http://clonejs.org/symbols/%24object.html#some
+[map]:         http://clonejs.org/symbols/%24object.html#map
+[filter]:      http://clonejs.org/symbols/%24object.html#filter
+
 [constructor]: http://clonejs.org/symbols/%24object.html#constructor
 [applySuper]:  http://clonejs.org/symbols/%24object.html#applySuper
 [callSuper]:   http://clonejs.org/symbols/%24object.html#callSuper
