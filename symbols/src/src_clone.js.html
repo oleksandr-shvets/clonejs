@@ -749,7 +749,7 @@
 <span class='line'>742</span> </span><span class="WHIT">    </span><span class="COMM">/**
 <span class='line'>743</span>      * @returns {Array} All own enumerable property values.
 <span class='line'>744</span>      * @memberof $object# */</span><span class="WHIT">
-<span class='line'>745</span> </span><span class="WHIT">    </span><span class="NAME">getValues</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** boolean=true */</span><span class="NAME">ownOnly</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** boolean=true */</span><span class="NAME">enumerableOnly</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>745</span> </span><span class="WHIT">    </span><span class="NAME">getValues</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** boolean=true */</span><span class="NAME">enumerableOnly</span><span class="PUNC">,</span><span class="COMM">/** boolean=true */</span><span class="NAME">ownOnly</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>746</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">keys</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$object.getKeys.apply</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>747</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">keys.map</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>748</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">[</span><span class="NAME">key</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
@@ -759,310 +759,312 @@
 <span class='line'>752</span> </span><span class="WHIT">    </span><span class="COMM">/**
 <span class='line'>753</span>      * Set values for own enumerable properties. Order of values should be the same as `{@link $object#getValues}()` produce.
 <span class='line'>754</span>      * @memberof $object# */</span><span class="WHIT">
-<span class='line'>755</span> </span><span class="WHIT">    </span><span class="NAME">setValues</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** Array */</span><span class="NAME">values</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** boolean=true */</span><span class="NAME">ownOnly</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** boolean=true */</span><span class="NAME">enumerableOnly</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>756</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">keys</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$object.getKeys.call</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">ownOnly</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">enumerableOnly</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>755</span> </span><span class="WHIT">    </span><span class="NAME">setValues</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** Array */</span><span class="NAME">values</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** boolean=true */</span><span class="NAME">enumerableOnly</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** boolean=true */</span><span class="NAME">ownOnly</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>756</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">keys</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$object.getKeys.call</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">enumerableOnly</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">ownOnly</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>757</span> </span><span class="WHIT">        </span><span class="NAME">keys.forEach</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>758</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">i</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">values</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">[</span><span class="NAME">key</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">values</span><span class="PUNC">[</span><span class="NAME">i</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>759</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>760</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'>761</span> 
 <span class='line'>762</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'>763</span>      *  
-<span class='line'>764</span>      * See [Object.keys⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys)
-<span class='line'>765</span>      * and [Object.getOwnPropertyNames⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys)
-<span class='line'>766</span>      * @returns {Array} All own enumerable property names.
-<span class='line'>767</span>      * @memberof $object# */</span><span class="WHIT">
-<span class='line'>768</span> </span><span class="WHIT">    </span><span class="NAME">getKeys</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** boolean=true */</span><span class="NAME">ownOnly</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** boolean=true */</span><span class="NAME">enumerableOnly</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>769</span> </span><span class="WHIT">               </span><span class="NAME">ownOnly</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">        </span><span class="NAME">ownOnly</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">Boolean</span><span class="PUNC">(</span><span class="NAME">ownOnly</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>770</span> </span><span class="WHIT">        </span><span class="NAME">enumerableOnly</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">enumerableOnly</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">Boolean</span><span class="PUNC">(</span><span class="NAME">enumerableOnly</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>771</span> </span><span class="WHIT">        
-<span class='line'>772</span>         </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">method</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ownOnly</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT">  </span><span class="NAME">enumerableOnly</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="STRN">'keys'</span><span class="WHIT">
-<span class='line'>773</span> </span><span class="WHIT">                  </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">ownOnly</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="NAME">enumerableOnly</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="STRN">'getOwnPropertyNames'</span><span class="PUNC">;</span><span class="WHIT">        
-<span class='line'>774</span>         
-<span class='line'>775</span>         </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">method</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>776</span> 
-<span class='line'>777</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object</span><span class="PUNC">[</span><span class="NAME">method</span><span class="PUNC">]</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>778</span> </span><span class="WHIT">            
-<span class='line'>779</span>         </span><span class="PUNC">}</span><span class="KEYW">else</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>780</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">keys</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>781</span> </span><span class="WHIT">            
-<span class='line'>782</span>             </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">ownOnly</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">enumerableOnly</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>783</span> </span><span class="WHIT">                
-<span class='line'>784</span>                 </span><span class="NAME">$object.forEach.call</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">value</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">key</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>785</span> </span><span class="WHIT">                    </span><span class="NAME">keys.push</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>786</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="KEYW">false</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>787</span> 
-<span class='line'>788</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="KEYW">else</span><span class="PUNC">{</span><span class="COMM">// get all properties:</span><span class="WHIT">
-<span class='line'>789</span> </span><span class="WHIT">                
-<span class='line'>790</span>                 </span><span class="NAME">keys</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Object.getOwnPropertyNames</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>791</span> </span><span class="WHIT">                </span><span class="NAME">$object.getPrototypes.call</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">forEach</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">proto</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>792</span> </span><span class="WHIT">                    </span><span class="NAME">keys</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">keys.concat</span><span class="PUNC">(</span><span class="NAME">Object.getOwnPropertyNames</span><span class="PUNC">(</span><span class="NAME">proto</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>793</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>794</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>795</span> 
-<span class='line'>796</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">keys</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>797</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>798</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>799</span> 
-<span class='line'>800</span> </span><span class="COMM">//    /**</span><span class="WHIT">
-<span class='line'>801</span> </span><span class="COMM">//     * Returns the current state of this object in JSON format.</span><span class="WHIT">
-<span class='line'>802</span> </span><span class="COMM">//     * @see $object#getState</span><span class="WHIT">
-<span class='line'>803</span> </span><span class="COMM">//     * @memberof $object# */</span><span class="WHIT">
-<span class='line'>804</span> </span><span class="COMM">//    toString: function(){</span><span class="WHIT">
-<span class='line'>805</span> </span><span class="COMM">//        return JSON.stringify( this.getState() );</span><span class="WHIT">
-<span class='line'>806</span> </span><span class="COMM">//    },</span><span class="WHIT">
-<span class='line'>807</span> 
-<span class='line'>808</span> </span><span class="COMM">//        /**</span><span class="WHIT">
-<span class='line'>809</span> </span><span class="COMM">//         * Returns true if all enumerable properties of this present in obj.</span><span class="WHIT">
-<span class='line'>810</span> </span><span class="COMM">//         * @returns {boolean}</span><span class="WHIT">
-<span class='line'>811</span> </span><span class="COMM">//         */</span><span class="WHIT">
-<span class='line'>812</span> </span><span class="COMM">//        looksLike: function(/** Object */obj){</span><span class="WHIT">
-<span class='line'>813</span> </span><span class="COMM">//            for(var  p in this){</span><span class="WHIT">
-<span class='line'>814</span> </span><span class="COMM">//                if(!(p in obj))</span><span class="WHIT">
-<span class='line'>815</span> </span><span class="COMM">//                    return false;</span><span class="WHIT">
-<span class='line'>816</span> </span><span class="COMM">//            }</span><span class="WHIT">
-<span class='line'>817</span> </span><span class="COMM">//            return true;</span><span class="WHIT">
-<span class='line'>818</span> </span><span class="COMM">//        },</span><span class="WHIT">
-<span class='line'>819</span> </span><span class="COMM">//        /**</span><span class="WHIT">
-<span class='line'>820</span> </span><span class="COMM">//         * Returns true if all methods of this present in obj.</span><span class="WHIT">
-<span class='line'>821</span> </span><span class="COMM">//         * @returns {boolean}</span><span class="WHIT">
-<span class='line'>822</span> </span><span class="COMM">//         */</span><span class="WHIT">
-<span class='line'>823</span> </span><span class="COMM">//        behavesLike: function(/** Object */obj){</span><span class="WHIT">
-<span class='line'>824</span> </span><span class="COMM">//            var propertyNames = this.getOwnPropertyNames();</span><span class="WHIT">
-<span class='line'>825</span> </span><span class="COMM">//            for(var i= 0; i &lt; propertyNames.length; i++){var name = propertyNames[i];</span><span class="WHIT">
-<span class='line'>826</span> </span><span class="COMM">//                if(name[0]!=='_'){</span><span class="WHIT">
-<span class='line'>827</span> </span><span class="COMM">//                    var property = this[name];</span><span class="WHIT">
-<span class='line'>828</span> </span><span class="COMM">//                    if(typeof(property)=='function'){</span><span class="WHIT">
-<span class='line'>829</span> </span><span class="COMM">//                        var objProperty = obj[name];</span><span class="WHIT">
-<span class='line'>830</span> </span><span class="COMM">//</span><span class="WHIT">
-<span class='line'>831</span> </span><span class="COMM">//                        if(typeof(objProperty)!='function') return false;</span><span class="WHIT">
-<span class='line'>832</span> </span><span class="COMM">//                        if(objProperty.length != property.length) return false;</span><span class="WHIT">
-<span class='line'>833</span> </span><span class="COMM">//                    }</span><span class="WHIT">
-<span class='line'>834</span> </span><span class="COMM">//                }</span><span class="WHIT">
-<span class='line'>835</span> </span><span class="COMM">//            }</span><span class="WHIT">
-<span class='line'>836</span> </span><span class="COMM">//            return true;</span><span class="WHIT">
-<span class='line'>837</span> </span><span class="COMM">//        },</span><span class="WHIT">
-<span class='line'>838</span> 
-<span class='line'>839</span> </span><span class="WHIT">      </span><span class="COMM">/////////////////</span><span class="WHIT">
-<span class='line'>840</span> </span><span class="WHIT">     </span><span class="COMM">// Some sugar:</span><span class="WHIT">
-<span class='line'>841</span> </span><span class="WHIT">    </span><span class="COMM">///////////////////////////////////////////</span><span class="WHIT">
-<span class='line'>842</span> 
-<span class='line'>843</span> </span><span class="WHIT">    </span><span class="COMM">/** Wrapper for [Object.getPrototypeOf⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getPrototypeOf)
-<span class='line'>844</span>      * @memberof $object# */</span><span class="WHIT">
-<span class='line'>845</span> </span><span class="WHIT">    </span><span class="NAME">getPrototype</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>846</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.getPrototypeOf</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>847</span> </span><span class="WHIT">    </span><span class="COMM">/** Wrapper for [Object.getOwnPropertyNames⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames)
-<span class='line'>848</span>      * @memberof $object# */</span><span class="WHIT">
-<span class='line'>849</span> </span><span class="WHIT">    </span><span class="NAME">getOwnPropertyNames</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>850</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.getOwnPropertyNames</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>851</span> 
-<span class='line'>852</span> </span><span class="WHIT">    </span><span class="COMM">/** Wrapper for [Object.preventExtensions⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/preventExtensions)
-<span class='line'>853</span>      * @memberof $object# */</span><span class="WHIT">
-<span class='line'>854</span> </span><span class="WHIT">    </span><span class="NAME">preventExtensions</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>855</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.preventExtensions</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>856</span> </span><span class="WHIT">    </span><span class="COMM">/** Wrapper for [Object.isExtensible⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isExtensible)
-<span class='line'>857</span>      * @memberof $object# */</span><span class="WHIT">
-<span class='line'>858</span> </span><span class="WHIT">    </span><span class="NAME">isExtensible</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>859</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.isExtensible</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>860</span> </span><span class="WHIT">    </span><span class="COMM">/** Wrapper for [Object.seal⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal)
-<span class='line'>861</span>      * @memberof $object# */</span><span class="WHIT">
-<span class='line'>862</span> </span><span class="WHIT">    </span><span class="NAME">seal</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>863</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.seal</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>864</span> </span><span class="WHIT">    </span><span class="COMM">/** Wrapper for [Object.isSealed⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isSealed)
-<span class='line'>865</span>      * @memberof $object# */</span><span class="WHIT">
-<span class='line'>866</span> </span><span class="WHIT">    </span><span class="NAME">isSealed</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>867</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.isSealed</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>868</span> </span><span class="WHIT">    </span><span class="COMM">/** Wrapper for [Object.freeze⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/freeze)
-<span class='line'>869</span>      * @memberof $object# */</span><span class="WHIT">
-<span class='line'>870</span> </span><span class="WHIT">    </span><span class="NAME">freeze</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>871</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.freeze</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>872</span> </span><span class="WHIT">    </span><span class="COMM">/** Wrapper for [Object.isFrozen⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isFrozen)
-<span class='line'>873</span>      * @memberof $object# */</span><span class="WHIT">
-<span class='line'>874</span> </span><span class="WHIT">    </span><span class="NAME">isFrozen</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>875</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.isFrozen</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>876</span> 
-<span class='line'>877</span> </span><span class="WHIT">    </span><span class="COMM">/** Wrapper for [Object.getOwnPropertyDescriptor⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor)
-<span class='line'>878</span>      * @memberof $object# */</span><span class="WHIT">
-<span class='line'>879</span> </span><span class="WHIT">    </span><span class="NAME">getOwnPropertyDescriptor</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** string */</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>880</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.getOwnPropertyDescriptor</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>881</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>882</span> 
-<span class='line'>883</span> </span><span class="WHIT">    </span><span class="COMM">/** Define properties.
-<span class='line'>884</span>      *  @see &lt;a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperties">Object.defineProperties⠙&lt;/a>
-<span class='line'>885</span>      *  @see $object.describe
-<span class='line'>886</span>      *  @memberof $object# */</span><span class="WHIT">
-<span class='line'>887</span> </span><span class="WHIT">    </span><span class="NAME">defineProperties</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** Object= */</span><span class="NAME">properties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** PropertyDescriptor= */</span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>888</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.defineProperties</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">$object.describe.apply</span><span class="PUNC">(</span><span class="KEYW">null</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>889</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>890</span> 
-<span class='line'>891</span> </span><span class="WHIT">    </span><span class="COMM">/** Wrapper for [Object.defineProperty⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty)
-<span class='line'>892</span>      *  @memberof $object# */</span><span class="WHIT">
-<span class='line'>893</span> </span><span class="WHIT">    </span><span class="NAME">defineProperty</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** string */</span><span class="NAME">name</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** PropertyDescriptor */</span><span class="NAME">propertyDescriptor</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>894</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.defineProperty</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">propertyDescriptor</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>895</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>896</span> 
-<span class='line'>897</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>763</span>      * If called without args - `getKeys()` will behaves like [Object.keys⠙][1].  
+<span class='line'>764</span>      * If called with false - `getKeys(false)` will behave like [Object.getOwnPropertyNames⠙][2]
+<span class='line'>765</span>      * [1]: http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys
+<span class='line'>766</span>      * [2]: http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys
+<span class='line'>767</span>      * @see $object#getOwnPropertyNames
+<span class='line'>768</span>      * @returns {Array} All own enumerable property names.
+<span class='line'>769</span>      * @memberof $object# */</span><span class="WHIT">
+<span class='line'>770</span> </span><span class="WHIT">    </span><span class="NAME">getKeys</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** boolean=true */</span><span class="NAME">enumerableOnly</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** boolean=true */</span><span class="NAME">ownOnly</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>771</span> </span><span class="WHIT">        </span><span class="NAME">enumerableOnly</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">enumerableOnly</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">Boolean</span><span class="PUNC">(</span><span class="NAME">enumerableOnly</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>772</span> </span><span class="WHIT">               </span><span class="NAME">ownOnly</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">        </span><span class="NAME">ownOnly</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">Boolean</span><span class="PUNC">(</span><span class="NAME">ownOnly</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>773</span> </span><span class="WHIT">        
+<span class='line'>774</span>         </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">method</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">  </span><span class="NAME">enumerableOnly</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">ownOnly</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="STRN">'keys'</span><span class="WHIT">
+<span class='line'>775</span> </span><span class="WHIT">                  </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">!</span><span class="NAME">enumerableOnly</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">ownOnly</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="STRN">'getOwnPropertyNames'</span><span class="PUNC">;</span><span class="WHIT">        
+<span class='line'>776</span>         
+<span class='line'>777</span>         </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">method</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>778</span> 
+<span class='line'>779</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object</span><span class="PUNC">[</span><span class="NAME">method</span><span class="PUNC">]</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>780</span> </span><span class="WHIT">            
+<span class='line'>781</span>         </span><span class="PUNC">}</span><span class="KEYW">else</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>782</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">keys</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>783</span> </span><span class="WHIT">            
+<span class='line'>784</span>             </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">ownOnly</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">enumerableOnly</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>785</span> </span><span class="WHIT">                
+<span class='line'>786</span>                 </span><span class="NAME">$object.forEach.call</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">value</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">key</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>787</span> </span><span class="WHIT">                    </span><span class="NAME">keys.push</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>788</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="KEYW">false</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>789</span> 
+<span class='line'>790</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="KEYW">else</span><span class="PUNC">{</span><span class="COMM">// get all properties:</span><span class="WHIT">
+<span class='line'>791</span> </span><span class="WHIT">                
+<span class='line'>792</span>                 </span><span class="NAME">keys</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Object.getOwnPropertyNames</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>793</span> </span><span class="WHIT">                </span><span class="NAME">$object.getPrototypes.call</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">forEach</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">proto</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>794</span> </span><span class="WHIT">                    </span><span class="NAME">keys</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">keys.concat</span><span class="PUNC">(</span><span class="NAME">Object.getOwnPropertyNames</span><span class="PUNC">(</span><span class="NAME">proto</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>795</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>796</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>797</span> 
+<span class='line'>798</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">keys</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>799</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>800</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>801</span> 
+<span class='line'>802</span> </span><span class="COMM">//    /**</span><span class="WHIT">
+<span class='line'>803</span> </span><span class="COMM">//     * Returns the current state of this object in JSON format.</span><span class="WHIT">
+<span class='line'>804</span> </span><span class="COMM">//     * @see $object#getState</span><span class="WHIT">
+<span class='line'>805</span> </span><span class="COMM">//     * @memberof $object# */</span><span class="WHIT">
+<span class='line'>806</span> </span><span class="COMM">//    toString: function(){</span><span class="WHIT">
+<span class='line'>807</span> </span><span class="COMM">//        return JSON.stringify( this.getState() );</span><span class="WHIT">
+<span class='line'>808</span> </span><span class="COMM">//    },</span><span class="WHIT">
+<span class='line'>809</span> 
+<span class='line'>810</span> </span><span class="COMM">//        /**</span><span class="WHIT">
+<span class='line'>811</span> </span><span class="COMM">//         * Returns true if all enumerable properties of this present in obj.</span><span class="WHIT">
+<span class='line'>812</span> </span><span class="COMM">//         * @returns {boolean}</span><span class="WHIT">
+<span class='line'>813</span> </span><span class="COMM">//         */</span><span class="WHIT">
+<span class='line'>814</span> </span><span class="COMM">//        looksLike: function(/** Object */obj){</span><span class="WHIT">
+<span class='line'>815</span> </span><span class="COMM">//            for(var  p in this){</span><span class="WHIT">
+<span class='line'>816</span> </span><span class="COMM">//                if(!(p in obj))</span><span class="WHIT">
+<span class='line'>817</span> </span><span class="COMM">//                    return false;</span><span class="WHIT">
+<span class='line'>818</span> </span><span class="COMM">//            }</span><span class="WHIT">
+<span class='line'>819</span> </span><span class="COMM">//            return true;</span><span class="WHIT">
+<span class='line'>820</span> </span><span class="COMM">//        },</span><span class="WHIT">
+<span class='line'>821</span> </span><span class="COMM">//        /**</span><span class="WHIT">
+<span class='line'>822</span> </span><span class="COMM">//         * Returns true if all methods of this present in obj.</span><span class="WHIT">
+<span class='line'>823</span> </span><span class="COMM">//         * @returns {boolean}</span><span class="WHIT">
+<span class='line'>824</span> </span><span class="COMM">//         */</span><span class="WHIT">
+<span class='line'>825</span> </span><span class="COMM">//        behavesLike: function(/** Object */obj){</span><span class="WHIT">
+<span class='line'>826</span> </span><span class="COMM">//            var propertyNames = this.getOwnPropertyNames();</span><span class="WHIT">
+<span class='line'>827</span> </span><span class="COMM">//            for(var i= 0; i &lt; propertyNames.length; i++){var name = propertyNames[i];</span><span class="WHIT">
+<span class='line'>828</span> </span><span class="COMM">//                if(name[0]!=='_'){</span><span class="WHIT">
+<span class='line'>829</span> </span><span class="COMM">//                    var property = this[name];</span><span class="WHIT">
+<span class='line'>830</span> </span><span class="COMM">//                    if(typeof(property)=='function'){</span><span class="WHIT">
+<span class='line'>831</span> </span><span class="COMM">//                        var objProperty = obj[name];</span><span class="WHIT">
+<span class='line'>832</span> </span><span class="COMM">//</span><span class="WHIT">
+<span class='line'>833</span> </span><span class="COMM">//                        if(typeof(objProperty)!='function') return false;</span><span class="WHIT">
+<span class='line'>834</span> </span><span class="COMM">//                        if(objProperty.length != property.length) return false;</span><span class="WHIT">
+<span class='line'>835</span> </span><span class="COMM">//                    }</span><span class="WHIT">
+<span class='line'>836</span> </span><span class="COMM">//                }</span><span class="WHIT">
+<span class='line'>837</span> </span><span class="COMM">//            }</span><span class="WHIT">
+<span class='line'>838</span> </span><span class="COMM">//            return true;</span><span class="WHIT">
+<span class='line'>839</span> </span><span class="COMM">//        },</span><span class="WHIT">
+<span class='line'>840</span> 
+<span class='line'>841</span> </span><span class="WHIT">      </span><span class="COMM">/////////////////</span><span class="WHIT">
+<span class='line'>842</span> </span><span class="WHIT">     </span><span class="COMM">// Some sugar:</span><span class="WHIT">
+<span class='line'>843</span> </span><span class="WHIT">    </span><span class="COMM">///////////////////////////////////////////</span><span class="WHIT">
+<span class='line'>844</span> 
+<span class='line'>845</span> </span><span class="WHIT">    </span><span class="COMM">/** Wrapper for [Object.getPrototypeOf⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getPrototypeOf)
+<span class='line'>846</span>      * @memberof $object# */</span><span class="WHIT">
+<span class='line'>847</span> </span><span class="WHIT">    </span><span class="NAME">getPrototype</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>848</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.getPrototypeOf</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>849</span> </span><span class="WHIT">    </span><span class="COMM">/** Wrapper for [Object.getOwnPropertyNames⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames)
+<span class='line'>850</span>      * @memberof $object# */</span><span class="WHIT">
+<span class='line'>851</span> </span><span class="WHIT">    </span><span class="NAME">getOwnPropertyNames</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>852</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.getOwnPropertyNames</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>853</span> 
+<span class='line'>854</span> </span><span class="WHIT">    </span><span class="COMM">/** Wrapper for [Object.preventExtensions⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/preventExtensions)
+<span class='line'>855</span>      * @memberof $object# */</span><span class="WHIT">
+<span class='line'>856</span> </span><span class="WHIT">    </span><span class="NAME">preventExtensions</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>857</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.preventExtensions</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>858</span> </span><span class="WHIT">    </span><span class="COMM">/** Wrapper for [Object.isExtensible⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isExtensible)
+<span class='line'>859</span>      * @memberof $object# */</span><span class="WHIT">
+<span class='line'>860</span> </span><span class="WHIT">    </span><span class="NAME">isExtensible</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>861</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.isExtensible</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>862</span> </span><span class="WHIT">    </span><span class="COMM">/** Wrapper for [Object.seal⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal)
+<span class='line'>863</span>      * @memberof $object# */</span><span class="WHIT">
+<span class='line'>864</span> </span><span class="WHIT">    </span><span class="NAME">seal</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>865</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.seal</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>866</span> </span><span class="WHIT">    </span><span class="COMM">/** Wrapper for [Object.isSealed⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isSealed)
+<span class='line'>867</span>      * @memberof $object# */</span><span class="WHIT">
+<span class='line'>868</span> </span><span class="WHIT">    </span><span class="NAME">isSealed</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>869</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.isSealed</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>870</span> </span><span class="WHIT">    </span><span class="COMM">/** Wrapper for [Object.freeze⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/freeze)
+<span class='line'>871</span>      * @memberof $object# */</span><span class="WHIT">
+<span class='line'>872</span> </span><span class="WHIT">    </span><span class="NAME">freeze</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>873</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.freeze</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>874</span> </span><span class="WHIT">    </span><span class="COMM">/** Wrapper for [Object.isFrozen⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isFrozen)
+<span class='line'>875</span>      * @memberof $object# */</span><span class="WHIT">
+<span class='line'>876</span> </span><span class="WHIT">    </span><span class="NAME">isFrozen</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>877</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.isFrozen</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>878</span> 
+<span class='line'>879</span> </span><span class="WHIT">    </span><span class="COMM">/** Wrapper for [Object.getOwnPropertyDescriptor⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor)
+<span class='line'>880</span>      * @memberof $object# */</span><span class="WHIT">
+<span class='line'>881</span> </span><span class="WHIT">    </span><span class="NAME">getOwnPropertyDescriptor</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** string */</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>882</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.getOwnPropertyDescriptor</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>883</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>884</span> 
+<span class='line'>885</span> </span><span class="WHIT">    </span><span class="COMM">/** Define properties.
+<span class='line'>886</span>      *  @see &lt;a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperties">Object.defineProperties⠙&lt;/a>
+<span class='line'>887</span>      *  @see $object.describe
+<span class='line'>888</span>      *  @memberof $object# */</span><span class="WHIT">
+<span class='line'>889</span> </span><span class="WHIT">    </span><span class="NAME">defineProperties</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** Object= */</span><span class="NAME">properties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** PropertyDescriptor= */</span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>890</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.defineProperties</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">$object.describe.apply</span><span class="PUNC">(</span><span class="KEYW">null</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>891</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>892</span> 
+<span class='line'>893</span> </span><span class="WHIT">    </span><span class="COMM">/** Wrapper for [Object.defineProperty⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty)
+<span class='line'>894</span>      *  @memberof $object# */</span><span class="WHIT">
+<span class='line'>895</span> </span><span class="WHIT">    </span><span class="NAME">defineProperty</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** string */</span><span class="NAME">name</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** PropertyDescriptor */</span><span class="NAME">propertyDescriptor</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>896</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Object.defineProperty</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">propertyDescriptor</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>897</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>898</span> 
-<span class='line'>899</span> </span><span class="COMM">// make methods not enumerable:</span><span class="WHIT">
-<span class='line'>900</span> </span><span class="NAME">$object.</span><span class="COMM">/*re*/</span><span class="NAME">defineProperties</span><span class="PUNC">(</span><span class="NAME">$object</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>901</span> 
-<span class='line'>902</span> 
-<span class='line'>903</span> </span><span class="COMM">////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////</span><span class="WHIT">
-<span class='line'>904</span> </span><span class="COMM">////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////</span><span class="WHIT">
-<span class='line'>905</span> 
-<span class='line'>906</span> 
-<span class='line'>907</span> </span><span class="COMM">/**
-<span class='line'>908</span>  * @namespace
-<span class='line'>909</span>  *    The namespace.
-<span class='line'>910</span>  * @description
-<span class='line'>911</span>  * If you run the following code:
-<span class='line'>912</span>  * &lt;code>
-<span class='line'>913</span>  *     ns.extend('collection', {name: 'collection'});
-<span class='line'>914</span>  *     ns.collection.extend('arrayCollection', {name: 'arrayCollection'});
-<span class='line'>915</span>  * &lt;/code> 
-<span class='line'>916</span>  * The structure of the namespace will be:
-<span class='line'>917</span>  * &lt;code>
-<span class='line'>918</span>  *     ns == {
-<span class='line'>919</span>  *         $collection: {name: 'collection'},
-<span class='line'>920</span>  *         collection: {
-<span class='line'>921</span>  *             $arrayCollection: {name: 'arrayCollection'},
-<span class='line'>922</span>  *             arrayCollection: {
-<span class='line'>923</span>  *                 prototype: {name: 'arrayCollection'},
-<span class='line'>924</span>  *                 extend: ns.extend,
-<span class='line'>925</span>  *                 put: ns.put
-<span class='line'>926</span>  *             },
-<span class='line'>927</span>  *             prototype: {name: 'collection'},
-<span class='line'>928</span>  *             extend: ns.extend,
-<span class='line'>929</span>  *             put: ns.put
-<span class='line'>930</span>  *         },
-<span class='line'>931</span>  *         prototype: $object,
-<span class='line'>932</span>  *         extend: ns.extend,
-<span class='line'>933</span>  *         put: ns.put
-<span class='line'>934</span>  *     }
-<span class='line'>935</span>  * &lt;/code>
-<span class='line'>936</span>  */</span><span class="WHIT">
-<span class='line'>937</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">ns</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="COMM">/** @lands ns# */</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>938</span> </span><span class="WHIT">    </span><span class="COMM">/** 
-<span class='line'>939</span>      * The prototype of every object in this namespace (default - `{@link $object}`).
-<span class='line'>940</span>      * @name prototype
-<span class='line'>941</span>      * @type Object
-<span class='line'>942</span>      * @memberOf ns# */</span><span class="WHIT">
-<span class='line'>943</span> </span><span class="WHIT">    </span><span class="NAME">prototype</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">$object</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>944</span> </span><span class="WHIT">    
-<span class='line'>945</span>     </span><span class="COMM">/**
-<span class='line'>946</span>      * Extend namespace by prototype.
-<span class='line'>947</span>      * @see $object#clone
-<span class='line'>948</span>      * @param nsItemName
-<span class='line'>949</span>      *        The name of the new sub-namespace 
-<span class='line'>950</span>      *        (begins with lower case letter).
-<span class='line'>951</span>      * @param prototypeOrProperties
-<span class='line'>952</span>      *        If this arg is not a clone (or sub-clone) of `ns.prototype`, 
-<span class='line'>953</span>      *        the new object will be created (cloned from `ns.prototype`).
-<span class='line'>954</span>      * @param defaultDescriptor
-<span class='line'>955</span>      *        The default {@link PropertyDescriptor} for created prototype.
-<span class='line'>956</span>      * @returns {ns} The created sub-namespace.
-<span class='line'>957</span>      * @memberOf ns# */</span><span class="WHIT">
-<span class='line'>958</span> </span><span class="WHIT">    </span><span class="NAME">extend</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">extend</span><span class="PUNC">(</span><span class="COMM">/** string */</span><span class="NAME">nsItemName</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** Object */</span><span class="NAME">prototypeOrProperties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** PropertyDescriptor= */</span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>959</span> 
-<span class='line'>960</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">$parent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.prototype</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">parentNS</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>961</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">$parent.isPrototypeOf</span><span class="PUNC">(</span><span class="NAME">prototypeOrProperties</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>962</span> </span><span class="WHIT">            
-<span class='line'>963</span>             </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">$newProto</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">prototypeOrProperties</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>899</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>900</span> 
+<span class='line'>901</span> </span><span class="COMM">// make methods not enumerable:</span><span class="WHIT">
+<span class='line'>902</span> </span><span class="NAME">$object.</span><span class="COMM">/*re*/</span><span class="NAME">defineProperties</span><span class="PUNC">(</span><span class="NAME">$object</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>903</span> 
+<span class='line'>904</span> 
+<span class='line'>905</span> </span><span class="COMM">////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////</span><span class="WHIT">
+<span class='line'>906</span> </span><span class="COMM">////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////</span><span class="WHIT">
+<span class='line'>907</span> 
+<span class='line'>908</span> 
+<span class='line'>909</span> </span><span class="COMM">/**
+<span class='line'>910</span>  * @namespace
+<span class='line'>911</span>  *    The namespace.
+<span class='line'>912</span>  * @description
+<span class='line'>913</span>  * If you run the following code:
+<span class='line'>914</span>  * &lt;code>
+<span class='line'>915</span>  *     ns.extend('collection', {name: 'collection'});
+<span class='line'>916</span>  *     ns.collection.extend('arrayCollection', {name: 'arrayCollection'});
+<span class='line'>917</span>  * &lt;/code> 
+<span class='line'>918</span>  * The structure of the namespace will be:
+<span class='line'>919</span>  * &lt;code>
+<span class='line'>920</span>  *     ns == {
+<span class='line'>921</span>  *         $collection: {name: 'collection'},
+<span class='line'>922</span>  *         collection: {
+<span class='line'>923</span>  *             $arrayCollection: {name: 'arrayCollection'},
+<span class='line'>924</span>  *             arrayCollection: {
+<span class='line'>925</span>  *                 prototype: {name: 'arrayCollection'},
+<span class='line'>926</span>  *                 extend: ns.extend,
+<span class='line'>927</span>  *                 put: ns.put
+<span class='line'>928</span>  *             },
+<span class='line'>929</span>  *             prototype: {name: 'collection'},
+<span class='line'>930</span>  *             extend: ns.extend,
+<span class='line'>931</span>  *             put: ns.put
+<span class='line'>932</span>  *         },
+<span class='line'>933</span>  *         prototype: $object,
+<span class='line'>934</span>  *         extend: ns.extend,
+<span class='line'>935</span>  *         put: ns.put
+<span class='line'>936</span>  *     }
+<span class='line'>937</span>  * &lt;/code>
+<span class='line'>938</span>  */</span><span class="WHIT">
+<span class='line'>939</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">ns</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="COMM">/** @lands ns# */</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>940</span> </span><span class="WHIT">    </span><span class="COMM">/** 
+<span class='line'>941</span>      * The prototype of every object in this namespace (default - `{@link $object}`).
+<span class='line'>942</span>      * @name prototype
+<span class='line'>943</span>      * @type Object
+<span class='line'>944</span>      * @memberOf ns# */</span><span class="WHIT">
+<span class='line'>945</span> </span><span class="WHIT">    </span><span class="NAME">prototype</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">$object</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>946</span> </span><span class="WHIT">    
+<span class='line'>947</span>     </span><span class="COMM">/**
+<span class='line'>948</span>      * Extend namespace by prototype.
+<span class='line'>949</span>      * @see $object#clone
+<span class='line'>950</span>      * @param nsItemName
+<span class='line'>951</span>      *        The name of the new sub-namespace 
+<span class='line'>952</span>      *        (begins with lower case letter).
+<span class='line'>953</span>      * @param prototypeOrProperties
+<span class='line'>954</span>      *        If this arg is not a clone (or sub-clone) of `ns.prototype`, 
+<span class='line'>955</span>      *        the new object will be created (cloned from `ns.prototype`).
+<span class='line'>956</span>      * @param defaultDescriptor
+<span class='line'>957</span>      *        The default {@link PropertyDescriptor} for created prototype.
+<span class='line'>958</span>      * @returns {ns} The created sub-namespace.
+<span class='line'>959</span>      * @memberOf ns# */</span><span class="WHIT">
+<span class='line'>960</span> </span><span class="WHIT">    </span><span class="NAME">extend</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">extend</span><span class="PUNC">(</span><span class="COMM">/** string */</span><span class="NAME">nsItemName</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** Object */</span><span class="NAME">prototypeOrProperties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** PropertyDescriptor= */</span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>961</span> 
+<span class='line'>962</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">$parent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.prototype</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">parentNS</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>963</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">$parent.isPrototypeOf</span><span class="PUNC">(</span><span class="NAME">prototypeOrProperties</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>964</span> </span><span class="WHIT">            
-<span class='line'>965</span>         </span><span class="PUNC">}</span><span class="KEYW">else</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>965</span>             </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">$newProto</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">prototypeOrProperties</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>966</span> </span><span class="WHIT">            
-<span class='line'>967</span>             </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">properties</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">prototypeOrProperties</span><span class="PUNC">;</span><span class="WHIT">            
-<span class='line'>968</span>             </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">typeName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">nsItemName</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">toUpperCase</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">nsItemName.substr</span><span class="PUNC">(</span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>969</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">properties.hasOwnProperty</span><span class="PUNC">(</span><span class="STRN">'constructor'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>970</span> </span><span class="WHIT">                </span><span class="NAME">properties.constructor.typeName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">typeName</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>971</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="KEYW">else</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>972</span> </span><span class="WHIT">                </span><span class="NAME">properties.constructor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">typeName</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>973</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>974</span> </span><span class="WHIT">            </span><span class="NAME">$newProto</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$parent.clone</span><span class="PUNC">(</span><span class="NAME">properties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>975</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">      
-<span class='line'>976</span>     
-<span class='line'>977</span>         </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">newNS</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$object.clone.call</span><span class="PUNC">(</span><span class="NAME">parentNS</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">prototype</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">$newProto</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>978</span> </span><span class="WHIT">        </span><span class="KEYW">this</span><span class="PUNC">[</span><span class="STRN">'$'</span><span class="PUNC">+</span><span class="NAME">nsItemName</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">  </span><span class="NAME">$newProto</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>979</span> </span><span class="WHIT">        </span><span class="KEYW">this</span><span class="PUNC">[</span><span class="NAME">nsItemName</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">newNS</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>980</span> </span><span class="WHIT">        
-<span class='line'>981</span>         </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">newNS</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>982</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>983</span> 
-<span class='line'>984</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'>985</span>      * Put object into this namespace. 
-<span class='line'>986</span>      * If `nsPathName` not specified, all prototype parents will be also pushed to this namespace.
-<span class='line'>987</span>      * @param nsPathName 
-<span class='line'>988</span>      *        If not specified, the value of `prototype.constructor.typeName` or `prototype.constructor.name` will be used. 
-<span class='line'>989</span>      * @param prototype
-<span class='line'>990</span>      * @returns {ns} The created sub-namespace.
-<span class='line'>991</span>      * @memberOf ns# */</span><span class="WHIT">
-<span class='line'>992</span> </span><span class="WHIT">    </span><span class="NAME">put</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** string= */</span><span class="NAME">nsPathName</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** Object */</span><span class="NAME">prototype</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>993</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">nsPathName</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="STRN">'string'</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>994</span> </span><span class="WHIT">            </span><span class="NAME">prototype</span><span class="WHIT">  </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">nsPathName</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>995</span> </span><span class="WHIT">            </span><span class="NAME">nsPathName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>996</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="COMM">//&lt;/arguments></span><span class="WHIT">
-<span class='line'>997</span> 
-<span class='line'>998</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">nsPathName</span><span class="WHIT"> </span><span class="COMM">/*&& nsPathName.indexOf('.') > 0*/</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>999</span> </span><span class="WHIT">            
-<span class='line'>1000</span>             </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">currentNS</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1001</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">nameParts</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">nsPathName.split</span><span class="PUNC">(</span><span class="STRN">'.'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1002</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">nsItemName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">nameParts.pop</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1003</span> </span><span class="WHIT">            </span><span class="NAME">nameParts.forEach</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">namePart</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1004</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="PUNC">!</span><span class="PUNC">(</span><span class="NAME">namePart</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">currentNS</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1005</span> </span><span class="WHIT">                    </span><span class="NAME">currentNS.extend</span><span class="PUNC">(</span><span class="NAME">namePart</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1006</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>1007</span> </span><span class="WHIT">                </span><span class="NAME">currentNS</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">currentNS</span><span class="PUNC">[</span><span class="NAME">namePart</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1008</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1009</span> 
-<span class='line'>1010</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">applyExtend</span><span class="PUNC">(</span><span class="NAME">currentNS</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">prototype</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">nsItemName</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1011</span> </span><span class="WHIT">            
-<span class='line'>1012</span>         </span><span class="PUNC">}</span><span class="KEYW">else</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>967</span>         </span><span class="PUNC">}</span><span class="KEYW">else</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>968</span> </span><span class="WHIT">            
+<span class='line'>969</span>             </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">properties</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">prototypeOrProperties</span><span class="PUNC">;</span><span class="WHIT">            
+<span class='line'>970</span>             </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">typeName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">nsItemName</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">toUpperCase</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">nsItemName.substr</span><span class="PUNC">(</span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>971</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">properties.hasOwnProperty</span><span class="PUNC">(</span><span class="STRN">'constructor'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>972</span> </span><span class="WHIT">                </span><span class="NAME">properties.constructor.typeName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">typeName</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>973</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="KEYW">else</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>974</span> </span><span class="WHIT">                </span><span class="NAME">properties.constructor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">typeName</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>975</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>976</span> </span><span class="WHIT">            </span><span class="NAME">$newProto</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$parent.clone</span><span class="PUNC">(</span><span class="NAME">properties</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">defaultDescriptor</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>977</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">      
+<span class='line'>978</span>     
+<span class='line'>979</span>         </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">newNS</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$object.clone.call</span><span class="PUNC">(</span><span class="NAME">parentNS</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">prototype</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">$newProto</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>980</span> </span><span class="WHIT">        </span><span class="KEYW">this</span><span class="PUNC">[</span><span class="STRN">'$'</span><span class="PUNC">+</span><span class="NAME">nsItemName</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT">  </span><span class="NAME">$newProto</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>981</span> </span><span class="WHIT">        </span><span class="KEYW">this</span><span class="PUNC">[</span><span class="NAME">nsItemName</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">newNS</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>982</span> </span><span class="WHIT">        
+<span class='line'>983</span>         </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">newNS</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>984</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>985</span> 
+<span class='line'>986</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>987</span>      * Put object into this namespace. 
+<span class='line'>988</span>      * If `nsPathName` not specified, all prototype parents will be also pushed to this namespace.
+<span class='line'>989</span>      * @param nsPathName 
+<span class='line'>990</span>      *        If not specified, the value of `prototype.constructor.typeName` or `prototype.constructor.name` will be used. 
+<span class='line'>991</span>      * @param prototype
+<span class='line'>992</span>      * @returns {ns} The created sub-namespace.
+<span class='line'>993</span>      * @memberOf ns# */</span><span class="WHIT">
+<span class='line'>994</span> </span><span class="WHIT">    </span><span class="NAME">put</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="COMM">/** string= */</span><span class="NAME">nsPathName</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** Object */</span><span class="NAME">prototype</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>995</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">nsPathName</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="STRN">'string'</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>996</span> </span><span class="WHIT">            </span><span class="NAME">prototype</span><span class="WHIT">  </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">nsPathName</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>997</span> </span><span class="WHIT">            </span><span class="NAME">nsPathName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>998</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="COMM">//&lt;/arguments></span><span class="WHIT">
+<span class='line'>999</span> 
+<span class='line'>1000</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="WHIT"> </span><span class="NAME">nsPathName</span><span class="WHIT"> </span><span class="COMM">/*&& nsPathName.indexOf('.') > 0*/</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1001</span> </span><span class="WHIT">            
+<span class='line'>1002</span>             </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">currentNS</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1003</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">nameParts</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">nsPathName.split</span><span class="PUNC">(</span><span class="STRN">'.'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1004</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">nsItemName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">nameParts.pop</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1005</span> </span><span class="WHIT">            </span><span class="NAME">nameParts.forEach</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">namePart</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1006</span> </span><span class="WHIT">                </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="PUNC">!</span><span class="PUNC">(</span><span class="NAME">namePart</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">currentNS</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1007</span> </span><span class="WHIT">                    </span><span class="NAME">currentNS.extend</span><span class="PUNC">(</span><span class="NAME">namePart</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1008</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>1009</span> </span><span class="WHIT">                </span><span class="NAME">currentNS</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">currentNS</span><span class="PUNC">[</span><span class="NAME">namePart</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1010</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1011</span> 
+<span class='line'>1012</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">applyExtend</span><span class="PUNC">(</span><span class="NAME">currentNS</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">prototype</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">nsItemName</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>1013</span> </span><span class="WHIT">            
-<span class='line'>1014</span>             </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">prototypes</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">prototype.getPrototypes</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1015</span> </span><span class="WHIT">            </span><span class="NAME">prototypes.push</span><span class="PUNC">(</span><span class="NAME">prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1016</span> 
-<span class='line'>1017</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">eachNS</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1018</span> </span><span class="WHIT">            </span><span class="NAME">prototypes.forEach</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">proto</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1019</span> </span><span class="WHIT">                </span><span class="NAME">nsItemName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">proto.constructor.typeName</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">proto.constructor.name</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1020</span> </span><span class="WHIT">                </span><span class="NAME">nsItemName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">nsItemName</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">toLowerCase</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">nsItemName.substr</span><span class="PUNC">(</span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1021</span> 
-<span class='line'>1022</span> </span><span class="WHIT">                </span><span class="NAME">applyExtend</span><span class="PUNC">(</span><span class="NAME">eachNS</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">proto</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">nsItemName</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1014</span>         </span><span class="PUNC">}</span><span class="KEYW">else</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1015</span> </span><span class="WHIT">            
+<span class='line'>1016</span>             </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">prototypes</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">prototype.getPrototypes</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1017</span> </span><span class="WHIT">            </span><span class="NAME">prototypes.push</span><span class="PUNC">(</span><span class="NAME">prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1018</span> 
+<span class='line'>1019</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">eachNS</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1020</span> </span><span class="WHIT">            </span><span class="NAME">prototypes.forEach</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">proto</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1021</span> </span><span class="WHIT">                </span><span class="NAME">nsItemName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">proto.constructor.typeName</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">proto.constructor.name</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1022</span> </span><span class="WHIT">                </span><span class="NAME">nsItemName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">nsItemName</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">toLowerCase</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">nsItemName.substr</span><span class="PUNC">(</span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>1023</span> 
-<span class='line'>1024</span> </span><span class="WHIT">                </span><span class="NAME">eachNS</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">eachNS</span><span class="PUNC">[</span><span class="NAME">nsItemName</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1025</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1026</span> 
-<span class='line'>1027</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">eachNS</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1028</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>1029</span> </span><span class="WHIT">        
-<span class='line'>1030</span>         </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">applyExtend</span><span class="PUNC">(</span><span class="NAME">eachNS</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">proto</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">nsItemName</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1031</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="PUNC">!</span><span class="PUNC">(</span><span class="NAME">nsItemName</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">eachNS</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">eachNS</span><span class="PUNC">[</span><span class="NAME">nsItemName</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="NAME">proto</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1032</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">eachNS.extend</span><span class="PUNC">(</span><span class="NAME">nsItemName</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">proto</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1033</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">                
-<span class='line'>1034</span>         </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>1035</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>1036</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1037</span> 
-<span class='line'>1038</span> </span><span class="COMM">/**
-<span class='line'>1039</span>  * @name _global_
-<span class='line'>1040</span>  * @namespace
-<span class='line'>1041</span>  *  Description of some native types.  
-<span class='line'>1042</span>  *  Listed objects does not present in global (window) object, it's only descriptions. 
-<span class='line'>1043</span>  */</span><span class="WHIT">
-<span class='line'>1044</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">)</span><span class="COMM">// (need for IDEa code inspections)</span><span class="WHIT">
-<span class='line'>1045</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'>1046</span>      * Object, that has at least one of the following property:  
-<span class='line'>1047</span>      * `value`, `get`, `set`, `writable`, `configurable`, `enumerable`.
-<span class='line'>1048</span>      * @see &lt;a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty⠙&lt;/a>
-<span class='line'>1049</span>      * @name PropertyDescriptor
-<span class='line'>1050</span>      * @typedef {({value:*}|{get:{function():*}}|{set:{function(*):void}}|{writable:boolean}|{configurable:boolean}|{enumerable:boolean})} */</span><span class="WHIT">
-<span class='line'>1051</span> </span><span class="WHIT">    </span><span class="NAME">PropertyDescriptor</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1052</span> </span><span class="WHIT">    
-<span class='line'>1053</span>     </span><span class="COMM">/**
-<span class='line'>1054</span>      * JavaScript class. Function, that can be called by "new" operator and/or have modified prototype property.  
-<span class='line'>1055</span>      * For example: `Object`, `Array`, `RegExp`.
-<span class='line'>1056</span>      * @name Constructor
-<span class='line'>1057</span>      * @typedef {Function} */</span><span class="WHIT">
-<span class='line'>1058</span> 
-<span class='line'>1059</span> 
-<span class='line'>1060</span> </span><span class="COMM">// export ns module:</span><span class="WHIT">
-<span class='line'>1061</span> </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">module</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">module.exports</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="NAME">module.exports</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ns</span><span class="PUNC">;</span></pre></body></html>
+<span class='line'>1024</span> </span><span class="WHIT">                </span><span class="NAME">applyExtend</span><span class="PUNC">(</span><span class="NAME">eachNS</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">proto</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">nsItemName</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1025</span> 
+<span class='line'>1026</span> </span><span class="WHIT">                </span><span class="NAME">eachNS</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">eachNS</span><span class="PUNC">[</span><span class="NAME">nsItemName</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1027</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1028</span> 
+<span class='line'>1029</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">eachNS</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1030</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>1031</span> </span><span class="WHIT">        
+<span class='line'>1032</span>         </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">applyExtend</span><span class="PUNC">(</span><span class="NAME">eachNS</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">proto</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">nsItemName</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1033</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="PUNC">!</span><span class="PUNC">(</span><span class="NAME">nsItemName</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">eachNS</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">eachNS</span><span class="PUNC">[</span><span class="NAME">nsItemName</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="NAME">proto</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1034</span> </span><span class="WHIT">                </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">eachNS.extend</span><span class="PUNC">(</span><span class="NAME">nsItemName</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">proto</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1035</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">                
+<span class='line'>1036</span>         </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>1037</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>1038</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1039</span> 
+<span class='line'>1040</span> </span><span class="COMM">/**
+<span class='line'>1041</span>  * @name _global_
+<span class='line'>1042</span>  * @namespace
+<span class='line'>1043</span>  *  Description of some native types.  
+<span class='line'>1044</span>  *  Listed objects does not present in global (window) object, it's only descriptions. 
+<span class='line'>1045</span>  */</span><span class="WHIT">
+<span class='line'>1046</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">)</span><span class="COMM">// (need for IDEa code inspections)</span><span class="WHIT">
+<span class='line'>1047</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>1048</span>      * Object, that has at least one of the following property:  
+<span class='line'>1049</span>      * `value`, `get`, `set`, `writable`, `configurable`, `enumerable`.
+<span class='line'>1050</span>      * @see &lt;a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty⠙&lt;/a>
+<span class='line'>1051</span>      * @name PropertyDescriptor
+<span class='line'>1052</span>      * @typedef {({value:*}|{get:{function():*}}|{set:{function(*):void}}|{writable:boolean}|{configurable:boolean}|{enumerable:boolean})} */</span><span class="WHIT">
+<span class='line'>1053</span> </span><span class="WHIT">    </span><span class="NAME">PropertyDescriptor</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1054</span> </span><span class="WHIT">    
+<span class='line'>1055</span>     </span><span class="COMM">/**
+<span class='line'>1056</span>      * JavaScript class. Function, that can be called by "new" operator and/or have modified prototype property.  
+<span class='line'>1057</span>      * For example: `Object`, `Array`, `RegExp`.
+<span class='line'>1058</span>      * @name Constructor
+<span class='line'>1059</span>      * @typedef {Function} */</span><span class="WHIT">
+<span class='line'>1060</span> 
+<span class='line'>1061</span> 
+<span class='line'>1062</span> </span><span class="COMM">// export ns module:</span><span class="WHIT">
+<span class='line'>1063</span> </span><span class="KEYW">if</span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">module</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">module.exports</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="NAME">module.exports</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ns</span><span class="PUNC">;</span></pre></body></html>
