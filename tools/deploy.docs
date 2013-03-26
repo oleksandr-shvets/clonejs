@@ -1,6 +1,0 @@
-#/usr/bin/bash -v
-
-cd  ../build/doc
-git commit -a -m "deploy doc"
-git push
-cd ../../tools
