@@ -56,10 +56,10 @@ See: [constructor][], [create][], [applySuper][], [callSuper][], [createSuperSaf
 ###### Properties iteration:
 
     var $obj = $object.clone({a: 11, b: 22, c: 33}),
-         obj = $object.create({d: 44});
+         obj = $obj.create({d: 44});
 
     var mappedObj = obj.map(function(value){return 100 + value}, obj, true);
-        // mappedObj == {d: 144}
+        // mappedObj == {d: 144} // mapped only own property
 
     var proto = {e: 55};
     mappedObj = obj.map(function(value){return 100 + value}, obj, false, proto);
