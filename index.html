@@ -83,6 +83,25 @@ assert( $myType.property3alias === $myType.property3 );
 
 <p>See: <a href="./symbols/%24object.html#constructor">constructor</a>, <a href="./symbols/%24object.html#create">create</a>, <a href="./symbols/%24object.html#applySuper">applySuper</a>, <a href="./symbols/%24object.html#callSuper">callSuper</a>, <a href="./symbols/%24object.html#createSuperSafeCallback">createSuperSafeCallback</a>.</p>
 
+          
+<h6>Properties iteration:</h6>
+
+<pre><code>var $obj = $object.clone({a: 11, b: 22, c: 33}),
+     obj = $object.create({d: 44});
+
+var mappedObj = obj.map(function(value){return 100 + value}, obj, true);
+    // mappedObj == {d: 144}
+
+var proto = {e: 55};
+mappedObj = obj.map(function(value){return 100 + value}, obj, false, proto);
+    // mappedObj == {a: 111, b: 122, c: 133, d: 144, e: 155}
+proto.f = 66;
+    // mappedObj == {a: 111, b: 122, c: 133, d: 144, e: 155, f: 66}
+</code></pre>
+
+<p>See: <a href="./symbols/%24object.html#forEach">forEach</a>, <a href="./symbols/%24object.html#map">map</a>, <a href="./symbols/%24object.html#filter">filter</a>, <a href="./symbols/%24object.html#every">every</a>, <a href="./symbols/%24object.html#some">some</a>.</p>
+
+          
 <h6>Namespaces:</h6>
 
 <pre><code>ns.extend('collection', {
