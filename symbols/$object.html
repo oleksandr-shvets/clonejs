@@ -51,7 +51,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="https://github.com/quadroid/clonejs/tree/master/lib/jsdoc-toolkit/templates/codeview-jsdoc2-template" target="_blank">Codeview</a> 1.3<br />
 			Generated on:
-			<time datetime='2013-2-26' pubdate>2013-2-26 8:24</time>
+			<time datetime='2013-2-26' pubdate>2013-2-26 23:38</time>
 		</footer>
 	</div>
 </div>
@@ -359,7 +359,7 @@ var $array = Array.prototype, $myType = {},
 												<td class="nameDescription">
 													<div class="fixedFont"><b><a href="../symbols/%24object.html#filter">filter</a></b>(callback, thisArg<sup>opt</sup>, ownOnly<sup>=false</sup>, prototype<sup>=$object</sup>)
 													</div>
-													<div class="description"><p>Creates a clone of this object with all enumerable properties that pass the test implemented by the provided function.</div>
+													<div class="description"><p>Creates a new object with all enumerable properties that pass the test implemented by the provided function.</div>
 												</td>
 											</tr>
 										
@@ -390,9 +390,10 @@ var $array = Array.prototype, $myType = {},
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/%24object.html#getEnumerableOwnPropertyNames">getEnumerableOwnPropertyNames</a></b>()
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#getKeys">getKeys</a></b>(ownOnly<sup>=true</sup>, enumerableOnly<sup>=true</sup>)
 													</div>
-													<div class="description"><p>Wrapper for <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys">Object.keys⠙</a></p></div>
+													<div class="description"><p>See <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys">Object.keys⠙</a>
+and <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys">Object.getOwnPropertyNames⠙</a></p></div>
 												</td>
 											</tr>
 										
@@ -456,6 +457,17 @@ var $array = Array.prototype, $myType = {},
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#getValues">getValues</a></b>(ownOnly<sup>=true</sup>, enumerableOnly<sup>=true</sup>)
+													</div>
+													<div class="description"></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item26'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
 													<div class="fixedFont"><b><a href="../symbols/%24object.html#isExtensible">isExtensible</a></b>()
 													</div>
 													<div class="description"><p>Wrapper for <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isExtensible">Object.isExtensible⠙</a></p></div>
@@ -463,7 +475,7 @@ var $array = Array.prototype, $myType = {},
 											</tr>
 										
 											<tr
-												 class='item26'
+												 class='item27'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -474,7 +486,7 @@ var $array = Array.prototype, $myType = {},
 											</tr>
 										
 											<tr
-												 class='item27'
+												 class='item28'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -485,7 +497,7 @@ var $array = Array.prototype, $myType = {},
 											</tr>
 										
 											<tr
-												 class='item28'
+												 class='item29'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -496,7 +508,7 @@ var $array = Array.prototype, $myType = {},
 											</tr>
 										
 											<tr
-												 class='item29'
+												 class='item30'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -507,7 +519,7 @@ var $array = Array.prototype, $myType = {},
 											</tr>
 										
 											<tr
-												 class='item30'
+												 class='item31'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -518,7 +530,7 @@ var $array = Array.prototype, $myType = {},
 											</tr>
 										
 											<tr
-												 class='item31'
+												 class='item32'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -529,7 +541,18 @@ var $array = Array.prototype, $myType = {},
 											</tr>
 										
 											<tr
-												 class='item32'
+												 class='item33'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#setValues">setValues</a></b>(values, ownOnly<sup>=true</sup>, enumerableOnly<sup>=true</sup>)
+													</div>
+													<div class="description"><p>Set values for own enumerable properties.</div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item34'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -1905,7 +1928,7 @@ Functions (except getters) and properties prefixed by "_" will be automatically 
 										</div>
 										
 										<div class="description">
-											<p>Creates a clone of this object with all enumerable properties that pass the test implemented by the provided function.</p>
+											<p>Creates a new object with all enumerable properties that pass the test implemented by the provided function.</p>
 											
 											
 											
@@ -1984,7 +2007,8 @@ Functions (except getters) and properties prefixed by "_" will be automatically 
 										</div>
 										
 										<div class="description">
-											<p>Executes a provided function once per every enumerable property.</p>
+											<p>Executes a provided function once per every enumerable property. <br />
+Is identical to <code>for in</code>.</p>
 											
 											
 											
@@ -2054,18 +2078,19 @@ Functions (except getters) and properties prefixed by "_" will be automatically 
 									<li 
 										 class='item19'
 									>
-										<div class="fixedFont heading" id="getEnumerableOwnPropertyNames">
+										<div class="fixedFont heading" id="getKeys">
 											<span class='lighter'>
 											
 											</span>
 											
+											<span class="light">{Array}</span>
 											
-											
-											<b>getEnumerableOwnPropertyNames</b>()
+											<b>getKeys</b>(ownOnly<sup>=true</sup>, enumerableOnly<sup>=true</sup>)
 										</div>
 										
 										<div class="description">
-											<p>Wrapper for <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys">Object.keys⠙</a></p>
+											<p>See <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys">Object.keys⠙</a>
+and <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys">Object.getOwnPropertyNames⠙</a></p>
 											
 											
 											
@@ -2075,7 +2100,45 @@ Functions (except getters) and properties prefixed by "_" will be automatically 
 										
 										
 										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{boolean=true}</span> <b>ownOnly</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
+														<span class="light fixedFont">{boolean=true}</span> <b>enumerableOnly</b>
+														
+													</dt>
+													<dd></dd>
+												
+											</dl>
 										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">Returns:</dt>
+													
+														<dd><span class="light fixedFont">{Array}</span> All own enumerable property names.</dd>
+													
+												
+												
+												
+												
+												
+											
+											</dl>
 										
 										<div class="hr"></div>
 									</li>
@@ -2310,6 +2373,73 @@ Separate object from its prototype and return it.</p>
 									<li 
 										 class='item25'
 									>
+										<div class="fixedFont heading" id="getValues">
+											<span class='lighter'>
+											
+											</span>
+											
+											<span class="light">{Array}</span>
+											
+											<b>getValues</b>(ownOnly<sup>=true</sup>, enumerableOnly<sup>=true</sup>)
+										</div>
+										
+										<div class="description">
+											
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{boolean=true}</span> <b>ownOnly</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
+														<span class="light fixedFont">{boolean=true}</span> <b>enumerableOnly</b>
+														
+													</dt>
+													<dd></dd>
+												
+											</dl>
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">Returns:</dt>
+													
+														<dd><span class="light fixedFont">{Array}</span> All own enumerable property values.</dd>
+													
+												
+												
+												
+												
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item26'
+									>
 										<div class="fixedFont heading" id="isExtensible">
 											<span class='lighter'>
 											
@@ -2337,7 +2467,7 @@ Separate object from its prototype and return it.</p>
 									</li>
 								
 									<li 
-										 class='item26'
+										 class='item27'
 									>
 										<div class="fixedFont heading" id="isFrozen">
 											<span class='lighter'>
@@ -2366,7 +2496,7 @@ Separate object from its prototype and return it.</p>
 									</li>
 								
 									<li 
-										 class='item27'
+										 class='item28'
 									>
 										<div class="fixedFont heading" id="isSealed">
 											<span class='lighter'>
@@ -2395,7 +2525,7 @@ Separate object from its prototype and return it.</p>
 									</li>
 								
 									<li 
-										 class='item28'
+										 class='item29'
 									>
 										<div class="fixedFont heading" id="map">
 											<span class='lighter'>
@@ -2474,7 +2604,7 @@ Separate object from its prototype and return it.</p>
 									</li>
 								
 									<li 
-										 class='item29'
+										 class='item30'
 									>
 										<div class="fixedFont heading" id="paste">
 											<span class='lighter'>
@@ -2541,7 +2671,7 @@ Separate object from its prototype and return it.</p>
 									</li>
 								
 									<li 
-										 class='item30'
+										 class='item31'
 									>
 										<div class="fixedFont heading" id="preventExtensions">
 											<span class='lighter'>
@@ -2570,7 +2700,7 @@ Separate object from its prototype and return it.</p>
 									</li>
 								
 									<li 
-										 class='item31'
+										 class='item32'
 									>
 										<div class="fixedFont heading" id="seal">
 											<span class='lighter'>
@@ -2599,7 +2729,59 @@ Separate object from its prototype and return it.</p>
 									</li>
 								
 									<li 
-										 class='item32'
+										 class='item33'
+									>
+										<div class="fixedFont heading" id="setValues">
+											<span class='lighter'>
+											
+											</span>
+											
+											
+											
+											<b>setValues</b>(values, ownOnly<sup>=true</sup>, enumerableOnly<sup>=true</sup>)
+										</div>
+										
+										<div class="description">
+											<p>Set values for own enumerable properties. Order of values should be the same as <code><a href="../symbols/%24object.html#getValues">$object#getValues</a>()</code> produce.</p>
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{Array}</span> <b>values</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
+														<span class="light fixedFont">{boolean=true}</span> <b>ownOnly</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
+														<span class="light fixedFont">{boolean=true}</span> <b>enumerableOnly</b>
+														
+													</dt>
+													<dd></dd>
+												
+											</dl>
+										
+										
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item34'
 									>
 										<div class="fixedFont heading" id="some">
 											<span class='lighter'>
@@ -2691,16 +2873,42 @@ Separate object from its prototype and return it.</p>
 		</script>
 	</body>
 	
-	<!-- Yandex.Metrika counter --><script type="text/javascript">(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter20738752 = new Ya.Metrika({id:20738752, webvisor:true, clickmap:true, trackLinks:true, accurateTrackBounce:true, trackHash:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/20738752" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
+	<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter20738752 = new Ya.Metrika({id:20738752,
+                    webvisor:true,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    trackHash:true});
+            } catch(e) { }
+        });
 
-<script type="text/javascript">
-    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+        var n = d.getElementsByTagName("script")[0],
+                s = d.createElement("script"),
+                f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
 </script>
-<script type="text/javascript">
-    try {
-        var pageTracker = _gat._getTracker("UA-1886659-9");
-        pageTracker._trackPageview();
-    } catch(err) {}
+<noscript><div><img src="//mc.yandex.ru/watch/20738752" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-1886659-9', 'clonejs.org');
+    ga('send', 'pageview');
 </script>
 </html>
