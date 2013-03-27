@@ -138,7 +138,7 @@ var $object = /** @lands $object# */{
     /**
      * Translate object to property descriptors.
      *
-     * For example, `{a:{}, b:2}` will be translated to something like `{a: {value: {}}, b: {value: 2}}`.
+     * For example, `{a:{}, b:2}` will be translated to something like `{a: {value: {}}, b: {value: 2}}`.  
      * Functions (except getters) and properties prefixed by "_" will be automatically marked as non-enumerable. 
      *
      * You can prefix your property names by `(get|set|const|final|hidden|writable)`:
@@ -245,8 +245,8 @@ var $object = /** @lands $object# */{
         /* if not */('__super__' in this) || this.defineProperty(
             '__super__', {value: Object.getPrototypeOf(Object.getPrototypeOf(this)), writable:!0,configurable:!0}
             /**
-             * Link to the instance prototype.
-             * Dynamically changed to next by prototype chain, while `{@link #applySuper}` method executing.
+             * Link to the instance prototype. 
+             * Dynamically changed to next by prototype chain, while `{@link #applySuper}` method executing. 
              * System property. **Use it only for debug purposes**.
              * @name  __super__
              * @type  {?Object}
