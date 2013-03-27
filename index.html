@@ -31,66 +31,62 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h2>clone.js</h2>
 
-<p>This is the micro-framework that implements the true <a href="http://en.wikipedia.org/wiki/Prototype-based_programming">prototype-based OOP⠙</a> in JS.<br>
-It's based on the ECMA Script 5 features like <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create⠙</a> and <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">property descriptors⠙</a>.</p>
+<h2><a href="http://clonejs.org/">clone.js</a></h2>
 
-<h3>See <a href="./symbols/%24object.html">API Documentation</a>
-</h3>
+<p>This is the micro-framework that implements the true <a href="http://en.wikipedia.org/wiki/Prototype-based_programming">prototype-based OOP⠙</a> in JS.<br/>It&#39;s based on the ECMA Script 5 features like <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create⠙</a> and <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">property descriptors⠙</a>.
 
-<p>The main difference with other class-producing tools like <code>Ext.define</code>, <code>dojo.declare</code>, <code>Backbone.Model.extend</code> is that <code>$object.clone</code> will return an object (prototype with defined constructor-function) instead of function (with defined prototype-object).<br>
-So, you don't need for instantiation, you can just start using the cloned object right now.<br>
-But, if you need more than one instance, you can create it by <code>$yourProto.create</code>.</p>
+### See <a href="http://clonejs.org/symbols/%24object.html">API Documentation</a></p>
+
+<p>The main difference with other class-producing tools like <code>Ext.define</code>, <code>dojo.declare</code>, <code>Backbone.Model.extend</code>
+is that <code>$object.clone</code> will return an object (prototype with defined constructor-function) instead of function (with defined prototype-object).<br/>So, you don&#39;t need for instantiation, you can just start using the cloned object right now.<br/>But, if you need more than one instance, you can create it by <code>$yourProto.create</code>.</p>
 
 <h6>Quick example (cloning):</h6>
 
 <pre><code>var $myProto = {a:1, b:2, c:3};
 var    clone = $object.clone.apply($myProto);
      clone.a = 11; // $myProto.a still == 1
-  $myProto.b = 22; // clone.b will be also changed to 22
-</code></pre>
+  $myProto.b = 22; // clone.b will be also changed to 22</code></pre>
 
-<p>See: <a href="./symbols/%24object.html#clone">clone</a>, <a href="./symbols/%24object.html#create">create</a>, <a href="./symbols/%24object.html#copy">copy</a>, <a href="./symbols/%24object.html#deepCopy">deepCopy</a>, <a href="./symbols/%24object.html#deepClone">deepClone</a>.</p>
+<p>See: <a href="http://clonejs.org/symbols/%24object.html#clone">clone</a>, <a href="http://clonejs.org/symbols/%24object.html#create">create</a>, <a href="http://clonejs.org/symbols/%24object.html#copy">copy</a>, <a href="http://clonejs.org/symbols/%24object.html#deepCopy">deepCopy</a>, <a href="http://clonejs.org/symbols/%24object.html#deepClone">deepClone</a>.</p>
 
 <h6>Property modificators:</h6>
 
 <pre><code>var $myType = $object.clone({
-    '(final)          property1': "not configurable and not writable",
-    '(writable final) property2': "not configurable only",
-    '(hidden)         property3': "not enumerable",
-    '(const)           constant': "not writable",
-                      property4 : "simple property",
-    '(get)       property3alias': 'property3',// automatically create getter
-                          _item : "private property (not enumerable)",
-                   '(get)  item': function() { return this._item },
-                   '(set)  item': function(v){ this._item = v    },
+    &#39;(final)          property1&#39;: &quot;not configurable and not writable&quot;,
+    &#39;(writable final) property2&#39;: &quot;not configurable only&quot;,
+    &#39;(hidden)         property3&#39;: &quot;not enumerable&quot;,
+    &#39;(const)           constant&#39;: &quot;not writable&quot;,
+                      property4 : &quot;simple property&quot;,
+    &#39;(get)       property3alias&#39;: &#39;property3&#39;,// automatically create getter
+                          _item : &quot;private property (not enumerable)&quot;,
+                   &#39;(get)  item&#39;: function() { return this._item },
+                   &#39;(set)  item&#39;: function(v){ this._item = v    },
                     constructor : function MyType(){
                                       this.applySuper(arguments);
                                       // do something...
                                   }
 });
-assert( $myType.property3alias === $myType.property3 );
-</code></pre>
+assert( $myType.property3alias === $myType.property3 );</code></pre>
 
-<p>See: <a href="./symbols/%24object.html#.describe">describe</a>.</p>
+<p>See: <a href="http://clonejs.org/symbols/%24object.html#.describe">describe</a>.</p>
 
 <h6>Constructors &amp; instantiation:</h6>
 
 <pre><code>var $parent = $object.clone({
     constructor: function Parent(){
-        console.log('$parent constructor arguments:', arguments);
+        console.log(&#39;$parent constructor arguments:&#39;, arguments);
     }
 });
 var $child = $parent.clone({
     constructor: function Child(arg){
-        console.log('$child constructor arguments:', arguments);
-        this.callParent('constructor', arg);
+        console.log(&#39;$child constructor arguments:&#39;, arguments);
+        this.callParent(&#39;constructor&#39;, arg);
     }
 });
 var $grandchild = $child.clone({
     constructor: function Grandchild(){
-        console.log('$grandchild constructor arguments:', arguments);
+        console.log(&#39;$grandchild constructor arguments:&#39;, arguments);
         this.applyParent(arguments);
     }
 });
@@ -100,12 +96,10 @@ var grandchild = $grandchild.create(1,2,3);
     // $child constructor arguments: [1,2,3]
     // $parent constructor arguments: [1]
 
-assert( $child.isPrototypeOf(grandchild) );
-</code></pre>
+assert( $child.isPrototypeOf(grandchild) );</code></pre>
 
-<p>See: <a href="./symbols/%24object.html#constructor">constructor</a>, <a href="./symbols/%24object.html#create">create</a>, <a href="./symbols/%24object.html#applySuper">applySuper</a>, <a href="./symbols/%24object.html#callSuper">callSuper</a>, <a href="./symbols/%24object.html#createSuperSafeCallback">createSuperSafeCallback</a>.</p>
+<p>See: <a href="http://clonejs.org/symbols/%24object.html#constructor">constructor</a>, <a href="http://clonejs.org/symbols/%24object.html#create">create</a>, <a href="http://clonejs.org/symbols/%24object.html#applySuper">applySuper</a>, <a href="http://clonejs.org/symbols/%24object.html#callSuper">callSuper</a>, <a href="http://clonejs.org/symbols/%24object.html#createSuperSafeCallback">createSuperSafeCallback</a>.</p>
 
-          
 <h6>Properties iteration:</h6>
 
 <pre><code>var $obj = $object.clone({a: 11, b: 22, c: 33}),
@@ -118,22 +112,20 @@ var proto = {e: 55};
 mappedObj = obj.map(function(value){return 100 + value}, obj, false, proto);
     // mappedObj == {a: 111, b: 122, c: 133, d: 144, e: 155}
 proto.f = 66;
-    // mappedObj == {a: 111, b: 122, c: 133, d: 144, e: 155, f: 66}
-</code></pre>
+    // mappedObj == {a: 111, b: 122, c: 133, d: 144, e: 155, f: 66}</code></pre>
 
-<p>See: <a href="./symbols/%24object.html#forEach">forEach</a>, <a href="./symbols/%24object.html#map">map</a>, <a href="./symbols/%24object.html#filter">filter</a>, <a href="./symbols/%24object.html#every">every</a>, <a href="./symbols/%24object.html#some">some</a>.</p>
+<p>See: <a href="http://clonejs.org/symbols/%24object.html#forEach">forEach</a>, <a href="http://clonejs.org/symbols/%24object.html#map">map</a>, <a href="http://clonejs.org/symbols/%24object.html#filter">filter</a>, <a href="http://clonejs.org/symbols/%24object.html#every">every</a>, <a href="http://clonejs.org/symbols/%24object.html#some">some</a>.</p>
 
-          
 <h6>Namespaces:</h6>
 
-<pre><code>ns.extend('collection', {
+<pre><code>ns.extend(&#39;collection&#39;, {
     $item:  {},
     _items: {}
 });
-ns.collection.extend('arrayCollection', {_items: []});
+ns.collection.extend(&#39;arrayCollection&#39;, {_items: []});
 
 var $users = ns.collection.$arrayCollection.clone({
-    $item: {name: '', isAdmin: false},
+    $item: {name: &#39;&#39;, isAdmin: false},
     constructor: function Users(items){
         items.forEach(function(item){
             var newItem = $object.create.call(this.$item, item);
@@ -141,12 +133,14 @@ var $users = ns.collection.$arrayCollection.clone({
         }, this);
     }
 });
-ns.put('models.users', $users);
+ns.put(&#39;models.users&#39;, $users);
 
-var users = ns.models.$users.create([{name: 'User1'}]);
-</code></pre>
+var users = ns.models.$users.create([{name: &#39;User1&#39;}]);</code></pre>
 
-<p>See: <a href="./symbols/ns.html">ns</a>, <a href="./symbols/ns.html#extend">ns.extend</a>, <a href="./symbols/ns.html#put">ns.put</a>.</p>
+<p>See: <a href="http://clonejs.org/symbols/ns.html">ns</a>, <a href="http://clonejs.org/symbols/ns.html#extend">ns.extend</a>, <a href="http://clonejs.org/symbols/ns.html#put">ns.put</a>.</p>
+
+<p></p>
+          
       </section>
     </div>
 
@@ -157,19 +151,44 @@ var users = ns.models.$users.create([{name: 'User1'}]);
         <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-            <!-- Yandex.Metrika counter --><script type="text/javascript">(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter20738752 = new Ya.Metrika({id:20738752, webvisor:true, clickmap:true, trackLinks:true, accurateTrackBounce:true, trackHash:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/20738752" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
 
-              <script type="text/javascript">
-            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-          </script>
-          <script type="text/javascript">
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
             try {
-              var pageTracker = _gat._getTracker("UA-1886659-9");
-            pageTracker._trackPageview();
-            } catch(err) {}
-          </script>
+                w.yaCounter20738752 = new Ya.Metrika({id:20738752,
+                    webvisor:true,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    trackHash:true});
+            } catch(e) { }
+        });
 
+        var n = d.getElementsByTagName("script")[0],
+                s = d.createElement("script"),
+                f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
 
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="//mc.yandex.ru/watch/20738752" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-1886659-9', 'clonejs.org');
+    ga('send', 'pageview');
+</script>
   </body>
 </html>
