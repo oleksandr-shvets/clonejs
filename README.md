@@ -47,9 +47,31 @@ See: [clone][], [create][], [copy][], [deepCopy][], [deepClone][].
 See: [describe][].
 
 ###### Constructors & instantiation:
-
-    var myTypeInstance = $myType.create({property4: "initialize simple property"});
-        assert( $myType.isPrototypeOf(myTypeInstance) );
+        
+    var $parent = $object.clone({
+        constructor: function Parent(){
+            console.log('$parent constructor arguments:', arguments);
+        }
+    });
+    var $child = $parent.clone({
+        constructor: function Child(arg){
+            console.log('$child constructor arguments:', arguments);
+            this.callParent('constructor', arg);
+        }
+    });
+    var $grandchild = $child.clone({
+        constructor: function Grandchild(){
+            console.log('$grandchild constructor arguments:', arguments);
+            this.applyParent(arguments);
+        }
+    });
+    var grandchild = $grandchild.create(1,2,3);
+        // will output:
+        // $grandchild constructor arguments: [1,2,3]
+        // $child constructor arguments: [1,2,3]
+        // $parent constructor arguments: [1]
+        
+    assert( $child.isPrototypeOf(grandchild) );
 
 See: [constructor][], [create][], [applySuper][], [callSuper][], [createSuperSafeCallback][].
 
