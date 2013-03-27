@@ -79,9 +79,10 @@ var $object = /** @lands $object# */{
                 var constructor = descriptors.constructor.value;
                 if(typeof constructor == 'string'){
                     var typeName = constructor;
-                    constructor = descriptors.constructor.value = function CustomType(){
-                        return this.applySuper(arguments);
-                    }
+                    // isn't so slow, see http://jsperf.com/eval-vs-new-function-vs-function
+                    constructor = descriptors.constructor.value = Function(
+                        'return function '+typeName+'(){return this.applySuper(arguments)}'
+                    )();
                     constructor.typeName = typeName;
                     
                 }else if(!constructor.typeName){
