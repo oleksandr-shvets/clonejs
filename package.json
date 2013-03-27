@@ -1,0 +1,28 @@
+{ 
+    "name": "clonejs",
+    "version": "0.7.2",
+    "description": "The true prototype-based JavaScript micro-framework.", 
+    "maintainers": [
+        {
+            "name": "Alex Shvets",
+            "web": "https://github.com/quadroid"
+        }
+    ],
+    "scripts": {
+        "test": "./node_modules/.bin/nodeunit ./test/clone.test.js"    
+    },
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/quadroid/clonejs.git"
+    },
+    "bugs": {
+        "url": "http://github.com/quadroid/clonejs/issues"
+    }, "licenses": [{
+        "type": "MIT",
+        "url": "http://github.com/quadroid/clonejs/raw/master/MIT.LICENSE"
+    }],
+    "directories": {
+        "lib": "./lib",
+        "doc": "./build/html"
+    }
+}
