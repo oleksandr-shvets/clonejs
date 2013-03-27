@@ -51,7 +51,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="https://github.com/quadroid/clonejs/tree/master/lib/jsdoc-toolkit/templates/codeview-jsdoc2-template" target="_blank">Codeview</a> 1.3<br />
 			Generated on:
-			<time datetime='2013-2-27' pubdate>2013-2-27 0:03</time>
+			<time datetime='2013-2-27' pubdate>2013-2-27 22:40</time>
 		</footer>
 	</div>
 </div>
@@ -346,7 +346,7 @@ var $array = Array.prototype, $myType = {},
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/%24object.html#every">every</a></b>(callback, thisArg<sup>opt</sup>, ownOnly<sup>=false</sup>)
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#every">every</a></b>(callback, scope<sup>=this</sup>, enumerableOnly<sup>=true</sup>, ownOnly<sup>=false</sup>)
 													</div>
 													<div class="description"><p>Tests whether all enumerable properties in the object pass the test implemented by the provided function.</div>
 												</td>
@@ -357,7 +357,7 @@ var $array = Array.prototype, $myType = {},
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/%24object.html#filter">filter</a></b>(callback, thisArg<sup>opt</sup>, ownOnly<sup>=false</sup>, prototype<sup>=$object</sup>)
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#filter">filter</a></b>(callback, scope<sup>=result</sup>, enumerableOnly<sup>=true</sup>, ownOnly<sup>=false</sup>, prototype<sup>=$object</sup>)
 													</div>
 													<div class="description"><p>Creates a new object with all enumerable properties that pass the test implemented by the provided function.</div>
 												</td>
@@ -368,7 +368,7 @@ var $array = Array.prototype, $myType = {},
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/%24object.html#forEach">forEach</a></b>(callback, thisArg<sup>opt</sup>, ownOnly<sup>=false</sup>)
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#forEach">forEach</a></b>(callback, scope<sup>=this</sup>, enumerableOnly<sup>=true</sup>, ownOnly<sup>=false</sup>)
 													</div>
 													<div class="description"><p>Executes a provided function once per every enumerable property.</div>
 												</td>
@@ -500,7 +500,7 @@ var $array = Array.prototype, $myType = {},
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/%24object.html#map">map</a></b>(callback, thisArg<sup>opt</sup>, ownOnly<sup>=false</sup>, prototype<sup>=$object</sup>)
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#map">map</a></b>(callback, scope<sup>=result</sup>, enumerableOnly<sup>=true</sup>, ownOnly<sup>=false</sup>, prototype<sup>=$object</sup>)
 													</div>
 													<div class="description"><p>Creates a new object with the results of calling a provided function on every enumerable property.</div>
 												</td>
@@ -555,7 +555,7 @@ var $array = Array.prototype, $myType = {},
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/%24object.html#some">some</a></b>(callback, thisArg<sup>opt</sup>, ownOnly<sup>=false</sup>)
+													<div class="fixedFont"><b><a href="../symbols/%24object.html#some">some</a></b>(callback, scope<sup>=this</sup>, enumerableOnly<sup>=true</sup>, ownOnly<sup>=false</sup>)
 													</div>
 													<div class="description"><p>Tests whether some enumerable properties in the object pass the test implemented by the provided function.</div>
 												</td>
@@ -658,8 +658,8 @@ var $myArray2 = $object.copy(Array).setProperties({customMethod: function(){}});
 								</div>
 								
 								<div class="description">
-									<p>Link to the instance prototype.
-Dynamically changed to next by prototype chain, while <code><a href="#applySuper">applySuper</a></code> method executing.
+									<p>Link to the instance prototype. <br />
+Dynamically changed to next by prototype chain, while <code><a href="#applySuper">applySuper</a></code> method executing. <br />
 System property. <strong>Use it only for debug purposes</strong>.</p>
 									
 									
@@ -1775,7 +1775,7 @@ But, if you modify parent (this), it can affect deep clone(s).</p>
 										<div class="description">
 											<p>Translate object to property descriptors.</p>
 
-<p>For example, <code>{a:{}, b:2}</code> will be translated to something like <code>{a: {value: {}}, b: {value: 2}}</code>.
+<p>For example, <code>{a:{}, b:2}</code> will be translated to something like <code>{a: {value: {}}, b: {value: 2}}</code>. <br />
 Functions (except getters) and properties prefixed by "_" will be automatically marked as non-enumerable. </p>
 
 <p>You can prefix your property names by <code>(get|set|const|final|hidden|writable)</code>:</p>
@@ -1850,7 +1850,7 @@ Functions (except getters) and properties prefixed by "_" will be automatically 
 											
 											<span class="light">{boolean}</span>
 											
-											<b>every</b>(callback, thisArg<sup>opt</sup>, ownOnly<sup>=false</sup>)
+											<b>every</b>(callback, scope<sup>=this</sup>, enumerableOnly<sup>=true</sup>, ownOnly<sup>=false</sup>)
 										</div>
 										
 										<div class="description">
@@ -1868,13 +1868,19 @@ Functions (except getters) and properties prefixed by "_" will be automatically 
 												<dt class="heading">Parameters:</dt>
 												
 													<dt>
-														<span class="light fixedFont">{function(*=|string=|Object=)}</span> <b>callback</b>
+														<span class="light fixedFont">{function(*=value|string=key|Object=this)}</span> <b>callback</b>
 														
 													</dt>
 													<dd></dd>
 												
 													<dt>
-														<span class="light fixedFont">{Object=}</span> <b>thisArg</b>
+														<span class="light fixedFont">{Object=this}</span> <b>scope</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
+														<span class="light fixedFont">{boolean=true}</span> <b>enumerableOnly</b>
 														
 													</dt>
 													<dd></dd>
@@ -1923,7 +1929,7 @@ Functions (except getters) and properties prefixed by "_" will be automatically 
 											
 											<span class="light">{Object}</span>
 											
-											<b>filter</b>(callback, thisArg<sup>opt</sup>, ownOnly<sup>=false</sup>, prototype<sup>=$object</sup>)
+											<b>filter</b>(callback, scope<sup>=result</sup>, enumerableOnly<sup>=true</sup>, ownOnly<sup>=false</sup>, prototype<sup>=$object</sup>)
 										</div>
 										
 										<div class="description">
@@ -1941,13 +1947,19 @@ Functions (except getters) and properties prefixed by "_" will be automatically 
 												<dt class="heading">Parameters:</dt>
 												
 													<dt>
-														<span class="light fixedFont">{function(?=|string=|Object=):?}</span> <b>callback</b>
+														<span class="light fixedFont">{function(*=value|string=key|Object=this):?}</span> <b>callback</b>
 														
 													</dt>
 													<dd></dd>
 												
 													<dt>
-														<span class="light fixedFont">{Object=}</span> <b>thisArg</b>
+														<span class="light fixedFont">{Object=result}</span> <b>scope</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
+														<span class="light fixedFont">{boolean=true}</span> <b>enumerableOnly</b>
 														
 													</dt>
 													<dd></dd>
@@ -2002,7 +2014,7 @@ Functions (except getters) and properties prefixed by "_" will be automatically 
 											
 											
 											
-											<b>forEach</b>(callback, thisArg<sup>opt</sup>, ownOnly<sup>=false</sup>)
+											<b>forEach</b>(callback, scope<sup>=this</sup>, enumerableOnly<sup>=true</sup>, ownOnly<sup>=false</sup>)
 										</div>
 										
 										<div class="description">
@@ -2021,13 +2033,19 @@ Is identical to <code>for in</code>.</p>
 												<dt class="heading">Parameters:</dt>
 												
 													<dt>
-														<span class="light fixedFont">{function(*=|string=|Object=)}</span> <b>callback</b>
+														<span class="light fixedFont">{function(*=value|string=key|Object=this)}</span> <b>callback</b>
 														
 													</dt>
 													<dd></dd>
 												
 													<dt>
-														<span class="light fixedFont">{Object=}</span> <b>thisArg</b>
+														<span class="light fixedFont">{Object=this}</span> <b>scope</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
+														<span class="light fixedFont">{boolean=true}</span> <b>enumerableOnly</b>
 														
 													</dt>
 													<dd></dd>
@@ -2538,7 +2556,7 @@ Separate object from its prototype and return it.</p>
 											
 											<span class="light">{Object}</span>
 											
-											<b>map</b>(callback, thisArg<sup>opt</sup>, ownOnly<sup>=false</sup>, prototype<sup>=$object</sup>)
+											<b>map</b>(callback, scope<sup>=result</sup>, enumerableOnly<sup>=true</sup>, ownOnly<sup>=false</sup>, prototype<sup>=$object</sup>)
 										</div>
 										
 										<div class="description">
@@ -2556,13 +2574,19 @@ Separate object from its prototype and return it.</p>
 												<dt class="heading">Parameters:</dt>
 												
 													<dt>
-														<span class="light fixedFont">{function(?=|string=|Object=):?}</span> <b>callback</b>
+														<span class="light fixedFont">{function(*=value|string=key|Object=this):?}</span> <b>callback</b>
 														
 													</dt>
 													<dd></dd>
 												
 													<dt>
-														<span class="light fixedFont">{Object=}</span> <b>thisArg</b>
+														<span class="light fixedFont">{Object=result}</span> <b>scope</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
+														<span class="light fixedFont">{boolean=true}</span> <b>enumerableOnly</b>
 														
 													</dt>
 													<dd></dd>
@@ -2794,7 +2818,7 @@ Separate object from its prototype and return it.</p>
 											
 											<span class="light">{boolean}</span>
 											
-											<b>some</b>(callback, thisArg<sup>opt</sup>, ownOnly<sup>=false</sup>)
+											<b>some</b>(callback, scope<sup>=this</sup>, enumerableOnly<sup>=true</sup>, ownOnly<sup>=false</sup>)
 										</div>
 										
 										<div class="description">
@@ -2812,13 +2836,19 @@ Separate object from its prototype and return it.</p>
 												<dt class="heading">Parameters:</dt>
 												
 													<dt>
-														<span class="light fixedFont">{function(*=|string=|Object=)}</span> <b>callback</b>
+														<span class="light fixedFont">{function(*=value|string=key|Object=this)}</span> <b>callback</b>
 														
 													</dt>
 													<dd></dd>
 												
 													<dt>
-														<span class="light fixedFont">{Object=}</span> <b>thisArg</b>
+														<span class="light fixedFont">{Object=this}</span> <b>scope</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
+														<span class="light fixedFont">{boolean=true}</span> <b>enumerableOnly</b>
 														
 													</dt>
 													<dd></dd>
