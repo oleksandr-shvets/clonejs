@@ -641,16 +641,48 @@ var $object = /** @lands $object# */{
      * Executes a provided function once per every enumerable property. 
      * Is identical to `for in`.
      * @memberof $object# */
-    forEach: function(/** function(*=,string=,Object=) */callback, /** Object= */thisArg, /** boolean=false */ownOnly){
-        if(ownOnly || typeof thisArg === 'boolean' && !thisArg){
-            var properties = Object.keys(this);
-            for(var i=0; i < properties.length; i++){
-                name = properties[i];
-                callback.call(thisArg, this[name], name, this);
+    forEach: function(
+        /** function(*=value,string=key,Object=this) */
+                            callback, 
+        /**   Object=this */scope, 
+        /**  boolean=true */enumerableOnly, 
+        /** boolean=false */ownOnly
+    ){
+        if(!(scope instanceof Object)){// http://jsperf.com/instanceof-object-vs-double-typeof
+            ownOnly = enumerableOnly;
+            enumerableOnly = scope;
+            scope = this;
+
+        }else if(scope === undefined){
+            scope = this;
+        }
+        if( enumerableOnly === undefined){
+            enumerableOnly = true;
+        }
+        // </arguments>
+
+        if(!enumerableOnly){
+
+            var keys = $object.getKeys.call(this, enumerableOnly, ownOnly);
+            for(var i= 0, count= keys.length; i<count; i++){ name = keys[i];
+                callback.call(scope, this[name], name, this);
+            }
+        }else if(ownOnly){
+            // see http://jsperf.com/object-keys-iteration/3
+            //     http://jsperf.com/object-keys-vs-for-in-for-values/2
+
+//            var properties = Object.keys(this);
+//            for(var i= 0, count = properties.length; i < count; i++){
+//                name = properties[i];
+//                callback.call(scope, this[name], name, this);
+//            }
+            for(var name in this) if(this.hasOwnProperty(name)){
+                callback.call(scope, this[name], name, this);
             }
         }else{
+
             for(var name in this){
-                callback.call(thisArg, this[name], name, this);
+                callback.call(scope, this[name], name, this);
             }
         }
     },
@@ -659,16 +691,41 @@ var $object = /** @lands $object# */{
      * Tests whether all enumerable properties in the object pass the test implemented by the provided function.
      * @returns {boolean}
      * @memberof $object# */
-    every: function(/** function(*=,string=,Object=) */callback, /** Object= */thisArg, /** boolean=false */ownOnly){
-        if(ownOnly || typeof thisArg === 'boolean' && !thisArg){
-            var properties = Object.keys(this);
-            for(var i=0; i < properties.length; i++){
-                name = properties[i];
-                if(! callback.call(thisArg, this[name], name, this) ) return false;
+    every: function(
+        /** function(*=value,string=key,Object=this) */
+                            callback, 
+        /**   Object=this */scope, 
+        /**  boolean=true */enumerableOnly, 
+        /** boolean=false */ownOnly
+    ){
+        if(!(scope instanceof Object)){// http://jsperf.com/instanceof-object-vs-double-typeof
+            ownOnly = enumerableOnly;
+            enumerableOnly = scope;
+            scope = this;
+
+        }else if(scope === undefined){
+            scope = this;
+        }
+        if( enumerableOnly === undefined){
+            enumerableOnly = true;    
+        }
+        // </arguments>
+        
+        if(!enumerableOnly){
+            
+            var keys = $object.getKeys.call(this, enumerableOnly, ownOnly);
+            for(var i= 0, count= keys.length; i<count; i++){ name = keys[i];
+                if(! callback.call(scope, this[name], name, this) ) return false;
+            }
+        }else if(ownOnly){
+            
+            for(var name in this) if(this.hasOwnProperty(name)){
+                if(! callback.call(scope, this[name], name, this) ) return false;
             }
         }else{
+            
             for(var name in this){
-                if(! callback.call(thisArg, this[name], name, this) ) return false;
+                if(! callback.call(scope, this[name], name, this) ) return false;
             }
         }
         
@@ -679,16 +736,41 @@ var $object = /** @lands $object# */{
      * Tests whether some enumerable properties in the object pass the test implemented by the provided function.
      * @returns {boolean}
      * @memberof $object# */
-    some: function(/** function(*=,string=,Object=) */callback, /** Object= */thisArg, /** boolean=false */ownOnly){
-        if(ownOnly || typeof thisArg === 'boolean' && !thisArg){
-            var properties = Object.keys(this);
-            for(var i=0; i < properties.length; i++){
-                name = properties[i];
-                if( callback.call(thisArg, this[name], name, this) ) return true;
+    some: function(
+        /** function(*=value,string=key,Object=this) */
+                            callback, 
+        /**   Object=this */scope, 
+        /**  boolean=true */enumerableOnly, 
+        /** boolean=false */ownOnly
+    ){
+        if(!(scope instanceof Object)){// http://jsperf.com/instanceof-object-vs-double-typeof
+            ownOnly = enumerableOnly;
+            enumerableOnly = scope;
+            scope = this;
+
+        }else if(scope === undefined){
+            scope = this;
+        }
+        if( enumerableOnly === undefined){
+            enumerableOnly = true;
+        }
+        // </arguments>
+
+        if(!enumerableOnly){
+
+            var keys = $object.getKeys.call(this, enumerableOnly, ownOnly);
+            for(var i= 0, count= keys.length; i<count; i++){ name = keys[i];
+                if( callback.call(scope, this[name], name, this) ) return true;
+            }
+        }else if(ownOnly){
+
+            for(var name in this) if(this.hasOwnProperty(name)){
+                if( callback.call(scope, this[name], name, this) ) return true;
             }
         }else{
+
             for(var name in this){
-                if( callback.call(thisArg, this[name], name, this) ) return true;
+                if( callback.call(scope, this[name], name, this) ) return true;
             }
         }
         
@@ -700,10 +782,12 @@ var $object = /** @lands $object# */{
      * @returns {Object}
      * @memberof $object# */
     map: function(
-        /** function(?=,string=,Object=):? */callback, 
-        /**                 Object=        */thisArg, 
-        /**                boolean=false   */ownOnly, 
-        /**                 Object=$object */prototype
+        /** function(*=value,string=key,Object=this):? */
+                              callback, 
+        /**  Object=result  */scope,
+        /** boolean=true    */enumerableOnly,
+        /** boolean=false   */ownOnly, 
+        /**  Object=$object */prototype
     ){
         var result = $object.apply(prototype || $object, 'clone');
 
@@ -711,10 +795,11 @@ var $object = /** @lands $object# */{
             
             var returned = callback.call(this, value, name, self);
             if( typeof returned === 'undefined' ){
+                // undefined values will be not enumerable:
                 Object.defineProperty(result, name, {value: undefined});
             }else result[name] = returned;
             
-        }, thisArg || result, ownOnly);
+        }, scope || result, enumerableOnly, ownOnly);
  
         return result;
     },
@@ -724,10 +809,12 @@ var $object = /** @lands $object# */{
      * @returns {Object}
      * @memberof $object# */
     filter: function(
-        /** function(?=,string=,Object=):? */callback,
-        /**                 Object=        */thisArg,
-        /**                boolean=false   */ownOnly,
-        /**                 Object=$object */prototype
+        /** function(*=value,string=key,Object=this):? */
+                              callback, 
+        /**  Object=result  */scope,
+        /** boolean=true    */enumerableOnly,
+        /** boolean=false   */ownOnly, 
+        /**  Object=$object */prototype
     ){
         var result = $object.apply(prototype || $object, 'clone');
 
@@ -735,7 +822,7 @@ var $object = /** @lands $object# */{
             if(! callback.call(this, value, name, self) ){
                 Object.defineProperty(result, name, {value: undefined});
             }
-        }, thisArg || result, ownOnly);
+        }, scope || result, enumerableOnly, ownOnly);
         
         return result;
     },
@@ -743,7 +830,7 @@ var $object = /** @lands $object# */{
     /**
      * @returns {Array} All own enumerable property values.
      * @memberof $object# */
-    getValues: function(/** boolean=true */ownOnly, /** boolean=true */enumerableOnly){
+    getValues: function(/** boolean=true */enumerableOnly,/** boolean=true */ownOnly){
         var keys = $object.getKeys.apply(this, arguments);
         return keys.map(function(key){
             return this[key];
@@ -753,25 +840,27 @@ var $object = /** @lands $object# */{
     /**
      * Set values for own enumerable properties. Order of values should be the same as `{@link $object#getValues}()` produce.
      * @memberof $object# */
-    setValues: function(/** Array */values, /** boolean=true */ownOnly, /** boolean=true */enumerableOnly){
-        var keys = $object.getKeys.call(this, ownOnly, enumerableOnly);
+    setValues: function(/** Array */values, /** boolean=true */enumerableOnly, /** boolean=true */ownOnly){
+        var keys = $object.getKeys.call(this, enumerableOnly, ownOnly);
         keys.forEach(function(key, i){
             if(i in values) this[key] = values[i];
         });
     },
 
     /**
-     *  
-     * See [Object.keys⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys)
-     * and [Object.getOwnPropertyNames⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys)
+     * If called without args - `getKeys()` will behaves like [Object.keys⠙][1].  
+     * If called with false - `getKeys(false)` will behave like [Object.getOwnPropertyNames⠙][2]
+     * [1]: http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys
+     * [2]: http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys
+     * @see $object#getOwnPropertyNames
      * @returns {Array} All own enumerable property names.
      * @memberof $object# */
-    getKeys: function(/** boolean=true */ownOnly, /** boolean=true */enumerableOnly){
-               ownOnly =        ownOnly === undefined || Boolean(ownOnly);
+    getKeys: function(/** boolean=true */enumerableOnly, /** boolean=true */ownOnly){
         enumerableOnly = enumerableOnly === undefined || Boolean(enumerableOnly);
+               ownOnly =        ownOnly === undefined || Boolean(ownOnly);
         
-        var method = ownOnly &&  enumerableOnly && 'keys'
-                  || ownOnly && !enumerableOnly && 'getOwnPropertyNames';        
+        var method =  enumerableOnly && ownOnly && 'keys'
+                  || !enumerableOnly && ownOnly && 'getOwnPropertyNames';        
         
         if( method ){
 
