@@ -5,6 +5,7 @@ It's based on the ECMA Script 5 features like [Object.create⠙][] and [property
 <!--- HIDDEN: -->
 [Download clonejs-latest.zip](http://github.com/quadroid/clonejs/archive/master.zip)
 <!--- /HIDDEN -->
+
 ### See [API Documentation](http://clonejs.org/symbols/%24object.html)
 
 The main difference with other class-producing tools like `Ext.define`, `dojo.declare`, `Backbone.Model.extend`
