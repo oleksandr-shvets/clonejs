@@ -1,13 +1,10 @@
 ## [clone.js][]
 
 This is the micro-framework that implements the true [prototype-based OOP⠙][1] in JS.  
-It's based on the ECMA Script 5 features like [Object.create⠙][2] and [property descriptors⠙][3].
-  [1]: http://en.wikipedia.org/wiki/Prototype-based_programming
-  [2]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create
-  [3]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty
-
+It's based on the ECMA Script 5 features like [Object.create⠙][] and [property descriptors⠙][Object.defineProperty⠙].
+<!--- HIDDEN: -->
 [Download clonejs-latest.zip](http://github.com/quadroid/clonejs/archive/master.zip)
-
+<!--- /HIDDEN -->
 ### See [API Documentation](http://clonejs.org/symbols/%24object.html)
 
 The main difference with other class-producing tools like `Ext.define`, `dojo.declare`, `Backbone.Model.extend`
@@ -116,7 +113,10 @@ See: [ns][], [ns.extend][], [ns.put][].
 
 
 
+[1]: http://en.wikipedia.org/wiki/Prototype-based_programming
 
+[Object.create⠙]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create
+[Object.defineProperty⠙]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty
 
 [clone.js]:    http://clonejs.org/
 [$object]:     http://clonejs.org/symbols/%24object.html
@@ -144,6 +144,7 @@ See: [ns][], [ns.extend][], [ns.put][].
 [ns.extend]:   http://clonejs.org/symbols/ns.html#extend
 [ns.put]:      http://clonejs.org/symbols/ns.html#put
 
-
+<!--- HIDDEN: -->
 ![yandex metrika](http://mc.yandex.ru/watch/20738752)
 [![githalytics.com alpha](https://cruel-carlota.pagodabox.com/3110be9614da5cb337ebd483c187010f "githalytics.com")](http://githalytics.com/quadroid/clonejs)
+<!--- /HIDDEN -->

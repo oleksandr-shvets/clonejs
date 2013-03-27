@@ -2,11 +2,10 @@
 
 cd ../lib/jsdoc-toolkit/
 
-cp ../../build/html/index.html ../../build/html/index.html.bak
-
 ./jsrun.sh -v -a -p -r=2 -D="title:clone.js" -d=../../build/html/ -t=./templates/codeview-jsdoc2-template/ ../../src/
 
-rm ../../build/html/index.html
-mv ../../build/html/index.html.bak ../../build/html/index.html
+cd ../../build/html/
+
+php index.php > index.html
 
 cd ../../tools/
