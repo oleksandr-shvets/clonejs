@@ -82,13 +82,13 @@ assert( $myType.property3alias === $myType.property3 );</code></pre>
 var $child = $parent.clone({
     constructor: function Child(arg){
         console.log(&#39;$child constructor arguments:&#39;, arguments);
-        this.callParent(&#39;constructor&#39;, arg);
+        this.callSuper(&#39;constructor&#39;, arg);
     }
 });
 var $grandchild = $child.clone({
     constructor: function Grandchild(){
         console.log(&#39;$grandchild constructor arguments:&#39;, arguments);
-        this.applyParent(arguments);
+        this.applySuper(arguments);
     }
 });
 var grandchild = $grandchild.create(1,2,3);
