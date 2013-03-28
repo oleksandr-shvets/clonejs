@@ -12,6 +12,10 @@ function include_markdown($filename){
     <meta name="description" content="Clonejs : The true prototype-based JavaScript micro-framework." />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <style>
+        #main_content IMG {width: auto; height: auto}
+        #main_content H2 IMG {float: right}
+    </style>
 
     <title>Clonejs</title>
   </head>

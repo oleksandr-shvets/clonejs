@@ -7,6 +7,10 @@
     <meta name="description" content="Clonejs : The true prototype-based JavaScript micro-framework." />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <style>
+        #main_content IMG {width: auto; height: auto}
+        #main_content H2 IMG {float: right}
+    </style>
 
     <title>Clonejs</title>
   </head>
@@ -32,7 +36,7 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
 
-<h2><a href="http://clonejs.org/">clone.js</a></h2>
+<h2><a href="http://clonejs.org/">clone.js</a> <a href="https://travis-ci.org/quadroid/clonejs"><img alt="Build Status" title="travis-ci.org" src="https://travis-ci.org/quadroid/clonejs.png?branch=master"/></a></h2>
 
 <p>This is the micro-framework that implements the true <a href="http://en.wikipedia.org/wiki/Prototype-based_programming">prototype-based OOP⠙</a> in JS.<br/>It&#39;s based on the ECMA Script 5 features like <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create⠙</a> and <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">property descriptors⠙</a>.
 </p>
@@ -63,10 +67,7 @@ var    clone = $object.clone.apply($myProto);
                           _item : &quot;private property (not enumerable)&quot;,
                    &#39;(get)  item&#39;: function() { return this._item },
                    &#39;(set)  item&#39;: function(v){ this._item = v    },
-                    constructor : function MyType(){
-                                      this.applySuper(arguments);
-                                      // do something...
-                                  }
+                    constructor : &#39;MyType&#39;
 });
 assert( $myType.property3alias === $myType.property3 );</code></pre>
 
