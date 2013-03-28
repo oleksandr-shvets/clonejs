@@ -67,6 +67,7 @@ var $object = /** @lands $object# */{
 
     /**
      * Create a clone of object.
+     * @see $object.describe
      * @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create⠙</a>
      * @returns {$object}
      * @memberOf $object#
@@ -103,6 +104,7 @@ var $object = /** @lands $object# */{
      * [1]: http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal
      * @see $object#clone
      * @see $object#constructor
+     * @see $object.describe
      * @returns {$object}
      *
      * @example
@@ -122,9 +124,9 @@ var $object = /** @lands $object# */{
 
 
     /**
-     * $object constructor.
-     * Override it if you want to create custom type.
-     * @field
+     * Default object constructor. Override it if you want to create custom type. 
+     * Defines given properties and seal this object.
+     * @see $object.describe
      * @memberOf $object#
      */
     constructor: function Object$(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
@@ -137,10 +139,9 @@ var $object = /** @lands $object# */{
 
     /**
      * Translate object to property descriptors.
-     *
      * For example, `{a:{}, b:2}` will be translated to something like `{a: {value: {}}, b: {value: 2}}`.  
+     *  
      * Functions (except getters) and properties prefixed by "_" will be automatically marked as non-enumerable. 
-     *
      * You can prefix your property names by `(get|set|const|final|hidden|writable)`:
      *
      * + `(get)`      - define getter, if string passed, the getter will be auto generated.
@@ -148,8 +149,8 @@ var $object = /** @lands $object# */{
      * + `(const)`    - make property unwritable.
      * + `(final)`    - make property unwritable, and prevent it deleting and descriptor modifications.
      * + `(hidden)`   - make property non-enumerable.
-     * + `(writable)` - make property writable (use with final).
-     *
+     * + `(writable)` - make property writable (use with final). 
+     *   
      * @param properties
      * @param defaultDescriptor The default property descriptor.
      * @returns {{PropertyDescriptor}} Property descriptors.
@@ -492,6 +493,7 @@ var $object = /** @lands $object# */{
      * But, if you modify parent (this), it can affect deep clone(s).
      * @see $object#clone
      * @see $object#deepCopy
+     * @see $object.describe
      * @returns {$object}
      * @memberOf $object#
      */
@@ -1035,6 +1037,7 @@ var ns = /** @lands ns# */{
     /**
      * Extend namespace by prototype.
      * @see $object#clone
+     * @see $object.describe
      * @param nsItemName
      *        The name of the new sub-namespace 
      *        (begins with lower case letter).
