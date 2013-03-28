@@ -54,13 +54,13 @@ See: [describe][].
     var $child = $parent.clone({
         constructor: function Child(arg){
             console.log('$child constructor arguments:', arguments);
-            this.callParent('constructor', arg);
+            this.callSuper('constructor', arg);
         }
     });
     var $grandchild = $child.clone({
         constructor: function Grandchild(){
             console.log('$grandchild constructor arguments:', arguments);
-            this.applyParent(arguments);
+            this.applySuper(arguments);
         }
     });
     var grandchild = $grandchild.create(1,2,3);
