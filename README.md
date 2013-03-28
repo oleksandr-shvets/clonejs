@@ -1,4 +1,4 @@
-## [clone.js][]
+## [clone.js][] [![Build Status](https://travis-ci.org/quadroid/clonejs.png?branch=master)](https://travis-ci.org/quadroid/clonejs)
 
 This is the micro-framework that implements the true [prototype-based OOP⠙][1] in JS.  
 It's based on the ECMA Script 5 features like [Object.create⠙][] and [property descriptors⠙][Object.defineProperty⠙].

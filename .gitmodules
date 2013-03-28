@@ -1,15 +1,15 @@
 [submodule "lib/es5-shim"]
 	path = lib/es5-shim
-	url = git@github.com:kriskowal/es5-shim.git
+	url = git://github.com/kriskowal/es5-shim.git
 [submodule "build/html"]
 	path = build/html
-	url = git@github.com:quadroid/clonejs.git
+	url = git://github.com/quadroid/clonejs.git
 [submodule "wiki"]
 	path = wiki
-	url = git@github.com:quadroid/clonejs.wiki.git
+	url = git://github.com/quadroid/clonejs.wiki.git
 [submodule "node_modules/nodeunit"]
 	path = node_modules/nodeunit
-	url = git@github.com:caolan/nodeunit.git
+	url = git://github.com/caolan/nodeunit.git
 [submodule "node_modules/markdown"]
 	path = node_modules/markdown
-	url = git@github.com:evilstreak/markdown-js.git
+	url = git://github.com/evilstreak/markdown-js.git
