@@ -35,10 +35,7 @@ See: [clone][], [create][], [copy][], [deepCopy][], [deepClone][].
                               _item : "private property (not enumerable)",
                        '(get)  item': function() { return this._item },
                        '(set)  item': function(v){ this._item = v    },
-                        constructor : function MyType(){
-                                          this.applySuper(arguments);
-                                          // do something...
-                                      }
+                        constructor : 'MyType'
     });
     assert( $myType.property3alias === $myType.property3 );
 
