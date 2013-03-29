@@ -1,18 +1,43 @@
-## [clone.js][] [![Build Status](https://travis-ci.org/quadroid/clonejs.png?branch=master "travis-ci.org")](https://travis-ci.org/quadroid/clonejs)
-        
-This is the micro-framework that implements the true [prototype-based OOP⠙][1] in JS.  
-It's based on the ECMA Script 5 features like [Object.create⠙][] and [property descriptors⠙][Object.defineProperty⠙].
-<!--- HIDDEN: -->
-[Download clonejs-latest.zip](http://github.com/quadroid/clonejs/archive/master.zip)
-<!--- /HIDDEN -->
+## [clone.js](http://clonejs.org) [![Build Status](https://travis-ci.org/quadroid/clonejs.png?branch=master "travis-ci.org")](https://travis-ci.org/quadroid/clonejs)
+<!-- HIDDEN: -->
+[ [API documentation](http://clonejs.org/symbols/%24object.html)
+|  [GitHub](http://github.com/quadroid/clonejs)
+|  [NPM package](http://npmjs.org/package/clonejs)
+|  [Travis CI](http://travis-ci.org/quadroid/clonejs)
+]
+<!-- /HIDDEN -->
 
-### See [API Documentation](http://clonejs.org/symbols/%24object.html)
+This is the micro-framework that based on the ECMA Script 5 features like [Object.create⠙][] and [property descriptors⠙][Object.defineProperty⠙].
 
-The main difference with other class-producing tools like `Ext.define`, `dojo.declare`, `Backbone.Model.extend`
-is that `$object.clone` will return an object (prototype with defined constructor-function) instead of function (with defined prototype-object).  
-So, you don't need for instantiation, you can just start using the cloned object right now.  
-But, if you need more than one instance, you can create it by `$yourProto.create`.
+##### Try the true [prototype-based OOP⠙](http://en.wikipedia.org/wiki/Prototype-based_programming)
 
+It's **trivial to create new "classes"** - just clone the prototype and change a couple of properties and voila... new "class".
+
+It's **really class-free**: do you know the difference between js constructor-functions and classes in other languages?
+`$object.clone` produces prototype objects, not function-constructors, like other class-producing tools (`Backbone.Model.extend`, `Ext.define`, `dojo.declare`).
+
+In this framework you can easilly create and manipulate objects without constructors, instead of js way,
+where you should define a constructor for every object (that you want to use as prototype), even if you didn't need it.
+It's possible to build and maintain extremely **large numbers of "classes"** with comparatively little code.
+
+See more [advantages of prototype-based OOP⠙](http://programmers.stackexchange.com/questions/110936/what-are-the-advantages-of-prototype-based-oop-over-class-based-oop#answers-header).
+
+### Installation
+
+Node.js:
+
+    npm install clonejs
+
+Browser script:
+
+    <script src="http://raw.github.com/quadroid/clonejs/master/src/clone.js" type="text/javascript"></script>
+
+### Usage
+
+Node.js:
+
+    var ns = require('clonejs'),
+        $object = ns.prototype;
 
 ###### Quick example (cloning):
 
@@ -111,12 +136,9 @@ See: [ns][], [ns.extend][], [ns.put][].
 
 
 
-[1]: http://en.wikipedia.org/wiki/Prototype-based_programming
-
 [Object.create⠙]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create
 [Object.defineProperty⠙]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty
 
-[clone.js]:    http://clonejs.org/
 [$object]:     http://clonejs.org/symbols/%24object.html
 
 [clone]:       http://clonejs.org/symbols/%24object.html#clone
@@ -142,7 +164,7 @@ See: [ns][], [ns.extend][], [ns.put][].
 [ns.extend]:   http://clonejs.org/symbols/ns.html#extend
 [ns.put]:      http://clonejs.org/symbols/ns.html#put
 
-<!--- HIDDEN: -->
+<!-- HIDDEN: -->
 ![yandex metrika](http://mc.yandex.ru/watch/20738752)
 [![githalytics.com alpha](https://cruel-carlota.pagodabox.com/3110be9614da5cb337ebd483c187010f "githalytics.com")](http://githalytics.com/quadroid/clonejs)
-<!--- /HIDDEN -->
+<!-- /HIDDEN -->
