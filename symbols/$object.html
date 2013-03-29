@@ -51,7 +51,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="https://github.com/quadroid/clonejs/tree/master/lib/jsdoc-toolkit/templates/codeview-jsdoc2-template" target="_blank">Codeview</a> 1.3<br />
 			Generated on:
-			<time datetime='2013-2-28' pubdate>2013-2-28 15:24</time>
+			<time datetime='2013-2-29' pubdate>2013-2-29 20:40</time>
 		</footer>
 	</div>
 </div>
@@ -1826,19 +1826,22 @@ But, if you modify parent (this), it can affect deep clone(s).</p>
 										
 										<div class="description">
 											<p>Translate object to property descriptors.
-For example, <code>{a:{}, b:2}</code> will be translated to something like <code>{a: {value: {}}, b: {value: 2}}</code>.  </p>
+For example, <code>{a: {b:1}, c:2}</code> will be translated to <code>{a: {value: {b:1}}, b: {value: 2}}</code>.  </p>
 
-<p>Functions (except getters) and properties prefixed by "_" will be automatically marked as non-enumerable. <br />
-You can prefix your property names by <code>(get|set|const|final|hidden|writable)</code>:</p>
+<p>Functions (except getters) and properties prefixed by "_" will be automatically marked as non-enumerable. </p>
 
-<ul>
-<li><code>(get)</code>      - define getter, if string passed, the getter will be auto generated.</li>
-<li><code>(set)</code>      - define setter, if string passed, the setter will be auto generated.</li>
-<li><code>(const)</code>    - make property unwritable.</li>
-<li><code>(final)</code>    - make property unwritable, and prevent it deleting and descriptor modifications.</li>
-<li><code>(hidden)</code>   - make property non-enumerable.</li>
-<li><code>(writable)</code> - make property writable (use with final).</li>
-</ul>
+<p>Uppercase properties will be not writable. </p>
+
+<p>You can prefix your property names by <code>(get|set|const|final|hidden|writable)</code>:</p>
+
+<dl class="detailList params dl">
+<dt>(get)     <dt><dd> define getter, if string passed, the getter will be auto generated.
+<dt>(set)     <dt><dd> define setter, if string passed, the setter will be auto generated.
+<dt>(const)   <dt><dd> make property unwritable.
+<dt>(final)   <dt><dd> make property unwritable, and prevent it deleting and descriptor modifications.
+<dt>(hidden)  <dt><dd> make property non-enumerable.
+<dt>(writable)<dt><dd> make property writable (use with final). 
+</dl>
 											
 											
 											

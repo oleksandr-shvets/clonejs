@@ -8,11 +8,14 @@
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
     <style>
+        NAV   {color: rgb(128, 128, 128); position: absolute}
+        NAV A {color: white}
+        NAV A:hover {color:#007edf}
         #main_content IMG {width: auto; height: auto}
         #main_content H2 IMG {float: right}
     </style>
 
-    <title>Clonejs</title>
+    <title>clone.js</title>
   </head>
 
   <body>
@@ -24,6 +27,13 @@
 
           <h1 id="project_title">Clonejs</h1>
           <h2 id="project_tagline">The true prototype-based JavaScript micro-framework.</h2>
+          
+            <nav>[
+                  <a href="./symbols/%24object.html">API documentation</a>
+                | <a href="http://github.com/quadroid/clonejs">GitHub</a>
+                | <a href="http://npmjs.org/package/clonejs">NPM package</a>
+                | <a href="http://travis-ci.org/quadroid/clonejs">Travis CI</a>
+            ]</nav>
 
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/quadroid/clonejs/zipball/master">Download this project as a .zip file</a>
@@ -38,13 +48,38 @@
 
 <h2><a href="http://clonejs.org/">clone.js</a> <a href="https://travis-ci.org/quadroid/clonejs"><img alt="Build Status" title="travis-ci.org" src="https://travis-ci.org/quadroid/clonejs.png?branch=master"/></a></h2>
 
-<p>This is the micro-framework that implements the true <a href="http://en.wikipedia.org/wiki/Prototype-based_programming">prototype-based OOP⠙</a> in JS.<br/>It&#39;s based on the ECMA Script 5 features like <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create⠙</a> and <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">property descriptors⠙</a>.
-</p>
+<p>
+This is the micro-framework that based on the ECMA Script 5 features like <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create⠙</a> and <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">property descriptors⠙</a>.</p>
 
-<h3>See <a href="http://clonejs.org/symbols/%24object.html">API Documentation</a></h3>
+<p>Try the true <a href="http://en.wikipedia.org/wiki/Prototype-based_programming">prototype-based OOP⠙</a> !</p>
 
-<p>The main difference with other class-producing tools like <code>Ext.define</code>, <code>dojo.declare</code>, <code>Backbone.Model.extend</code>
-is that <code>$object.clone</code> will return an object (prototype with defined constructor-function) instead of function (with defined prototype-object).<br/>So, you don&#39;t need for instantiation, you can just start using the cloned object right now.<br/>But, if you need more than one instance, you can create it by <code>$yourProto.create</code>.</p>
+<p>It&#39;s <strong>trivial to create new &quot;classes&quot;</strong> - just clone the prototype and change a couple of properties and voila... new &quot;class&quot;.</p>
+
+<p>It&#39;s <strong>really class-free</strong>: do you know the difference between js constructor-functions and classes in other languages?
+<code>$object.clone</code> produces prototype objects, not function-constructors, like other class-producing tools (<code>Backbone.Model.extend</code>, <code>Ext.define</code>, <code>dojo.declare</code>).</p>
+
+<p>In this framework you can easilly create and manipulate objects without constructors, instead of js way,
+where you should define a constructor for every object (that you want to use as prototype), even if you didn&#39;t need it.
+It&#39;s possible to build and maintain extremely <strong>large numbers of &quot;classes&quot;</strong> with comparatively little code.</p>
+
+<p>See more <a href="http://programmers.stackexchange.com/questions/110936/what-are-the-advantages-of-prototype-based-oop-over-class-based-oop">advantages of prototype-based OOP⠙</a>.</p>
+
+<h3>Installation</h3>
+
+<p>Node.js:</p>
+
+<pre><code>npm install clonejs</code></pre>
+
+<p>Browser script:</p>
+
+<pre><code>&lt;script src=&quot;http://raw.github.com/quadroid/clonejs/master/src/clone.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</code></pre>
+
+<h3>Usage</h3>
+
+<p>Node.js:</p>
+
+<pre><code>var ns = require(&#39;clonejs&#39;),
+    $object = ns.prototype;</code></pre>
 
 <h6>Quick example (cloning):</h6>
 
@@ -53,7 +88,7 @@ var    clone = $object.clone.apply($myProto);
      clone.a = 11; // $myProto.a still == 1
   $myProto.b = 22; // clone.b will be also changed to 22</code></pre>
 
-<p>See: <a href="http://clonejs.org/symbols/%24object.html#clone">clone</a>, <a href="http://clonejs.org/symbols/%24object.html#create">create</a>, <a href="http://clonejs.org/symbols/%24object.html#copy">copy</a>, <a href="http://clonejs.org/symbols/%24object.html#deepCopy">deepCopy</a>, <a href="http://clonejs.org/symbols/%24object.html#deepClone">deepClone</a>.</p>
+<p>See: <a href="./symbols/%24object.html#clone">clone</a>, <a href="./symbols/%24object.html#create">create</a>, <a href="./symbols/%24object.html#copy">copy</a>, <a href="./symbols/%24object.html#deepCopy">deepCopy</a>, <a href="./symbols/%24object.html#deepClone">deepClone</a>.</p>
 
 <h6>Property modificators:</h6>
 
@@ -71,7 +106,7 @@ var    clone = $object.clone.apply($myProto);
 });
 assert( $myType.property3alias === $myType.property3 );</code></pre>
 
-<p>See: <a href="http://clonejs.org/symbols/%24object.html#.describe">describe</a>.</p>
+<p>See: <a href="./symbols/%24object.html#.describe">describe</a>.</p>
 
 <h6>Constructors &amp; instantiation:</h6>
 
@@ -100,7 +135,7 @@ var grandchild = $grandchild.create(1,2,3);
 
 assert( $child.isPrototypeOf(grandchild) );</code></pre>
 
-<p>See: <a href="http://clonejs.org/symbols/%24object.html#constructor">constructor</a>, <a href="http://clonejs.org/symbols/%24object.html#create">create</a>, <a href="http://clonejs.org/symbols/%24object.html#applySuper">applySuper</a>, <a href="http://clonejs.org/symbols/%24object.html#callSuper">callSuper</a>, <a href="http://clonejs.org/symbols/%24object.html#createSuperSafeCallback">createSuperSafeCallback</a>.</p>
+<p>See: <a href="./symbols/%24object.html#constructor">constructor</a>, <a href="./symbols/%24object.html#create">create</a>, <a href="./symbols/%24object.html#applySuper">applySuper</a>, <a href="./symbols/%24object.html#callSuper">callSuper</a>, <a href="./symbols/%24object.html#createSuperSafeCallback">createSuperSafeCallback</a>.</p>
 
 <h6>Properties iteration:</h6>
 
@@ -116,7 +151,7 @@ mappedObj = obj.map(function(value){return 100 + value}, obj, false, proto);
 proto.f = 66;
     // mappedObj == {a: 111, b: 122, c: 133, d: 144, e: 155, f: 66}</code></pre>
 
-<p>See: <a href="http://clonejs.org/symbols/%24object.html#forEach">forEach</a>, <a href="http://clonejs.org/symbols/%24object.html#map">map</a>, <a href="http://clonejs.org/symbols/%24object.html#filter">filter</a>, <a href="http://clonejs.org/symbols/%24object.html#every">every</a>, <a href="http://clonejs.org/symbols/%24object.html#some">some</a>.</p>
+<p>See: <a href="./symbols/%24object.html#forEach">forEach</a>, <a href="./symbols/%24object.html#map">map</a>, <a href="./symbols/%24object.html#filter">filter</a>, <a href="./symbols/%24object.html#every">every</a>, <a href="./symbols/%24object.html#some">some</a>.</p>
 
 <h6>Namespaces:</h6>
 
@@ -139,7 +174,7 @@ ns.put(&#39;models.users&#39;, $users);
 
 var users = ns.models.$users.create([{name: &#39;User1&#39;}]);</code></pre>
 
-<p>See: <a href="http://clonejs.org/symbols/ns.html">ns</a>, <a href="http://clonejs.org/symbols/ns.html#extend">ns.extend</a>, <a href="http://clonejs.org/symbols/ns.html#put">ns.put</a>.</p>
+<p>See: <a href="./symbols/ns.html">ns</a>, <a href="./symbols/ns.html#extend">ns.extend</a>, <a href="./symbols/ns.html#put">ns.put</a>.</p>
 
 <p></p>
           

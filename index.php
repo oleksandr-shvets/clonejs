@@ -1,7 +1,13 @@
 <?php
 function include_markdown($filename){
     $html = `../../node_modules/.bin/md2html $filename`;
-    echo preg_replace( '|&lt;!--- HIDDEN: --&gt;(.*)&lt;!--- /HIDDEN --&gt;|msU', '', $html);
+    $substitutions = array(
+        '#&lt;!-- HIDDEN: --&gt;(.*)&lt;!-- /HIDDEN --&gt;#msU' => '',
+        '#http://clonejs\.org/(?![ \'"])#' => './',
+        '#\shref\s.=\s.["\']https?://#' => ' target="_blank"$0',
+        //'#<a href = "" >⠙</a>#' => '',
+    );
+    echo preg_replace( array_keys($substitutions), array_values($substitutions), $html);
 }
 ?><!DOCTYPE html>
 <html>
@@ -13,11 +19,14 @@ function include_markdown($filename){
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
     <style>
+        NAV   {color: rgb(128, 128, 128); position: absolute}
+        NAV A {color: white}
+        NAV A:hover {color:#007edf}
         #main_content IMG {width: auto; height: auto}
         #main_content H2 IMG {float: right}
     </style>
 
-    <title>Clonejs</title>
+    <title>clone.js</title>
   </head>
 
   <body>
@@ -29,6 +38,13 @@ function include_markdown($filename){
 
           <h1 id="project_title">Clonejs</h1>
           <h2 id="project_tagline">The true prototype-based JavaScript micro-framework.</h2>
+          
+            <nav>[
+                  <a href="./symbols/%24object.html">API documentation</a>
+                | <a href="http://github.com/quadroid/clonejs">GitHub</a>
+                | <a href="http://npmjs.org/package/clonejs">NPM package</a>
+                | <a href="http://travis-ci.org/quadroid/clonejs">Travis CI</a>
+            ]</nav>
 
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/quadroid/clonejs/zipball/master">Download this project as a .zip file</a>
