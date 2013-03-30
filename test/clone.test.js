@@ -1,6 +1,6 @@
 // nodeunit
 
-if(typeof $object=='undefined'){
+if(typeof $object==='undefined'){
     var ns = require('../src/clone.js'),
         $object = ns.prototype;
 }

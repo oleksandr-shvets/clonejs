@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>clone.js nodeunit</title>
+    <script src="../../node_modules/nodeunit/examples/browser/nodeunit.js"></script>
+    <script src="../../src/clone.js"></script>
+    <script src="../clone.test.js"></script>
+</head>
+<body>
+    <script>
+        nodeunit.run({
+            'test $object': this['test $object'],
+            'test ns': this['test ns']
+        });
+    </script>
+</body>
+</html>
