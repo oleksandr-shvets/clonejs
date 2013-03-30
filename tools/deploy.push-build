@@ -13,9 +13,8 @@ $CHANGELOG"
 
 cd ../
 
-git commit -a -m "$MESSAGE"
-git push
-
 echo -e  "\r\n### $BUILD_NAME  \r\n\r\n$CHANGELOG" > tmp/last-build.log
+git commit -a -m "$MESSAGE"
+#git push
 
 cd tools/

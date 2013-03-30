@@ -1,4 +1,4 @@
-#/usr/bin/bash -v
+#/usr/bin/bash -x
 
 NEW_VERSION="$1"
 OLD_VERSION=`cat ../.version`
@@ -7,21 +7,21 @@ if [ -z "$1" ]
 then
 
     echo "please specify new version: $0 VERSION"
-    echo "Current version: $OLD_VERSION"
+    echo "Current version is: $OLD_VERSION"
     
 else
     echo "Building release $NEW_VERSION"
     
-    echo "$NEW_VERSION" > ../.version
-    
-    sed 's/"version": "$OLD_VERSION",/"version": "$NEW_VERSION",/g' package.json > package.json
-    sed 's/@version $OLD_VERSION/@version $NEW_VERSION/g' src/clone.js > src/clone.js
+    echo "$NEW_VERSION" | tr -d "[\r\n]" > ../.version
+        
+    sed -i "" "s/\( *\"version\" *: *\"\)$OLD_VERSION\(\" *,\)/\1$NEW_VERSION\2/g" ../package.json
+    sed -i "" "s/\(@version \)$OLD_VERSION/\1$NEW_VERSION/g" ../src/clone.js
     
     ./build.api-doc
     ./build.cdn
     
     ./deploy.push-build
-    #./deploy.npm-package
+    ./deploy.npm-package
     
     cat ../tmp/last-build.log >> ../CHANGELOG.md
 fi
