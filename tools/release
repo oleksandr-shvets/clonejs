@@ -14,8 +14,8 @@ else
     
     echo "$NEW_VERSION" > ../.version
     
-    sed 's/"version": "$NEW_VERSION",/"version": "$NEW_VERSION",/g' package.json > package.json
-    sed 's/@version $NEW_VERSION/@version $NEW_VERSION/g' src/clone.js > src/clone.js
+    sed 's/"version": "$OLD_VERSION",/"version": "$NEW_VERSION",/g' package.json > package.json
+    sed 's/@version $OLD_VERSION/@version $NEW_VERSION/g' src/clone.js > src/clone.js
     
     ./build.api-doc
     ./build.cdn

@@ -5,7 +5,8 @@ DATE=`date "+%Y-%m-%d %H:%M"`
 BUILD_NAME="Build $VERSION ($DATE)"
 CHANGELOG=`git log --pretty=format:"%s"  --graph  --branches --not --remotes`
 
-MESSAGE="$BUILD_NAME \r\n$CHANGELOG"
+MESSAGE="$BUILD_NAME \
+$CHANGELOG"
 
 ./deploy.html-pages "$MESSAGE"
 ./deploy.wiki "$MESSAGE"
@@ -15,6 +16,6 @@ cd ../
 git commit -a -m "$MESSAGE"
 git push
 
-echo -e  "\r\n### $BUILD_NAME  \r\n$CHANGELOG" > tmp/last-build.log
+echo -e  "\r\n### $BUILD_NAME  \r\n\r\n$CHANGELOG" > tmp/last-build.log
 
 cd tools/
