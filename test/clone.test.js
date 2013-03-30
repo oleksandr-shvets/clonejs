@@ -72,28 +72,50 @@ this['test $object'] = {
     },
 
     describe: function(test){
-
-        //test.expect(2);
         
         function Constructor(){}
 
         test.deepEqual(
             $object.describe({
-                         _p: undefined,
-      '(const) _unwritable': 231,
-                     method: Function,
-                constructor: Constructor
+                          _p: undefined,
+       '(const) _unwritable': 231,
+                   property1: 11,
+        '(hidden) property2': 22,
+      '(writable) property3': 33,
+         '(final) property4': 44,
+'(final writable) property5': 55,
+                      method: Function,
+                 constructor: Constructor
             }),{
                          _p: {value: undefined, enumerable:false},
                 _unwritable: {value: 231, enumerable:false, writable: false},
+                  property1: {value: 11},
+                  property2: {value: 22, enumerable:false},
+                  property3: {value: 33, writable:true},
+                  property4: {value: 44, writable:false, configurable: false},
+                  property5: {value: 55, writable:true, configurable: false},
                      method: {value: Function, enumerable:false},
                 constructor: {value: Constructor, enumerable:false}
-            },
-            'private properties, functions, constructor should be not enumerable'
+            }
         );
+        
+        /// Constructor:
+        
+        var proto = {};
+        var descriptors = $object.describe.call(proto, {constructor: 'MyCustomName'});
 
-        //todo
+            var constructor = descriptors.constructor.value;
+            test.equal(typeof constructor, 'function');
+            test.equal(constructor.name, 'MyCustomName');
+            test.equal(constructor.typeName, 'MyCustomName');
+            test.strictEqual(constructor.prototype, proto);
 
+        var $obj = $object.clone().clone();
+        constructor.call($obj, {key: 11});
+            
+            test.equal($obj.key, 11);
+        
+        /// TODO: test defaultDescriptor 
 
         test.done();
     },
