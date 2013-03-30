@@ -2,6 +2,6 @@
 
 cd  ../wiki
 cp ../README.md Home.md
-git commit -a -m "deploy wiki"
+git commit -a -m "Deploy wiki. $1"
 git push
 cd ../tools

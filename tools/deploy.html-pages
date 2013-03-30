@@ -1,6 +1,6 @@
 #/usr/bin/bash -v
 
 cd  ../build/html
-git commit -a -m "deploy html"
+git commit -a -m "Deploy html. $1"
 git push -u origin gh-pages
 cd ../../tools
