@@ -74,24 +74,7 @@ var $object = /** @lands $object# */{
      */
     clone: function(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
         if(arguments.length){
-            var descriptors = $object.describe.apply(null, arguments);
-
-            if( descriptors.hasOwnProperty('constructor') ){
-                var constructor = descriptors.constructor.value;
-                if(typeof constructor == 'string'){
-                    var typeName = constructor;
-                    // isn't so slow, see http://jsperf.com/eval-vs-new-function-vs-function
-                    constructor = descriptors.constructor.value = Function(
-                        'return function '+typeName+'(){return this.applySuper(arguments)}'
-                    )();
-                    constructor.typeName = typeName;
-                    
-                }else if(!constructor.typeName){
-                    constructor.typeName = constructor.name || this.constructor.typeName + '_clone';//+n
-                }
-
-                constructor.prototype = this;
-            }
+            var descriptors = $object.describe.apply(this, arguments);
         }
         return Object.create(this, descriptors);
     },
@@ -139,18 +122,21 @@ var $object = /** @lands $object# */{
 
     /**
      * Translate object to property descriptors.
-     * For example, `{a:{}, b:2}` will be translated to something like `{a: {value: {}}, b: {value: 2}}`.  
+     * For example, `{a: {b:1}, c:2}` will be translated to `{a: {value: {b:1}}, b: {value: 2}}`.  
      *  
      * Functions (except getters) and properties prefixed by "_" will be automatically marked as non-enumerable. 
+     *  
+     * Uppercase properties will be not writable. 
+     *  
      * You can prefix your property names by `(get|set|const|final|hidden|writable)`:
-     *
-     * + `(get)`      - define getter, if string passed, the getter will be auto generated.
-     * + `(set)`      - define setter, if string passed, the setter will be auto generated.
-     * + `(const)`    - make property unwritable.
-     * + `(final)`    - make property unwritable, and prevent it deleting and descriptor modifications.
-     * + `(hidden)`   - make property non-enumerable.
-     * + `(writable)` - make property writable (use with final). 
-     *   
+     * <dl class="detailList params dl">
+     * <dt>(get)     <dt><dd> define getter, if string passed, the getter will be auto generated.
+     * <dt>(set)     <dt><dd> define setter, if string passed, the setter will be auto generated.
+     * <dt>(const)   <dt><dd> make property unwritable.
+     * <dt>(final)   <dt><dd> make property unwritable, and prevent it deleting and descriptor modifications.
+     * <dt>(hidden)  <dt><dd> make property non-enumerable.
+     * <dt>(writable)<dt><dd> make property writable (use with final). 
+     * </dl>
      * @param properties
      * @param defaultDescriptor The default property descriptor.
      * @returns {{PropertyDescriptor}} Property descriptors.
@@ -158,20 +144,28 @@ var $object = /** @lands $object# */{
      * @memberOf $object
      */
     describe: function(/** Object */properties, /** PropertyDescriptor= */defaultDescriptor){
+        
         var descriptors = {};
+        
+        /// Default properties descriptor:
 
         var $defaultDescriptor = defaultDescriptor ? defaultDescriptor : {
             configurable: true,
             enumerable: true,
             writable: true
         };
+        
+        /// Iterate properties:
 
         var hidingAllowed = !(defaultDescriptor && defaultDescriptor.enumerable);
 
         for(var name in properties){
+            
             var value = properties[name];
             var descriptor = Object.create($defaultDescriptor);
 
+            /// apply property modifiers:
+            
             if( name[0]=='(' ){
                 //TODO: fix regexp to not mach the '(getset) property'
                 var matches = name.match(/^\((((get|set|const|hidden|final|writable) *)+)\) +(.+)$/);
@@ -191,7 +185,9 @@ var $object = /** @lands $object# */{
                     }
                 }
             }
-
+            
+            /// define getters/setters:
+            
             if(descriptor.get || descriptor.set){
                 if(typeof value == 'string'){
                     var hiddenPropertyName = value;
@@ -206,24 +202,52 @@ var $object = /** @lands $object# */{
                     }
                 }
                 descriptor.value = undefined;
-                if(descriptor.get) value = undefined;// do not allow to hide getter by default
+                if(descriptor.get) value = undefined;// do not allow to hide getter as method
             }else{
                 descriptor.value = value;
             }
 
-            // hide methods and private properties:
+            /// hide methods and private properties:
+            
             if(hidingAllowed && typeof(value)=='function' || name[0]=='_'){
                 descriptor.enumerable = false;
             }
-    //        // constants:
-    //        if(name.toUpperCase() == name){
-    //            descriptor.writable = false;
-    //        }
+
+            /// constants:
+            
+            if(name.toUpperCase() == name){
+                descriptor.writable = false;
+            }
+            
+            ///
+            
             descriptors[name] = descriptor;
         }
-    //    if( descriptors.hasOwnProperty('constructor')){
-    //        descriptors.constructor.enumerable = false;
-    //    }
+        
+        /// constructor:
+        
+        if( descriptors.hasOwnProperty('constructor') ){
+            var $prototype = this;
+            var constructor = descriptors.constructor.value;
+            if(typeof constructor == 'string'){
+                var typeName = constructor;
+                // isn't slow, see http://jsperf.com/eval-vs-new-function-vs-function
+                constructor = Function(
+                    'return function '+typeName+'(){return this.applySuper(arguments)}'
+                )();
+                constructor.typeName = typeName;
+                descriptors.constructor.value = constructor;
+
+            }else if(!constructor.typeName){
+                constructor.typeName = constructor.name || 'CloneOf'+$prototype.constructor.typeName;//+n
+            }
+
+            constructor.prototype = $prototype;
+            descriptors.constructor.enumerable = false;
+        }
+
+        ///
+        
         return descriptors;
     },
     
@@ -977,7 +1001,7 @@ var $object = /** @lands $object# */{
      *  @see $object.describe
      *  @memberof $object# */
     defineProperties: function(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
-        return Object.defineProperties(this, $object.describe.apply(null, arguments));
+        return Object.defineProperties(this, $object.describe.apply(this, arguments));
     },
 
     /** Wrapper for [Object.defineProperty⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty)

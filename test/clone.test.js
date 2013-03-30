@@ -74,18 +74,20 @@ this['test $object'] = {
     describe: function(test){
 
         //test.expect(2);
+        
+        function Constructor(){}
 
         test.deepEqual(
             $object.describe({
                          _p: undefined,
       '(const) _unwritable': 231,
                      method: Function,
-                constructor: Function
+                constructor: Constructor
             }),{
                          _p: {value: undefined, enumerable:false},
                 _unwritable: {value: 231, enumerable:false, writable: false},
                      method: {value: Function, enumerable:false},
-                constructor: {value: Function, enumerable:false}
+                constructor: {value: Constructor, enumerable:false}
             },
             'private properties, functions, constructor should be not enumerable'
         );
