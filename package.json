@@ -1,6 +1,6 @@
 {
   "name": "clonejs",
-  "version": "0.7.2.01",
+  "version": "0.7.2-01-beta",
   "description": "The true prototype-based JavaScript micro-framework.",
   "maintainers": [
     {
