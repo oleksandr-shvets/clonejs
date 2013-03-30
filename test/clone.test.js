@@ -203,7 +203,7 @@ this['test $object'] = {
         var $child = $parent.clone({
             constructor: function(arg){
                 calls.push('users');
-                this.callSuper('constructor', arg);
+                this.applySuper(arguments);
             }
         });
 

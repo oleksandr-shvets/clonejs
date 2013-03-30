@@ -261,9 +261,7 @@ var $object = /** @lands $object# */{
      */
     applySuper: function(/** Array|string='constructor' */ methodName, /** Array= */args){
         if(typeof(methodName) != 'string'){
-            if( arguments[0] instanceof Array){
-                args = arguments[0];
-            }
+            args = arguments[0];
             methodName = 'constructor';
         }//</arguments>
 
