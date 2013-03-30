@@ -316,14 +316,14 @@ this['test ns'] = {
     put: function(test){
         var $collection = $object.clone({constructor: 'Collection'}),
             $arrayCollection = $collection.clone({constructor: 'ArrayCollection'});
-        var ns2 = $object.apply(ns, 'copy');
+        var ns2 = $object.copy.apply(ns);
         ns2.put($arrayCollection);
     
             _ns_check(ns2, test);
 
-        var ns3 = $object.apply(ns, 'copy');
+        var ns3 = $object.copy.apply(ns);
         ns3.put('collection.arrayCollection', $arrayCollection);
-
+        
             _ns_check(ns3, test);
         
         test.done();

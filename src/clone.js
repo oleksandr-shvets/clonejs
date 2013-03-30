@@ -877,7 +877,7 @@ var $object = /** @lands $object# */{
      * If called without args - `getKeys()` will behaves like [Object.keys⠙][1].  
      * If called with false - `getKeys(false)` will behave like [Object.getOwnPropertyNames⠙][2]
      * [1]: http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys
-     * [2]: http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys
+     * [2]: http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames
      * @see $object#getOwnPropertyNames
      * @returns {Array} All own enumerable property names.
      * @memberof $object# */
@@ -1075,8 +1075,8 @@ var ns = /** @lands ns# */{
     extend: function extend(/** string */nsItemName, /** Object */prototypeOrProperties, /** PropertyDescriptor= */defaultDescriptor){
 
         var $parent = this.prototype, parentNS = this;
+
         if( $parent.isPrototypeOf(prototypeOrProperties) ){
-            
             var $newProto = prototypeOrProperties;
             
         }else{
@@ -1107,6 +1107,7 @@ var ns = /** @lands ns# */{
      * @returns {ns} The created sub-namespace.
      * @memberOf ns# */
     put: function(/** string= */nsPathName, /** Object */prototype){
+        
         if(typeof nsPathName != 'string'){
             prototype  = nsPathName;
             nsPathName = undefined;
@@ -1117,9 +1118,18 @@ var ns = /** @lands ns# */{
             var currentNS = this;
             var nameParts = nsPathName.split('.');
             var nsItemName = nameParts.pop();
+            var proto = prototype;
             nameParts.forEach(function(namePart){
                 if(!(namePart in currentNS)){
-                    currentNS.extend(namePart, {});
+                    
+                    proto = Object.getPrototypeOf(proto);
+                    var typeName = proto.constructor.typeName || proto.constructor.name;
+                    if(namePart !== typeName[0].toLowerCase() + typeName.substr(1) ){
+
+                        proto = {};
+                    }
+                    
+                    currentNS.extend(namePart, proto);
                 }
                 currentNS = currentNS[namePart];
             });
@@ -1133,8 +1143,8 @@ var ns = /** @lands ns# */{
 
             var eachNS = this;
             prototypes.forEach(function(proto){
-                nsItemName = proto.constructor.typeName || proto.constructor.name;
-                nsItemName = nsItemName[0].toLowerCase() + nsItemName.substr(1);
+                var typeName = proto.constructor.typeName || proto.constructor.name;
+                nsItemName   = typeName[0].toLowerCase() + typeName.substr(1);
 
                 applyExtend(eachNS, proto, nsItemName);
 
