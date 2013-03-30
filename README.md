@@ -14,13 +14,18 @@ This is the micro-framework that based on the ECMA Script 5 features like [Objec
 It's **trivial to create new "classes"** - just clone the prototype and change a couple of properties and voila... new "class".
 
 It's **really class-free**: do you know the difference between js constructor-functions and classes in other languages?
+<<<<<<< HEAD
 `$object.clone` produces prototype objects, not function-constructors, like other class-producing tools (`Backbone.Model.extend`, `Ext.define`, `dojo.declare`).
+=======
+`$object.clone` produces prototype objects, not function-constructors, unlike other class-producing tools (`Backbone.Model.extend`, `Ext.define`, `dojo.declare`).
+>>>>>>> edit readme
 
 In this framework you can easilly create and manipulate objects without constructors, instead of js way,
 where you should define a constructor for every object (that you want to use as prototype), even if you didn't need it.
 It's possible to build and maintain extremely **large numbers of "classes"** with comparatively little code.
 
 See more [advantages of prototype-based OOP⠙](http://programmers.stackexchange.com/questions/110936/what-are-the-advantages-of-prototype-based-oop-over-class-based-oop#answers-header).
+<<<<<<< HEAD
 
 ### Installation
 
@@ -31,6 +36,18 @@ Node.js:
 Browser script:
 
     <script src="http://raw.github.com/quadroid/clonejs/master/src/clone.js" type="text/javascript"></script>
+=======
+
+### Installation
+
+Node.js:
+
+    npm install clonejs
+
+[CDN⠙][] for client-side (~3 KB gzipped):
+
+    <script src="http://quadroid.github.com/clonejs/cdn/clone.min.js" type="text/javascript"></script>
+>>>>>>> edit readme
 
 ### Usage
 
@@ -138,7 +155,12 @@ See: [ns][], [ns.extend][], [ns.put][].
 
 [Object.create⠙]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create
 [Object.defineProperty⠙]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty
+<<<<<<< HEAD
 
+=======
+[CDN⠙]: http://code.lancepollard.com/github-as-a-cdn/
+        
+>>>>>>> edit readme
 [$object]:     http://clonejs.org/symbols/%24object.html
 
 [clone]:       http://clonejs.org/symbols/%24object.html#clone
