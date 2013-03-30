@@ -1,0 +1,14 @@
+#/usr/bin/bash -v
+
+### minify:
+
+./build.minify
+
+### copy to cdn:
+
+cd ../build/
+
+cp clone*.js html/cdn/
+cp ../src/clone*.js html/cdn/
+
+cd ../tools/

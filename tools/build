@@ -1,4 +1,0 @@
-#/usr/bin/bash -v
-
-#./build.*
-find ./build.* -exec {} \;

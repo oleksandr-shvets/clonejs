@@ -1,0 +1,13 @@
+#/usr/bin/bash -v
+
+VERSION=`cat ../../.version`
+
+cd  ../tmp/
+
+rm -rf clean-repo
+github clone git@github.com:quadroid/clonejs.git clean-repo
+cd clean-repo
+npm unpublish "clonejs@$VERSION"
+npm publish
+
+cd ../../tools
