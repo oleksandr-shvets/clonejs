@@ -1,10 +1,9 @@
 ## [clone.js](http://clonejs.org) [![Build Status](https://travis-ci.org/quadroid/clonejs.png?branch=master "travis-ci.org")](https://travis-ci.org/quadroid/clonejs)
 <!-- HIDDEN: -->
-[ [API documentation](http://clonejs.org/symbols/%24object.html)
+[API documentation](http://clonejs.org/symbols/%24object.html)
 |  [GitHub](http://github.com/quadroid/clonejs)
 |  [NPM package](http://npmjs.org/package/clonejs)
 |  [Travis CI](http://travis-ci.org/quadroid/clonejs)
-]
 <!-- /HIDDEN -->
 
 This is the micro-framework that based on the ECMA Script 5 features like [Object.create⠙][] and [property descriptors⠙][Object.defineProperty⠙].
