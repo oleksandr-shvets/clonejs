@@ -1,6 +1,6 @@
 #/usr/bin/bash -v
 
-VERSION=`cat ../../.version`
+VERSION=`cat ../.version`
 DATE=`date "+%Y-%m-%d %H:%M"`
 BUILD_NAME="Build $VERSION ($DATE)"
 CHANGELOG=`git log --pretty=format:"%s"  --graph  --branches --not --remotes`
