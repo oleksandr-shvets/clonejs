@@ -318,6 +318,21 @@ this['test $object'] = {
                 test.strictEqual(obj.a,  1);
 
         test.done();
+    },
+
+    getPrototypes: function(test){
+        ns.extend('level1',{n:1})
+          .extend('level1_1',{n:2})
+          .extend('level1_1_1',{n:3});
+        
+        var $obj = ns.level1.level1_1.$level1_1_1.create();
+        
+            test.deepEqual($obj.getPrototypes(), [{n:1}, {n:2}, {n:3}]);
+            test.deepEqual($obj.getPrototypes(undefined, true), [{n:3}, {n:2}, {n:1}]);
+            test.deepEqual($obj.getPrototypes(Object.prototype), [Object.prototype, {n:1}, {n:2}, {n:3}]);
+            //test.deepEqual($obj.getPrototypes(null), [Object.prototype, Object.prototype, {n:1}, {n:2}, {n:3}]);
+        
+        test.done();
     }
 
 };
