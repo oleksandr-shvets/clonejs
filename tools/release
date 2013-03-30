@@ -22,4 +22,6 @@ else
     
     ./deploy.push-build
     #./deploy.npm-package
+    
+    cat ../tmp/last-build.log >> ../CHANGELOG.md
 fi

@@ -4,18 +4,17 @@
 
 VERSION=`cat ../../.version`
 BUILD_NAME="Build $VERSION"
-
-#"`date "+%Y-%m-%d %H:%M:%S"`"
+BUILD_MESSAGE=`git log --pretty=format:"%s"  --graph  --branches --not --remotes`
+DATE=`date "+%Y-%m-%d %H:%M:%S"`
 
 ./deploy.html-pages
 ./deploy.wiki
 
 cd ../
 
-git commit -a -m "$BUILD_NAME"
+git commit -a -m "$BUILD_NAME: \r\n$BUILD_MESSAGE"
+git push
 
-BUILD_MESSAGE=`git log --pretty=format:"%s"  --graph  --branches --not --remotes`
-
-git push -m "$BUILD_NAME: \r\n$BUILD_MESSAGE"
+echo -e "\r\n### ($DATE) $BUILD_NAME:  \r\n$BUILD_MESSAGE" > tmp/last-build.log
 
 cd tools/
