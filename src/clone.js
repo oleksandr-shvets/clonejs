@@ -1,7 +1,7 @@
 'use strict';
 /**
  * @title   clone.js - the true prototype-based JavaScript micro-framework.
- * @version 0.7.2-01-beta
+ * @version v0.7.2-02-beta
  * @author  Alex Shvets
  *
  * @class

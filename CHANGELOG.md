@@ -13,3 +13,8 @@ clone.js change log
 * add scripts
 * add npm overlay
 * test script: run all *.test.js files
+
+### Build v0.7.2-02-beta (2013-03-30 22:06)  
+
+* fix home page nav
+* incrase CI speed
