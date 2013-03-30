@@ -1,0 +1,2 @@
+clone.js change log
+-------------------
