@@ -268,6 +268,7 @@ DL.detailList.nomargin DT:only-of-type{
     width: auto !important;
 }
 
+DL.detailList.params.dl DT,
 DL.detailList.params DT > B{
     float: left;
     padding-right: 1ex;
