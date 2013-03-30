@@ -19,7 +19,11 @@ function include_markdown($filename){
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
     <style>
-        NAV   {color: rgb(128, 128, 128); position: absolute}
+        NAV {
+            color: rgb(128, 128, 128);
+            position: absolute;
+            z-index: 11;
+        }
         NAV A {color: white}
         NAV A:hover {color:#007edf}
         #downloads{
@@ -61,7 +65,7 @@ function include_markdown($filename){
               <a class="zip_download_link" href="https://github.com/quadroid/clonejs/zipball/master">Download this project as a .zip file</a>
               <a class="tar_download_link" href="https://github.com/quadroid/clonejs/tarball/master">Download this project as a tar.gz file</a>
               <span class="version">
-                 version: <?php include "../../.version" ?>
+                 <?php include "../../.version" ?>
               </span>
             </section>
         </header>
