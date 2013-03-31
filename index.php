@@ -13,10 +13,15 @@ function include_markdown($filename){
 <html>
 
   <head>
+    <title>clone.js</title>
+    
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta name="description" content="Clonejs : The true prototype-based JavaScript micro-framework." />
-
+    
+    <link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/tomorrow.min.css">
+    <script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+    
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
     <style>
         NAV {
@@ -40,11 +45,9 @@ function include_markdown($filename){
         #main_content IMG {width: auto; height: auto}
         #main_content H2 IMG {float: right}
     </style>
-
-    <title>clone.js</title>
   </head>
 
-  <body>
+  <body onload="hljs.initHighlighting()">
 
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
@@ -88,7 +91,8 @@ function include_markdown($filename){
       </footer>
     </div>
 
-<?php include '.analytics-code.html' ?>
-
   </body>
+
+  <?php include '.analytics-code.html' ?>
+  
 </html>

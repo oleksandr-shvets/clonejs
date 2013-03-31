@@ -2,10 +2,15 @@
 <html>
 
   <head>
+    <title>clone.js</title>
+    
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta name="description" content="Clonejs : The true prototype-based JavaScript micro-framework." />
-
+    
+    <link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/tomorrow.min.css">
+    <script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+    
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
     <style>
         NAV {
@@ -29,11 +34,9 @@
         #main_content IMG {width: auto; height: auto}
         #main_content H2 IMG {float: right}
     </style>
-
-    <title>clone.js</title>
   </head>
 
-  <body>
+  <body onload="hljs.initHighlighting()">
 
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
@@ -71,14 +74,14 @@
 
 <h5>Try the true <a href="http://en.wikipedia.org/wiki/Prototype-based_programming">prototype-based OOP⠙</a></h5>
 
-<p>It&#39;s <strong>trivial to create new &quot;classes&quot;</strong> - just clone the prototype and change a couple of properties and voila... new &quot;class&quot;.</p>
+<p><strong>It&#39;s trivial to create new &quot;classes&quot;</strong> - just clone the prototype and change a couple of properties and voila... new &quot;class&quot;.</p>
 
-<p>It&#39;s <strong>really class-free</strong>: do you know the difference between js constructor-functions and classes in other languages?
+<p><strong>It&#39;s really class-free</strong>: do you know the difference between js constructor-functions and classes in other languages?
 <code>$object.clone</code> produces prototype objects, not function-constructors, unlike other class-producing tools (<code>Backbone.Model.extend</code>, <code>Ext.define</code>, <code>dojo.declare</code>).</p>
 
 <p>In this framework you can easilly create and manipulate objects without constructors, instead of js way,
 where you should define a constructor for every object (that you want to use as prototype), even if you didn&#39;t need it.
-It&#39;s possible to build and maintain extremely <strong>large numbers of &quot;classes&quot;</strong> with comparatively little code.</p>
+It&#39;s possible to build and maintain extremely <strong>large numbers of &quot;classes&quot; with comparatively little code</strong>.</p>
 
 <p>See more <a href="http://programmers.stackexchange.com/questions/110936/what-are-the-advantages-of-prototype-based-oop-over-class-based-oop#answers-header">advantages of prototype-based OOP⠙</a>.</p>
 
@@ -207,7 +210,9 @@ var users = ns.models.$users.create([{name: &#39;User1&#39;}]);</code></pre>
       </footer>
     </div>
 
-<!-- Yandex.Metrika counter -->
+  </body>
+
+  <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function (d, w, c) {
         (w[c] = w[c] || []).push(function() {
@@ -244,6 +249,5 @@ var users = ns.models.$users.create([{name: &#39;User1&#39;}]);</code></pre>
 
     ga('create', 'UA-1886659-9', 'clonejs.org');
     ga('send', 'pageview');
-</script>
-  </body>
+</script>  
 </html>
