@@ -44,6 +44,7 @@ function include_markdown($filename){
         }
         #main_content IMG {width: auto; height: auto}
         #main_content H2 IMG {float: right}
+        #main_content PRE CODE {padding: 0px}
     </style>
   </head>
 
