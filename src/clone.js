@@ -272,7 +272,7 @@ var $object = /** @lands $object# */{
         }//</arguments>
 
         /* if not */('__super__' in this) || this.defineProperty(
-            '__super__', {value: Object.getPrototypeOf(Object.getPrototypeOf(this)), writable:!0,configurable:!0}
+            '__super__', {value: this.getSuper(), writable:true, configurable:true}
             /**
              * Link to the instance prototype. 
              * Dynamically changed to next by prototype chain, while `{@link #applySuper}` method executing. 
@@ -307,28 +307,16 @@ var $object = /** @lands $object# */{
         return this.applySuper(methodName, args);
     },
 
-//        /**
-//         * Async safe version of {@link $object#applySuper}.
-//         * @param {string} methodName
-//         * @param {Array} args
-//         * @param {...number=} callbackArgIdx1 Indexes of arguments, that is a callbacks, that can call applySuper.
-//         *     Default value is the last arg index.
-//         * @param callbackArgIdxN
-//         * @returns {*}
-//         */
-//        applySuperAsync: function(methodName, args, /** number=`args.length-1` */callbackArgIdx1, /** number= */callbackArgIdxN){
-//            if( callbackArgIdx1===undefined)
-//                callbackArgIdx1 = args.length - 1;
-//
-//            var safeArgs = new Array(args.length);
-//            var indexOf = Array.prototype.indexOf;
-//            for(var i=0; i < args; i++){
-//                safeArgs[i] = indexOf.call(arguments, i, 2+i) ? this.createSuperSafeCallback(args[i]) : args[i];
-//            }
-//
-//            return this.applySuper(methodName, safeArgs);
-//        },
-
+    /**
+     * Returns parent prototype for this instance.
+     * @this {Object} Instance only.
+     * @returns {Object}
+     * @memberOf $object#
+     */
+    getSuper: function(){
+        return Object.getPrototypeOf( Object.getPrototypeOf(this) );    
+    },
+    
     /**
      * Use this method to wrap callback, that can call `{@link #applySuper}` method.
      * @see $object#applySuper
