@@ -69,6 +69,7 @@ var $object = /** @lands $object# */{
      * Create a clone of object.
      * @see $object.describe
      * @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create⠙</a>
+     * @this {Object} Prototype or instance.
      * @returns {$object}
      * @memberOf $object#
      */
@@ -88,6 +89,7 @@ var $object = /** @lands $object# */{
      * @see $object#clone
      * @see $object#constructor
      * @see $object.describe
+     * @this {Object} Prototype or instance.
      * @returns {$object}
      *
      * @example
@@ -110,6 +112,8 @@ var $object = /** @lands $object# */{
      * Default object constructor. Override it if you want to create custom type. 
      * Defines given properties and seal this object.
      * @see $object.describe
+     * @see $object#create
+     * @this {Object} Instance only.
      * @memberOf $object#
      */
     constructor: function Object$(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
@@ -140,6 +144,7 @@ var $object = /** @lands $object# */{
      * @param properties
      * @param defaultDescriptor The default property descriptor.
      * @returns {{PropertyDescriptor}} Property descriptors.
+     * @this {Object} Prototype only.
      * @static
      * @memberOf $object
      */
@@ -256,6 +261,7 @@ var $object = /** @lands $object# */{
      * @returns {*}
      * @see $object#__super__
      * @see $object#callSuper
+     * @this {Object} Instance only.
      * @protected
      * @memberOf $object#
      */
@@ -293,6 +299,7 @@ var $object = /** @lands $object# */{
 
     /** @see $object#applySuper
      *  @see $object#__super__
+     *  @this {Object} Instance only.
      *  @protected
      *  @memberOf $object# */
     callSuper: function(/** string */methodName, /** ?= */ arg1, /** ...?= */argN){
@@ -325,6 +332,7 @@ var $object = /** @lands $object# */{
     /**
      * Use this method to wrap callback, that can call `{@link #applySuper}` method.
      * @see $object#applySuper
+     * @this {Object} Instance only.
      * @returns {Function}
      * @memberOf $object#
      */
@@ -359,6 +367,7 @@ var $object = /** @lands $object# */{
     /**
      * Returns all changed properties, since cloning of object. 
      * Separate object from its prototype and return it. 
+     * @this {Object} Instance or prototype.
      * @param listPrivate Add non-enumerable properties.
      * @returns {$object}
      * @memberOf $object#
@@ -400,6 +409,8 @@ var $object = /** @lands $object# */{
      * // where ~$users:
      * New plain object, that have a copy of every own $user property.
      *
+     * @this {Object} Instance or prototype.
+     * 
      * @param deepMethod
      *        How to process inner objects. Can be:        
      *        "deepCopy"  - see `{@link #deepCopy}`   
@@ -487,6 +498,7 @@ var $object = /** @lands $object# */{
      * Create a copy of this and all inner objects.
      * @see $object#copy
      * @see $object#deepClone
+     * @this {Object} Instance or prototype.
      * @returns {$object}
      * @memberOf $object#
      */
@@ -516,6 +528,7 @@ var $object = /** @lands $object# */{
      * @see $object#clone
      * @see $object#deepCopy
      * @see $object.describe
+     * @this {Object} Instance or prototype.
      * @returns {$object}
      * @memberOf $object#
      */
@@ -537,6 +550,7 @@ var $object = /** @lands $object# */{
     /**
      * Copy properties to other object.
      * @see $object#concat
+     * @this {Object} Prototype or instance.
      * @memberOf $object#
      */
     paste: function(/** Object */pasteTo, /** (Array|boolean)= */allProperties){
@@ -546,6 +560,7 @@ var $object = /** @lands $object# */{
     /**
      * Copy properties from given object. 
      * If allProperties does not specified, only own properties will be copied.
+     * @this {Object} Instance or prototype.
      * @param obj
      * @param allProperties Array of property names, or `true`. 
      *        If true, all (own and parents) properties will be copied. 
@@ -582,6 +597,7 @@ var $object = /** @lands $object# */{
      * @example
      *     var  args = $object.apply(arguments, 'slice',[1], Array);
      *     var  args = $object.apply.call(Array, arguments, 'slice',[1]);
+     * @this {Object} Prototype only.
      * @returns {*}
      * @static
      * @memberOf $object
@@ -607,6 +623,7 @@ var $object = /** @lands $object# */{
      * assert( myObj1.can('split').as(   Array.prototype ) === false );
      * assert( $object.can.call(new Array, 'split').as(new Array) === true  );
      *
+     * @this {Object} Instance or prototype.
      * @returns {{like: function(Object):boolean, as: function(Object):boolean}}
      * @memberOf $object#
      */
@@ -637,6 +654,7 @@ var $object = /** @lands $object# */{
 
     /**
      * @see $object#can
+     * @this {Object} Instance or prototype.
      * @memberof $object# */
     cant: function(/** string */method){
         return this.can(method, 1);
@@ -644,6 +662,7 @@ var $object = /** @lands $object# */{
 
     /**
      * Returns array of object prototype chain.
+     * @this {Object} Instance or prototype.
      * @returns {Array}
      * @memberof $object#
      */
@@ -664,6 +683,7 @@ var $object = /** @lands $object# */{
     /**
      * Executes a provided function once per every enumerable property. 
      * Is identical to `for in`.
+     * @this {Object} Instance or prototype.
      * @memberof $object# */
     forEach: function(
         /** function(*=value,string=key,Object=this) */
@@ -713,6 +733,7 @@ var $object = /** @lands $object# */{
 
     /**
      * Tests whether all enumerable properties in the object pass the test implemented by the provided function.
+     * @this {Object} Instance or prototype.
      * @returns {boolean}
      * @memberof $object# */
     every: function(
@@ -758,6 +779,7 @@ var $object = /** @lands $object# */{
 
     /**
      * Tests whether some enumerable properties in the object pass the test implemented by the provided function.
+     * @this {Object} Instance or prototype.
      * @returns {boolean}
      * @memberof $object# */
     some: function(
@@ -803,6 +825,7 @@ var $object = /** @lands $object# */{
 
     /**
      * Creates a new object with the results of calling a provided function on every enumerable property.
+     * @this {Object} Instance or prototype.
      * @returns {Object}
      * @memberof $object# */
     map: function(
@@ -830,6 +853,7 @@ var $object = /** @lands $object# */{
 
     /**
      * Creates a new object with all enumerable properties that pass the test implemented by the provided function.
+     * @this {Object} Instance or prototype.
      * @returns {Object}
      * @memberof $object# */
     filter: function(
@@ -852,6 +876,7 @@ var $object = /** @lands $object# */{
     },
 
     /**
+     * @this {Object} Instance or prototype.
      * @returns {Array} All own enumerable property values.
      * @memberof $object# */
     getValues: function(/** boolean=true */enumerableOnly,/** boolean=true */ownOnly){
@@ -863,6 +888,7 @@ var $object = /** @lands $object# */{
 
     /**
      * Set values for own enumerable properties. Order of values should be the same as `{@link $object#getValues}()` produce.
+     * @this {Object} Instance or prototype.
      * @memberof $object# */
     setValues: function(/** Array */values, /** boolean=true */enumerableOnly, /** boolean=true */ownOnly){
         var keys = $object.getKeys.call(this, enumerableOnly, ownOnly);
@@ -877,6 +903,7 @@ var $object = /** @lands $object# */{
      * [1]: http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys
      * [2]: http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames
      * @see $object#getOwnPropertyNames
+     * @this {Object} Instance or prototype.
      * @returns {Array} All own enumerable property names.
      * @memberof $object# */
     getKeys: function(/** boolean=true */enumerableOnly, /** boolean=true */ownOnly){
@@ -998,12 +1025,15 @@ var $object = /** @lands $object# */{
      *  @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperties">Object.defineProperties⠙</a>
      *  @see $object.describe
      *  @memberof $object# */
+     *  @this {Object} Instance or prototype.
+     *  @memberOf $object# */
     defineProperties: function(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
         return Object.defineProperties(this, $object.describe.apply(this, arguments));
     },
 
     /** Wrapper for [Object.defineProperty⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty)
-     *  @memberof $object# */
+     *  @this {Object} Instance or prototype.
+     *  @memberOf $object# */
     defineProperty: function(/** string */name, /** PropertyDescriptor */propertyDescriptor){
         return Object.defineProperty(this, name, propertyDescriptor);
     }
