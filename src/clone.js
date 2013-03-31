@@ -592,7 +592,10 @@ var $object = /** @lands $object# */{
      */
     apply: function(/** Object */withObj, /** string */methodName, /** Array= */args, /** Object= */asObj){
         if(!asObj){
-            asObj = typeof(withObj[methodName])=='function' && withObj[methodName].length == $object[methodName].length && withObj || $object;
+            asObj = typeof(withObj[methodName])=='function' 
+                 && withObj[methodName].length == this[methodName].length 
+                 && withObj 
+                 || this;
 
         }else if(typeof asObj == 'function' && asObj.prototype){
             asObj = asObj.prototype;
@@ -694,7 +697,6 @@ var $object = /** @lands $object# */{
         // </arguments>
 
         if(!enumerableOnly){
-
             var keys = $object.getKeys.call(this, enumerableOnly, ownOnly);
             for(var i= 0, count= keys.length; i<count; i++){ name = keys[i];
                 callback.call(scope, this[name], name, this);
@@ -897,7 +899,6 @@ var $object = /** @lands $object# */{
     getKeys: function(/** boolean=true */enumerableOnly, /** boolean=true */ownOnly){
         enumerableOnly = enumerableOnly === undefined || Boolean(enumerableOnly);
                ownOnly =        ownOnly === undefined || Boolean(ownOnly);
-        
         var method =  enumerableOnly && ownOnly && 'keys'
                   || !enumerableOnly && ownOnly && 'getOwnPropertyNames';        
         
@@ -1012,7 +1013,6 @@ var $object = /** @lands $object# */{
     /** Define properties.
      *  @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperties">Object.defineProperties⠙</a>
      *  @see $object.describe
-     *  @memberof $object# */
      *  @this {Object} Instance or prototype.
      *  @memberOf $object# */
     defineProperties: function(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
