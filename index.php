@@ -48,7 +48,7 @@ function include_markdown($filename){
     </style>
   </head>
 
-  <body onload="hljs.initHighlighting()">
+  <body>
 
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
@@ -93,6 +93,17 @@ function include_markdown($filename){
     </div>
 
   </body>
+  <script src="http://quadroid.github.com/clonejs/cdn/clone.min.js" type="text/javascript"></script>
+  <script>
+  window.onload = function(){
+      console.log(111);
+      $object.forEach.call(document.querySelectorAll('CODE'), function(el){
+          el.className = 'language-javascript';
+          hljs.highlightBlock(el, null, false);
+      });
+      //hljs.initHighlighting();
+  }
+  </script>
 
   <?php include '.analytics-code.html' ?>
   

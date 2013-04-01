@@ -1,7 +1,7 @@
 'use strict';
 /**
  * @title   clone.js - the true prototype-based JavaScript micro-framework.
- * @version v0.7.2-02-beta
+ * @version v0.7.2-03-beta
  * @author  Alex Shvets
  *
  * @class
@@ -697,7 +697,6 @@ var $object = /** @lands $object# */{
         // </arguments>
 
         if(!enumerableOnly){
-
             var keys = $object.getKeys.call(this, enumerableOnly, ownOnly);
             for(var i= 0, count= keys.length; i<count; i++){ name = keys[i];
                 callback.call(scope, this[name], name, this);
@@ -901,7 +900,6 @@ var $object = /** @lands $object# */{
     getKeys: function(/** boolean=true */enumerableOnly, /** boolean=true */ownOnly){
         enumerableOnly = enumerableOnly === undefined || Boolean(enumerableOnly);
                ownOnly =        ownOnly === undefined || Boolean(ownOnly);
-        
         var method =  enumerableOnly && ownOnly && 'keys'
                   || !enumerableOnly && ownOnly && 'getOwnPropertyNames';        
         
@@ -916,7 +914,7 @@ var $object = /** @lands $object# */{
                 
                 $object.forEach.call(this, function(value, key){
                     keys.push(key);
-                },null, ownOnly, enumerableOnly);
+                },null, enumerableOnly, ownOnly);
 
             }else{// get all properties:
                 

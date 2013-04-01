@@ -37,7 +37,7 @@
     </style>
   </head>
 
-  <body onload="hljs.initHighlighting()">
+  <body>
 
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
@@ -58,7 +58,7 @@
               <a class="zip_download_link" href="https://github.com/quadroid/clonejs/zipball/master">Download this project as a .zip file</a>
               <a class="tar_download_link" href="https://github.com/quadroid/clonejs/tarball/master">Download this project as a tar.gz file</a>
               <span class="version">
-                 v0.7.2-02-beta              </span>
+                 v0.7.2-03-beta              </span>
             </section>
         </header>
     </div>
@@ -212,6 +212,17 @@ var users = ns.models.$users.create([{name: &#39;User1&#39;}]);</code></pre>
     </div>
 
   </body>
+  <script src="http://quadroid.github.com/clonejs/cdn/clone.min.js" type="text/javascript"></script>
+  <script>
+  window.onload = function(){
+      console.log(111);
+      $object.forEach.call(document.querySelectorAll('CODE'), function(el){
+          el.className = 'language-javascript';
+          hljs.highlightBlock(el, null, false);
+      });
+      //hljs.initHighlighting();
+  }
+  </script>
 
   <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
