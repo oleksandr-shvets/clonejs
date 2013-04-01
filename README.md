@@ -10,14 +10,14 @@ This is the micro-framework that based on the ECMA Script 5 features like [Objec
 
 ##### Try the true [prototype-based OOP⠙](http://en.wikipedia.org/wiki/Prototype-based_programming)
 
-It's **trivial to create new "classes"** - just clone the prototype and change a couple of properties and voila... new "class".
+**It's trivial to create new "classes"** - just clone the prototype and change a couple of properties and voila... new "class".
 
-It's **really class-free**: do you know the difference between js constructor-functions and classes in other languages?
+**It's really class-free**: do you know the difference between js constructor-functions and classes in other languages?
 `$object.clone` produces prototype objects, not function-constructors, unlike other class-producing tools (`Backbone.Model.extend`, `Ext.define`, `dojo.declare`).
 
 In this framework you can easilly create and manipulate objects without constructors, instead of js way,
 where you should define a constructor for every object (that you want to use as prototype), even if you didn't need it.
-It's possible to build and maintain extremely **large numbers of "classes"** with comparatively little code.
+It's possible to build and maintain extremely **large numbers of "classes" with comparatively little code**.
 
 See more [advantages of prototype-based OOP⠙](http://programmers.stackexchange.com/questions/110936/what-are-the-advantages-of-prototype-based-oop-over-class-based-oop#answers-header).
 
