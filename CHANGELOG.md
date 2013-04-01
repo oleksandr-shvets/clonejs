@@ -18,3 +18,14 @@ clone.js change log
 
 * fix home page nav
 * incrase CI speed
+
+### Build v0.7.2-03-beta (2013-04-01 12:06)  
+
+* fix bug in getKeys(), forEach()
+* add getValues() test
+* add getSuper()
+* update documentation, code formatting
+* add getPrototypes() test
+* home page: remove [ ] from nav bar
+* update describe() test
+* fix applySuper() bug
