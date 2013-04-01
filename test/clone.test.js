@@ -339,8 +339,8 @@ this['test $object'] = {
         var obj = $object.clone({en:'1 0', _p:'0 0'}).create({ownEn:'1 1', _own:'0 1'});
         //                      enumerable,   own
         test.deepEqual(obj.getValues(true,   true), [ '1 1' ]); 
-        test.deepEqual(obj.getValues(false, false), [ '1 1', '0 1', '1 0', '0 0' ]);
-        test.deepEqual(obj.getValues(false,  true), [ '1 1', '0 1' ]);
+        test.deepEqual(obj.getValues(false, false), [ '0 1', '1 1', '1 0', '0 0' ]);
+        test.deepEqual(obj.getValues(false,  true), [ '0 1', '1 1' ]);
         test.deepEqual(obj.getValues(true,  false), [ '1 1', '1 0' ]); 
         
         test.done();
