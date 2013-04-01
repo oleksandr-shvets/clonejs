@@ -345,7 +345,28 @@ this['test $object'] = {
         
         test.done();
     },
-    }
+
+//    setValues: function(test){
+//        var $obj = $object.clone({p:11, _h:12}), own = {p2:21, _h2:22}, 
+//            obj  = $obj.create(own), values;
+//        
+//        test.deepEqual(values = obj.getValues(),
+//                       $obj.create(own).setValues(values)  );
+//        
+//        test.deepEqual(values = obj.getValues(true),
+//                       $obj.create(own).setValues(values), true);
+//        
+//        test.deepEqual(values = obj.getValues(false),
+//                       $obj.create(own).setValues(values), false);
+//        
+//        test.deepEqual(values = obj.getValues(true, false),
+//                       $obj.create(own).setValues(values), true, false);
+//        
+//        test.deepEqual(values = obj.getValues(false, true),
+//                       $obj.create(own).setValues(values), false, true);
+//        
+//        test.done();
+//    }
 
 };
 

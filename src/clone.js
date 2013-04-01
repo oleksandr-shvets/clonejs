@@ -683,7 +683,7 @@ var $object = /** @lands $object# */{
         /**  boolean=true */enumerableOnly, 
         /** boolean=false */ownOnly
     ){
-        if(!(scope instanceof Object)){// http://jsperf.com/instanceof-object-vs-double-typeof
+        if(typeof scope !== 'object' && typeof scope !== 'function'){
             ownOnly = enumerableOnly;
             enumerableOnly = scope;
             scope = this;
@@ -884,7 +884,8 @@ var $object = /** @lands $object# */{
         var keys = $object.getKeys.call(this, enumerableOnly, ownOnly);
         keys.forEach(function(key, i){
             if(i in values) this[key] = values[i];
-        });
+        }, this);
+        return this;
     },
 
     /**
@@ -913,7 +914,7 @@ var $object = /** @lands $object# */{
                 
                 $object.forEach.call(this, function(value, key){
                     keys.push(key);
-                },false);
+                },null, enumerableOnly, ownOnly);
 
             }else{// get all properties:
                 
