@@ -835,10 +835,10 @@
 <span class='line'>828</span> </span><span class="WHIT">    </span><span class="NAME">map</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="WHIT">
 <span class='line'>829</span> </span><span class="WHIT">        </span><span class="COMM">/** function(*=value,string=key,Object=this):? */</span><span class="WHIT">
 <span class='line'>830</span> </span><span class="WHIT">                              </span><span class="NAME">callback</span><span class="PUNC">,</span><span class="WHIT"> 
-<span class='line'>831</span>         </span><span class="COMM">/**  Object=result  */</span><span class="NAME">scope</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>832</span> </span><span class="WHIT">        </span><span class="COMM">/** boolean=true    */</span><span class="NAME">enumerableOnly</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>833</span> </span><span class="WHIT">        </span><span class="COMM">/** boolean=false   */</span><span class="NAME">ownOnly</span><span class="PUNC">,</span><span class="WHIT"> 
-<span class='line'>834</span>         </span><span class="COMM">/**  Object=$object */</span><span class="NAME">prototype</span><span class="WHIT">
+<span class='line'>831</span>         </span><span class="COMM">/**  !Object=result  */</span><span class="NAME">scope</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>832</span> </span><span class="WHIT">        </span><span class="COMM">/**  boolean=true    */</span><span class="NAME">enumerableOnly</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>833</span> </span><span class="WHIT">        </span><span class="COMM">/**  boolean=false   */</span><span class="NAME">ownOnly</span><span class="PUNC">,</span><span class="WHIT"> 
+<span class='line'>834</span>         </span><span class="COMM">/**  !Object=$object */</span><span class="NAME">prototype</span><span class="WHIT">
 <span class='line'>835</span> </span><span class="WHIT">    </span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>836</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">result</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$object.apply</span><span class="PUNC">(</span><span class="NAME">prototype</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">$object</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'clone'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>837</span> 
