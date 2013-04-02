@@ -103,16 +103,17 @@ It&#39;s possible to build and maintain extremely <strong>large numbers of &quot
 <pre><code>var ns = require(&#39;clonejs&#39;),
     $object = ns.prototype;
 
+// Forget about the classes.    
 // Instead of creating class (function), create prototype (object):
 var $duck = $object.clone({
     quack: function(){}
 });
 
-// Forget about the `new` operator, use `.create()` method instead:
+// Forget about the `new` operator, use .create() method instead:
 var duck = $duck.create();
 
 // Forget about the `instanceof` operator, use JS native 
-// `.isPrototypeOf()` method instead:
+// .isPrototypeOf() method instead:
 $duck.isPrototypeOf(duck);// - true</code></pre>
 
 <h6>Quick example (cloning):</h6>
