@@ -51,7 +51,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="https://github.com/quadroid/clonejs/tree/master/lib/jsdoc-toolkit/templates/codeview-jsdoc2-template" target="_blank">Codeview</a> 1.3<br />
 			Generated on:
-			<time datetime='2013-3-2' pubdate>2013-3-2 14:05</time>
+			<time datetime='2013-3-2' pubdate>2013-3-2 15:16</time>
 		</footer>
 	</div>
 </div>
@@ -1106,6 +1106,13 @@ assert( $object.can.call(new Array, 'split').as(new Array) === true  );</pre>
 										</div>
 										
 										
+											
+												<pre class="code">    var $myProto = {a:1, b:2, c:3};
+    var    clone = $object.clone.apply($myProto);
+         clone.a = 11; // $myProto.a still == 1
+      $myProto.b = 22; // clone.b will be also changed to 22</pre>
+											
+										
 										
 										
 											<dl class="detailList params">
@@ -1429,7 +1436,7 @@ New plain object, that have a copy of every own $user property.</pre>
 										
 										<div class="description">
 											<p>Use this method to create an instances of prototype objects. <br />
-Behaves like a clone method. But, also apply constructor, and, if <a href="#constructor">default constructor</a> called,
+Behaves like a <a href="#clone">clone</a> method. But also apply constructor, and, if <a href="#constructor">default constructor</a> called,
 the created instance will be <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal">sealed⠙</a> to avoid creation of <a href="https://developers.google.com/v8/design#prop_access">hidden classes⠙</a>. <br />
 All arguments, passed to <code>create()</code>, will be forwarded to <a href="#constructor">constructor</a>.</p>
 											
