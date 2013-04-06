@@ -722,7 +722,7 @@ var $object = /** @lands $object# */{
             }
         }else{
 
-            for(var name in this){console.log('forEach:', name);
+            for(var name in this){
                 callback.call(scope, this[name], name, this);
             }
         }
@@ -877,8 +877,8 @@ var $object = /** @lands $object# */{
      * @returns {Array} All own enumerable property values.
      * @memberof $object# */
     getValues: function(/** boolean=true */enumerableOnly,/** boolean=true */ownOnly){
-        var keys = $object.getKeys.apply(this, arguments);console.log('getValues:', keys);
-        return keys.map(function(key){console.log('getValues:', key);
+        var keys = $object.getKeys.apply(this, arguments);
+        return keys.map(function(key){
             return this[key];
         }, this);
     },
@@ -919,7 +919,7 @@ var $object = /** @lands $object# */{
             
             if(!ownOnly && enumerableOnly){
                 
-                $object.forEach.call(this, function(value, key){console.log('getKeys:', key);
+                $object.forEach.call(this, function(value, key){
                     keys.push(key);
                 },null, enumerableOnly, ownOnly);
 
