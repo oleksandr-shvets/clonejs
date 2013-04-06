@@ -69,6 +69,11 @@ var $object = /** @lands $object# */{
      * Create a clone of object.
      * @see $object.describe
      * @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create⠙</a>
+     * @example
+     *     var $myProto = {a:1, b:2, c:3};
+     *     var    clone = $object.clone.apply($myProto);
+     *          clone.a = 11; // $myProto.a still == 1
+     *       $myProto.b = 22; // clone.b will be also changed to 22
      * @this {Object} Prototype or instance.
      * @returns {$object}
      * @memberOf $object#
@@ -82,14 +87,16 @@ var $object = /** @lands $object# */{
 
     /**
      * Use this method to create an instances of prototype objects.  
-     * Behaves like a clone method. But, also apply constructor, and, if default constructor called,
-     * the created instance will be [sealed⠙][1]. To prevent it, override the constructor. 
-     * All arguments will be passed to constructor. 
-     * [1]: http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal
+     * Behaves like a [clone](#clone) method. But also apply constructor, and, if [default constructor][1] called,
+     * the created instance will be [sealed⠙][2] to avoid creation of [hidden classes⠙][3].  
+     * All arguments, passed to `create()`, will be forwarded to [constructor][1].
+     * [1]: #constructor
+     * [2]: http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal
+     * [3]: https://developers.google.com/v8/design#prop_access
      * @see $object#clone
      * @see $object#constructor
      * @see $object.describe
-     * @this {Object} Prototype or instance.
+     * @this {$object} Prototype.
      * @returns {$object}
      *
      * @example
@@ -821,10 +828,10 @@ var $object = /** @lands $object# */{
     map: function(
         /** function(*=value,string=key,Object=this):? */
                               callback, 
-        /**  Object=result  */scope,
-        /** boolean=true    */enumerableOnly,
-        /** boolean=false   */ownOnly, 
-        /**  Object=$object */prototype
+        /**  !Object=result  */scope,
+        /**  boolean=true    */enumerableOnly,
+        /**  boolean=false   */ownOnly, 
+        /**  !Object=$object */prototype
     ){
         var result = $object.apply(prototype || $object, 'clone');
 

@@ -29,7 +29,7 @@ Node.js:
 
 [CDN⠙][] for client-side (~3 KB gzipped):
 
-    <script src="http://quadroid.github.com/clonejs/cdn/clone.min.js" type="text/javascript"></script>
+    <script src="http://quadroid.github.com/clonejs/cdn/clone.min.js"></script>
 
 ### Usage
 
@@ -37,6 +37,21 @@ Node.js:
 
     var ns = require('clonejs'),
         $object = ns.prototype;
+        
+    /// Forget about classes.    
+    //  Instead of creating class (function), create prototype (object):
+    var $duck = $object.clone({
+        quack: function(){}
+    });
+    
+    /// Forget about the `new` operator, use .create() method instead:
+    var duck = $duck.create();
+
+    /// Forget about the `instanceof` operator, use JS native 
+    //  .isPrototypeOf() method instead:
+    $duck.isPrototypeOf(duck);// - true
+
+
 
 ###### Quick example (cloning):
 
@@ -73,9 +88,9 @@ See: [describe][].
         }
     });
     var $child = $parent.clone({
-        constructor: function Child(arg){
+        constructor: function Child(arg1, arg2){
             console.log('$child constructor arguments:', arguments);
-            this.callSuper('constructor', arg);
+            this.callSuper('constructor', arg1, arg2);
         }
     });
     var $grandchild = $child.clone({
@@ -88,7 +103,7 @@ See: [describe][].
         // will output:
         // $grandchild constructor arguments: [1,2,3]
         // $child constructor arguments: [1,2,3]
-        // $parent constructor arguments: [1]
+        // $parent constructor arguments: [1,2]
         
     assert( $child.isPrototypeOf(grandchild) );
 
@@ -99,14 +114,16 @@ See: [constructor][], [create][], [applySuper][], [callSuper][], [createSuperSaf
     var $obj = $object.clone({a: 11, b: 22, c: 33}),
          obj = $obj.create({d: 44});
 
-    var mappedObj = obj.map(function(value){return 100 + value}, obj, true);
-        // mappedObj == {d: 144} // mapped only own property
+    /// Map only own properties (default):
+    var mappedObj1 = obj.map(function(value){return 100 + value});
+        // mappedObj1 == {d: 144}
 
+    /// Map all properties, replace default (`$object`) prototype of created object:
     var proto = {e: 55};
-    mappedObj = obj.map(function(value){return 100 + value}, obj, false, proto);
-        // mappedObj == {a: 111, b: 122, c: 133, d: 144, e: 155}
+    var mappedObj2 = obj.map(function(value){return 100 + value}, obj, false, proto);
+        // mappedObj2 == {a: 111, b: 122, c: 133, d: 144, e: 155}
     proto.f = 66;
-        // mappedObj == {a: 111, b: 122, c: 133, d: 144, e: 155, f: 66}
+        // mappedObj2 == {a: 111, b: 122, c: 133, d: 144, e: 155, f: 66}
 
 See: [forEach][], [map][], [filter][], [every][], [some][].
 
