@@ -171,7 +171,7 @@ var $object = /** @lands $object# */{
 
         var hidingAllowed = !(defaultDescriptor && defaultDescriptor.enumerable);
 
-        for(var name in properties){console.log('describe:', name);
+        for(var name in properties){
             
             var value = properties[name];
             var descriptor = Object.create($defaultDescriptor);
@@ -919,7 +919,7 @@ var $object = /** @lands $object# */{
             
             if(!ownOnly && enumerableOnly){
                 
-                $object.forEach.call(this, function(value, key){
+                $object.forEach.call(this, function(value, key){console.log('getKeys:', key);
                     keys.push(key);
                 },null, enumerableOnly, ownOnly);
 
