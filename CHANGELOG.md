@@ -29,3 +29,7 @@ clone.js change log
 * home page: remove [ ] from nav bar
 * update describe() test
 * fix applySuper() bug
+
+### Build v0.7.2-04-beta (2013-04-06 14:35)  
+
+* update documentation
