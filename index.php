@@ -28,6 +28,7 @@ function include_markdown($filename){
             color: rgb(128, 128, 128);
             position: absolute;
             z-index: 11;
+            margin-top: 5px;
         }
         NAV A {color: white}
         NAV A:hover {color:#007edf}
@@ -58,12 +59,13 @@ function include_markdown($filename){
           <h1 id="project_title">Clonejs</h1>
           <h2 id="project_tagline">The true prototype-based JavaScript micro-framework.</h2>
           
-            <nav>[
+            <nav>
                   <a href="./symbols/%24object.html">API documentation</a>
+                | <a href="https://github.com/quadroid/clonejs/blob/master/CHANGELOG.md">ChangeLog</a>
                 | <a href="http://github.com/quadroid/clonejs">GitHub</a>
-                | <a href="http://npmjs.org/package/clonejs">NPM package</a>
+                | <a href="http://npmjs.org/package/clonejs">NPM</a>
                 | <a href="http://travis-ci.org/quadroid/clonejs">Travis CI</a>
-            ]</nav>
+            </nav>
 
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/quadroid/clonejs/zipball/master">Download this project as a .zip file</a>
@@ -93,7 +95,7 @@ function include_markdown($filename){
     </div>
 
   </body>
-  <script src="http://clonejs.org/cdn/clone.min.js" type="text/javascript"></script>
+  <script src="./cdn/clone.min.js" type="text/javascript"></script>
   <script>
   window.onload = function(){
       console.log(111);
