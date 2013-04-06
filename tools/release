@@ -23,5 +23,5 @@ else
     ./deploy.push-build
     ./deploy.npm-package
         
-    echo -e "`cat ../tmp/last-build.log.md`  \r\n`cat ../CHANGELOG.md`" > ../CHANGELOG.md
+    echo -e "`cat ../tmp/last-build.log.md`\r\n\r\n`cat ../CHANGELOG.md`" > ../CHANGELOG.md
 fi

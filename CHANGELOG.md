@@ -1,3 +1,8 @@
+### Build v0.7.2-05-beta (2013-04-06 15:35) 
+* reverse changelog items order
+* deploy scripts: fix new line in build message
+* fix cdn src
+
 ### Build v0.7.2-04-beta (2013-04-06 14:35)
 * update documentation
 
