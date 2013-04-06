@@ -878,7 +878,7 @@ var $object = /** @lands $object# */{
      * @memberof $object# */
     getValues: function(/** boolean=true */enumerableOnly,/** boolean=true */ownOnly){
         var keys = $object.getKeys.apply(this, arguments);
-        return keys.map(function(key){
+        return keys.map(function(key){console.log('getValues:', key);
             return this[key];
         }, this);
     },
