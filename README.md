@@ -1,6 +1,7 @@
 ## [clone.js](http://clonejs.org) [![Build Status](https://travis-ci.org/quadroid/clonejs.png?branch=master "travis-ci.org")](https://travis-ci.org/quadroid/clonejs)
 <!-- HIDDEN: -->
 [API documentation](http://clonejs.org/symbols/%24object.html)
+|  [ChangeLog](https://github.com/quadroid/clonejs/blob/master/CHANGELOG.md)
 |  [GitHub](http://github.com/quadroid/clonejs)
 |  [NPM package](http://npmjs.org/package/clonejs)
 |  [Travis CI](http://travis-ci.org/quadroid/clonejs)
@@ -19,7 +20,10 @@ In this framework you can easilly create and manipulate objects without construc
 where you should define a constructor for every object (that you want to use as prototype), even if you didn't need it.
 It's possible to build and maintain extremely **large numbers of "classes" with comparatively little code**.
 
-See more [advantages of prototype-based OOP⠙](http://programmers.stackexchange.com/questions/110936/what-are-the-advantages-of-prototype-based-oop-over-class-based-oop#answers-header).
+See more:
+
+- [advantages of prototype-based OOP⠙](http://programmers.stackexchange.com/questions/110936/what-are-the-advantages-of-prototype-based-oop-over-class-based-oop#answers-header)
+- [Myth: JavaScript needs classes⠙](http://www.2ality.com/2011/11/javascript-classes.html)
 
 ### Installation
 
@@ -29,7 +33,7 @@ Node.js:
 
 [CDN⠙][] for client-side (~3 KB gzipped):
 
-    <script src="clonejs.org/cdn/clone.min.js"></script>
+    <script src="http://quadroid.github.io/clonejs/cdn/clone.min.js"></script>
 
 ### Usage
 
