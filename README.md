@@ -29,7 +29,7 @@ Node.js:
 
 [CDN⠙][] for client-side (~3 KB gzipped):
 
-    <script src="http://quadroid.github.com/clonejs/cdn/clone.min.js"></script>
+    <script src="clonejs.org/cdn/clone.min.js"></script>
 
 ### Usage
 
