@@ -93,7 +93,7 @@ function include_markdown($filename){
     </div>
 
   </body>
-  <script src="http://quadroid.github.com/clonejs/cdn/clone.min.js" type="text/javascript"></script>
+  <script src="http://clonejs.org/cdn/clone.min.js" type="text/javascript"></script>
   <script>
   window.onload = function(){
       console.log(111);
