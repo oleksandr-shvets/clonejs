@@ -171,7 +171,7 @@ var $object = /** @lands $object# */{
 
         var hidingAllowed = !(defaultDescriptor && defaultDescriptor.enumerable);
 
-        for(var name in properties){
+        for(var name in properties){console.log('describe:', name);
             
             var value = properties[name];
             var descriptor = Object.create($defaultDescriptor);
@@ -722,7 +722,7 @@ var $object = /** @lands $object# */{
             }
         }else{
 
-            for(var name in this){
+            for(var name in this){console.log('forEach:', name);
                 callback.call(scope, this[name], name, this);
             }
         }
