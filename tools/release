@@ -12,9 +12,12 @@ then
 else
     echo "Building release $NEW_VERSION"
     
+    # write $NEW_VERSION into .version file (without CRLF at the end):
     echo "$NEW_VERSION" | tr -d "[\r\n]" > ../.version
-        
+    
+    # replace version in package.json:
     sed -i "" "s/\( *\"version\" *: *\"\)$OLD_VERSION\(\" *,\)/\1$NEW_VERSION\2/g" ../package.json
+    # replace version in clone.js:
     sed -i "" "s/\(@version \)$OLD_VERSION/\1$NEW_VERSION/g" ../src/clone.js
     
     ./build.api-doc
@@ -22,6 +25,7 @@ else
     
     ./deploy.push-build
     ./deploy.npm-package
-        
+    
+    # write changelog (generated in deploy.push-build):
     echo -e "`cat ../tmp/last-build.log.md`\r\n\r\n`cat ../CHANGELOG.md`" > ../CHANGELOG.md
 fi

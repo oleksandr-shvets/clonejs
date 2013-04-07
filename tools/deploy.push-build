@@ -11,7 +11,9 @@ MESSAGE=`echo -e "$BUILD_NAME \r\n$CHANGELOG"`
 
 cd ../
 
+# generate changelog entry:
 echo -e "### $MESSAGE" > tmp/last-build.log.md
+
 git commit -a -m "$MESSAGE"
 #git push
 
