@@ -451,6 +451,7 @@ var $object = /** @lands $object# */{
         if(typeof rootPrototype == 'undefined'){
             rootPrototype = $object;
         }
+        //</arguments>
 
         var sourceObj = this;
         if( typeof(sourceObj)=='function' && Object.getOwnPropertyNames(sourceObj.prototype) ){
@@ -879,6 +880,7 @@ var $object = /** @lands $object# */{
      * @memberof $object# */
     getValues: function(/** boolean=true */enumerableOnly,/** boolean=true */ownOnly){
         var keys = $object.getKeys.apply(this, arguments);
+        //console.log('getValues:', keys, enumerableOnly, ownOnly);
         return keys.map(function(key){
             return this[key];
         }, this);
@@ -890,7 +892,9 @@ var $object = /** @lands $object# */{
      * @memberof $object# */
     setValues: function(/** Array */values, /** boolean=true */enumerableOnly, /** boolean=true */ownOnly){
         var keys = $object.getKeys.call(this, enumerableOnly, ownOnly);
+        //console.log('setValues:', keys, enumerableOnly, ownOnly);
         keys.forEach(function(key, i){
+            //console.log(i,key);
             if(i in values) this[key] = values[i];
         }, this);
         return this;
@@ -1195,7 +1199,7 @@ var ns = /** @lands ns# */{
  *  Description of some native types.  
  *  Listed objects does not present in global (window) object, it's only descriptions. 
  */
-    if(0)// (need for IDEa code inspections)
+    if(false)// (need for IDEa code inspections)
     /**
      * Object, that has at least one of the following property:  
      * `value`, `get`, `set`, `writable`, `configurable`, `enumerable`.

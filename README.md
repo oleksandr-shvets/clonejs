@@ -37,34 +37,63 @@ Node.js:
 
 ### Usage
 
-Node.js:
-
+    // node.js:
     var ns = require('clonejs'),
         $object = ns.prototype;
         
     /// Forget about classes.    
     //  Instead of creating class (function), create prototype (object):
     var $duck = $object.clone({
-        quack: function(){}
+        name: 'Unnamed',
+        quack: function(){
+            console.log( this.name +' Duck: Quack-quack!');
+        }
+    });
+    $duck.quack();//Unnamed Duck: Quack-quack!
+        
+    /// Inheritance is simple: 
+    var $talkingDuck = $duck.clone({
+        quack: function(){
+            this.applySuper('quack');
+            console.log('My name is '+ this.name +'!');
+        }       
     });
     
     /// Forget about the `new` operator, use .create() method instead:
-    var duck = $duck.create();
+    var donald = $talkingDuck.create({name: 'Donald'});
+    donald.quack();// Donald Duck: Quack-quack! My name is Donald!
 
     /// Forget about the `instanceof` operator, use JS native 
     //  .isPrototypeOf() method instead:
-    $duck.isPrototypeOf(duck);// - true
+    $duck.isPrototypeOf(donald);// true
 
 
 
-###### Quick example (cloning):
+###### Cloning objects:
 
-    var $myProto = {a:1, b:2, c:3};
-    var    clone = $object.clone.apply($myProto);
-         clone.a = 11; // $myProto.a still == 1
-      $myProto.b = 22; // clone.b will be also changed to 22
-
-See: [clone][], [create][], [copy][], [deepCopy][], [deepClone][].
+    var $proto  = $object.clone({a:1, b:2, c:3});
+    
+    /// clone:
+    var clone   = $proto.clone();
+        clone.a = 11; // $proto.a not changed
+       $proto.b = 22; // clone.b will be also changed to 22
+        
+    ///  copy: 
+    var  copy   = $proto.copy();
+         copy.a = 111;// $proto.a not changed
+       $proto.b = 222;// copy.b not changed  
+    
+    /// create:
+    var instance   = $proto.create({d: 4444});
+        instance.a = 1111;// $proto.a not changed
+          $proto.b = 2222;// like clone, instance.b will be also changed to 2222
+        instance.e = 5555;// error: can't add new properties to the instances,
+                          // instance by default are sealed
+    assert( instance.e === undefined );
+    assert( instance.a === 1111 );  
+    assert( instance.d === 4444 );  
+        
+See: [clone][], [copy][], [create][], [deepCopy][], [deepClone][].
 
 ###### Property modificators:
 
@@ -84,32 +113,36 @@ See: [clone][], [create][], [copy][], [deepCopy][], [deepClone][].
 
 See: [describe][].
 
-###### Constructors & instantiation:
+###### Inheritance & constructors:
         
     var $parent = $object.clone({
         constructor: function Parent(){
+            this.applySuper();
             console.log('$parent constructor arguments:', arguments);
         }
     });
+        
     var $child = $parent.clone({
         constructor: function Child(arg1, arg2){
-            console.log('$child constructor arguments:', arguments);
             this.callSuper('constructor', arg1, arg2);
+            console.log('$child constructor arguments:', arguments);
         }
     });
+        
     var $grandchild = $child.clone({
         constructor: function Grandchild(){
-            console.log('$grandchild constructor arguments:', arguments);
             this.applySuper(arguments);
+            console.log('$grandchild constructor arguments:', arguments);
         }
     });
-    var grandchild = $grandchild.create(1,2,3);
-        // will output:
-        // $grandchild constructor arguments: [1,2,3]
-        // $child constructor arguments: [1,2,3]
-        // $parent constructor arguments: [1,2]
         
-    assert( $child.isPrototypeOf(grandchild) );
+    var myBoy = $grandchild.create(1,2,3);
+        /// console log:
+        // $parent constructor arguments: [1,2]
+        // $child constructor arguments: [1,2,3]
+        // $grandchild constructor arguments: [1,2,3]
+        
+    assert( $child.isPrototypeOf(myBoy) );
 
 See: [constructor][], [create][], [applySuper][], [callSuper][], [createSuperSafeCallback][].
 
