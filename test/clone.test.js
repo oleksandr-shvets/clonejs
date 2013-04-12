@@ -214,26 +214,45 @@ this['test $object'] = {
         test.done();
     },
 
-    'callSuper, applySuper': function(test){
-        var calls = [];
-        var $parent = $object.clone({
-            constructor: function(arg){
-                calls.push('collection');
-                this.callSuper('constructor', arg);
-            }
-        });
-        var $child = $parent.clone({
-            constructor: function(arg){
-                calls.push('users');
-                this.applySuper(arguments);
-            }
-        });
+    'callSuper, applySuper': {
+        test: function(test){
+            var calls = [];
+            var $parent = $object.clone({
+                constructor: function(arg){
+                    calls.push('collection');
+                    this.callSuper('constructor', arg);
+                }
+            });
+            var $child = $parent.clone({
+                constructor: function(arg){
+                    calls.push('users');
+                    this.applySuper(arguments);
+                }
+            });
+            var child = $child.create({setBy$objectConstructor: 11});
+                
+                test.deepEqual(calls, ['users','collection']);
+                test.equal(child.setBy$objectConstructor, 11);
+    
+            test.done();
+        },
+        
+        'first call applySuper() on sealed object': function(test){
+            var $parent = $object.clone({
+                method: function(){}
+            });
+            var $child = $parent.clone({
+                method: function(arg){
+                    this.applySuper('method');
+                }
+            });
+            var child = $child.clone();
 
-        var child = $child.create({setBy$objectConstructor: 11});
-            test.deepEqual(calls, ['users','collection']);
-            test.equal(child.setBy$objectConstructor, 11, '$object.constructor called');
+            child.seal();
+            child.method();
 
-        test.done();
+            test.done();
+        }
     },
 
     createSuperSafeCallback: function(test){
@@ -336,7 +355,7 @@ this['test $object'] = {
     },
 
     getValues: function(test){
-        var obj = $object.clone({en:'1 0', _p:'0 0'}).create({ownEn:'1 1', _own:'0 1'});
+        var obj = $object.clone({en:'1 0', _p:'0 0'}).clone({ownEn:'1 1', _own:'0 1'});
         //                      enumerable,   own
         test.deepEqual(obj.getValues(true,   true).sort(), [ '1 1' ]); 
         test.deepEqual(obj.getValues(false, false).sort(), [ '0 0', '0 1', '1 0', '1 1' ]);
@@ -346,27 +365,32 @@ this['test $object'] = {
         test.done();
     },
 
-//    setValues: function(test){
-//        var $obj = $object.clone({p:11, _h:12}), own = {p2:21, _h2:22}, 
-//            obj  = $obj.create(own), values;
+    setValues: function(test){
+        var obj = $object.clone({en:'1 0', _p:'0 0'}).clone({ownEn:'1 1', _own:'0 1'}), values;
+
+        values = obj.getValues();
+            test.deepEqual(obj, obj.copy(Infinity).setValues(values) );
+       
+        values = obj.getValues(true);
+            test.deepEqual(obj, obj.copy(Infinity).setValues(values, true) );
+
+//        console.log('copy values:', obj.copy(Infinity).getValues(false) );
+//        values = obj.getValues(false);
+//            test.deepEqual(obj, obj.copy(Infinity).setValues(values, false) );
+//        console.log(values);
 //        
-//        test.deepEqual(values = obj.getValues(),
-//                       $obj.create(own).setValues(values)  );
+//        values = obj.getValues(true, false);
+//            test.deepEqual(obj, obj.copy(Infinity).setValues(values, true,  false) );
 //        
-//        test.deepEqual(values = obj.getValues(true),
-//                       $obj.create(own).setValues(values), true);
+//        values = obj.getValues(false, true);
+//            test.deepEqual(obj, obj.copy(Infinity).setValues(values, false, true) );
 //        
-//        test.deepEqual(values = obj.getValues(false),
-//                       $obj.create(own).setValues(values), false);
-//        
-//        test.deepEqual(values = obj.getValues(true, false),
-//                       $obj.create(own).setValues(values), true, false);
-//        
-//        test.deepEqual(values = obj.getValues(false, true),
-//                       $obj.create(own).setValues(values), false, true);
-//        
-//        test.done();
-//    }
+//        values = obj.getValues(false, false);
+//            test.deepEqual(obj, obj.copy(Infinity).setValues(values, false, false) );
+        
+        
+        test.done();
+    }
 
 };
 

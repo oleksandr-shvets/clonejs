@@ -114,7 +114,6 @@ var $object = /** @lands $object# */{
         return obj.constructor.apply(obj, arguments) || obj;
     },
 
-
     /**
      * Default object constructor. Override it if you want to create custom type. 
      * Defines given properties and seal this object.
@@ -124,11 +123,8 @@ var $object = /** @lands $object# */{
      * @memberOf $object#
      */
     constructor: function Object$(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
-        properties && this.defineProperties(properties, defaultDescriptor);
-
-        if( this.constructor === Object$ ){
-            this.seal();
-        }
+        if(properties) this.defineProperties(properties, defaultDescriptor);
+        if(this.constructor === Object$) this.seal();
     },
 
     /**
@@ -278,19 +274,7 @@ var $object = /** @lands $object# */{
             methodName = 'constructor';
         }//</arguments>
 
-        /* if not */('__super__' in this) || this.defineProperty(
-            '__super__', {value: this.getSuper(), writable:true, configurable:true}
-            /**
-             * Link to the instance prototype. 
-             * Dynamically changed to next by prototype chain, while `{@link #applySuper}` method executing. 
-             * System property. **Use it only for debug purposes**.
-             * @name  __super__
-             * @type  {?Object}
-             * @see $object#applySuper
-             * @private
-             * @memberOf $object#
-             */
-        );
+        '__super__' in this || this.getSuper(true);
 
         // save super
         var savedSuper = this.__super__;
@@ -320,8 +304,24 @@ var $object = /** @lands $object# */{
      * @returns {Object}
      * @memberOf $object#
      */
-    getSuper: function(){
-        return Object.getPrototypeOf( Object.getPrototypeOf(this) );    
+    getSuper: function(/** boolean=false */define){
+        var __super__ = Object.getPrototypeOf(Object.getPrototypeOf(this));
+        if(define){
+            this.defineProperty(
+                '__super__', {value: __super__, writable:true, configurable:true}
+                /**
+                 * Link to the instance prototype.
+                 * Dynamically changed to next by prototype chain, while `{@link #applySuper}` method executing.
+                 * System property. **Use it only for debug purposes**.
+                 * @name  __super__
+                 * @type  {?Object}
+                 * @see $object#applySuper
+                 * @private
+                 * @memberOf $object#
+                 */
+            );
+        }
+        return  __super__;    
     },
     
     /**
@@ -999,7 +999,9 @@ var $object = /** @lands $object# */{
     /** Wrapper for [Object.seal⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal)
      * @memberof $object# */
     seal: function(){
-        return Object.seal(this) },
+        '__super__' in this || this.getSuper(true);
+        return Object.seal(this);
+    },
     /** Wrapper for [Object.isSealed⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isSealed)
      * @memberof $object# */
     isSealed: function(){
