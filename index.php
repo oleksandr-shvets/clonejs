@@ -81,7 +81,17 @@ function include_markdown($filename){
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
 
-<?php include_markdown('../../README.md') ?>
+        <?php include_markdown('../../README.md') ?>
+        
+        <script>
+        if( window.location.protocol == 'file:' ){
+            var src = '../../test/conf/nodeunit-browser.html';
+            document.write('\
+                <h6><a href="'+src+'">Unit tests:</a></h6> \
+                <pre><code><iframe src="'+src+'" style="width:100%; height:38em"></iframe></code></pre> \
+            ');
+        };
+        </script>
           
       </section>
     </div>

@@ -69,7 +69,7 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
 
-<h2><a href="http://clonejs.org">clone.js</a> <a href="https://travis-ci.org/quadroid/clonejs"><img alt="Build Status" title="travis-ci.org" src="https://travis-ci.org/quadroid/clonejs.png?branch=master"/></a></h2>
+        <h2><a href="http://clonejs.org">clone.js</a> <a href="https://travis-ci.org/quadroid/clonejs"><img alt="Build Status" title="travis-ci.org" src="https://travis-ci.org/quadroid/clonejs.png?branch=master"/></a></h2>
 
 <p></p>
 
@@ -251,6 +251,16 @@ var users = ns.models.$users.create([{name: &#39;User1&#39;}]);</code></pre>
 <p>See: <a href="./symbols/ns.html">ns</a>, <a href="./symbols/ns.html#extend">ns.extend</a>, <a href="./symbols/ns.html#put">ns.put</a>.</p>
 
 <p></p>
+        
+        <script>
+        if( window.location.protocol == 'file:' ){
+            var src = '../../test/conf/nodeunit-browser.html';
+            document.write('\
+                <h6><a href="'+src+'">Unit tests:</a></h6> \
+                <pre><code><iframe src="'+src+'" style="width:100%; height:38em"></iframe></code></pre> \
+            ');
+        };
+        </script>
           
       </section>
     </div>
