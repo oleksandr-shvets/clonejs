@@ -109,24 +109,54 @@ var ns = require(&#39;clonejs&#39;),
 /// Forget about classes.    
 //  Instead of creating class (function), create prototype (object):
 var $duck = $object.clone({
-    quack: function(){}
+    name: &#39;Unnamed&#39;,
+    quack: function(){
+        console.log( this.name +&#39; Duck: Quack-quack!&#39;);
+    }
+});
+$duck.quack();//Unnamed Duck: Quack-quack!
+
+/// Inheritance is simple: 
+var $talkingDuck = $duck.clone({
+    quack: function(){
+        this.applySuper(&#39;quack&#39;);
+        console.log(&#39;My name is &#39;+ this.name +&#39;!&#39;);
+    }       
 });
 
 /// Forget about the `new` operator, use .create() method instead:
-var duck = $duck.create();
+var donald = $talkingDuck.create({name: &#39;Donald&#39;});
+donald.quack();// Donald Duck: Quack-quack! My name is Donald!
 
 /// Forget about the `instanceof` operator, use JS native 
 //  .isPrototypeOf() method instead:
-$duck.isPrototypeOf(duck);// true</code></pre>
+$duck.isPrototypeOf(donald);// true</code></pre>
 
 <h6>Cloning objects:</h6>
 
-<pre><code>var $myProto = {a:1, b:2, c:3};
-var    clone = $object.clone.apply($myProto);
-     clone.a = 11; // $myProto.a still == 1
-  $myProto.b = 22; // clone.b will be also changed to 22</code></pre>
+<pre><code>var $proto  = $object.clone({a:1, b:2, c:3});
 
-<p>See: <a href="./symbols/%24object.html#clone">clone</a>, <a href="./symbols/%24object.html#create">create</a>, <a href="./symbols/%24object.html#copy">copy</a>, <a href="./symbols/%24object.html#deepCopy">deepCopy</a>, <a href="./symbols/%24object.html#deepClone">deepClone</a>.</p>
+/// clone:
+var clone   = $proto.clone();
+    clone.a = 11; // $proto.a not changed
+   $proto.b = 22; // clone.b will be also changed to 22
+
+///  copy: 
+var  copy   = $proto.copy();
+     copy.a = 111;// $proto.a not changed
+   $proto.b = 222;// copy.b not changed  
+
+/// create:
+var instance   = $proto.create({d: 4444});
+    instance.a = 1111;// $proto.a not changed
+      $proto.b = 2222;// like clone, instance.b will be also changed to 2222
+    instance.e = 5555;// error: can&#39;t add new properties to the instances,
+                      // instance by default are sealed
+assert( instance.e === undefined );
+assert( instance.a === 1111 );  
+assert( instance.d === 4444 );  </code></pre>
+
+<p>See: <a href="./symbols/%24object.html#clone">clone</a>, <a href="./symbols/%24object.html#copy">copy</a>, <a href="./symbols/%24object.html#create">create</a>, <a href="./symbols/%24object.html#deepCopy">deepCopy</a>, <a href="./symbols/%24object.html#deepClone">deepClone</a>.</p>
 
 <h6>Property modificators:</h6>
 
