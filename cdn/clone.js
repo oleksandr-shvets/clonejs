@@ -1,7 +1,7 @@
 'use strict';
 /**
  * @title   clone.js - the true prototype-based JavaScript micro-framework.
- * @version v0.7.2-05-beta
+ * @version v0.7.3-beta
  * @author  Alex Shvets
  *
  * @class
@@ -114,7 +114,6 @@ var $object = /** @lands $object# */{
         return obj.constructor.apply(obj, arguments) || obj;
     },
 
-
     /**
      * Default object constructor. Override it if you want to create custom type. 
      * Defines given properties and seal this object.
@@ -124,11 +123,8 @@ var $object = /** @lands $object# */{
      * @memberOf $object#
      */
     constructor: function Object$(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
-        properties && this.defineProperties(properties, defaultDescriptor);
-
-        if( this.constructor === Object$ ){
-            this.seal();
-        }
+        if(properties) this.defineProperties(properties, defaultDescriptor);
+        if(this.constructor === Object$) this.seal();
     },
 
     /**
@@ -278,19 +274,7 @@ var $object = /** @lands $object# */{
             methodName = 'constructor';
         }//</arguments>
 
-        /* if not */('__super__' in this) || this.defineProperty(
-            '__super__', {value: this.getSuper(), writable:true, configurable:true}
-            /**
-             * Link to the instance prototype. 
-             * Dynamically changed to next by prototype chain, while `{@link #applySuper}` method executing. 
-             * System property. **Use it only for debug purposes**.
-             * @name  __super__
-             * @type  {?Object}
-             * @see $object#applySuper
-             * @private
-             * @memberOf $object#
-             */
-        );
+        '__super__' in this || this.getSuper(true);
 
         // save super
         var savedSuper = this.__super__;
@@ -320,8 +304,24 @@ var $object = /** @lands $object# */{
      * @returns {Object}
      * @memberOf $object#
      */
-    getSuper: function(){
-        return Object.getPrototypeOf( Object.getPrototypeOf(this) );    
+    getSuper: function(/** boolean=false */define){
+        var __super__ = Object.getPrototypeOf(Object.getPrototypeOf(this));
+        if(define){
+            this.defineProperty(
+                '__super__', {value: __super__, writable:true, configurable:true}
+                /**
+                 * Link to the instance prototype.
+                 * Dynamically changed to next by prototype chain, while `{@link #applySuper}` method executing.
+                 * System property. **Use it only for debug purposes**.
+                 * @name  __super__
+                 * @type  {?Object}
+                 * @see $object#applySuper
+                 * @private
+                 * @memberOf $object#
+                 */
+            );
+        }
+        return  __super__;    
     },
     
     /**
@@ -371,7 +371,8 @@ var $object = /** @lands $object# */{
         var currentState  = $object.create();
         var ownProperties = listPrivate ? Object.getOwnPropertyNames(this) : Object.keys(this);
 
-        for(var i=0; i < ownProperties.length; i++){var name = ownProperties[i];
+        for(var i= 0, length=ownProperties.length; i<length; i++){
+            var name = ownProperties[i];
             currentState[name] = this[name];
         }
         return currentState;
@@ -435,7 +436,7 @@ var $object = /** @lands $object# */{
         /**                  boolean=false   */mixParents
         //**                Array=all */propertiesList
     ){
-        for(var i=0, value=arguments[i]; i < arguments.length; value=arguments[++i]) switch(typeof value){
+        for(var i=0, value=arguments[i], length=arguments.length; i<length; value=arguments[++i]) switch(typeof value){
             case 'string':   deepMethod    = value; break;
             case 'function': rootPrototype = value.prototype; break;
             case 'object':   rootPrototype = value; break;
@@ -450,6 +451,7 @@ var $object = /** @lands $object# */{
         if(typeof rootPrototype == 'undefined'){
             rootPrototype = $object;
         }
+        //</arguments>
 
         var sourceObj = this;
         if( typeof(sourceObj)=='function' && Object.getOwnPropertyNames(sourceObj.prototype) ){
@@ -466,7 +468,7 @@ var $object = /** @lands $object# */{
 
         sourceObjects = sourceObjects.reverse();
 
-        for(var i=0; i < sourceObjects.length; i++){
+        for(var i=0, length=sourceObjects.length; i<length; i++){
             sourceObj = sourceObjects[i];
             var ownPropertyNames = Object.getOwnPropertyNames(sourceObj);
             if (!mixParents && i && ownPropertyNames.length){
@@ -474,8 +476,8 @@ var $object = /** @lands $object# */{
             }
 
             // copy all own properties:
-            for(var p=0; p < ownPropertyNames.length; p++){
-                var name = ownPropertyNames[p];
+            for(var j=0, jLength=ownPropertyNames.length; j<jLength; j++){
+                var name = ownPropertyNames[j];
                 var descriptor = Object.getOwnPropertyDescriptor(sourceObj, name);
 
                 if( deepMethod && typeof sourceObj[name] == 'object' && sourceObj[name] !== null){
@@ -504,7 +506,7 @@ var $object = /** @lands $object# */{
         var obj = arguments.length ? $object.apply(this, 'copy', arguments) : $object.clone();
 
         var ownPropertyNames = Object.getOwnPropertyNames(this);
-        for(var i=0; i < ownPropertyNames.length; i++){
+        for(var i=0, length=ownPropertyNames.length; i<length; i++){
             var name = ownPropertyNames[i];
             var descriptor = Object.getOwnPropertyDescriptor(this, name);
             if(typeof this[name] == 'object' && this[name] !== null){
@@ -531,7 +533,7 @@ var $object = /** @lands $object# */{
         var obj = $object.apply(this, 'clone', arguments);
 
         var ownPropertyNames = Object.getOwnPropertyNames(this);
-        for(var i=0; i < ownPropertyNames.length; i++){
+        for(var i=0, length=ownPropertyNames.length; i<length; i++){
             var name = ownPropertyNames[i];
             if(typeof this[name] == 'object' && this[name] !== null){
                 var descriptor = Object.getOwnPropertyDescriptor(this, name);
@@ -574,7 +576,7 @@ var $object = /** @lands $object# */{
         }
 
         proto = obj;
-        do for(var i=0; i < allProperties.length; i++){
+        do for(var i=0, length=allProperties.length; i<length; i++){
             var name = allProperties[i];
             var descriptor = Object.getOwnPropertyDescriptor(proto, name);
             if( descriptor ){
@@ -705,7 +707,7 @@ var $object = /** @lands $object# */{
 
         if(!enumerableOnly){
             var keys = $object.getKeys.call(this, enumerableOnly, ownOnly);
-            for(var i= 0, count= keys.length; i<count; i++){ name = keys[i];
+            for(var i= 0, length= keys.length; i<length; i++){ name = keys[i];
                 callback.call(scope, this[name], name, this);
             }
         }else if(ownOnly){
@@ -713,7 +715,7 @@ var $object = /** @lands $object# */{
             //     http://jsperf.com/object-keys-vs-for-in-for-values/2
 
 //            var properties = Object.keys(this);
-//            for(var i= 0, count = properties.length; i < count; i++){
+//            for(var i= 0, length = properties.length; i < length; i++){
 //                name = properties[i];
 //                callback.call(scope, this[name], name, this);
 //            }
@@ -756,7 +758,7 @@ var $object = /** @lands $object# */{
         if(!enumerableOnly){
             
             var keys = $object.getKeys.call(this, enumerableOnly, ownOnly);
-            for(var i= 0, count= keys.length; i<count; i++){ name = keys[i];
+            for(var i= 0, length= keys.length; i<length; i++){ name = keys[i];
                 if(! callback.call(scope, this[name], name, this) ) return false;
             }
         }else if(ownOnly){
@@ -802,7 +804,7 @@ var $object = /** @lands $object# */{
         if(!enumerableOnly){
 
             var keys = $object.getKeys.call(this, enumerableOnly, ownOnly);
-            for(var i= 0, count= keys.length; i<count; i++){ name = keys[i];
+            for(var i= 0, length= keys.length; i<length; i++){ name = keys[i];
                 if( callback.call(scope, this[name], name, this) ) return true;
             }
         }else if(ownOnly){
@@ -878,6 +880,7 @@ var $object = /** @lands $object# */{
      * @memberof $object# */
     getValues: function(/** boolean=true */enumerableOnly,/** boolean=true */ownOnly){
         var keys = $object.getKeys.apply(this, arguments);
+        //console.log('getValues:', keys, enumerableOnly, ownOnly);
         return keys.map(function(key){
             return this[key];
         }, this);
@@ -889,7 +892,9 @@ var $object = /** @lands $object# */{
      * @memberof $object# */
     setValues: function(/** Array */values, /** boolean=true */enumerableOnly, /** boolean=true */ownOnly){
         var keys = $object.getKeys.call(this, enumerableOnly, ownOnly);
+        //console.log('setValues:', keys, enumerableOnly, ownOnly);
         keys.forEach(function(key, i){
+            //console.log(i,key);
             if(i in values) this[key] = values[i];
         }, this);
         return this;
@@ -998,7 +1003,9 @@ var $object = /** @lands $object# */{
     /** Wrapper for [Object.seal⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal)
      * @memberof $object# */
     seal: function(){
-        return Object.seal(this) },
+        '__super__' in this || this.getSuper(true);
+        return Object.seal(this);
+    },
     /** Wrapper for [Object.isSealed⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/isSealed)
      * @memberof $object# */
     isSealed: function(){
@@ -1192,7 +1199,7 @@ var ns = /** @lands ns# */{
  *  Description of some native types.  
  *  Listed objects does not present in global (window) object, it's only descriptions. 
  */
-    if(0)// (need for IDEa code inspections)
+    if(false)// (need for IDEa code inspections)
     /**
      * Object, that has at least one of the following property:  
      * `value`, `get`, `set`, `writable`, `configurable`, `enumerable`.
