@@ -264,12 +264,10 @@ var users = ns.models.$users.create([{name: &#39;User1&#39;}]);</code></pre>
     </div>
 
   </body>
-  <script src="./cdn/clone.min.js" type="text/javascript"></script>
   <script>
   window.onload = function(){
-      console.log(111);
-      $object.forEach.call(document.querySelectorAll('CODE'), function(el){
-          el.className = 'language-javascript';
+      Array.prototype.forEach.call( document.querySelectorAll('PRE > CODE'), function(el){
+          //el.className = 'language-javascript';
           hljs.highlightBlock(el, null, false);
       });
       //hljs.initHighlighting();

@@ -95,12 +95,10 @@ function include_markdown($filename){
     </div>
 
   </body>
-  <script src="./cdn/clone.min.js" type="text/javascript"></script>
   <script>
   window.onload = function(){
-      console.log(111);
-      $object.forEach.call(document.querySelectorAll('CODE'), function(el){
-          el.className = 'language-javascript';
+      Array.prototype.forEach.call( document.querySelectorAll('PRE > CODE'), function(el){
+          //el.className = 'language-javascript';
           hljs.highlightBlock(el, null, false);
       });
       //hljs.initHighlighting();
