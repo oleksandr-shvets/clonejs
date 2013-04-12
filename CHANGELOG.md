@@ -1,3 +1,9 @@
+### Build v0.7.3-beta (2013-04-12 06:00) 
+* improve documentation
+* fix bug: first call applySuper() on sealed object
+* optimize `for`
+* deploy scripts: add comments
+
 ### Build v0.7.2-05-beta (2013-04-06 15:35) 
 * reverse changelog items order
 * deploy scripts: fix new line in build message
