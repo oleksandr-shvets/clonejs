@@ -54,6 +54,10 @@ function include_markdown($filename){
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
+        
+          <?/*<script src="http://vk.com/js/api/share.js?11" charset="windows-1251"></script>
+          <script>document.write(VK.Share.button(false,{type: "round", text: "Нра"}))</script>*/?>
+          
           <a id="forkme_banner" href="https://github.com/quadroid/clonejs">View on GitHub</a>
 
           <h1 id="project_title">Clonejs</h1>
@@ -81,17 +85,17 @@ function include_markdown($filename){
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
 
-        <?php include_markdown('../../README.md') ?>
-        
         <script>
         if( window.location.protocol == 'file:' ){
             var src = '../../test/conf/nodeunit-browser.html';
             document.write('\
-                <h6><a href="'+src+'">Unit tests:</a></h6> \
-                <pre><code><iframe src="'+src+'" style="width:100%; height:38em"></iframe></code></pre> \
+                <h6 style="margin: 0px"><a href="'+src+'">Unit testing...</a></h6> \
+                <iframe src="'+src+'" style="width:100%; height:32em"></iframe> \
             ');
         };
         </script>
+        
+        <?php include_markdown('../../README.md') ?>
           
       </section>
     </div>

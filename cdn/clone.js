@@ -1,7 +1,7 @@
 'use strict';
 /**
  * @title   clone.js - the true prototype-based JavaScript micro-framework.
- * @version v0.7.3-beta
+ * @version $Prompt=abcd$
  * @author  Alex Shvets
  *
  * @class
@@ -889,6 +889,7 @@ var $object = /** @lands $object# */{
     /**
      * Set values for own enumerable properties. Order of values should be the same as `{@link $object#getValues}()` produce.
      * @this {Object} Instance or prototype.
+     * @version alpha
      * @memberof $object# */
     setValues: function(/** Array */values, /** boolean=true */enumerableOnly, /** boolean=true */ownOnly){
         var keys = $object.getKeys.call(this, enumerableOnly, ownOnly);

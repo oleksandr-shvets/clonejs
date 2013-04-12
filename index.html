@@ -43,6 +43,8 @@
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
+        
+                    
           <a id="forkme_banner" href="https://github.com/quadroid/clonejs">View on GitHub</a>
 
           <h1 id="project_title">Clonejs</h1>
@@ -60,7 +62,7 @@
               <a class="zip_download_link" href="https://github.com/quadroid/clonejs/zipball/master">Download this project as a .zip file</a>
               <a class="tar_download_link" href="https://github.com/quadroid/clonejs/tarball/master">Download this project as a tar.gz file</a>
               <span class="version">
-                 v0.7.3-beta              </span>
+                 $Prompt=abcd$              </span>
             </section>
         </header>
     </div>
@@ -69,199 +71,17 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
 
-        <h2><a href="http://clonejs.org">clone.js</a> <a href="https://travis-ci.org/quadroid/clonejs"><img alt="Build Status" title="travis-ci.org" src="https://travis-ci.org/quadroid/clonejs.png?branch=master"/></a></h2>
-
-<p></p>
-
-<p>This is the micro-framework that based on the ECMA Script 5 features like <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create⠙</a> and <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">property descriptors⠙</a>.</p>
-
-<h5>Try the true <a href="http://en.wikipedia.org/wiki/Prototype-based_programming">prototype-based OOP⠙</a></h5>
-
-<p><strong>It&#39;s trivial to create new &quot;classes&quot;</strong> - just clone the prototype and change a couple of properties and voila... new &quot;class&quot;.</p>
-
-<p><strong>It&#39;s really class-free</strong>: do you know the difference between js constructor-functions and classes in other languages?
-<code>$object.clone</code> produces prototype objects, not function-constructors, unlike other class-producing tools (<code>Backbone.Model.extend</code>, <code>Ext.define</code>, <code>dojo.declare</code>).</p>
-
-<p>In this framework you can easilly create and manipulate objects without constructors, instead of js way,
-where you should define a constructor for every object (that you want to use as prototype), even if you didn&#39;t need it.
-It&#39;s possible to build and maintain extremely <strong>large numbers of &quot;classes&quot; with comparatively little code</strong>.</p>
-
-<p>See more:</p>
-
-<ul><li><a href="http://programmers.stackexchange.com/questions/110936/what-are-the-advantages-of-prototype-based-oop-over-class-based-oop#answers-header">advantages of prototype-based OOP⠙</a></li><li><a href="http://www.2ality.com/2011/11/javascript-classes.html">Myth: JavaScript needs classes⠙</a></li></ul>
-
-<h3>Installation</h3>
-
-<p>Node.js:</p>
-
-<pre><code>npm install clonejs</code></pre>
-
-<p><a href="http://code.lancepollard.com/github-as-a-cdn/">CDN⠙</a> for client-side (~3 KB gzipped):</p>
-
-<pre><code>&lt;script src=&quot;http://quadroid.github.io/clonejs/cdn/clone.min.js&quot;&gt;&lt;/script&gt;</code></pre>
-
-<h3>Usage</h3>
-
-<pre><code>// node.js:
-var ns = require(&#39;clonejs&#39;),
-    $object = ns.prototype;
-
-/// Forget about classes.    
-//  Instead of creating class (function), create prototype (object):
-var $duck = $object.clone({
-    name: &#39;Unnamed&#39;,
-    quack: function(){
-        console.log( this.name +&#39; Duck: Quack-quack!&#39;);
-    }
-});
-$duck.quack();//Unnamed Duck: Quack-quack!
-
-/// Inheritance is simple: 
-var $talkingDuck = $duck.clone({
-    quack: function(){
-        this.applySuper(&#39;quack&#39;);
-        console.log(&#39;My name is &#39;+ this.name +&#39;!&#39;);
-    }       
-});
-
-/// Forget about the `new` operator, use .create() method instead:
-var donald = $talkingDuck.create({name: &#39;Donald&#39;});
-donald.quack();// Donald Duck: Quack-quack! My name is Donald!
-
-/// Forget about the `instanceof` operator, use JS native 
-//  .isPrototypeOf() method instead:
-$duck.isPrototypeOf(donald);// true</code></pre>
-
-<h6>Cloning objects:</h6>
-
-<pre><code>var $proto  = $object.clone({a:1, b:2, c:3});
-
-/// clone:
-var clone   = $proto.clone();
-    clone.a = 11; // $proto.a not changed
-   $proto.b = 22; // clone.b will be also changed to 22
-
-///  copy: 
-var  copy   = $proto.copy();
-     copy.a = 111;// $proto.a not changed
-   $proto.b = 222;// copy.b not changed  
-
-/// create:
-var instance   = $proto.create({d: 4444});
-    instance.a = 1111;// $proto.a not changed
-      $proto.b = 2222;// like clone, instance.b will be also changed to 2222
-    instance.e = 5555;// error: can&#39;t add new properties to the instances,
-                      // instance by default are sealed
-assert( instance.e === undefined );
-assert( instance.a === 1111 );  
-assert( instance.d === 4444 );  </code></pre>
-
-<p>See: <a href="./symbols/%24object.html#clone">clone</a>, <a href="./symbols/%24object.html#copy">copy</a>, <a href="./symbols/%24object.html#create">create</a>, <a href="./symbols/%24object.html#deepCopy">deepCopy</a>, <a href="./symbols/%24object.html#deepClone">deepClone</a>.</p>
-
-<h6>Property modificators:</h6>
-
-<pre><code>var $myType = $object.clone({
-    &#39;(final)          property1&#39;: &quot;not configurable and not writable&quot;,
-    &#39;(writable final) property2&#39;: &quot;not configurable only&quot;,
-    &#39;(hidden)         property3&#39;: &quot;not enumerable&quot;,
-    &#39;(const)           constant&#39;: &quot;not writable&quot;,
-                      property4 : &quot;simple property&quot;,
-    &#39;(get)       property3alias&#39;: &#39;property3&#39;,// automatically create getter
-                          _item : &quot;private property (not enumerable)&quot;,
-                   &#39;(get)  item&#39;: function() { return this._item },
-                   &#39;(set)  item&#39;: function(v){ this._item = v    },
-                    constructor : &#39;MyType&#39;
-});
-assert( $myType.property3alias === $myType.property3 );</code></pre>
-
-<p>See: <a href="./symbols/%24object.html#.describe">describe</a>.</p>
-
-<h6>Inheritance &amp; constructors:</h6>
-
-<pre><code>var $parent = $object.clone({
-    constructor: function Parent(){
-        this.applySuper();
-        console.log(&#39;$parent constructor arguments:&#39;, arguments);
-    }
-});
-
-var $child = $parent.clone({
-    constructor: function Child(arg1, arg2){
-        this.callSuper(&#39;constructor&#39;, arg1, arg2);
-        console.log(&#39;$child constructor arguments:&#39;, arguments);
-    }
-});
-
-var $grandchild = $child.clone({
-    constructor: function Grandchild(){
-        this.applySuper(arguments);
-        console.log(&#39;$grandchild constructor arguments:&#39;, arguments);
-    }
-});
-
-var myBoy = $grandchild.create(1,2,3);
-    /// console log:
-    // $parent constructor arguments: [1,2]
-    // $child constructor arguments: [1,2,3]
-    // $grandchild constructor arguments: [1,2,3]
-
-assert( $child.isPrototypeOf(myBoy) );</code></pre>
-
-<p>See: <a href="./symbols/%24object.html#constructor">constructor</a>, <a href="./symbols/%24object.html#create">create</a>, <a href="./symbols/%24object.html#applySuper">applySuper</a>, <a href="./symbols/%24object.html#callSuper">callSuper</a>, <a href="./symbols/%24object.html#createSuperSafeCallback">createSuperSafeCallback</a>.</p>
-
-<h6>Properties iteration:</h6>
-
-<pre><code>var $obj = $object.clone({a: 11, b: 22, c: 33}),
-     obj = $obj.create({d: 44});
-
-/// Map only own properties (default):
-var mappedObj1 = obj.map(function(value){return 100 + value});
-    // mappedObj1 == {d: 144}
-
-/// Map all properties, replace default (`$object`) prototype of created object:
-var proto = {e: 55};
-var mappedObj2 = obj.map(function(value){return 100 + value}, obj, false, proto);
-    // mappedObj2 == {a: 111, b: 122, c: 133, d: 144, e: 155}
-proto.f = 66;
-    // mappedObj2 == {a: 111, b: 122, c: 133, d: 144, e: 155, f: 66}</code></pre>
-
-<p>See: <a href="./symbols/%24object.html#forEach">forEach</a>, <a href="./symbols/%24object.html#map">map</a>, <a href="./symbols/%24object.html#filter">filter</a>, <a href="./symbols/%24object.html#every">every</a>, <a href="./symbols/%24object.html#some">some</a>.</p>
-
-<h6>Namespaces:</h6>
-
-<pre><code>ns.extend(&#39;collection&#39;, {
-    $item:  {},
-    _items: {}
-});
-ns.collection.extend(&#39;arrayCollection&#39;, {_items: []});
-
-var $users = ns.collection.$arrayCollection.clone({
-    $item: {name: &#39;&#39;, isAdmin: false},
-    constructor: function Users(items){
-        items.forEach(function(item){
-            var newItem = $object.create.call(this.$item, item);
-            this._items.push(newItem);
-        }, this);
-    }
-});
-ns.put(&#39;models.users&#39;, $users);
-
-var users = ns.models.$users.create([{name: &#39;User1&#39;}]);</code></pre>
-
-<p>See: <a href="./symbols/ns.html">ns</a>, <a href="./symbols/ns.html#extend">ns.extend</a>, <a href="./symbols/ns.html#put">ns.put</a>.</p>
-
-<p></p>
-        
         <script>
         if( window.location.protocol == 'file:' ){
             var src = '../../test/conf/nodeunit-browser.html';
             document.write('\
-                <h6><a href="'+src+'">Unit tests:</a></h6> \
-                <pre><code><iframe src="'+src+'" style="width:100%; height:38em"></iframe></code></pre> \
+                <h6 style="margin: 0px"><a href="'+src+'">Unit testing...</a></h6> \
+                <iframe src="'+src+'" style="width:100%; height:32em"></iframe> \
             ');
         };
         </script>
-          
+        
+                  
       </section>
     </div>
 
