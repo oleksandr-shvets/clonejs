@@ -371,7 +371,8 @@ var $object = /** @lands $object# */{
         var currentState  = $object.create();
         var ownProperties = listPrivate ? Object.getOwnPropertyNames(this) : Object.keys(this);
 
-        for(var i=0; i < ownProperties.length; i++){var name = ownProperties[i];
+        for(var i= 0, length=ownProperties.length; i<length; i++){
+            var name = ownProperties[i];
             currentState[name] = this[name];
         }
         return currentState;
@@ -435,7 +436,7 @@ var $object = /** @lands $object# */{
         /**                  boolean=false   */mixParents
         //**                Array=all */propertiesList
     ){
-        for(var i=0, value=arguments[i]; i < arguments.length; value=arguments[++i]) switch(typeof value){
+        for(var i=0, value=arguments[i], length=arguments.length; i<length; value=arguments[++i]) switch(typeof value){
             case 'string':   deepMethod    = value; break;
             case 'function': rootPrototype = value.prototype; break;
             case 'object':   rootPrototype = value; break;
@@ -466,7 +467,7 @@ var $object = /** @lands $object# */{
 
         sourceObjects = sourceObjects.reverse();
 
-        for(var i=0; i < sourceObjects.length; i++){
+        for(var i=0, length=sourceObjects.length; i<length; i++){
             sourceObj = sourceObjects[i];
             var ownPropertyNames = Object.getOwnPropertyNames(sourceObj);
             if (!mixParents && i && ownPropertyNames.length){
@@ -474,8 +475,8 @@ var $object = /** @lands $object# */{
             }
 
             // copy all own properties:
-            for(var p=0; p < ownPropertyNames.length; p++){
-                var name = ownPropertyNames[p];
+            for(var j=0, jLength=ownPropertyNames.length; j<jLength; j++){
+                var name = ownPropertyNames[j];
                 var descriptor = Object.getOwnPropertyDescriptor(sourceObj, name);
 
                 if( deepMethod && typeof sourceObj[name] == 'object' && sourceObj[name] !== null){
@@ -504,7 +505,7 @@ var $object = /** @lands $object# */{
         var obj = arguments.length ? $object.apply(this, 'copy', arguments) : $object.clone();
 
         var ownPropertyNames = Object.getOwnPropertyNames(this);
-        for(var i=0; i < ownPropertyNames.length; i++){
+        for(var i=0, length=ownPropertyNames.length; i<length; i++){
             var name = ownPropertyNames[i];
             var descriptor = Object.getOwnPropertyDescriptor(this, name);
             if(typeof this[name] == 'object' && this[name] !== null){
@@ -531,7 +532,7 @@ var $object = /** @lands $object# */{
         var obj = $object.apply(this, 'clone', arguments);
 
         var ownPropertyNames = Object.getOwnPropertyNames(this);
-        for(var i=0; i < ownPropertyNames.length; i++){
+        for(var i=0, length=ownPropertyNames.length; i<length; i++){
             var name = ownPropertyNames[i];
             if(typeof this[name] == 'object' && this[name] !== null){
                 var descriptor = Object.getOwnPropertyDescriptor(this, name);
@@ -574,7 +575,7 @@ var $object = /** @lands $object# */{
         }
 
         proto = obj;
-        do for(var i=0; i < allProperties.length; i++){
+        do for(var i=0, length=allProperties.length; i<length; i++){
             var name = allProperties[i];
             var descriptor = Object.getOwnPropertyDescriptor(proto, name);
             if( descriptor ){
@@ -705,7 +706,7 @@ var $object = /** @lands $object# */{
 
         if(!enumerableOnly){
             var keys = $object.getKeys.call(this, enumerableOnly, ownOnly);
-            for(var i= 0, count= keys.length; i<count; i++){ name = keys[i];
+            for(var i= 0, length= keys.length; i<length; i++){ name = keys[i];
                 callback.call(scope, this[name], name, this);
             }
         }else if(ownOnly){
@@ -713,7 +714,7 @@ var $object = /** @lands $object# */{
             //     http://jsperf.com/object-keys-vs-for-in-for-values/2
 
 //            var properties = Object.keys(this);
-//            for(var i= 0, count = properties.length; i < count; i++){
+//            for(var i= 0, length = properties.length; i < length; i++){
 //                name = properties[i];
 //                callback.call(scope, this[name], name, this);
 //            }
@@ -756,7 +757,7 @@ var $object = /** @lands $object# */{
         if(!enumerableOnly){
             
             var keys = $object.getKeys.call(this, enumerableOnly, ownOnly);
-            for(var i= 0, count= keys.length; i<count; i++){ name = keys[i];
+            for(var i= 0, length= keys.length; i<length; i++){ name = keys[i];
                 if(! callback.call(scope, this[name], name, this) ) return false;
             }
         }else if(ownOnly){
@@ -802,7 +803,7 @@ var $object = /** @lands $object# */{
         if(!enumerableOnly){
 
             var keys = $object.getKeys.call(this, enumerableOnly, ownOnly);
-            for(var i= 0, count= keys.length; i<count; i++){ name = keys[i];
+            for(var i= 0, length= keys.length; i<length; i++){ name = keys[i];
                 if( callback.call(scope, this[name], name, this) ) return true;
             }
         }else if(ownOnly){
