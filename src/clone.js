@@ -1,4 +1,4 @@
-'use strict';
+(function(root){'use strict';
 /**
  * @title   clone.js - the true prototype-based JavaScript micro-framework.
  * @version v0.7.3-beta
@@ -1213,6 +1213,21 @@ var ns = /** @lands ns# */{
      * @name Constructor
      * @typedef {Function} */
 
+if(typeof module != 'undefined' && module.exports){
+    /// CommonJS module:
+    
+    module.exports = $ns;
+    
+}else if(root.requirejs && typeof define == 'function'){
+    /// RequireJS module:
+    
+    define(function(){return $ns});
+    
+}else{
+    /// No modules detected:
+    
+    root.$object = $object;
+    root.$ns = $ns;
+}
 
-// export ns module:
-if(typeof module != 'undefined' && module.exports) module.exports = ns;
+})(this);
