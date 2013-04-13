@@ -52,23 +52,34 @@ this['test $object'] = {
         test.done();
     },
 
-
-    create: function(test){
-        var customConstructorCalled = false;
-        var $myType = $object.clone({
-            constructor: function(){
-                customConstructorCalled = true;
-            }
-        });
-        var instance = $myType.create({ignored: true});
-            test.ok(customConstructorCalled);
-            test.ok(typeof instance.ignored == 'undefined');
-            test.ok(!Object.isSealed(instance));//default constructor does not called
-
-        instance = $object.create();
-            test.ok( Object.isSealed(instance), 'the created object should be sealed by default');
-
-        test.done();
+    create: {
+        
+        '': function(test){
+            var customConstructorCalled = false;
+            var $myType = $object.clone({
+                constructor: function(){
+                    customConstructorCalled = true;
+                }
+            });
+            var instance = $myType.create({ignored: true});
+                test.ok(customConstructorCalled);
+                test.ok(typeof instance.ignored == 'undefined');
+    
+    //        instance = $object.create();
+    //            test.ok( Object.isSealed(instance), 'the created object should be sealed by default');
+    
+            test.done();
+        },
+        
+        'super property should can be modified': function(test){
+            
+            var obj = $object.clone({a: 1}).create();
+            obj.a = 2;
+                
+                test.equal(obj.a, 2);
+            
+            test.done();
+        }
     },
 
     describe: function(test){

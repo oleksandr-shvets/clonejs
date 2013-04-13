@@ -87,11 +87,6 @@ Node.js:
     var instance   = $proto.create({d: 4444});
         instance.a = 1111;// $proto.a not changed
           $proto.b = 2222;// like clone, instance.b will be also changed to 2222
-        instance.e = 5555;// error: can't add new properties to the instances,
-                          // instance by default are sealed
-    assert( instance.e === undefined );
-    assert( instance.a === 1111 );  
-    assert( instance.d === 4444 );  
         
 See: [clone][], [copy][], [create][], [deepCopy][], [deepClone][].
 

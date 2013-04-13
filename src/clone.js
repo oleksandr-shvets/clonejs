@@ -87,8 +87,8 @@ var $object = /** @lands $object# */{
 
     /**
      * Use this method to create an instances of prototype objects.  
-     * Behaves like a [clone](#clone) method. But also apply constructor, and, if [default constructor][1] called,
-     * the created instance will be [sealed⠙][2] to avoid creation of [hidden classes⠙][3].  
+     * Behaves like a [clone](#clone) method. But also apply [constructor][1]<!--, and,
+     * the created instance will be [sealed⠙][2] to avoid creation of [hidden classes⠙][3]-->.  
      * All arguments, passed to `create()`, will be forwarded to [constructor][1].
      * [1]: #constructor
      * [2]: http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal
@@ -116,7 +116,7 @@ var $object = /** @lands $object# */{
 
     /**
      * Default object constructor. Override it if you want to create custom type. 
-     * Defines given properties and seal this object.
+     * Defines given properties.
      * @see $object.describe
      * @see $object#create
      * @this {Object} Instance only.
@@ -124,7 +124,6 @@ var $object = /** @lands $object# */{
      */
     constructor: function Object$(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
         if(properties) this.defineProperties(properties, defaultDescriptor);
-        if(this.constructor === Object$) this.seal();
     },
 
     /**
