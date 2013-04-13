@@ -16,13 +16,13 @@ This is the micro-framework that based on the ECMA Script 5 features like [Objec
 **It's really class-free**: do you know the difference between js constructor-functions and classes in other languages?
 `$object.clone` produces prototype objects, not function-constructors, unlike other class-producing tools (`Backbone.Model.extend`, `Ext.define`, `dojo.declare`).
 
-In this framework you can easilly create and manipulate objects without constructors, instead of js way,
+In this framework you can easilly create and manipulate objects without constructors, instead of classic js way,
 where you should define a constructor for every object (that you want to use as prototype), even if you didn't need it.
 It's possible to build and maintain extremely **large numbers of "classes" with comparatively little code**.
 
 See more:
 
-- [advantages of prototype-based OOP⠙](http://programmers.stackexchange.com/questions/110936/what-are-the-advantages-of-prototype-based-oop-over-class-based-oop#answers-header)
+- [Advantages of prototype-based OOP⠙](http://programmers.stackexchange.com/questions/110936/what-are-the-advantages-of-prototype-based-oop-over-class-based-oop#answers-header)
 - [Myth: JavaScript needs classes⠙](http://www.2ality.com/2011/11/javascript-classes.html)
 
 ### Installation
@@ -37,9 +37,10 @@ Node.js:
 
 ### Usage
 
-    // node.js:
+    //<node.js>
     var ns = require('clonejs'),
         $object = ns.prototype;
+    //</node.js>
         
     /// Forget about classes.    
     //  Instead of creating class (function), create prototype (object):
@@ -87,6 +88,8 @@ Node.js:
     var instance   = $proto.create({d: 4444});
         instance.a = 1111;// $proto.a not changed
           $proto.b = 2222;// like clone, instance.b will be also changed to 2222
+    assert( instance.a === 1111 ); 
+    assert( instance.d === 4444 );
         
 See: [clone][], [copy][], [create][], [deepCopy][], [deepClone][].
 
@@ -147,10 +150,12 @@ See: [constructor][], [create][], [applySuper][], [callSuper][], [createSuperSaf
          obj = $obj.create({d: 44});
 
     /// Map only own properties (default):
+        
     var mappedObj1 = obj.map(function(value){return 100 + value});
         // mappedObj1 == {d: 144}
 
-    /// Map all properties, replace default (`$object`) prototype of created object:
+    /// Map all properties, replace default (`$object`) prototype of returned object:
+        
     var proto = {e: 55};
     var mappedObj2 = obj.map(function(value){return 100 + value}, obj, false, proto);
         // mappedObj2 == {a: 111, b: 122, c: 133, d: 144, e: 155}
@@ -160,14 +165,21 @@ See: [constructor][], [create][], [applySuper][], [callSuper][], [createSuperSaf
 See: [forEach][], [map][], [filter][], [every][], [some][].
 
 ###### Namespaces:
-
-    ns.extend('collection', {
+    
+    /// create namespace `ns.collections`
+        
+    ns.extend('collections', {
         $item:  {},
         _items: {}
     });
-    ns.collection.extend('arrayCollection', {_items: []});
+
+    /// create namespace `ns.collections.arrayCollections`
+        
+    ns.collections.extend('arrayCollections', {_items: []});
+
+    /// create namespace  `ns.models.users`
     
-    var $users = ns.collection.$arrayCollection.clone({
+    var $users = ns.collections.$arrayCollections.clone({
         $item: {name: '', isAdmin: false},
         constructor: function Users(items){
             items.forEach(function(item){
@@ -177,6 +189,8 @@ See: [forEach][], [map][], [filter][], [every][], [some][].
         }
     });
     ns.put('models.users', $users);
+        
+    /// use namespace:
 
     var users = ns.models.$users.create([{name: 'User1'}]);
 
