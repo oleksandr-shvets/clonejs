@@ -3,7 +3,7 @@
 /**#nocode-*/
 /**
  * @title   clone.js - the true prototype-based JavaScript micro-framework.
- * @version v0.7.3-beta
+ * @version v0.7.4-beta
  * @author  Alex Shvets
  *
  * @class

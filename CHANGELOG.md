@@ -1,3 +1,12 @@
+### Build v0.7.4-beta (2013-04-14 09:06) 
+* add ability to inject into Object.prototype, update module interface
+* change namespace interface
+* add RequireJS support
+* bugfix: does not seal() created objects by default
+* update NodeUnit browser tests look
+* improve documentation
+* refactor tests
+
 ### Build v0.7.3-beta (2013-04-12 06:00) 
 * improve documentation
 * fix bug: first call applySuper() on sealed object
