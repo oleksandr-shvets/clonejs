@@ -1055,10 +1055,9 @@ var $object = /** @lands $object# */{
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
 /**
- * @namespace
- *    The namespace.
+ * @class
+ *    The namespace object.
  * @description
  * If you run the following code:
  * <code>
@@ -1086,13 +1085,17 @@ var $object = /** @lands $object# */{
  *     }
  * </code>
  */
-var ns = /** @lands ns# */{
+var $namespace = /** @lands $namespace# */{
     /** 
      * The prototype of every object in this namespace (default - `{@link $object}`).
      * @name prototype
      * @type Object
-     * @memberOf ns# */
+     * @memberOf $namespace# */
     prototype: $object,
+    
+    constructor: function(/** Object=$object */prototype){
+        if(prototype) this.prototype = prototype;
+    },
     
     /**
      * Extend namespace by prototype.
@@ -1101,23 +1104,23 @@ var ns = /** @lands ns# */{
      * @param nsItemName
      *        The name of the new sub-namespace 
      *        (begins with lower case letter).
-     * @param prototypeOrProperties
+     * @param prototype
      *        If this arg is not a clone (or sub-clone) of `ns.prototype`, 
      *        the new object will be created (cloned from `ns.prototype`).
      * @param defaultDescriptor
      *        The default {@link PropertyDescriptor} for created prototype.
-     * @returns {ns} The created sub-namespace.
-     * @memberOf ns# */
-    extend: function extend(/** string */nsItemName, /** Object */prototypeOrProperties, /** PropertyDescriptor= */defaultDescriptor){
+     * @returns {$namespace} The created sub-namespace.
+     * @memberOf $namespace# */
+    extend: function extend(/** string */nsItemName, /** Object */prototype, /** PropertyDescriptor= */defaultDescriptor){
 
         var $parent = this.prototype, parentNS = this;
 
-        if( $parent.isPrototypeOf(prototypeOrProperties) ){
-            var $newProto = prototypeOrProperties;
+        if( $parent.isPrototypeOf(prototype) ){
+            var $newProto = prototype;
             
         }else{
             
-            var properties = prototypeOrProperties;            
+            var properties = prototype;            
             var typeName = nsItemName[0].toUpperCase() + nsItemName.substr(1);
             if( properties.hasOwnProperty('constructor') ){
                 properties.constructor.typeName = typeName;
@@ -1127,7 +1130,7 @@ var ns = /** @lands ns# */{
             $newProto = $parent.clone(properties, defaultDescriptor);
         }      
     
-        var newNS = $object.clone.call(parentNS, {prototype: $newProto});
+        var newNS = /*parentNS*/$namespace.create($newProto);
         this['$'+nsItemName] =  $newProto;
         this[nsItemName] = newNS;
         
@@ -1140,8 +1143,8 @@ var ns = /** @lands ns# */{
      * @param nsPathName 
      *        If not specified, the value of `prototype.constructor.typeName` or `prototype.constructor.name` will be used. 
      * @param prototype
-     * @returns {ns} The created sub-namespace.
-     * @memberOf ns# */
+     * @returns {$namespace} The created sub-namespace.
+     * @memberOf $namespace# */
     put: function(/** string= */nsPathName, /** Object */prototype){
         
         if(typeof nsPathName != 'string'){

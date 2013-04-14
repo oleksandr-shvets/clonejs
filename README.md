@@ -167,21 +167,23 @@ See: [constructor][], [create][], [applySuper][], [callSuper][], [createSuperSaf
 See: [forEach][], [map][], [filter][], [every][], [some][].
 
 ###### Namespaces:
-    
-    /// create namespace `ns.collections`
         
-    ns.extend('collections', {
+    var app = clonejs.$namespace.create();
+    
+    /// create namespace item `app.collections`
+        
+    app.extend('collections', {
         $item:  {},
         _items: {}
     });
 
-    /// create namespace `ns.collections.arrayCollections`
-        
-    ns.collections.extend('arrayCollections', {_items: []});
+    /// create namespace item `app.collections.arrayCollections`
 
-    /// create namespace  `ns.models.users`
+    app.collections.extend('arrayCollections', {_items: []});
+
+    /// create namespace item  `app.models.users`
     
-    var $users = ns.collections.$arrayCollections.clone({
+    var $users = app.collections.$arrayCollections.clone({
         $item: {name: '', isAdmin: false},
         constructor: function Users(items){
             items.forEach(function(item){
@@ -190,13 +192,13 @@ See: [forEach][], [map][], [filter][], [every][], [some][].
             }, this);
         }
     });
-    ns.put('models.users', $users);
+    app.put('models.users', $users);
         
     /// use namespace:
 
-    var users = ns.models.$users.create([{name: 'User1'}]);
+    var users = app.models.$users.create([{name: 'User1'}]);
 
-See: [ns][], [ns.extend][], [ns.put][].
+See: [$namespace][], [$namespace.extend][], [$namespace.put][].
 
 
 
@@ -226,9 +228,9 @@ See: [ns][], [ns.extend][], [ns.put][].
 [callSuper]:   http://clonejs.org/symbols/%24object.html#callSuper
 [createSuperSafeCallback]: http://clonejs.org/symbols/%24object.html#createSuperSafeCallback
 
-[ns]:          http://clonejs.org/symbols/ns.html
-[ns.extend]:   http://clonejs.org/symbols/ns.html#extend
-[ns.put]:      http://clonejs.org/symbols/ns.html#put
+[$namespace]:          http://clonejs.org/symbols/$namespace.html
+[$namespace.extend]:   http://clonejs.org/symbols/$namespace.html#extend
+[$namespace.put]:      http://clonejs.org/symbols/$namespace.html#put
 
 <!-- HIDDEN: -->
 ![yandex metrika](http://mc.yandex.ru/watch/20738752)

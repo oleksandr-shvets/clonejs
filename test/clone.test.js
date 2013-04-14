@@ -351,9 +351,10 @@ this['test $object'] = {
     },
 
     getPrototypes: function(test){
-        ns.extend('level1',{n:1})
-          .extend('level1_1',{n:2})
-          .extend('level1_1_1',{n:3});
+        var ns = clonejs.$namespace.clone();
+            ns.extend('level1',{n:1})
+              .extend('level1_1',{n:2})
+              .extend('level1_1_1',{n:3});
         
         var $obj = ns.level1.level1_1.$level1_1_1.create();
         
@@ -401,72 +402,74 @@ this['test $object'] = {
         
         
         test.done();
-    }
-
-};
-
-
-this['test ns'] = {
-    
-    extend: function(test){
-        var ns1 = $object.apply(ns, 'copy');
-        ns1.extend('collection',          {name: 'collection'})
-               .extend('arrayCollection', {name: 'arrayCollection'});
-
-            _ns_check(ns1, test);
-        
-        test.done();
     },
-    
-    put: function(test){
-        var $collection = $object.clone({constructor: 'Collection'}),
-            $arrayCollection = $collection.clone({constructor: 'ArrayCollection'});
-        var ns2 = $object.copy.apply(ns);
-        ns2.put($arrayCollection);
-    
-            _ns_check(ns2, test);
 
-        var ns3 = $object.copy.apply(ns);
-        ns3.put('collection.arrayCollection', $arrayCollection);
+    $namespace: {
+        /*
         
-            _ns_check(ns3, test);
+        namespace contents:
+            ns = {
+                prototype: $ns,
+                items: {
+                    prototype: $item,
+                    subitems: {}, 
+                    $subitem: $subitem,
+                    
+                    extend: $ns.extend
+                },
+                $item: $item,
+    
+                extend: $ns.extend,
+                put: $ns.put
+            }
+            
+        1) $subitem should be a direct child of $item
+        2) items, subitems should be plural
+    
+        clone.clone()
+        clone.prototype
+        */
         
-        test.done();
+        extend: function(test){
+            var ns1 = clonejs.$namespace.create();
+            ns1.extend('collection',          {name: 'collection'})
+                   .extend('arrayCollection', {name: 'arrayCollection'});
+    
+                _ns_check(ns1, test);
+            
+            test.done();
+        },
+        
+        put: function(test){
+            var $collection = $object.clone({constructor: 'Collection'}),
+                $arrayCollection = $collection.clone({constructor: 'ArrayCollection'});
+            var ns2 = clonejs.$namespace.create();
+            ns2.put($arrayCollection);
+        
+                _ns_check(ns2, test);
+    
+            var ns3 = clonejs.$namespace.create();
+            ns3.put('collection.arrayCollection', $arrayCollection);
+            
+                _ns_check(ns3, test);
+            
+            test.done();
+        }
     }
 };
 
 function _ns_check(newNS, test){
     test.strictEqual(newNS.prototype, $object);
-    test.strictEqual(newNS.extend,    ns.extend);
-    test.strictEqual(newNS.put,       ns.put);
+    test.strictEqual(newNS.extend,    clonejs.$namespace.extend);
+    test.strictEqual(newNS.put,       clonejs.$namespace.put);
     
     test.ok( $object.isPrototypeOf(newNS.$collection) );
     test.equal( newNS.$collection.constructor.typeName, 'Collection');
     test.strictEqual(newNS.collection.prototype, newNS.$collection);
-    test.strictEqual(newNS.collection.extend,    ns.extend);
+    test.strictEqual(newNS.collection.extend,    clonejs.$namespace.extend);
 
     test.ok( newNS.$collection.isPrototypeOf(newNS.collection.$arrayCollection) );
     test.equal( newNS.collection.$arrayCollection.constructor.typeName, 'ArrayCollection');
     test.strictEqual(newNS.collection.arrayCollection.prototype, newNS.collection.$arrayCollection);
-    test.strictEqual(newNS.collection.arrayCollection.extend,    ns.extend);
-    
-//    test.strictEqual(newNS., );
-//    test.strictEqual(newNS., );
-//    test.strictEqual(newNS., );
-//    test.strictEqual(newNS., );
-//    test.deepEqual(newNS, {
-//        prototype: $object,
-//        extend: ns.extend,
-//        put: ns.put,
-//        $collection: {name: 'collection'},
-//        collection: {
-//            prototype: {name: 'collection'},
-//            extend: ns.extend,
-//            $arrayCollection: {name: 'arrayCollection'},
-//            arrayCollection: {
-//                prototype: {name: 'arrayCollection'},
-//                extend: ns.extend
-//            }
-//        }
-//    });
+    test.strictEqual(newNS.collection.arrayCollection.extend,    clonejs.$namespace.extend);
 }
