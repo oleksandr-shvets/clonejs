@@ -1246,17 +1246,17 @@ if(typeof module != 'undefined' && module.exports){
     
     if('clonejs' in global){
         var options = global.clonejs;
+
+        if(options.inject){
+            injectIntoObjectPrototype();
+        }
+    }
+
+    if(!options || options.$object !== false){
+        global.$object = exports.$object;
     }
 
     global.clonejs = exports;
-    
-    if(options.inject){
-        injectIntoObjectPrototype();
-    }
-    
-    if(options.$object !== false){
-        global.$object = global.clonejs.$object;
-    }
 }
 
 return;

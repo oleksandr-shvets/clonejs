@@ -39,8 +39,8 @@ Node.js:
 
     //<node.js>
     var clonejs = require('clonejs'),
-        $object = clonejs.prototype;
-    //or: var $object = require('clonejs').prototype;
+        $object = clonejs.$object;
+    //or: var $object = require('clonejs').$object;
     //or: require('clonejs').inject();
     //</node.js>
         
