@@ -1,4 +1,6 @@
+/**#nocode+*/
 (function(global){'use strict';
+/**#nocode-*/
 /**
  * @title   clone.js - the true prototype-based JavaScript micro-framework.
  * @version v0.7.3-beta
@@ -1282,4 +1284,6 @@ return;
          * @name Constructor
          * @typedef {Function} */
 
+/**#nocode+*/
 })(this);
+/**#nocode-*/
