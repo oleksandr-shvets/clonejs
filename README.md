@@ -38,8 +38,10 @@ Node.js:
 ### Usage
 
     //<node.js>
-    var ns = require('clonejs'),
-        $object = ns.prototype;
+    var clonejs = require('clonejs'),
+        $object = clonejs.prototype;
+    //or: var $object = require('clonejs').prototype;
+    //or: require('clonejs').inject();
     //</node.js>
         
     /// Forget about classes.    

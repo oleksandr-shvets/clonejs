@@ -1,4 +1,4 @@
-(function(root){'use strict';
+(function(global){'use strict';
 /**
  * @title   clone.js - the true prototype-based JavaScript micro-framework.
  * @version v0.7.3-beta
@@ -123,7 +123,11 @@ var $object = /** @lands $object# */{
      * @memberOf $object#
      */
     constructor: function Object$(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
-        if(properties) this.defineProperties(properties, defaultDescriptor);
+        if(typeof properties == 'object'){
+            this.defineProperties(properties, defaultDescriptor);
+        }else if(arguments.length){
+            return Object(properties);
+        }
     },
 
     /**
@@ -1043,7 +1047,7 @@ var $object = /** @lands $object# */{
 };
 
 // make methods not enumerable:
-$object./*re*/defineProperties($object);
+//$object./*re*/defineProperties($object);
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1192,42 +1196,90 @@ var ns = /** @lands ns# */{
     }
 };
 
-/**
- * @name _global_
- * @namespace
- *  Description of some native types.  
- *  Listed objects does not present in global (window) object, it's only descriptions. 
- */
-    if(false)// (need for IDEa code inspections)
-    /**
-     * Object, that has at least one of the following property:  
-     * `value`, `get`, `set`, `writable`, `configurable`, `enumerable`.
-     * @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty⠙</a>
-     * @name PropertyDescriptor
-     * @typedef {({value:*}|{get:{function():*}}|{set:{function(*):void}}|{writable:boolean}|{configurable:boolean}|{enumerable:boolean})} */
-    PropertyDescriptor;
-    
-    /**
-     * JavaScript class. Function, that can be called by "new" operator and/or have modified prototype property.  
-     * For example: `Object`, `Array`, `RegExp`.
-     * @name Constructor
-     * @typedef {Function} */
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+var exports = {
+
+    get $object(){
+        $object.defineProperties($object);
+        Object.defineProperty(this, '$object', {value: $object});
+        return $object;
+    },
+
+    get $namespace(){
+        $object = this.$object;
+        $namespace = $object.clone($namespace);
+        Object.defineProperty(this, '$namespace', {value: $namespace});
+        return $namespace;
+    },
+
+    inject: injectIntoObjectPrototype,
+
+    /**
+     * Deprecated, use $bject instead.
+     * @deprecated */
+    get prototype(){return this.$object},
+    /** @deprecated */
+    extend: $namespace.extend,
+    /** @deprecated */
+    put: $namespace.put
+};
+    
 if(typeof module != 'undefined' && module.exports){
     /// CommonJS module:
     
-    module.exports = $ns;
+    module.exports = exports;
     
-}else if(root.requirejs && typeof define == 'function'){
+}else if(global.requirejs && typeof define == 'function'){
     /// RequireJS module:
     
-    define(function(){return $ns});
+    define(function(){return exports});
     
 }else{
     /// No modules detected:
     
-    root.$object = $object;
-    root.$ns = $ns;
+    if('clonejs' in global){
+        var options = global.clonejs;
+    }
+
+    global.clonejs = exports;
+    
+    if(options.inject){
+        injectIntoObjectPrototype();
+    }
+    
+    if(options.$object !== false){
+        global.$object = global.clonejs.$object;
+    }
 }
+
+return;
+    
+    function injectIntoObjectPrototype(){
+        Object.defineProperties(Object.prototype, $object.describe($object));
+        $object = Object.prototype;
+        Object.defineProperty(exports, '$object', {value: $object});
+    }
+    
+    /**
+     * @name _global_
+     * @namespace
+     *  Description of some native types.
+     *  Listed objects does not present in global (window) object, it's only descriptions.
+     */
+        /**
+         * Object, that has at least one of the following property:
+         * `value`, `get`, `set`, `writable`, `configurable`, `enumerable`.
+         * @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty⠙</a>
+         * @name PropertyDescriptor
+         * @typedef {({value:*}|{get:{function():*}}|{set:{function(*):void}}|{writable:boolean}|{configurable:boolean}|{enumerable:boolean})} */
+        PropertyDescriptor;
+
+        /**
+         * JavaScript class. Function, that can be called by "new" operator and/or have modified prototype property.
+         * For example: `Object`, `Array`, `RegExp`.
+         * @name Constructor
+         * @typedef {Function} */
 
 })(this);
