@@ -1,55 +1,57 @@
 // nodeunit
 
 if(typeof $object==='undefined'){
-    var ns = require('../src/clone.js'),
-        $object = ns.prototype;
+    var clonejs = require('../src/clone.js'),
+        $object = clonejs.prototype;
 }
 
-this['test $object'] = {
+this.tests = {
 
-    clone: function(test){
-        var clone = $object.clone({a:1});
-            test.ok( clone.hasOwnProperty('a') );
-            test.equal( Object.getPrototypeOf(clone), $object);
-            test.strictEqual( Object.getOwnPropertyNames(clone).length, 1);
-
-        clone = $object.clone({a:1}, {});
-            test.ok( clone.hasOwnProperty('a') );
-            test.equal( Object.getPrototypeOf(clone), $object);
-            test.strictEqual( Object.getOwnPropertyNames(clone).length, 1);
-
-        clone = $object.clone();
-            test.strictEqual( Object.getOwnPropertyNames(clone).length, 0);
-            test.equal( Object.getPrototypeOf(clone), $object);
-
-        test.done();
-    },
-
-    'clone.call': function(test){
-        var $proto = {a: 1};
-
-            var clone = $object.clone.call($proto);
-                test.equal( Object.getPrototypeOf(clone), $proto,
-                    'check prototype');
-
-            clone = $object.clone.call($proto, {b:2});
-                test.ok( clone.hasOwnProperty('b') );
-
-            clone = $object.clone.call($proto, {b:2}, {});
-                test.ok( clone.hasOwnProperty('b') );
-
-        test.done();
-    },
-
-    'clone.constructor': function(test){
-        var constructor = $object.clone({constructor: ''}).constructor;
-        var c = $object.clone({constructor: ''});
-            test.ok(constructor !== c.constructor);
-            test.ok(constructor !== $object.clone().constructor);
-            test.equal(typeof constructor, 'function');
-
-
-        test.done();
+    clone: {
+        '': function(test){
+            var clone = $object.clone({a:1});
+                test.ok( clone.hasOwnProperty('a') );
+                test.equal( Object.getPrototypeOf(clone), $object);
+                test.strictEqual( Object.getOwnPropertyNames(clone).length, 1);
+    
+            clone = $object.clone({a:1}, {});
+                test.ok( clone.hasOwnProperty('a') );
+                test.equal( Object.getPrototypeOf(clone), $object);
+                test.strictEqual( Object.getOwnPropertyNames(clone).length, 1);
+    
+            clone = $object.clone();
+                test.strictEqual( Object.getOwnPropertyNames(clone).length, 0);
+                test.equal( Object.getPrototypeOf(clone), $object);
+    
+            test.done();
+        },
+    
+        call: function(test){
+            var $proto = {a: 1};
+    
+                var clone = $object.clone.call($proto);
+                    test.equal( Object.getPrototypeOf(clone), $proto,
+                        'check prototype');
+    
+                clone = $object.clone.call($proto, {b:2});
+                    test.ok( clone.hasOwnProperty('b') );
+    
+                clone = $object.clone.call($proto, {b:2}, {});
+                    test.ok( clone.hasOwnProperty('b') );
+    
+            test.done();
+        },
+    
+        constructor: function(test){
+            var constructor = $object.clone({constructor: ''}).constructor;
+            var c = $object.clone({constructor: ''});
+                test.ok(constructor !== c.constructor);
+                test.ok(constructor !== $object.clone().constructor);
+                test.equal(typeof constructor, 'function');
+    
+    
+            test.done();
+        }
     },
 
     create: {
@@ -225,8 +227,8 @@ this['test $object'] = {
         test.done();
     },
 
-    'callSuper, applySuper': {
-        test: function(test){
+    '__super__': {
+        'callSuper, applySuper': function(test){
             var calls = [];
             var $parent = $object.clone({
                 constructor: function(arg){
@@ -248,7 +250,42 @@ this['test $object'] = {
             test.done();
         },
         
-        'first call applySuper() on sealed object': function(test){
+        'createSuperSafeCallback, __super__': function(test){
+    
+            test.expect(3);
+    
+            var $parent = $object.clone({
+                testSuper: function(){
+                    test.strictEqual(this.__super__, $object);
+                }
+            });
+            var $child = $parent.clone({
+                constructor: function(){
+                    this.applySuper();
+                    test.strictEqual(this.__super__, $parent);
+                },
+                
+                asyncCheck: function(){
+                    var callback = this.createSuperSafeCallback(function(){
+                        test.strictEqual(this.__super__, $parent);
+                        this.applySuper('testSuper');                    
+                    },this);
+                    
+                    setTimeout(callback, 0);
+                }
+            });
+    
+            var child = $child.create();
+            child.asyncCheck();
+    
+            setTimeout(function(){
+                test.done();
+            },0);
+        },
+        
+        "first call applySuper() on sealed object \
+         should doesn't throw an error": function(test){
+            
             var $parent = $object.clone({
                 method: function(){}
             });
@@ -258,45 +295,15 @@ this['test $object'] = {
                 }
             });
             var child = $child.clone();
-
             child.seal();
-            child.method();
+                
+                test.doesNotThrow(function(){
+                    child.method();    
+                });
 
             test.done();
         }
     },
-
-    createSuperSafeCallback: function(test){
-
-        test.expect(2);
-
-        var $parent = $object.clone({
-            constructor: function(){},
-            asyncMethod: function(){
-                var args = arguments;
-                var callback = function(){
-                    this.applySuper(args);
-                    test.equal(this.__super__, $object);
-                }
-                setTimeout( this.createSuperSafeCallback(callback, this) );
-            }
-        });
-        var $child = $parent.clone({
-            constructor: function(){
-                this.applySuper('asyncMethod', [{a:11}]);
-                test.equal(this.__super__, $parent);
-            }
-        });
-
-        var child = $child.create();
-
-        setTimeout(function(){
-//            console.log(child.a);
-//            test.equal(11, child.a);
-            test.done();
-        });
-    },
-
 
     apply: function(test){
         //methodName, args, withObj, asObj
@@ -386,17 +393,15 @@ this['test $object'] = {
         values = obj.getValues(true);
             test.deepEqual(obj, obj.copy(Infinity).setValues(values, true) );
 
-//        console.log('copy values:', obj.copy(Infinity).getValues(false) );
-//        values = obj.getValues(false);
-//            test.deepEqual(obj, obj.copy(Infinity).setValues(values, false) );
-//        console.log(values);
-//        
+        values = obj.getValues(false);
+            test.deepEqual(obj, obj.copy(Infinity).setValues(values, false) );
+        
 //        values = obj.getValues(true, false);
 //            test.deepEqual(obj, obj.copy(Infinity).setValues(values, true,  false) );
-//        
-//        values = obj.getValues(false, true);
-//            test.deepEqual(obj, obj.copy(Infinity).setValues(values, false, true) );
-//        
+        
+        values = obj.getValues(false, true);
+            test.deepEqual(obj, obj.copy(Infinity).setValues(values, false, true) );
+        
 //        values = obj.getValues(false, false);
 //            test.deepEqual(obj, obj.copy(Infinity).setValues(values, false, false) );
         
