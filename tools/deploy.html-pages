@@ -2,5 +2,6 @@
 
 cd  ../build/html
 git commit -a -m "Deploy html. $1"
-git push -u origin gh-pages
+git push git@github.com:quadroid/clonejs.git
+#-u origin gh-pages
 cd ../../tools
