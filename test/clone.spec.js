@@ -1,10 +1,5 @@
 // nodeunit
 
-if(typeof clonejs === 'undefined'){
-    var clonejs = require('../src/clone.js'),
-        $object = clonejs.$object;
-}
-
 this.tests = {
 
     clone: {
@@ -161,6 +156,8 @@ this.tests = {
 
         var $collection = $object.clone({items: []});
         var $users = $collection.clone({name: ''});
+        
+        var injected = Object.prototype === $object;
 
             // $users full prototype chain:
             //$users -> $collection -> $object -> Object.prototype -> null
@@ -169,30 +166,30 @@ this.tests = {
 
             var userCopy = $users.copy();
             //~$users -> $object
-                test.equal(Object.getPrototypeOf(userCopy), $object);
+                test.deepEqual(Object.getPrototypeOf(userCopy), $object);
                 test.ok(userCopy.hasOwnProperty('name'));
                 test.ok(userCopy.items === undefined);
 
             userCopy = $users.copy(Array);
             //~$users -> Array.prototype
-                test.equal(Object.getPrototypeOf(userCopy), Array.prototype);
+                test.deepEqual(Object.getPrototypeOf(userCopy), Array.prototype);
                 test.ok(userCopy.hasOwnProperty('name'));
                 test.ok(userCopy.items === undefined);
-                test.ok(userCopy.clone === undefined);
+                if(!injected) test.ok(userCopy.clone === undefined);
 
             userCopy = $users.copy(Array, Infinity);
             //~$users -> ~$collection -> ~$object -> Array.prototype
                 test.ok(userCopy.hasOwnProperty('name'));
                 test.ok(userCopy.getPrototype().hasOwnProperty('items'));
-                test.ok(userCopy.getPrototype().getPrototype().hasOwnProperty('clone'));
-                test.ok(userCopy.getPrototype().getPrototype().getPrototype() === Array.prototype);
+                if(!injected) test.ok(userCopy.getPrototype().getPrototype().hasOwnProperty('clone'));
+                test.deepEqual(userCopy.getPrototype().getPrototype().getPrototype(), Array.prototype);
 
             userCopy = $users.copy(Array, Infinity, true);
             //~($users + $collection + $object) -> Array.prototype
-                test.equal(Object.getPrototypeOf(userCopy), Array.prototype);
+                test.deepEqual(Object.getPrototypeOf(userCopy), Array.prototype);
                 test.ok(userCopy.hasOwnProperty('name'));
                 test.ok(userCopy.hasOwnProperty('items'));
-                test.ok(userCopy.hasOwnProperty('clone'));
+                if(!injected) test.ok(userCopy.hasOwnProperty('clone'));
 
         //TODO: add tests for deepCopy/deepClone
 
@@ -358,16 +355,21 @@ this.tests = {
     },
 
     getPrototypes: function(test){
-        var ns = clonejs.$namespace.clone();
-            ns.extend('level1',{n:1})
-              .extend('level1_1',{n:2})
-              .extend('level1_1_1',{n:3});
-        
-        var $obj = ns.level1.level1_1.$level1_1_1.create();
+        var $obj = $object.clone({n:1})
+                          .clone({n:2})
+                          .clone({n:3})
+                          .create();
         
             test.deepEqual($obj.getPrototypes(), [{n:1}, {n:2}, {n:3}]);
             test.deepEqual($obj.getPrototypes(undefined, true), [{n:3}, {n:2}, {n:1}]);
-            test.deepEqual($obj.getPrototypes(Object.prototype), [Object.prototype, {n:1}, {n:2}, {n:3}]);
+            var prototypes = $obj.getPrototypes(Object.prototype);
+            if( $object === Object.prototype ){
+                test.deepEqual(prototypes, [{n:1}, {n:2}, {n:3}]);
+            }else{
+                test.deepEqual(prototypes, [$object, {n:1}, {n:2}, {n:3}]);
+                test.strictEqual(prototypes[0], $object);
+            }
+            
             //test.deepEqual($obj.getPrototypes(null), [Object.prototype, Object.prototype, {n:1}, {n:2}, {n:3}]);
         
         test.done();
@@ -437,7 +439,7 @@ this.tests = {
         
         extend: function(test){
             var ns1 = clonejs.$namespace.create();
-            ns1.extend('collection',          {name: 'collection'})
+                ns1.extend('collection',      {name: 'collection'})
                    .extend('arrayCollection', {name: 'arrayCollection'});
     
                 _ns_check(ns1, test);
