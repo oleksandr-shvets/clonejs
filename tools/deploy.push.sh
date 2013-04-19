@@ -18,8 +18,12 @@ MESSAGE_FILE="tmp/last-build.txt"
 echo 
 cat ../$MESSAGE_FILE
 echo 
-read -n 1 -p "You can edit it now ($MESSAGE_FILE). Continue? [y/n](y)" ANSWER
-[ $ANSWER == "n" ] && exit 10
+while read -n 1 -p "You can edit it now ($MESSAGE_FILE). Continue? [y/n/e](e)dit: " ANSWER \
+ && ! [ $ANSWER == 'y' ]
+do
+    [ $ANSWER == 'n' ] && exit 10
+    mcedit ../$MESSAGE_FILE
+done
 
 # refresh message:
 MESSAGE="`cat ../$MESSAGE_FILE`"
@@ -42,7 +46,7 @@ echo -e "### $MESSAGE\r\n\r\n`cat CHANGELOG.md`" > CHANGELOG.md || exit 40
 
 git commit -a --file=$MESSAGE_FILE || exit 50
     
-read -n 1 -p "Tag $VERSION and push? [y/n](y)" ANSWER
+read -n 1 -p "Tag $VERSION and push? [y/n](y): " ANSWER
 if [ $ANSWER != "n" ]
 then
     git tag -d $VERSION # delete tag
