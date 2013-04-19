@@ -43,11 +43,12 @@
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
-        
+
+          
                     
           <a id="forkme_banner" href="https://github.com/quadroid/clonejs">View on GitHub</a>
 
-          <h1 id="project_title">Clonejs</h1>
+          <h1 id="project_title">CloneJS</h1>
           <h2 id="project_tagline">The true prototype-based JavaScript micro-framework.</h2>
           
             <nav>
@@ -85,14 +86,18 @@
 
 <p></p>
 
-<p>This is the micro-framework that based on the ECMA Script 5 features like <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create⠙</a> and <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">property descriptors⠙</a>.</p>
+<p>This is the micro-framework that based on the ECMA Script 5 features like <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create⠙</a> and <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">property descriptors⠙</a>.
+So, it isn&#39;t supported by IE8, but now, finally, you can use property descriptors, getters and setters!  </p>
 
-<h5>Try the true <a href="http://en.wikipedia.org/wiki/Prototype-based_programming">prototype-based OOP⠙</a></h5>
+<p>This framework provides:</p>
 
-<p><strong>It&#39;s trivial to create new &quot;classes&quot;</strong> - just clone the prototype and change a couple of properties and voila... new &quot;class&quot;.</p>
+<ul><li>Class-less, the pure prototype-based paradigm.</li><li>Orintation to property descriptors: not-enumerable is like private, </li><li><a href="./symbols/%24object.html#applySuper">applySuper</a> method</li><li>Power object creation tools: <a href="./symbols/%24object.html#clone">clone</a>, <a href="./symbols/%24object.html#create">create</a>, <a href="./symbols/%24object.html#copy">copy</a>, <a href="./symbols/%24object.html#deepCopy">deepCopy</a>, <a href="./symbols/%24object.html#deepClone">deepClone</a>.</li><li>Iterate thouth your objects properties like arrays: <a href="./symbols/%24object.html#forEach">forEach</a>, <a href="./symbols/%24object.html#map">map</a>, <a href="./symbols/%24object.html#filter">filter</a>, <a href="./symbols/%24object.html#every">every</a>, <a href="./symbols/%24object.html#some">some</a>.</li><li>Object modify methods: [concat][], [paste][], unlike other libs, preserve property descriptors state. </li></ul>
 
-<p><strong>It&#39;s really class-free</strong>: do you know the difference between js constructor-functions and classes in other languages?
-<code>$object.clone</code> produces prototype objects, not function-constructors, unlike other class-producing tools (<code>Backbone.Model.extend</code>, <code>Ext.define</code>, <code>dojo.declare</code>).</p>
+<h6>Try the true <a href="http://en.wikipedia.org/wiki/Prototype-based_programming">prototype-based OOP⠙</a></h6>
+
+<p><strong>It&#39;s trivial to create new &quot;classes&quot;</strong> - just clone the object and change a couple of properties and voila... new &quot;class&quot;.</p>
+
+<p><strong>It&#39;s really class-free</strong>: <code>$object.clone</code> produces prototype objects, not function-constructors, unlike other class-producing tools (<code>Ext.define</code>, <code>dojo.declare</code>).</p>
 
 <p>In this framework you can easilly create and manipulate objects without constructors, instead of classic js way,
 where you should define a constructor for every object (that you want to use as prototype), even if you didn&#39;t need it.
@@ -111,6 +116,11 @@ It&#39;s possible to build and maintain extremely <strong>large numbers of &quot
 <p><a href="http://code.lancepollard.com/github-as-a-cdn/">CDN⠙</a> for client-side (~3 KB gzipped):</p>
 
 <pre><code>&lt;script src=&quot;http://quadroid.github.io/clonejs/cdn/clone.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+
+<h6>Injected mode</h6>
+
+<pre><code>&lt;script&gt;var clonejs = {inject: Object.prototype}&lt;/script&gt;
+&lt;script src=&quot;http://quadroid.github.io/clonejs/cdn/clone.min.js&quot;&gt;&lt;/script&gt;</code></pre>
 
 <h3>Usage</h3>
 

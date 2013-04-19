@@ -1,7 +1,9 @@
-'use strict';
+/**#nocode+*/
+(function(global){'use strict';
+/**#nocode-*/
 /**
  * @title   clone.js - the true prototype-based JavaScript micro-framework.
- * @version $Prompt=abcd$
+ * @version v0.7.4-beta
  * @author  Alex Shvets
  *
  * @class
@@ -87,8 +89,8 @@ var $object = /** @lands $object# */{
 
     /**
      * Use this method to create an instances of prototype objects.  
-     * Behaves like a [clone](#clone) method. But also apply constructor, and, if [default constructor][1] called,
-     * the created instance will be [sealed⠙][2] to avoid creation of [hidden classes⠙][3].  
+     * Behaves like a [clone](#clone) method. But also apply [constructor][1]<!--, and,
+     * the created instance will be [sealed⠙][2] to avoid creation of [hidden classes⠙][3]-->.  
      * All arguments, passed to `create()`, will be forwarded to [constructor][1].
      * [1]: #constructor
      * [2]: http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/seal
@@ -116,15 +118,18 @@ var $object = /** @lands $object# */{
 
     /**
      * Default object constructor. Override it if you want to create custom type. 
-     * Defines given properties and seal this object.
+     * Defines given properties.
      * @see $object.describe
      * @see $object#create
      * @this {Object} Instance only.
      * @memberOf $object#
      */
     constructor: function Object$(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
-        if(properties) this.defineProperties(properties, defaultDescriptor);
-        if(this.constructor === Object$) this.seal();
+        if(typeof properties == 'object'){
+            this.defineProperties(properties, defaultDescriptor);
+        }else if(arguments.length){
+            return Object(properties);
+        }
     },
 
     /**
@@ -889,7 +894,6 @@ var $object = /** @lands $object# */{
     /**
      * Set values for own enumerable properties. Order of values should be the same as `{@link $object#getValues}()` produce.
      * @this {Object} Instance or prototype.
-     * @version alpha
      * @memberof $object# */
     setValues: function(/** Array */values, /** boolean=true */enumerableOnly, /** boolean=true */ownOnly){
         var keys = $object.getKeys.call(this, enumerableOnly, ownOnly);
@@ -942,11 +946,12 @@ var $object = /** @lands $object# */{
     },
 
 //    /**
-//     * Returns the current state of this object in JSON format.
+//     * Returns the name and current state of this object.
 //     * @see $object#getState
 //     * @memberof $object# */
 //    toString: function(){
-//        return JSON.stringify( this.getState() );
+//        var Type = this.constructor;
+//        return '['+ (Type.typeName || Type.name) +' '+ JSON.stringify( this.getState() )+']';
 //    },
 
 //        /**
@@ -1045,16 +1050,15 @@ var $object = /** @lands $object# */{
 };
 
 // make methods not enumerable:
-$object./*re*/defineProperties($object);
+//$object./*re*/defineProperties($object);
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 /**
- * @namespace
- *    The namespace.
+ * @class
+ *    The namespace object.
  * @description
  * If you run the following code:
  * <code>
@@ -1082,13 +1086,17 @@ $object./*re*/defineProperties($object);
  *     }
  * </code>
  */
-var ns = /** @lands ns# */{
+var $namespace = /** @lands $namespace# */{
     /** 
      * The prototype of every object in this namespace (default - `{@link $object}`).
      * @name prototype
      * @type Object
-     * @memberOf ns# */
+     * @memberOf $namespace# */
     prototype: $object,
+    
+    constructor: function(/** Object=$object */prototype){
+        this.prototype = prototype || $object;
+    },
     
     /**
      * Extend namespace by prototype.
@@ -1097,23 +1105,23 @@ var ns = /** @lands ns# */{
      * @param nsItemName
      *        The name of the new sub-namespace 
      *        (begins with lower case letter).
-     * @param prototypeOrProperties
+     * @param prototype
      *        If this arg is not a clone (or sub-clone) of `ns.prototype`, 
      *        the new object will be created (cloned from `ns.prototype`).
      * @param defaultDescriptor
      *        The default {@link PropertyDescriptor} for created prototype.
-     * @returns {ns} The created sub-namespace.
-     * @memberOf ns# */
-    extend: function extend(/** string */nsItemName, /** Object */prototypeOrProperties, /** PropertyDescriptor= */defaultDescriptor){
+     * @returns {$namespace} The created sub-namespace.
+     * @memberOf $namespace# */
+    extend: function extend(/** string */nsItemName, /** Object */prototype, /** PropertyDescriptor= */defaultDescriptor){
 
         var $parent = this.prototype, parentNS = this;
 
-        if( $parent.isPrototypeOf(prototypeOrProperties) ){
-            var $newProto = prototypeOrProperties;
+        if( $parent.isPrototypeOf(prototype) && $parent !== $object){
+            var $newProto = prototype;
             
         }else{
             
-            var properties = prototypeOrProperties;            
+            var properties = prototype;            
             var typeName = nsItemName[0].toUpperCase() + nsItemName.substr(1);
             if( properties.hasOwnProperty('constructor') ){
                 properties.constructor.typeName = typeName;
@@ -1123,7 +1131,7 @@ var ns = /** @lands ns# */{
             $newProto = $parent.clone(properties, defaultDescriptor);
         }      
     
-        var newNS = $object.clone.call(parentNS, {prototype: $newProto});
+        var newNS = /*parentNS*/$namespace.create($newProto);
         this['$'+nsItemName] =  $newProto;
         this[nsItemName] = newNS;
         
@@ -1136,8 +1144,8 @@ var ns = /** @lands ns# */{
      * @param nsPathName 
      *        If not specified, the value of `prototype.constructor.typeName` or `prototype.constructor.name` will be used. 
      * @param prototype
-     * @returns {ns} The created sub-namespace.
-     * @memberOf ns# */
+     * @returns {$namespace} The created sub-namespace.
+     * @memberOf $namespace# */
     put: function(/** string= */nsPathName, /** Object */prototype){
         
         if(typeof nsPathName != 'string'){
@@ -1156,7 +1164,8 @@ var ns = /** @lands ns# */{
                     
                     proto = Object.getPrototypeOf(proto);
                     var typeName = proto.constructor.typeName || proto.constructor.name;
-                    if(namePart !== typeName[0].toLowerCase() + typeName.substr(1) ){
+                    var prototypeName = typeName[0].toLowerCase() + typeName.substr(1);
+                    if(namePart !== prototypeName ){
 
                         proto = {};
                     }
@@ -1194,27 +1203,98 @@ var ns = /** @lands ns# */{
     }
 };
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /**
- * @name _global_
  * @namespace
- *  Description of some native types.  
- *  Listed objects does not present in global (window) object, it's only descriptions. 
+ * 
+ * @name clonejs
  */
-    if(false)// (need for IDEa code inspections)
+var exports = /** @lands clonejs# */{
+
+    get $object(){
+        $object.defineProperties($object);
+        Object.defineProperty(this, '$object', {value: $object});
+        return $object;
+    },
+
+    get $namespace(){
+        $object = this.$object;
+        $namespace = $object.clone($namespace);
+        Object.defineProperty(this, '$namespace', {value: $namespace});
+        return $namespace;
+    },
+
+    inject: injectIntoObjectPrototype,
+
     /**
-     * Object, that has at least one of the following property:  
-     * `value`, `get`, `set`, `writable`, `configurable`, `enumerable`.
-     * @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty⠙</a>
-     * @name PropertyDescriptor
-     * @typedef {({value:*}|{get:{function():*}}|{set:{function(*):void}}|{writable:boolean}|{configurable:boolean}|{enumerable:boolean})} */
-    PropertyDescriptor;
+     * Deprecated, use $bject instead.
+     * @deprecated */
+    get prototype(){return this.$object},
+    /** @deprecated */
+    extend: $namespace.extend,
+    /** @deprecated */
+    put: $namespace.put
+};
+    
+if(typeof module != 'undefined' && module.exports){
+    /// CommonJS module:
+    
+    module.exports = exports;
+    
+}else if(global.requirejs && typeof define == 'function'){
+    /// RequireJS module:
+    
+    define(function(){return exports});
+    
+}else{
+    /// No modules detected:
+    
+    if('clonejs' in global){
+        var options = global.clonejs;
+
+        if(options.inject){
+            injectIntoObjectPrototype();
+        }
+    }
+
+    if(!options || options.$object !== false){
+        global.$object = $object = exports.$object;
+    }
+
+    global.clonejs = exports;
+}
+
+return;
+    
+    function injectIntoObjectPrototype(){
+        Object.defineProperties(Object.prototype, $object.describe($object));
+        $object = Object.prototype;
+        Object.defineProperty(exports, '$object', {value: $object});
+        return $object;
+    }
     
     /**
-     * JavaScript class. Function, that can be called by "new" operator and/or have modified prototype property.  
-     * For example: `Object`, `Array`, `RegExp`.
-     * @name Constructor
-     * @typedef {Function} */
+     * @name _global_
+     * @namespace
+     *  Description of some native types.
+     *  Listed objects does not present in global (window) object, it's only descriptions.
+     */
+        /**
+         * Object, that has at least one of the following property:
+         * `value`, `get`, `set`, `writable`, `configurable`, `enumerable`.
+         * @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty⠙</a>
+         * @name PropertyDescriptor
+         * @typedef {({value:*}|{get:{function():*}}|{set:{function(*):void}}|{writable:boolean}|{configurable:boolean}|{enumerable:boolean})} */
+        PropertyDescriptor;
 
+        /**
+         * JavaScript class. Function, that can be called by "new" operator and/or have modified prototype property.
+         * For example: `Object`, `Array`, `RegExp`.
+         * @name Constructor
+         * @typedef {Function} */
 
-// export ns module:
-if(typeof module != 'undefined' && module.exports) module.exports = ns;
+/**#nocode+*/
+})(this);
+/**#nocode-*/

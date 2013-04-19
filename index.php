@@ -3,6 +3,7 @@ function include_markdown($filename){
     $html = `../../node_modules/.bin/md2html $filename`;
     $substitutions = array(
         '#&lt;!-- HIDDEN: --&gt;(.*)&lt;!-- /HIDDEN --&gt;#msU' => '',
+        '#CloneJS\.org#' => 'clone.js',
         '#http://clonejs\.org/(?![ \'"])#' => './',
         '#\shref\s.=\s.["\']https?://#' => ' target="_blank"$0',
         //'#<a href = "" >⠙</a>#' => '',
@@ -54,13 +55,16 @@ function include_markdown($filename){
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
-        
+
+        <?/*<a href="https://twitter.com/share" class="twitter-share-button" data-text="The true prototype-based JavaScript micro-framework." data-size="large" data-hashtags="clonejs">Tweet</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+        */?>  
           <?/*<script src="http://vk.com/js/api/share.js?11" charset="windows-1251"></script>
           <script>document.write(VK.Share.button(false,{type: "round", text: "Нра"}))</script>*/?>
           
           <a id="forkme_banner" href="https://github.com/quadroid/clonejs">View on GitHub</a>
 
-          <h1 id="project_title">Clonejs</h1>
+          <h1 id="project_title">CloneJS</h1>
           <h2 id="project_tagline">The true prototype-based JavaScript micro-framework.</h2>
           
             <nav>
