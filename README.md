@@ -1,4 +1,4 @@
-## [clone.js](http://clonejs.org) [![Build Status](https://travis-ci.org/quadroid/clonejs.png?branch=master "travis-ci.org")](https://travis-ci.org/quadroid/clonejs)
+## [CloneJS.org](http://clonejs.org) [![Build Status](https://travis-ci.org/quadroid/clonejs.png?branch=master "travis-ci.org")](https://travis-ci.org/quadroid/clonejs)
 <!-- HIDDEN: -->
 [API documentation](http://clonejs.org/symbols/%24object.html)
 |  [ChangeLog](https://github.com/quadroid/clonejs/blob/master/CHANGELOG.md)
@@ -9,12 +9,11 @@
 
 This is the micro-framework that based on the ECMA Script 5 features like [Object.create⠙][] and [property descriptors⠙][Object.defineProperty⠙].
 
-##### Try the true [prototype-based OOP⠙](http://en.wikipedia.org/wiki/Prototype-based_programming)
+###### Try the true [prototype-based OOP⠙](http://en.wikipedia.org/wiki/Prototype-based_programming)
 
 **It's trivial to create new "classes"** - just clone the prototype and change a couple of properties and voila... new "class".
 
-**It's really class-free**: do you know the difference between js constructor-functions and classes in other languages?
-`$object.clone` produces prototype objects, not function-constructors, unlike other class-producing tools (`Backbone.Model.extend`, `Ext.define`, `dojo.declare`).
+**It's really class-free**: `$object.clone` produces prototype objects, not function-constructors, unlike other class-producing tools (`Ext.define`, `dojo.declare`).
 
 In this framework you can easilly create and manipulate objects without constructors, instead of classic js way,
 where you should define a constructor for every object (that you want to use as prototype), even if you didn't need it.
@@ -33,6 +32,11 @@ Node.js:
 
 [CDN⠙][] for client-side (~3 KB gzipped):
 
+    <script src="http://quadroid.github.io/clonejs/cdn/clone.min.js"></script>
+    
+###### Injected mode
+
+    <script>var clonejs = {inject: Object.prototype}</script>
     <script src="http://quadroid.github.io/clonejs/cdn/clone.min.js"></script>
 
 ### Usage
