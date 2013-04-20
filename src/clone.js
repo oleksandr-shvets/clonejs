@@ -977,13 +977,14 @@ var $object = /** @lands $object# */{
         }
     },
 
-//    /**
-//     * Returns the current state of this object in JSON format.
-//     * @see $object#getState
-//     * @memberof $object# */
-//    toString: function(){
-//        return JSON.stringify( this.getState() );
-//    },
+    /**
+     * Returns the name and current state of this object.
+     * @see $object#getState
+     * @memberof $object# */
+    toString: function(){
+        var Type = this.constructor;
+        return '['+ (Type.typeName || Type.name) +' '+ JSON.stringify( this.getState() )+']';
+    },
 
 //        /**
 //         * Returns true if all enumerable properties of this present in obj.
