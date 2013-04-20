@@ -234,12 +234,9 @@ var $object = /** @lands $object# */{
                         if( accessorName ){
                             void function(name, accessor){
                                 descriptor[accessorName] = function once(v){
-                                    console.log('once:', name);
                                     var newValue = accessor.call(this, v);
-                                    
                                     var descriptor = Object.create($defaultDescriptor, {value: {value: newValue }});
                                     Object.defineProperty(this, name, descriptor);
-                                    
                                     return newValue;
                                 }
                             }(name, accessor);
