@@ -79,53 +79,64 @@ this.tests = {
         }
     },
 
-    describe: function(test){
+    describe:{
         
-        function Constructor(){}
-
-        test.deepEqual(
-            $object.describe({
-                          _p: undefined,
-       '(const) _unwritable': 231,
-                   property1: 11,
-        '(hidden) property2': 22,
-      '(writable) property3': 33,
-         '(final) property4': 44,
-'(final writable) property5': 55,
-                      method: Function,
-                 constructor: Constructor
-            }),{
-                         _p: {value: undefined, enumerable:false},
-                _unwritable: {value: 231, enumerable:false, writable: false},
-                  property1: {value: 11},
-                  property2: {value: 22, enumerable:false},
-                  property3: {value: 33, writable:true},
-                  property4: {value: 44, writable:false, configurable: false},
-                  property5: {value: 55, writable:true, configurable: false},
-                     method: {value: Function, enumerable:false},
-                constructor: {value: Constructor, enumerable:false}
-            }
-        );
-        
-        /// Constructor:
-        
-        var proto = {};
-        var descriptors = $object.describe.call(proto, {constructor: 'MyCustomName'});
-
-            var constructor = descriptors.constructor.value;
-            test.equal(typeof constructor, 'function');
-            test.equal(constructor.name, 'MyCustomName');
-            test.equal(constructor.typeName, 'MyCustomName');
-            test.strictEqual(constructor.prototype, proto);
-
-        var $obj = $object.clone().clone();
-        constructor.call($obj, {key: 11});
+        '_private, modifiers: const, hidden, writable, final': function(test){
             
-            test.equal($obj.key, 11);
+            function Constructor(){};
+    
+            test.deepEqual(
+                $object.describe({
+                                          _p: undefined,
+                       '(const) _unwritable': 231,
+                                  property1 : 11,
+                        '(hidden) property2': 22,
+                      '(writable) property3': 33,
+                         '(final) property4': 44,
+                '(final writable) property5': 55,
+//                              '(get) getter': Function,
+//                              '(set) setter': Function,
+//                            '(get) p2getter': 'property2',
+                                     method : Function,
+                                constructor : Constructor
+                }),{
+                                          _p: {value: undefined, enumerable:false},
+                                 _unwritable: {value: 231, enumerable:false, writable: false},
+                                   property1: {value: 11},
+                                   property2: {value: 22, enumerable:false},
+                                   property3: {value: 33, writable:true},
+                                   property4: {value: 44, writable:false, configurable: false},
+                                   property5: {value: 55, writable:true, configurable: false},
+//                                      getter: {get: Function},
+//                                      setter: {'set': Function, enumerable:false},
+//                                    p2getter: {get: Function},
+                                      method: {value: Function, enumerable:false},
+                                 constructor: {value: Constructor, enumerable:false}
+                }
+            );
+    
+            test.done();
+        },
         
-        /// TODO: test defaultDescriptor 
+        'constructor': function(test){
+            var proto = {};
+            var descriptors = $object.describe.call(proto, {constructor: 'MyCustomName'});
 
-        test.done();
+                var constructor = descriptors.constructor.value;
+                test.equal(typeof constructor, 'function');
+                test.equal(constructor.name, 'MyCustomName');
+                test.equal(constructor.typeName, 'MyCustomName');
+                test.strictEqual(constructor.prototype, proto);
+
+            var $obj = $object.clone().clone();
+            constructor.call($obj, {key: 11});
+
+                test.equal($obj.key, 11);
+
+            test.done();            
+        },
+            
+        
     },
 
     'can, cant': function(test){
