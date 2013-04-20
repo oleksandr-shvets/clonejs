@@ -135,7 +135,29 @@ this.tests = {
 
             test.done();            
         },
+
+        'get, set modifiers': function(test){
             
+            var obj = $object.create({
+                _private: 1,
+                getterValue: 2,
+                setterValue: 0,
+                '(get) priv': '_private',
+                '(get) getter': function(){
+                    return this.getterValue;
+                },
+                '(set) setter': function(value){
+                    this.setterValue = value;
+                }
+            });
+            
+            test.equal(obj.priv, 1);
+            test.equal(obj.getter, 2);
+            obj.setter = 3;
+            test.equal(obj.setterValue, 3);
+            
+            test.done();    
+        },
         
     },
 
