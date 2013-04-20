@@ -159,6 +159,32 @@ this.tests = {
             test.done();    
         },
         
+        'once modifier': function(test){
+            var obj = $object.create({
+                getterCalls: 0,
+                setterCalls: 0,
+                '(get once) getterOnce': function(){
+                    this.getterCalls++;
+                    return 'G';
+                },
+                '(set once) setterOnce': function(value){
+                    this.setterCalls++;
+                    return value;
+                }
+            });
+            console.log(obj.getterOnce, Object.getOwnPropertyDescriptor(obj,'getterOnce'))
+            test.equal(obj.getterOnce, 'G');
+            test.equal(obj.getterOnce, 'G');
+            test.equal(obj.getterCalls, 1);
+
+            obj.setterOnce = 'S1';
+            test.equal(obj.setterOnce, 'S1');
+            obj.setterOnce = 'S2';
+            test.equal(obj.setterOnce, 'S2');
+            test.equal(obj.setterCalls, 1);
+            
+            test.done();
+        }
     },
 
     'can, cant': function(test){

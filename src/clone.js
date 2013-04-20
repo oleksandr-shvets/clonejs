@@ -144,6 +144,7 @@ var $object = /** @lands $object# */{
      * <dl class="detailList params dl">
      * <dt>(get)     <dt><dd> define getter, if string passed, the getter will be auto generated.
      * <dt>(set)     <dt><dd> define setter, if string passed, the setter will be auto generated.
+     * <dt>(get once)<dt><dd> on first property call, getter fn will be called, and property will be replaced by returned value. 
      * <dt>(const)   <dt><dd> make property unwritable.
      * <dt>(final)   <dt><dd> make property unwritable, and prevent it deleting and descriptor modifications.
      * <dt>(hidden)  <dt><dd> make property non-enumerable.
@@ -181,13 +182,20 @@ var $object = /** @lands $object# */{
             
             if( name[0]=='(' ){
                 //TODO: fix regexp to not mach the '(getset) property'
-                var matches = name.match(/^\((((get|set|const|hidden|final|writable) *)+)\) +(.+)$/);
+                var matches = name.match(/^\((((get|set|once|const|hidden|final|writable) *)+)\) +(.+)$/);
                 if( matches ){
                     var prefixes = matches[1].split(' ').sort();
                     name = matches[4];
 
-                    if(descriptors[name]) descriptor = descriptors[name];
-
+                    if( descriptors[name] ){ 
+                        descriptor = descriptors[name];
+                    
+                    }else if( prefixes.indexOf('get') >= 0 || prefixes.indexOf('set') >= 0 ){
+                        
+                        descriptor = {configurable: true};
+                        var accessor = value;
+                    }
+                    //abcdefghijklmnopqrstuvwxyz
                     for(var i in prefixes) switch(prefixes[i]){
                         case    'const': descriptor.writable     = false; break;
                         case    'final': descriptor.configurable = false; descriptor.writable = false; break;
@@ -196,29 +204,53 @@ var $object = /** @lands $object# */{
                         case      'set': descriptor.set          = value; break;
                         case 'writable': descriptor.writable     = true;  break;
                     }
-                }
-            }
-            
-            /// define getters/setters:
-            
-            if(descriptor.get || descriptor.set){
-                if(typeof value == 'string'){
-                    var hiddenPropertyName = value;
-                    if(typeof descriptor.get == 'string'){
-                        descriptor.get = function getter(){
-                            return this[hiddenPropertyName];
+                                   
+                    /// define getters/setters:
+                    
+                    if(accessor){
+                        if(typeof accessor == 'string'){
+                            var hiddenPropertyName = accessor;
+                            if(typeof descriptor.get == 'string'){
+                                descriptor.get = function getter(){
+                                    return this[hiddenPropertyName];
+                                }
+                            }else{
+                                descriptor.set = function setter(newValue){
+                                    this[hiddenPropertyName] = newValue;
+                                }
+                            }
                         }
-                    }else{
-                        descriptor.set = function setter(newValue){
-                            this[hiddenPropertyName] = newValue;
+                        // A property cannot both have accessors and be writable or have a value:
+                        //delete descriptor.value;
+                        //delete descriptor.writable;
+                        
+                        if(descriptor.get) value = undefined;// do not allow to hide getter (as default for method)
+                    }     
+                    
+                    // `once` modifier:
+                    
+                    if( prefixes.indexOf('once') >= 0 ){
+                        var accessorName = descriptor.set ? 'set' : descriptor.get ? 'get' : '';
+                        if( accessorName ){
+                            void function(name, accessor){
+                                descriptor[accessorName] = function once(v){
+                                    console.log('once:', name);
+                                    var newValue = accessor.call(this, v);
+                                    
+                                    var descriptor = Object.create($defaultDescriptor, {value: {value: newValue }});
+                                    Object.defineProperty(this, name, descriptor);
+                                    
+                                    return newValue;
+                                }
+                            }(name, accessor);
+                        }else{
+                            console.warn('$object.define: `once` modifier can be used only with `get` or `set` modifier.')
                         }
                     }
                 }
-                descriptor.value = undefined;
-                if(descriptor.get) value = undefined;// do not allow to hide getter as method
-            }else{
-                descriptor.value = value;
             }
+            
+            if(! accessor) descriptor.value = value;
 
             /// hide methods and private properties:
             
