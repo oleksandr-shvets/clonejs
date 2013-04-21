@@ -53,7 +53,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="https://github.com/quadroid/clonejs/tree/master/lib/jsdoc-toolkit/templates/codeview-jsdoc2-template" target="_blank">Codeview</a> 1.3<br />
 			Generated on:
-			<time datetime='2013-3-18' pubdate>2013-3-18 12:52</time>
+			<time datetime='2013-3-21' pubdate>2013-3-21 16:38</time>
 		</footer>
 	</div>
 </div>
@@ -1870,6 +1870,7 @@ For example, <code>{a: {b:1}, c:2}</code> will be translated to <code>{a: {value
 <dl class="detailList params dl">
 <dt>(get)     <dt><dd> define getter, if string passed, the getter will be auto generated.
 <dt>(set)     <dt><dd> define setter, if string passed, the setter will be auto generated.
+<dt>(get once)<dt><dd> on first property call, getter fn will be called, and property will be replaced by returned value. 
 <dt>(const)   <dt><dd> make property unwritable.
 <dt>(final)   <dt><dd> make property unwritable, and prevent it deleting and descriptor modifications.
 <dt>(hidden)  <dt><dd> make property non-enumerable.

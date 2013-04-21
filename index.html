@@ -1,315 +1,103 @@
+
 <!DOCTYPE html>
-<html>
-
-  <head>
-    <title>clone.js</title>
-    
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Clonejs : The true prototype-based JavaScript micro-framework." />
-    
-    <link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/tomorrow.min.css">
-    <script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
-    
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-    <style>
-        NAV {
-            color: rgb(128, 128, 128);
-            position: absolute;
-            z-index: 11;
-            margin-top: 5px;
-        }
-        NAV A {color: white}
-        NAV A:hover {color:#007edf}
-        #downloads{
-            width: 603px;
-            background-position-x: 400px;
-        }
-        #downloads .version{
-            float: right;
-            color: grey;
-            font-style: italic;
-            margin-top: 40px;
-            margin-right: 15px;
-        }
-        #main_content IMG {width: auto; height: auto}
-        #main_content H2 IMG {float: right}
-        #main_content PRE CODE {padding: 0px}
-    </style>
-  </head>
-
-  <body>
-
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-
-          
-                    
-          <a id="forkme_banner" href="https://github.com/quadroid/clonejs">View on GitHub</a>
-
-          <h1 id="project_title">CloneJS</h1>
-          <h2 id="project_tagline">The true prototype-based JavaScript micro-framework.</h2>
-          
-            <nav>
-                  <a href="./symbols/%24object.html">API documentation</a>
-                | <a href="https://github.com/quadroid/clonejs/blob/master/CHANGELOG.md">ChangeLog</a>
-                | <a href="http://github.com/quadroid/clonejs">GitHub</a>
-                | <a href="http://npmjs.org/package/clonejs">NPM</a>
-                | <a href="http://travis-ci.org/quadroid/clonejs">Travis CI</a>
-            </nav>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/quadroid/clonejs/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/quadroid/clonejs/tarball/master">Download this project as a tar.gz file</a>
-              <span class="version">
-                 v0.7.4-beta              </span>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-
-        <script>
-        if( window.location.protocol == 'file:' ){
-            var src = '../../test/conf/nodeunit-browser.html';
-            document.write('\
-                <h6 style="margin: 0px"><a href="'+src+'">Unit testing...</a></h6> \
-                <iframe src="'+src+'" style="width:100%; height:32em"></iframe> \
-            ');
-        };
-        </script>
-        
-        <h2><a href="http://clonejs.org">clone.js</a> <a href="https://travis-ci.org/quadroid/clonejs"><img alt="Build Status" title="travis-ci.org" src="https://travis-ci.org/quadroid/clonejs.png?branch=master"/></a></h2>
-
-<p></p>
-
-<p>This is the micro-framework that based on the ECMA Script 5 features like <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create⠙</a> and <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">property descriptors⠙</a>.
-So, it isn&#39;t supported by IE8, but now, finally, you can use property descriptors, getters and setters!  </p>
-
-<p>This framework provides:</p>
-
-<ul><li>Class-less, the pure prototype-based paradigm.</li><li>Orintation to property descriptors: not-enumerable is like private, </li><li><a href="./symbols/%24object.html#applySuper">applySuper</a> method</li><li>Power object creation tools: <a href="./symbols/%24object.html#clone">clone</a>, <a href="./symbols/%24object.html#create">create</a>, <a href="./symbols/%24object.html#copy">copy</a>, <a href="./symbols/%24object.html#deepCopy">deepCopy</a>, <a href="./symbols/%24object.html#deepClone">deepClone</a>.</li><li>Iterate thouth your objects properties like arrays: <a href="./symbols/%24object.html#forEach">forEach</a>, <a href="./symbols/%24object.html#map">map</a>, <a href="./symbols/%24object.html#filter">filter</a>, <a href="./symbols/%24object.html#every">every</a>, <a href="./symbols/%24object.html#some">some</a>.</li><li>Object modify methods: [concat][], [paste][], unlike other libs, preserve property descriptors state. </li></ul>
-
-<h6>Try the true <a href="http://en.wikipedia.org/wiki/Prototype-based_programming">prototype-based OOP⠙</a></h6>
-
-<p><strong>It&#39;s trivial to create new &quot;classes&quot;</strong> - just clone the object and change a couple of properties and voila... new &quot;class&quot;.</p>
-
-<p><strong>It&#39;s really class-free</strong>: <code>$object.clone</code> produces prototype objects, not function-constructors, unlike other class-producing tools (<code>Ext.define</code>, <code>dojo.declare</code>).</p>
-
-<p>In this framework you can easilly create and manipulate objects without constructors, instead of classic js way,
-where you should define a constructor for every object (that you want to use as prototype), even if you didn&#39;t need it.
-It&#39;s possible to build and maintain extremely <strong>large numbers of &quot;classes&quot; with comparatively little code</strong>.</p>
-
-<p>See more:</p>
-
-<ul><li><a href="http://programmers.stackexchange.com/questions/110936/what-are-the-advantages-of-prototype-based-oop-over-class-based-oop#answers-header">Advantages of prototype-based OOP⠙</a></li><li><a href="http://www.2ality.com/2011/11/javascript-classes.html">Myth: JavaScript needs classes⠙</a></li></ul>
-
-<h3>Installation</h3>
-
-<p>Node.js:</p>
-
-<pre><code>npm install clonejs</code></pre>
-
-<p><a href="http://code.lancepollard.com/github-as-a-cdn/">CDN⠙</a> for client-side (~3 KB gzipped):</p>
-
-<pre><code>&lt;script src=&quot;http://quadroid.github.io/clonejs/cdn/clone.min.js&quot;&gt;&lt;/script&gt;</code></pre>
-
-<h6>Injected mode</h6>
-
-<pre><code>&lt;script&gt;var clonejs = {inject: Object.prototype}&lt;/script&gt;
-&lt;script src=&quot;http://quadroid.github.io/clonejs/cdn/clone.min.js&quot;&gt;&lt;/script&gt;</code></pre>
-
-<h3>Usage</h3>
-
-<pre><code>//&lt;node.js&gt;
-var clonejs = require(&#39;clonejs&#39;),
-    $object = clonejs.$object;
-//or: var $object = require(&#39;clonejs&#39;).$object;
-//or: require(&#39;clonejs&#39;).inject();
-//&lt;/node.js&gt;
-
-/// Forget about classes.    
-//  Instead of creating class (function), create prototype (object):
-var $duck = $object.clone({
-    name: &#39;Unnamed&#39;,
-    quack: function(){
-        console.log( this.name +&#39; Duck: Quack-quack!&#39;);
-    }
-});
-$duck.quack();//Unnamed Duck: Quack-quack!
-
-/// Inheritance is simple: 
-var $talkingDuck = $duck.clone({
-    quack: function(){
-        this.applySuper(&#39;quack&#39;);
-        console.log(&#39;My name is &#39;+ this.name +&#39;!&#39;);
-    }       
-});
-
-/// Forget about the `new` operator, use .create() method instead:
-var donald = $talkingDuck.create({name: &#39;Donald&#39;});
-donald.quack();// Donald Duck: Quack-quack! My name is Donald!
-
-/// Forget about the `instanceof` operator, use JS native 
-//  .isPrototypeOf() method instead:
-$duck.isPrototypeOf(donald);// true</code></pre>
-
-<h6>Cloning objects:</h6>
-
-<pre><code>var $proto  = $object.clone({a:1, b:2, c:3});
-
-/// clone:
-var clone   = $proto.clone();
-    clone.a = 11; // $proto.a not changed
-   $proto.b = 22; // clone.b will be also changed to 22
-
-///  copy: 
-var  copy   = $proto.copy();
-     copy.a = 111;// $proto.a not changed
-   $proto.b = 222;// copy.b not changed  
-
-/// create:
-var instance   = $proto.create({d: 4444});
-    instance.a = 1111;// $proto.a not changed
-      $proto.b = 2222;// like clone, instance.b will be also changed to 2222
-assert( instance.a === 1111 ); 
-assert( instance.d === 4444 );</code></pre>
-
-<p>See: <a href="./symbols/%24object.html#clone">clone</a>, <a href="./symbols/%24object.html#copy">copy</a>, <a href="./symbols/%24object.html#create">create</a>, <a href="./symbols/%24object.html#deepCopy">deepCopy</a>, <a href="./symbols/%24object.html#deepClone">deepClone</a>.</p>
-
-<h6>Property modificators:</h6>
-
-<pre><code>var $myType = $object.clone({
-    &#39;(final)          property1&#39;: &quot;not configurable and not writable&quot;,
-    &#39;(writable final) property2&#39;: &quot;not configurable only&quot;,
-    &#39;(hidden)         property3&#39;: &quot;not enumerable&quot;,
-    &#39;(const)           constant&#39;: &quot;not writable&quot;,
-                      property4 : &quot;simple property&quot;,
-    &#39;(get)       property3alias&#39;: &#39;property3&#39;,// automatically create getter
-                          _item : &quot;private property (not enumerable)&quot;,
-                   &#39;(get)  item&#39;: function() { return this._item },
-                   &#39;(set)  item&#39;: function(v){ this._item = v    },
-                    constructor : &#39;MyType&#39;
-});
-assert( $myType.property3alias === $myType.property3 );</code></pre>
-
-<p>See: <a href="./symbols/%24object.html#.describe">describe</a>.</p>
-
-<h6>Inheritance &amp; constructors:</h6>
-
-<pre><code>var $parent = $object.clone({
-    constructor: function Parent(){
-        this.applySuper();
-        console.log(&#39;$parent constructor arguments:&#39;, arguments);
-    }
-});
-
-var $child = $parent.clone({
-    constructor: function Child(arg1, arg2){
-        this.callSuper(&#39;constructor&#39;, arg1, arg2);
-        console.log(&#39;$child constructor arguments:&#39;, arguments);
-    }
-});
-
-var $grandchild = $child.clone({
-    constructor: function Grandchild(){
-        this.applySuper(arguments);
-        console.log(&#39;$grandchild constructor arguments:&#39;, arguments);
-    }
-});
-
-var myBoy = $grandchild.create(1,2,3);
-    /// console log:
-    // $parent constructor arguments: [1,2]
-    // $child constructor arguments: [1,2,3]
-    // $grandchild constructor arguments: [1,2,3]
-
-assert( $child.isPrototypeOf(myBoy) );</code></pre>
-
-<p>See: <a href="./symbols/%24object.html#constructor">constructor</a>, <a href="./symbols/%24object.html#create">create</a>, <a href="./symbols/%24object.html#applySuper">applySuper</a>, <a href="./symbols/%24object.html#callSuper">callSuper</a>, <a href="./symbols/%24object.html#createSuperSafeCallback">createSuperSafeCallback</a>.</p>
-
-<h6>Properties iteration:</h6>
-
-<pre><code>var $obj = $object.clone({a: 11, b: 22, c: 33}),
-     obj = $obj.create({d: 44});
-
-/// Map only own properties (default):
-
-var mappedObj1 = obj.map(function(value){return 100 + value});
-    // mappedObj1 == {d: 144}
-
-/// Map all properties, replace default (`$object`) prototype of returned object:
-
-var proto = {e: 55};
-var mappedObj2 = obj.map(function(value){return 100 + value}, obj, false, proto);
-    // mappedObj2 == {a: 111, b: 122, c: 133, d: 144, e: 155}
-proto.f = 66;
-    // mappedObj2 == {a: 111, b: 122, c: 133, d: 144, e: 155, f: 66}</code></pre>
-
-<p>See: <a href="./symbols/%24object.html#forEach">forEach</a>, <a href="./symbols/%24object.html#map">map</a>, <a href="./symbols/%24object.html#filter">filter</a>, <a href="./symbols/%24object.html#every">every</a>, <a href="./symbols/%24object.html#some">some</a>.</p>
-
-<h6>Namespaces:</h6>
-
-<pre><code>var app = clonejs.$namespace.create();
-
-/// create namespace item `app.collections`
-
-app.extend(&#39;collections&#39;, {
-    $item:  {},
-    _items: {}
-});
-
-/// create namespace item `app.collections.arrayCollections`
-
-app.collections.extend(&#39;arrayCollections&#39;, {_items: []});
-
-/// create namespace item  `app.models.users`
-
-var $users = app.collections.$arrayCollections.clone({
-    $item: {name: &#39;&#39;, isAdmin: false},
-    constructor: function Users(items){
-        items.forEach(function(item){
-            var newItem = $object.create.call(this.$item, item);
-            this._items.push(newItem);
-        }, this);
-    }
-});
-app.put(&#39;models.users&#39;, $users);
-
-/// use namespace:
-
-var users = app.models.$users.create([{name: &#39;User1&#39;}]);</code></pre>
-
-<p>See: <a href="./symbols/$namespace.html">$namespace</a>, <a href="./symbols/$namespace.html#extend">$namespace.extend</a>, <a href="./symbols/$namespace.html#put">$namespace.put</a>.</p>
-
-<p></p>
-          
-      </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Clonejs maintained by <a href="https://github.com/quadroid">Alex Shvets</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-  </body>
-  <script>
-  window.onload = function(){
-      Array.prototype.forEach.call( document.querySelectorAll('PRE > CODE'), function(el){
-          //el.className = 'language-javascript';
-          hljs.highlightBlock(el, null, false);
-      });
-      //hljs.initHighlighting();
-  }
-  </script>
-
-  <!-- Yandex.Metrika counter -->
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="generator" content="JsDoc Toolkit" />
+		<title>Globals ■ clone.js</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+		<meta name="mobileoptimized" content="0" />
+	
+		<link rel="stylesheet" href="css/all.css" media="all" />
+		<link rel="stylesheet" href="css/handheld.css" media="only screen and (max-width: 660px)" />
+		<link rel="stylesheet" href="css/handheld.css" media="handheld" />
+		<link rel="stylesheet" href="css/screen.css" media="screen and (min-width: 661px)" />
+
+		<script src="javascript/all.js"></script>
+		<!--[if lt IE 9]>
+			<script src="javascript/html5.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+<div class="index">
+	<div class="menu">
+		<div class="indexLinks">
+			<a href="index.html">Home</a>
+			<a href="files.html">Files</a>
+		</div>
+	        
+		<h2 class="heading1"><a href="index.html">clone.js</a></h2>
+		
+		<input type="text" name="classFilter" class="classFilter" id="ClassFilter" placeholder="Filter"></input>
+		
+		<nav>
+			<ul class="classList" id="ClassList">
+				
+					<li><a href="symbols/%24namespace.html">$namespace</a></li>
+				
+					<li><a href="symbols/%24object.html">$object</a></li>
+				
+					<li><a href="symbols/_global_.html">_global_</a></li>
+				
+					<li><a href="symbols/clonejs.html">clonejs</a></li>
+				
+			</ul>
+		</nav>
+	</div>
+	<div class="fineprint" style="clear:both">
+		<footer>
+			
+			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
+			Template: <a href="https://github.com/quadroid/clonejs/tree/master/lib/jsdoc-toolkit/templates/codeview-jsdoc2-template" target="_blank">Codeview</a> 1.3<br />
+			Generated on:
+			<time datetime='2013-3-21' pubdate>2013-3-21 16:38</time>
+		</footer>
+	</div>
+</div>
+
+<div class="index indexStatic"></div>
+
+<div class="content">
+	<div class="innerContent">
+		<article>
+			<h1 class="classTitle"><span>Global objects</span></h1>
+			
+			<ul id="ClassList2">
+				
+					<li>
+						<h2 class="classname"><a href="symbols/%24namespace.html">$namespace</a></h2>
+						<p><p>The namespace object.</p>
+					</li>
+				
+					<li>
+						<h2 class="classname"><a href="symbols/%24object.html">$object</a></h2>
+						<p><p>This is the framework that implements the true <a href="http://en.wikipedia.org/wiki/Prototype-based_programming">prototype-based OOP⠙</a> paradigm in JS.</p>
+					</li>
+				
+					<li>
+						<h2 class="classname"><a href="symbols/_global_.html">_global_</a></h2>
+						<p>Description of some native types.</p>
+					</li>
+				
+					<li>
+						<h2 class="classname"><a href="symbols/clonejs.html">clonejs</a></h2>
+						<p></p>
+					</li>
+				
+			</ul>
+		</article>
+	</div>
+</div>
+		<script type="text/javascript">
+			wbos.CssTools.MediaQueryFallBack.LoadCss('css/screen.css', 'css/handheld.css', 660)
+			codeview.classFilter.Init()
+		</script>
+	</body>
+	
+	<!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function (d, w, c) {
         (w[c] = w[c] || []).push(function() {
@@ -346,5 +134,5 @@ var users = app.models.$users.create([{name: &#39;User1&#39;}]);</code></pre>
 
     ga('create', 'UA-1886659-9', 'clonejs.org');
     ga('send', 'pageview');
-</script>  
+</script>
 </html>

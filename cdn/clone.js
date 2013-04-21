@@ -144,6 +144,7 @@ var $object = /** @lands $object# */{
      * <dl class="detailList params dl">
      * <dt>(get)     <dt><dd> define getter, if string passed, the getter will be auto generated.
      * <dt>(set)     <dt><dd> define setter, if string passed, the setter will be auto generated.
+     * <dt>(get once)<dt><dd> on first property call, getter fn will be called, and property will be replaced by returned value. 
      * <dt>(const)   <dt><dd> make property unwritable.
      * <dt>(final)   <dt><dd> make property unwritable, and prevent it deleting and descriptor modifications.
      * <dt>(hidden)  <dt><dd> make property non-enumerable.
@@ -176,19 +177,27 @@ var $object = /** @lands $object# */{
             
             var value = properties[name];
             var descriptor = Object.create($defaultDescriptor);
+            var accessor = null;
 
             /// apply property modifiers:
             
             if( name[0]=='(' ){
                 //TODO: fix regexp to not mach the '(getset) property'
-                var matches = name.match(/^\((((get|set|const|hidden|final|writable) *)+)\) +(.+)$/);
+                var matches = name.match(/^\((((get|set|once|const|hidden|final|writable) *)+)\) +(.+)$/);
                 if( matches ){
-                    var prefixes = matches[1].split(' ').sort();
+                    var modifiers = matches[1].split(' ').sort();
                     name = matches[4];
 
-                    if(descriptors[name]) descriptor = descriptors[name];
-
-                    for(var i in prefixes) switch(prefixes[i]){
+                    if( descriptors[name] ){ 
+                        descriptor = descriptors[name];
+                    
+                    }else if( modifiers.indexOf('get') >= 0 || modifiers.indexOf('set') >= 0 ){
+                        // default descriptor for accessors:
+                        descriptor = {configurable: true};
+                        accessor = value;
+                    }
+                    //abcdefghijklmnopqrstuvwxyz
+                    for(var i in modifiers) switch(modifiers[i]){
                         case    'const': descriptor.writable     = false; break;
                         case    'final': descriptor.configurable = false; descriptor.writable = false; break;
                         case      'get': descriptor.get          = value; break;
@@ -196,29 +205,50 @@ var $object = /** @lands $object# */{
                         case      'set': descriptor.set          = value; break;
                         case 'writable': descriptor.writable     = true;  break;
                     }
-                }
-            }
-            
-            /// define getters/setters:
-            
-            if(descriptor.get || descriptor.set){
-                if(typeof value == 'string'){
-                    var hiddenPropertyName = value;
-                    if(typeof descriptor.get == 'string'){
-                        descriptor.get = function getter(){
-                            return this[hiddenPropertyName];
+                                   
+                    /// define getters/setters:
+                    
+                    if(accessor){
+                        if(typeof accessor == 'string'){
+                            var hiddenPropertyName = accessor;
+                            if(typeof descriptor.get == 'string'){
+                                descriptor.get = function getter(){
+                                    return this[hiddenPropertyName];
+                                }
+                            }else{
+                                descriptor.set = function setter(newValue){
+                                    this[hiddenPropertyName] = newValue;
+                                }
+                            }
                         }
-                    }else{
-                        descriptor.set = function setter(newValue){
-                            this[hiddenPropertyName] = newValue;
+                        // A property cannot both have accessors and be writable or have a value:
+                        //delete descriptor.value;
+                        //delete descriptor.writable;
+                        
+                        if(descriptor.get) value = undefined;// do not allow to hide getter (as default for method)
+                    }     
+                    
+                    /// `once` modifier:
+                    
+                    if( modifiers.indexOf('once') >= 0 ){
+                        var accessorName = descriptor.set ? 'set' : descriptor.get ? 'get' : '';
+                        if( accessorName ){
+                            void function(name, accessor){
+                                descriptor[accessorName] = function once(v){
+                                    var newValue = accessor.call(this, v);
+                                    var descriptor = Object.create($defaultDescriptor, {value: {value: newValue }});
+                                    Object.defineProperty(this, name, descriptor);
+                                    return newValue;
+                                }
+                            }(name, accessor);
+                        }else{
+                            console.warn('$object.define: `once` modifier can be used only with `get` or `set` modifier.')
                         }
                     }
                 }
-                descriptor.value = undefined;
-                if(descriptor.get) value = undefined;// do not allow to hide getter as method
-            }else{
-                descriptor.value = value;
             }
+            
+            if(! accessor) descriptor.value = value;
 
             /// hide methods and private properties:
             
@@ -945,14 +975,14 @@ var $object = /** @lands $object# */{
         }
     },
 
-//    /**
-//     * Returns the name and current state of this object.
-//     * @see $object#getState
-//     * @memberof $object# */
-//    toString: function(){
-//        var Type = this.constructor;
-//        return '['+ (Type.typeName || Type.name) +' '+ JSON.stringify( this.getState() )+']';
-//    },
+    /**
+     * Returns the name and current state of this object.
+     * @see $object#getState
+     * @memberof $object# */
+    toString: function(){
+        var Type = this.constructor;
+        return '['+ (Type.typeName || Type.name) +' '+ JSON.stringify( this.getState() )+']';
+    },
 
 //        /**
 //         * Returns true if all enumerable properties of this present in obj.
@@ -1049,7 +1079,7 @@ var $object = /** @lands $object# */{
 
 };
 
-// make methods not enumerable:
+////make methods not enumerable:
 //$object./*re*/defineProperties($object);
 
 
@@ -1211,42 +1241,89 @@ var $namespace = /** @lands $namespace# */{
  * 
  * @name clonejs
  */
-var exports = /** @lands clonejs# */{
+//var clonejs = /** @lands clonejs# */{
+//    
+//    $object: $object,
+//    $namespace: $namespace,
+//    inject: function(prototype){
+//        if(typeof prototype != 'object') prototype = Object.prototype;
+//        
+//        
+//        
+//        return clonejs;
+//    },
 
-    get $object(){
+//    get $object(){
+//        $object.defineProperties($object);
+//        Object.defineProperty(this, '$object', {value: $object});
+//        return $object;
+//    },
+//
+//    get $namespace(){
+//        $object = this.$object;
+//        $namespace = $object.clone($namespace);
+//        Object.defineProperty(this, '$namespace', {value: $namespace});
+//        return $namespace;
+//    },
+//
+//    inject: function inject(/** Object=Object.prototype */prototype){
+//        if(typeof prototype != 'object') prototype = Object.prototype;
+//
+//        Object.defineProperties(prototype, $object.describe($object));
+//        $object = prototype;
+//        
+//        Object.defineProperty(clonejs, '$object', {value: prototype});
+//
+//        //exports.inject = $object.paste;
+//        
+//        return clonejs;
+//    },
+//
+//    /**
+//     * Deprecated, use $object instead.
+//     * @deprecated */
+//    get prototype(){return this.$object},
+//    /** @deprecated */
+//    extend: $namespace.extend,
+//    /** @deprecated */
+//    put: $namespace.put
+//};
+
+var clonejs = $object.clone.call({}, {
+        
+    '(get once) $object': function(){
         $object.defineProperties($object);
-        Object.defineProperty(this, '$object', {value: $object});
+        delete this.inject;
         return $object;
     },
-
-    get $namespace(){
-        $object = this.$object;
-        $namespace = $object.clone($namespace);
-        Object.defineProperty(this, '$namespace', {value: $namespace});
+    
+    '(get once) $namespace': function(){
+        $namespace = this.$object.clone($namespace);
         return $namespace;
     },
-
-    inject: injectIntoObjectPrototype,
-
-    /**
-     * Deprecated, use $bject instead.
-     * @deprecated */
-    get prototype(){return this.$object},
-    /** @deprecated */
-    extend: $namespace.extend,
-    /** @deprecated */
-    put: $namespace.put
-};
     
+    inject: function(prototype){
+        if(typeof prototype != 'object') prototype = Object.prototype;
+
+        Object.defineProperties(prototype, $object.describe($object));
+        
+        delete this.inject;
+        delete this.$object;
+        this.$object = $object = prototype;
+        
+        return clonejs;
+    }
+});
+
 if(typeof module != 'undefined' && module.exports){
     /// CommonJS module:
     
-    module.exports = exports;
+    module.exports = clonejs;
     
 }else if(global.requirejs && typeof define == 'function'){
     /// RequireJS module:
     
-    define(function(){return exports});
+    define(function(){return clonejs});
     
 }else{
     /// No modules detected:
@@ -1254,26 +1331,19 @@ if(typeof module != 'undefined' && module.exports){
     if('clonejs' in global){
         var options = global.clonejs;
 
-        if(options.inject){
-            injectIntoObjectPrototype();
+        if( options.inject ){
+            clonejs.inject( options.inject );
         }
     }
 
     if(!options || options.$object !== false){
-        global.$object = $object = exports.$object;
+        global.$object = $object = clonejs.$object;
     }
 
-    global.clonejs = exports;
+    global.clonejs = clonejs;
 }
 
 return;
-    
-    function injectIntoObjectPrototype(){
-        Object.defineProperties(Object.prototype, $object.describe($object));
-        $object = Object.prototype;
-        Object.defineProperty(exports, '$object', {value: $object});
-        return $object;
-    }
     
     /**
      * @name _global_
