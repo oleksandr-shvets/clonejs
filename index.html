@@ -84,7 +84,7 @@
         
         <p></p>
 
-<p>This is the micro-framework that based on the ECMA Script 5 features like <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create⠙</a> and <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">property descriptors⠙</a>.
+<p>This framework based on the ECMA Script 5 features like <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create⠙</a> and <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">property descriptors⠙</a>.
 So, it isn&#39;t supported by IE8, but now, finally, you can use property descriptors, getters and setters!  </p>
 
 <p><strong>This framework provides:</strong></p>
@@ -173,8 +173,8 @@ var  copy   = $proto.copy();
 var instance   = $proto.create({d: 4444});
     instance.a = 1111;// $proto.a not changed
       $proto.b = 2222;// like clone, instance.b will be also changed to 2222
-assert( instance.a === 1111 ); 
-assert( instance.d === 4444 );</code></pre>
+console.log( instance.a );// 1111
+console.log( instance.d );// 4444</code></pre>
 
 <p>See: <a href="./symbols/%24object.html#clone">clone</a>, <a href="./symbols/%24object.html#copy">copy</a>, <a href="./symbols/%24object.html#create">create</a>, <a href="./symbols/%24object.html#deepCopy">deepCopy</a>, <a href="./symbols/%24object.html#deepClone">deepClone</a>.</p>
 
@@ -190,10 +190,16 @@ assert( instance.d === 4444 );</code></pre>
                           _item : &quot;private property (not enumerable)&quot;,
                    &#39;(get)  item&#39;: function() { return this._item },
                    &#39;(set)  item&#39;: function(v){ this._item = v    },
-              &#39;(get once)  once&#39;: function() { return this._item },
+              &#39;(get once)  once&#39;: function() {
+                                      console.log(&#39;getter called.&#39;);
+                                      return this.property4;
+                                  },
                     constructor : &#39;MyType&#39;
 });
-assert( $myType.property3alias === $myType.property3 );</code></pre>
+console.log( $myType.property3alias === $myType.property3 );// true 
+console.log( $myType.once );// getter called. simple property
+console.log( $myType.once );// simple property
+console.log( $myType.once );// simple property</code></pre>
 
 <p>See: <a href="./symbols/%24object.html#.describe">describe</a>.</p>
 
@@ -226,7 +232,7 @@ var myBoy = $grandchild.create(1,2,3);
     // $child constructor arguments: [1,2,3]
     // $grandchild constructor arguments: [1,2,3]
 
-assert( $child.isPrototypeOf(myBoy) );</code></pre>
+console.log( $child.isPrototypeOf(myBoy) );// true</code></pre>
 
 <p>See: <a href="./symbols/%24object.html#constructor">constructor</a>, <a href="./symbols/%24object.html#create">create</a>, <a href="./symbols/%24object.html#applySuper">applySuper</a>, <a href="./symbols/%24object.html#callSuper">callSuper</a>, <a href="./symbols/%24object.html#createSuperSafeCallback">createSuperSafeCallback</a>.</p>
 
