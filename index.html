@@ -149,7 +149,8 @@ var $talkingDuck = $duck.clone({
 
 /// Forget about the `new` operator, use .create() method instead:
 var donald = $talkingDuck.create({name: &#39;Donald&#39;});
-donald.quack();// Donald Duck: Quack-quack! My name is Donald!
+donald.quack();// Donald Duck: Quack-quack! 
+               // My name is Donald!
 
 /// Forget about the `instanceof` operator, use JS native 
 //  .isPrototypeOf() method instead:
@@ -181,23 +182,27 @@ console.log( instance.d );// 4444</code></pre>
 <h6>Property modificators:</h6>
 
 <pre><code>var $myType = $object.clone({
+                    constructor : &quot;MyType&quot;,
+                      property0 : &quot;simple property&quot;,
     &#39;(final)          property1&#39;: &quot;not configurable and not writable&quot;,
     &#39;(writable final) property2&#39;: &quot;not configurable only&quot;,
     &#39;(hidden)         property3&#39;: &quot;not enumerable&quot;,
     &#39;(const)           constant&#39;: &quot;not writable&quot;,
-                      property4 : &quot;simple property&quot;,
     &#39;(get)       property3alias&#39;: &#39;property3&#39;,// automatically create getter
                           _item : &quot;private property (not enumerable)&quot;,
                    &#39;(get)  item&#39;: function() { return this._item },
                    &#39;(set)  item&#39;: function(v){ this._item = v    },
               &#39;(get once)  once&#39;: function() {
-                                      console.log(&#39;getter called.&#39;);
-                                      return this.property4;
-                                  },
-                    constructor : &#39;MyType&#39;
+                                      console.log(&#39;getter called&#39;);
+                                      return this.property0;
+                                  }
 });
+
 console.log( $myType.property3alias === $myType.property3 );// true 
-console.log( $myType.once );// getter called. simple property
+
+console.log( $myType.once );// getter called
+                            // simple property
+
 console.log( $myType.once );// simple property
 console.log( $myType.once );// simple property</code></pre>
 
@@ -227,7 +232,7 @@ var $grandchild = $child.clone({
 });
 
 var myBoy = $grandchild.create(1,2,3);
-    /// console log:
+/// console log:
     // $parent constructor arguments: [1,2]
     // $child constructor arguments: [1,2,3]
     // $grandchild constructor arguments: [1,2,3]
@@ -298,7 +303,7 @@ var users = app.models.$users.create([{name: &#39;User1&#39;}]);</code></pre>
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
-        <p class="copyright">Clonejs maintained by <a href="https://github.com/quadroid">Alex Shvets</a></p>
+        <p class="copyright">CloneJS maintained by <a href="https://github.com/quadroid">Alex Shvets</a></p>
         <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>

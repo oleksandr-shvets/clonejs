@@ -3,7 +3,6 @@ function include_markdown($filename){
     $html = `../../node_modules/.bin/md2html $filename`;
     $substitutions = array(
         '#&lt;!-- HIDDEN: --&gt;(.*)&lt;!-- /HIDDEN --&gt;#msU' => '',
-        '#CloneJS\.org#' => 'clone.js',
         '#http://clonejs\.org/(?![ \'"])#' => './',
         '#\shref\s.=\s.["\']https?://#' => ' target="_blank"$0',
         //'#<a href = "" >⠙</a>#' => '',
@@ -107,7 +106,7 @@ function include_markdown($filename){
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
-        <p class="copyright">Clonejs maintained by <a href="https://github.com/quadroid">Alex Shvets</a></p>
+        <p class="copyright">CloneJS maintained by <a href="https://github.com/quadroid">Alex Shvets</a></p>
         <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
