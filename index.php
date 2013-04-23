@@ -4,8 +4,8 @@ function include_markdown($filename){
     $substitutions = array(
         '#&lt;!-- HIDDEN: --&gt;(.*)&lt;!-- /HIDDEN --&gt;#msU' => '',
         '#http://clonejs\.org/(?![ \'"])#' => './',
-        '#\shref\s.=\s.["\']https?://#' => ' target="_blank"$0',
-        //'#<a href = "" >⠙</a>#' => '',
+        //'#\shref\s.=\s.["\']https?://#' => ' target="_blank"$0',
+        '#(<a)\s+([^>]*>[^>]*⠙</a>)#' => '$1 target="_blank" $2',
     );
     echo preg_replace( array_keys($substitutions), array_values($substitutions), $html);
 }
