@@ -35,18 +35,23 @@ STATUS="succeful"
 cd ../
 
 # write changelog:
-#
-# TODO: [feature] Analyse old and new versions, and add corresponding heading level:
-#       H1 # (vX) - Global changes.
-#       H2 ## (v0.X) - Major changes: add/remove methods, changing signatures.
-#       H3 ### (v0.7.X) - Minor changes: bugfixes, optimizations.
-#       H4 #### (v0.7.4-X) - Micro changes, that not affect clone.min.js (tests, docs, html).
-#
-echo -e "### $MESSAGE\r\n\r\n`cat CHANGELOG.md`" > CHANGELOG.md || exit 40
+# TODO: Analyse old and new versions, and add corresponding heading level.
+echo -e <<<___CHANGELOG
 
-git commit -a --file=$MESSAGE_FILE || exit 50
-    
-read -n 1 -p "Tag $VERSION and push? [y/n](y): " ANSWER
+**Legend** _(actual since v0.8):_
+- **<u>X</u>.0.0** - Global changes.
+- **0.<u>X</u>.0** - Major changes: add/remove methods, changing signatures.
+- **0.0.<u>X</u>** - Minor changes (no new features): bugfixes, optimizations.
+- **0.0.0-<u>X</u>** - Micro changes, that not affect clone.min.js (tests, docs, html).
+
+##### $MESSAGE
+
+$(cat CHANGELOG.md)
+___CHANGELOG > CHANGELOG.md || exit 40
+
+QUESTION="Tag $VERSION and push? [y/n](y): "
+[ $TERM == 'dumb' ] && echo $QUESTION
+read -n 1 -p "$QUESTION" ANSWER
 if [ $ANSWER != "n" ]
 then
     git tag -d $VERSION # delete tag
