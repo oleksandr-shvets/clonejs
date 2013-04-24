@@ -1,10 +1,12 @@
 echo ":: minify ::::::::::::::::::::::::::::::::::::::"
 
-SRC_FILE=../src/clone.js
-OUT_FILE=clone.min.js
- VERSION=`cat ../.version`
+echo $PATH
 
-cd `dirname $0`/../build/
+cd "`dirname $0`/../build/"
+
+SRC_FILE="../src/clone.js"
+OUT_FILE="clone.min.js"
+ VERSION="`cat ../.version`"
 
 closure-compiler \
                --js $SRC_FILE \

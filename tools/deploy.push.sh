@@ -1,6 +1,6 @@
 echo ":: deploy: push ::::::::::::::::::::::::::::::"
 cd `dirname $0`
-set -x
+set +x
 
      VERSION=`cat ../.version`
  OLD_VERSION=$1
@@ -18,11 +18,21 @@ MESSAGE_FILE="tmp/last-build.txt"
 echo 
 cat ../$MESSAGE_FILE
 echo 
-while read -n 1 -p "You can edit it now ($MESSAGE_FILE). Continue? [y/n/e](e)dit: " ANSWER \
+
+
+QUESTION="You can edit it now ($MESSAGE_FILE). Continue? [y/n/e](e)dit: "
+[ $TERM == 'dumb' ] && echo $QUESTION
+while read -n 1 -p "$QUESTION" ANSWER \
  && ! [ $ANSWER == 'y' ]
 do
     [ $ANSWER == 'n' ] && exit 10
-    mcedit ../$MESSAGE_FILE
+    if [ $TERM == 'dumb' ]
+    then
+        EDITOR="$OLDPWD/../Contents/MacOS/idea_appLauncher"
+        [ -r $EDITOR ] && $EDITOR "$PWD/../$MESSAGE_FILE"
+    else
+        mcedit ../$MESSAGE_FILE
+    fi
 done
 
 # refresh message:
@@ -54,8 +64,9 @@ QUESTION="Tag $VERSION and push? [y/n](y): "
 read -n 1 -p "$QUESTION" ANSWER
 if [ $ANSWER != "n" ]
 then
+    git commit -a --file=$MESSAGE_FILE || exit 50
     git tag -d $VERSION # delete tag
-    git tag $VERSION
+    git tag $VERSION # set tag
     git push origin  --tags || exit
     echo "Push $STATUS."
 fi
