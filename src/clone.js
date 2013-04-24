@@ -82,7 +82,7 @@ var $object = /** @lands $object# */{
      */
     clone: function(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
         if(arguments.length){
-            var descriptors = $object.describe.apply(this, arguments);
+            var descriptors = (this.describe || $object.describe).apply(this, arguments);
         }
         return Object.create(this, descriptors);
     },
@@ -112,7 +112,7 @@ var $object = /** @lands $object# */{
      * @memberOf $object#
      */
     create: function(/** Object|...?= */properties, /** PropertyDescriptor= */defaultDescriptor){
-        var obj = this.clone();
+        var obj = (this.clone || $object.clone).apply(this);
         return obj.constructor.apply(obj, arguments) || obj;
     },
 
@@ -506,7 +506,7 @@ var $object = /** @lands $object# */{
             sourceObj = sourceObjects[i];
             var ownPropertyNames = Object.getOwnPropertyNames(sourceObj);
             if (!mixParents && i && ownPropertyNames.length){
-                updateObj = $object.apply(updateObj, 'clone');
+                updateObj = (updateObj.clone || $object.clone).apply(updateObj);
             }
 
             // copy all own properties:
@@ -514,8 +514,9 @@ var $object = /** @lands $object# */{
                 var name = ownPropertyNames[j];
                 var descriptor = Object.getOwnPropertyDescriptor(sourceObj, name);
 
-                if( deepMethod && typeof sourceObj[name] == 'object' && sourceObj[name] !== null){
-                    descriptor.value = $object[deepMethod].call(sourceObj[name]);
+                var nestedObj = sourceObj[name];
+                if( deepMethod && typeof  nestedObj == 'object' && nestedObj !== null){
+                    descriptor.value = (this[deepMethod] || $object[deepMethod]).call(nestedObj);
                 }
 
                 Object.defineProperty(updateObj, name, descriptor);
@@ -537,7 +538,7 @@ var $object = /** @lands $object# */{
 //        var args = arguments;
 //        $object.apply(args, 'unshift',['deepCopy'], Array);
 //        return this.copy.apply(this, args);
-        var obj = arguments.length ? $object.apply(this, 'copy', arguments) : $object.clone();
+        var obj = arguments.length ? (this.copy || $object.copy).apply(this, arguments) : $object.clone();
 
         var ownPropertyNames = Object.getOwnPropertyNames(this);
         for(var i=0, length=ownPropertyNames.length; i<length; i++){
@@ -564,7 +565,7 @@ var $object = /** @lands $object# */{
      * @memberOf $object#
      */
     deepClone: function deepClone(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
-        var obj = $object.apply(this, 'clone', arguments);
+        var obj = (this.copy || $object.copy).apply(this, arguments);
 
         var ownPropertyNames = Object.getOwnPropertyNames(this);
         for(var i=0, length=ownPropertyNames.length; i<length; i++){
@@ -585,7 +586,8 @@ var $object = /** @lands $object# */{
      * @memberOf $object#
      */
     paste: function(/** Object */pasteTo, /** (Array|boolean)= */allProperties){
-        return $object.apply(pasteTo, 'concat', [this, allProperties]);
+//        return $object.apply(pasteTo, 'concat', [this, allProperties]);
+        return (this.concat || $object.concat).call(pasteTo, this, allProperties);
     },
 
     /**
@@ -869,9 +871,10 @@ var $object = /** @lands $object# */{
         /**  boolean=false   */ownOnly, 
         /**  !Object=$object */prototype
     ){
-        var result = $object.apply(prototype || $object, 'clone');
+        if(!prototype) prototype = $object;
+        var result = (prototype.clone || $object.clone).apply(prototype);
 
-        $object.forEach.call(this, function(value, name, self){
+        (this.forEach || $object.forEach).call(this, function(value, name, self){
             
             var returned = callback.call(this, value, name, self);
             if( typeof returned === 'undefined' ){
@@ -897,9 +900,9 @@ var $object = /** @lands $object# */{
         /** boolean=false   */ownOnly, 
         /**  Object=$object */prototype
     ){
-        var result = $object.apply(prototype || $object, 'clone');
+        var result = (prototype.clone || $object.clone).apply(prototype);
 
-        $object.forEach.call(this, function(value, name, self){
+        (this.forEach || $object.forEach).call(this, function(value, name, self){
             if(! callback.call(this, value, name, self) ){
                 Object.defineProperty(result, name, {value: undefined});
             }
@@ -913,7 +916,7 @@ var $object = /** @lands $object# */{
      * @returns {Array} All own enumerable property values.
      * @memberof $object# */
     getValues: function(/** boolean=true */enumerableOnly,/** boolean=true */ownOnly){
-        var keys = $object.getKeys.apply(this, arguments);
+        var keys = (this.getKeys || $object.getKeys).apply(this, arguments);
         //console.log('getValues:', keys, enumerableOnly, ownOnly);
         return keys.map(function(key){
             return this[key];
@@ -957,15 +960,15 @@ var $object = /** @lands $object# */{
             var keys = [];
             
             if(!ownOnly && enumerableOnly){
-                
-                $object.forEach.call(this, function(value, key){
+
+                (this.forEach || $object.forEach).call(this, function(value, key){
                     keys.push(key);
                 },null, enumerableOnly, ownOnly);
 
             }else{// get all properties:
                 
                 keys = Object.getOwnPropertyNames(this);
-                $object.getPrototypes.call(this).forEach(function(proto){
+                (this.getPrototypes || $object.getPrototypes).call(this).forEach(function(proto){
                     keys = keys.concat(Object.getOwnPropertyNames(proto));
                 });
             }
@@ -1066,7 +1069,7 @@ var $object = /** @lands $object# */{
      *  @this {Object} Instance or prototype.
      *  @memberOf $object# */
     defineProperties: function(/** Object= */properties, /** PropertyDescriptor= */defaultDescriptor){
-        return Object.defineProperties(this, $object.describe.apply(this, arguments));
+        return Object.defineProperties(this, (this.describe || $object.describe).apply(this, arguments));
     },
 
     /** Wrapper for [Object.defineProperty⠙](http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty)
