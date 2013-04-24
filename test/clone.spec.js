@@ -172,7 +172,7 @@ this.tests = {
                     return value;
                 }
             });
-            console.log(obj.getterOnce, Object.getOwnPropertyDescriptor(obj,'getterOnce'))
+
             test.equal(obj.getterOnce, 'G');
             test.equal(obj.getterOnce, 'G');
             test.equal(obj.getterCalls, 1);
@@ -361,31 +361,31 @@ this.tests = {
         }
     },
 
-    apply: function(test){
-        //methodName, args, withObj, asObj
-        var asObj = {defineProperties: function(){
-            this.called = true;
-            return this;
-        }};
-        var obj = $object.apply(Array(22,33), 'defineProperties',[{a:11}], asObj);
-            test.equal(obj.a, undefined);
-            test.ok(obj.called);
-            test.equal(obj[0], 22);
-            test.equal(Object.getPrototypeOf(obj), Array.prototype);
-
-        //methodName, args, withObj
-        obj = $object.apply(Array(22,33), 'defineProperties',[{a:11}]);
-            test.equal(obj.a,  11);
-            test.equal(obj[0], 22);
-            test.equal(Object.getPrototypeOf(obj), Array.prototype);
-
-        //methodName, withObj
-        obj = $object.apply(Array(22,33), 'defineProperties');
-            test.equal(obj[0], 22);
-            test.equal(Object.getPrototypeOf(obj), Array.prototype);
-
-        test.done();
-    },
+//    apply: function(test){
+//        //methodName, args, withObj, asObj
+//        var asObj = {defineProperties: function(){
+//            this.called = true;
+//            return this;
+//        }};
+//        var obj = $object.apply(Array(22,33), 'defineProperties',[{a:11}], asObj);
+//            test.equal(obj.a, undefined);
+//            test.ok(obj.called);
+//            test.equal(obj[0], 22);
+//            test.equal(Object.getPrototypeOf(obj), Array.prototype);
+//
+//        //methodName, args, withObj
+//        obj = $object.apply(Array(22,33), 'defineProperties',[{a:11}]);
+//            test.equal(obj.a,  11);
+//            test.equal(obj[0], 22);
+//            test.equal(Object.getPrototypeOf(obj), Array.prototype);
+//
+//        //methodName, withObj
+//        obj = $object.apply(Array(22,33), 'defineProperties');
+//            test.equal(obj[0], 22);
+//            test.equal(Object.getPrototypeOf(obj), Array.prototype);
+//
+//        test.done();
+//    },
 
     concat: function(test){
         var $parent = $object.clone({a: 1});

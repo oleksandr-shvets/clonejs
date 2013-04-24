@@ -37,7 +37,7 @@
  * @example
  *
  * var myObj = {a:1, b:2, c:3};
- * var cloneOfMyObj = $object.apply(myObj, 'clone');
+ * var cloneOfMyObj = $object.clone.apply(myObj);
  * cloneOfMyObj.a = 11; // myObj.a still == 1
  * myObj.b = 22; // cloneOfMyObj.b will be also changed to 22
  *
@@ -648,6 +648,29 @@ var $object = /** @lands $object# */{
 
         return asObj[methodName].apply(withObj, args);
     },
+//    /**
+//     * Apply method from one object to another object.
+//     * @example
+//     *     var  args = $object.apply(arguments, 'slice',[1], Array);
+//     *     var  args = $object.apply.call(Array, arguments, 'slice',[1]);
+//     * @this {Object} Prototype only.
+//     * @returns {*}
+//     * @static
+//     * @memberOf $object
+//     */
+//    apply: function(/** Object */withObj, /** string */methodName, /** Array= */args, /** Object= */asObj){
+//        if(!asObj){
+//            asObj = typeof(withObj[methodName])=='function' 
+//                 && withObj[methodName].length == this[methodName].length 
+//                 && withObj 
+//                 || this;
+//
+//        }else if(typeof asObj == 'function' && asObj.prototype){
+//            asObj = asObj.prototype;
+//        }
+//
+//        return asObj[methodName].apply(withObj, args);
+//    },
 
     /**
      * Use this to check if method of one object is the same as in the another object.
