@@ -1,17 +1,28 @@
-## [CloneJS.org](http://clonejs.org) [![Build Status](https://travis-ci.org/quadroid/clonejs.png?branch=master "travis-ci.org")](https://travis-ci.org/quadroid/clonejs)
 <!-- HIDDEN: -->
-[API documentation](http://clonejs.org/symbols/%24object.html)
+## CloneJS [![Build Status](https://travis-ci.org/quadroid/clonejs.png?branch=master "travis-ci.org")](https://travis-ci.org/quadroid/clonejs) [![NPM version](https://badge.fury.io/js/clonejs.png)](http://badge.fury.io/js/clonejs)
+[**CloneJS.org**](http://clonejs.org)
+|  [API documentation](http://clonejs.org/symbols/%24object.html)
 |  [ChangeLog](https://github.com/quadroid/clonejs/blob/master/CHANGELOG.md)
-|  [GitHub](http://github.com/quadroid/clonejs)
+*|  [GitHub](http://github.com/quadroid/clonejs)
 |  [NPM package](http://npmjs.org/package/clonejs)
-|  [Travis CI](http://travis-ci.org/quadroid/clonejs)
+|  [Travis CI](http://travis-ci.org/quadroid/clonejs)*
 <!-- /HIDDEN -->
 
-This is the micro-framework that based on the ECMA Script 5 features like [Object.create⠙][] and [property descriptors⠙][Object.defineProperty⠙].
+This framework based on the ECMA Script 5 features like [Object.create⠙][] and [property descriptors⠙][].
+So, it isn't supported by IE8, but now, finally, you can use property descriptors, getters and setters!  
+  
+**This framework provides:**
 
-###### Try the true [prototype-based OOP⠙](http://en.wikipedia.org/wiki/Prototype-based_programming)
+* Class-less, the pure prototype-oriented paradigm.
+* Easy creation of special properties: getters/setters, runned only once accessors, constants, "final" (unconfigurable) and "hidden" (unenumerable) properties.
+* Power object creation tools: [clone][], [copy][], [deepCopy][], [deepClone][], [create][].
+* Object properties iteration, like arrays: [forEach][], [map][], [filter][], [every][], [some][].
+* [applySuper][] method to easy and inheritance safe call parent prototype methods.
+* Object modify methods ([concat][], [paste][]), which preserve property descriptors state. 
 
-**It's trivial to create new "classes"** - just clone the prototype and change a couple of properties and voila... new "class".
+#### Try the true [prototype-based OOP⠙](http://en.wikipedia.org/wiki/Prototype-based_programming)
+
+**It's trivial to create new "classes"** - just clone the object and change a couple of properties and voila... new "class".
 
 **It's really class-free**: `$object.clone` produces prototype objects, not function-constructors, unlike other class-producing tools (`Ext.define`, `dojo.declare`).
 
@@ -68,7 +79,8 @@ Node.js:
     
     /// Forget about the `new` operator, use .create() method instead:
     var donald = $talkingDuck.create({name: 'Donald'});
-    donald.quack();// Donald Duck: Quack-quack! My name is Donald!
+    donald.quack();// Donald Duck: Quack-quack! 
+                   // My name is Donald!
 
     /// Forget about the `instanceof` operator, use JS native 
     //  .isPrototypeOf() method instead:
@@ -102,16 +114,20 @@ See: [clone][], [copy][], [create][], [deepCopy][], [deepClone][].
 ###### Property modificators:
 
     var $myType = $object.clone({
+                        constructor : "MyType",
+                          property0 : "simple property",
         '(final)          property1': "not configurable and not writable",
         '(writable final) property2': "not configurable only",
         '(hidden)         property3': "not enumerable",
         '(const)           constant': "not writable",
-                          property4 : "simple property",
         '(get)       property3alias': 'property3',// automatically create getter
                               _item : "private property (not enumerable)",
                        '(get)  item': function() { return this._item },
                        '(set)  item': function(v){ this._item = v    },
-                        constructor : 'MyType'
+                  '(get once)  once': function() {
+                                          console.log('getter called');
+                                          return this.property0;
+                                      }
     });
     
     console.log( $myType.property3alias === $myType.property3 );// true 
@@ -147,7 +163,7 @@ See: [describe][].
     });
         
     var myBoy = $grandchild.create(1,2,3);
-        /// console log:
+    /// console log:
         // $parent constructor arguments: [1,2]
         // $child constructor arguments: [1,2,3]
         // $grandchild constructor arguments: [1,2,3]
@@ -214,6 +230,7 @@ See: [$namespace][], [$namespace.extend][], [$namespace.put][].
 
 [Object.create⠙]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create
 [Object.defineProperty⠙]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty
+[property descriptors⠙]: http://ejohn.org/blog/ecmascript-5-objects-and-properties/#ig-sh-1
 
 [CDN⠙]: http://code.lancepollard.com/github-as-a-cdn/
 
@@ -232,6 +249,9 @@ See: [$namespace][], [$namespace.extend][], [$namespace.put][].
 [some]:        http://clonejs.org/symbols/%24object.html#some
 [map]:         http://clonejs.org/symbols/%24object.html#map
 [filter]:      http://clonejs.org/symbols/%24object.html#filter
+
+[concat]:      http://clonejs.org/symbols/%24object.html#concat
+[paste]:       http://clonejs.org/symbols/%24object.html#paste
 
 [constructor]: http://clonejs.org/symbols/%24object.html#constructor
 [applySuper]:  http://clonejs.org/symbols/%24object.html#applySuper

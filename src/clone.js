@@ -21,7 +21,7 @@
  * For example:
  * <code>
  * var $array = Array.prototype, $myType = {},
- *     myTypeInstance = Object.create($myType);// $object.apply($myType, 'create');
+ *     myTypeInstance = Object.create($myType);
  * </code>
  *
  * Properties, **prefixed by "_"**, are private.
@@ -98,8 +98,8 @@ var $object = /** @lands $object# */{
      * @see $object#clone
      * @see $object#constructor
      * @see $object.describe
-     * @this {$object} Prototype.
-     * @returns {$object}
+     * @this {$object|Object} Prototype.
+     * @returns {$object|Object}
      *
      * @example
      *     var $myType = $object.clone({
@@ -140,11 +140,11 @@ var $object = /** @lands $object# */{
      *  
      * Uppercase properties will be not writable. 
      *  
-     * You can prefix your property names by `(get|set|const|final|hidden|writable)`:
+     * You can prefix your property names by `(get|set|once|const|final|hidden|writable)`:
      * <dl class="detailList params dl">
      * <dt>(get)     <dt><dd> define getter, if string passed, the getter will be auto generated.
      * <dt>(set)     <dt><dd> define setter, if string passed, the setter will be auto generated.
-     * <dt>(get once)<dt><dd> on first property call, getter fn will be called, and property will be replaced by returned value. 
+     * <dt>(get/set once)<dt><dd> on first property access, accessor function will be called, and property will be redefined by returned value. 
      * <dt>(const)   <dt><dd> make property unwritable.
      * <dt>(final)   <dt><dd> make property unwritable, and prevent it deleting and descriptor modifications.
      * <dt>(hidden)  <dt><dd> make property non-enumerable.
