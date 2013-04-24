@@ -157,13 +157,13 @@ var $object = /** @lands $object# */{
      * @static
      * @memberOf $object
      */
-    describe: function(/** Object */properties, /** PropertyDescriptor= */defaultDescriptor){
+    describe: function describe(/** Object */properties, /** PropertyDescriptor= */defaultDescriptor){
         
         var descriptors = {};
         
         /// Default properties descriptor:
 
-        var $defaultDescriptor = defaultDescriptor ? defaultDescriptor : {
+        var $defaultDescriptor = defaultDescriptor ? Object.create(defaultDescriptor) : {
             configurable: true,
             enumerable: true,
             writable: true
@@ -177,6 +177,20 @@ var $object = /** @lands $object# */{
             
             var value = properties[name];
             var descriptor = Object.create($defaultDescriptor);
+            var accessor = null;
+            
+            /// process dots in name:
+            
+//            if(name.indexOf('.')){
+//                var names = name.split('.');
+//                var eachProperty = properties;
+//                for(var i=0, sz=names.length; i < sz; i++){
+//                    var eachName = names[i];
+//                    eachProperty = eachName in eachProperty ? eachProperty[eachName].value : {};
+//                }
+//                eachProperty
+//              
+//            }
 
             /// apply property modifiers:
             
@@ -184,19 +198,19 @@ var $object = /** @lands $object# */{
                 //TODO: fix regexp to not mach the '(getset) property'
                 var matches = name.match(/^\((((get|set|once|const|hidden|final|writable) *)+)\) +(.+)$/);
                 if( matches ){
-                    var prefixes = matches[1].split(' ').sort();
+                    var modifiers = matches[1].split(' ').sort();
                     name = matches[4];
 
                     if( descriptors[name] ){ 
                         descriptor = descriptors[name];
                     
-                    }else if( prefixes.indexOf('get') >= 0 || prefixes.indexOf('set') >= 0 ){
-                        
+                    }else if( modifiers.indexOf('get') >= 0 || modifiers.indexOf('set') >= 0 ){
+                        // default descriptor for accessors:
                         descriptor = {configurable: true};
-                        var accessor = value;
+                        accessor = value;
                     }
                     //abcdefghijklmnopqrstuvwxyz
-                    for(var i in prefixes) switch(prefixes[i]){
+                    for(var i in modifiers) switch(modifiers[i]){
                         case    'const': descriptor.writable     = false; break;
                         case    'final': descriptor.configurable = false; descriptor.writable = false; break;
                         case      'get': descriptor.get          = value; break;
@@ -227,9 +241,9 @@ var $object = /** @lands $object# */{
                         if(descriptor.get) value = undefined;// do not allow to hide getter (as default for method)
                     }     
                     
-                    // `once` modifier:
+                    /// `once` modifier:
                     
-                    if( prefixes.indexOf('once') >= 0 ){
+                    if( modifiers.indexOf('once') >= 0 ){
                         var accessorName = descriptor.set ? 'set' : descriptor.get ? 'get' : '';
                         if( accessorName ){
                             void function(name, accessor){
@@ -285,6 +299,7 @@ var $object = /** @lands $object# */{
             }
 
             constructor.prototype = $prototype;
+            
             descriptors.constructor.enumerable = false;
         }
 
@@ -292,6 +307,48 @@ var $object = /** @lands $object# */{
         
         return descriptors;
     },
+
+    /**
+     * Default descriptor for the new properties.
+     * @static
+     * @this Prototype only.
+     * @memberOf $object */
+    'describe.defaultDescriptor': {
+        configurable: true,
+        enumerable: true,
+        writable: true
+    },
+
+    '(get set hidden) defaultDescriptor': 'describe.defaultDescriptor',
+    
+    /**
+     * @static
+     * @this $object.describe function
+     * @memberOf $object */
+    'describe.createConstructor': function(typeName, $prototype){},
+    
+    /** 
+     * @static
+     * @this $object.describe function
+     * @memberOf $object */
+    'describe.createOnceAccessor': function(getOrSet, accessor){},
+    
+    /** 
+     * @static
+     * @this $object.describe function
+     * @memberOf $object */
+    'describe.property': function(/** string */name, /** (string|PropertyDescriptor)= */modifiers, /** PropertyDescriptor= */defaultDescriptor){
+        switch(typeof modifiers){
+            case 'object':
+                defaultDescriptor = modifiers;
+                //no break!
+            case 'undefined':
+                modifiers = '';
+        }//<arguments>
+        
+        var descriptor = Object.create(this.defaultDescriptor);
+    },
+//    'describe.': function(){},
     
     /**
      * Apply method of super object (prototype) to this object.
@@ -625,29 +682,6 @@ var $object = /** @lands $object# */{
         return this;
     },
 
-    /**
-     * Apply method from one object to another object.
-     * @example
-     *     var  args = $object.apply(arguments, 'slice',[1], Array);
-     *     var  args = $object.apply.call(Array, arguments, 'slice',[1]);
-     * @this {Object} Prototype only.
-     * @returns {*}
-     * @static
-     * @memberOf $object
-     */
-    apply: function(/** Object */withObj, /** string */methodName, /** Array= */args, /** Object= */asObj){
-        if(!asObj){
-            asObj = typeof(withObj[methodName])=='function' 
-                 && withObj[methodName].length == this[methodName].length 
-                 && withObj 
-                 || this;
-
-        }else if(typeof asObj == 'function' && asObj.prototype){
-            asObj = asObj.prototype;
-        }
-
-        return asObj[methodName].apply(withObj, args);
-    },
 //    /**
 //     * Apply method from one object to another object.
 //     * @example
@@ -1099,12 +1133,14 @@ var $object = /** @lands $object# */{
      *  @this {Object} Instance or prototype.
      *  @memberOf $object# */
     defineProperty: function(/** string */name, /** PropertyDescriptor */propertyDescriptor){
-        return Object.defineProperty(this, name, propertyDescriptor);
+        var descriptor = (this.describe || $object.describe).property(name, propertyDescriptor);
+        return Object.defineProperties(this, descriptor);
+//        return Object.defineProperty(this, name, propertyDescriptor);
     }
 
 };
 
-// make methods not enumerable:
+////make methods not enumerable:
 //$object./*re*/defineProperties($object);
 
 
@@ -1147,10 +1183,10 @@ var $namespace = /** @lands $namespace# */{
      * @name prototype
      * @type Object
      * @memberOf $namespace# */
-    prototype: $object,
+    prototype: null,
     
     constructor: function(/** Object=$object */prototype){
-        if(prototype) this.prototype = prototype;
+        this.prototype = prototype || $object;
     },
     
     /**
@@ -1171,7 +1207,7 @@ var $namespace = /** @lands $namespace# */{
 
         var $parent = this.prototype, parentNS = this;
 
-        if( $parent.isPrototypeOf(prototype) ){
+        if( $parent.isPrototypeOf(prototype) && prototype.constructor !== Object/*|| prototype === $parent&& $parent !== $object*/){
             var $newProto = prototype;
             
         }else{
@@ -1219,7 +1255,8 @@ var $namespace = /** @lands $namespace# */{
                     
                     proto = Object.getPrototypeOf(proto);
                     var typeName = proto.constructor.typeName || proto.constructor.name;
-                    if(namePart !== typeName[0].toLowerCase() + typeName.substr(1) ){
+                    var prototypeName = typeName[0].toLowerCase() + typeName.substr(1);
+                    if(namePart !== prototypeName ){
 
                         proto = {};
                     }
@@ -1260,42 +1297,95 @@ var $namespace = /** @lands $namespace# */{
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-var exports = {
+/**
+ * @namespace
+ * 
+ * @name clonejs
+ */
+//var clonejs = /** @lands clonejs# */{
+//    
+//    $object: $object,
+//    $namespace: $namespace,
+//    inject: function(prototype){
+//        if(typeof prototype != 'object') prototype = Object.prototype;
+//        
+//        
+//        
+//        return clonejs;
+//    },
 
-    get $object(){
-        $object.defineProperties($object);
-        Object.defineProperty(this, '$object', {value: $object});
+//    get $object(){
+//        $object.defineProperties($object);
+//        Object.defineProperty(this, '$object', {value: $object});
+//        return $object;
+//    },
+//
+//    get $namespace(){
+//        $object = this.$object;
+//        $namespace = $object.clone($namespace);
+//        Object.defineProperty(this, '$namespace', {value: $namespace});
+//        return $namespace;
+//    },
+//
+//    inject: function inject(/** Object=Object.prototype */prototype){
+//        if(typeof prototype != 'object') prototype = Object.prototype;
+//
+//        Object.defineProperties(prototype, $object.describe($object));
+//        $object = prototype;
+//        
+//        Object.defineProperty(clonejs, '$object', {value: prototype});
+//
+//        //exports.inject = $object.paste;
+//        
+//        return clonejs;
+//    },
+//
+//    /**
+//     * Deprecated, use $object instead.
+//     * @deprecated */
+//    get prototype(){return this.$object},
+//    /** @deprecated */
+//    extend: $namespace.extend,
+//    /** @deprecated */
+//    put: $namespace.put
+//};
+
+var clonejs = $object.clone.call({}, {
+        
+    '(get once) $object': function(){
+        $object = $object.clone.call({}, $object);
+//        delete this.inject;
+        this.inject = $object.paste.bind($object);
         return $object;
     },
-
-    get $namespace(){
-        $object = this.$object;
-        $namespace = $object.clone($namespace);
-        Object.defineProperty(this, '$namespace', {value: $namespace});
+    
+    '(get once) $namespace': function(){
+        $namespace = this.$object.clone($namespace);
         return $namespace;
     },
-
-    inject: injectIntoObjectPrototype,
-
-    /**
-     * Deprecated, use $bject instead.
-     * @deprecated */
-    get prototype(){return this.$object},
-    /** @deprecated */
-    extend: $namespace.extend,
-    /** @deprecated */
-    put: $namespace.put
-};
     
+    inject: function(prototype){
+        if(typeof prototype != 'object') prototype = Object.prototype;
+
+        Object.defineProperties(prototype, $object.describe($object));
+        
+        delete this.inject;
+        delete this.$object;
+        this.$object = $object = prototype;
+        
+        return clonejs;
+    }
+});
+
 if(typeof module != 'undefined' && module.exports){
     /// CommonJS module:
     
-    module.exports = exports;
+    module.exports = clonejs;
     
 }else if(global.requirejs && typeof define == 'function'){
     /// RequireJS module:
     
-    define(function(){return exports});
+    define(function(){return clonejs});
     
 }else{
     /// No modules detected:
@@ -1303,25 +1393,19 @@ if(typeof module != 'undefined' && module.exports){
     if('clonejs' in global){
         var options = global.clonejs;
 
-        if(options.inject){
-            injectIntoObjectPrototype();
+        if( options.inject ){
+            clonejs.inject( options.inject );
         }
     }
 
     if(!options || options.$object !== false){
-        global.$object = exports.$object;
+        global.$object = $object = clonejs.$object;
     }
 
-    global.clonejs = exports;
+    global.clonejs = clonejs;
 }
 
 return;
-    
-    function injectIntoObjectPrototype(){
-        Object.defineProperties(Object.prototype, $object.describe($object));
-        $object = Object.prototype;
-        Object.defineProperty(exports, '$object', {value: $object});
-    }
     
     /**
      * @name _global_
