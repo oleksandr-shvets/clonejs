@@ -94,8 +94,8 @@ Node.js:
     var instance   = $proto.create({d: 4444});
         instance.a = 1111;// $proto.a not changed
           $proto.b = 2222;// like clone, instance.b will be also changed to 2222
-    assert( instance.a === 1111 ); 
-    assert( instance.d === 4444 );
+    console.log( instance.a );// 1111
+    console.log( instance.d );// 4444
         
 See: [clone][], [copy][], [create][], [deepCopy][], [deepClone][].
 
@@ -113,7 +113,13 @@ See: [clone][], [copy][], [create][], [deepCopy][], [deepClone][].
                        '(set)  item': function(v){ this._item = v    },
                         constructor : 'MyType'
     });
-    assert( $myType.property3alias === $myType.property3 );
+    
+    console.log( $myType.property3alias === $myType.property3 );// true 
+    
+    console.log( $myType.once );// getter called
+                                // simple property
+                                
+    console.log( $myType.once );// simple property
 
 See: [describe][].
 
@@ -146,7 +152,7 @@ See: [describe][].
         // $child constructor arguments: [1,2,3]
         // $grandchild constructor arguments: [1,2,3]
         
-    assert( $child.isPrototypeOf(myBoy) );
+    console.log( $child.isPrototypeOf(myBoy) );// true
 
 See: [constructor][], [create][], [applySuper][], [callSuper][], [createSuperSafeCallback][].
 
