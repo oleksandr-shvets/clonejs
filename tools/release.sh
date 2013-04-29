@@ -27,6 +27,7 @@ echo "$NEW_VERSION" | tr -d "[\r\n]" > ../.version
 # replace version in files:
 sed -i "" "s/\( *\"version\" *: *\"\)$OLD_VERSION\(\" *,\)/\1$NEW_VERSION\2/g" \
     ../package.json \
+    ../component.json \
     || exit 30
 sed -i "" "s/\(@version \)$OLD_VERSION/\1$NEW_VERSION/g" \
     ../src/clone.js \
