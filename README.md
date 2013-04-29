@@ -14,11 +14,14 @@ So, it isn't supported by IE8, but now, finally, you can use property descriptor
 **This framework provides:**
 
 * Class-less, the pure prototype-oriented paradigm.
+* [Lazy initialization⠙][] support (by `get/set once` modifier).
 * Easy creation of special properties: getters/setters, runned only once accessors, constants, "final" (unconfigurable) and "hidden" (unenumerable) properties.
 * Power object creation tools: [clone][], [copy][], [deepCopy][], [deepClone][], [create][].
 * Object properties iteration, like arrays: [forEach][], [map][], [filter][], [every][], [some][].
 * [applySuper][] method to easy and inheritance safe call parent prototype methods.
 * Object modify methods ([concat][], [paste][]), which preserve property descriptors state. 
+
+[Lazy initialization⠙]: http://en.wikipedia.org/wiki/Lazy_initialization
 
 #### Try the true [prototype-based OOP⠙](http://en.wikipedia.org/wiki/Prototype-based_programming)
 
