@@ -163,11 +163,7 @@ var $object = /** @lands $object# */{
         
         /// Default properties descriptor:
 
-        var $defaultDescriptor = defaultDescriptor ? Object.create(defaultDescriptor) : {
-            configurable: true,
-            enumerable: true,
-            writable: true
-        };
+        var $defaultDescriptor = Object.create(defaultDescriptor || this._defaultDescriptor);
         
         /// Iterate properties:
 
@@ -209,8 +205,9 @@ var $object = /** @lands $object# */{
                         descriptor = {configurable: true};
                         accessor = value;
                     }
-                    //abcdefghijklmnopqrstuvwxyz
+
                     for(var i in modifiers) switch(modifiers[i]){
+                        //order by: abcdefghijklmnopqrstuvwxyz
                         case    'const': descriptor.writable     = false; break;
                         case    'final': descriptor.configurable = false; descriptor.writable = false; break;
                         case      'get': descriptor.get          = value; break;
@@ -313,13 +310,13 @@ var $object = /** @lands $object# */{
      * @static
      * @this Prototype only.
      * @memberOf $object */
-    'describe.defaultDescriptor': {
+    'describe._defaultDescriptor': {
         configurable: true,
         enumerable: true,
         writable: true
     },
 
-    '(get set hidden) defaultDescriptor': 'describe.defaultDescriptor',
+//    '(get set hidden) defaultDescriptor': 'describe._defaultDescriptor',
     
     /**
      * @static
