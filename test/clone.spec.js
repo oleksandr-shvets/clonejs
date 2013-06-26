@@ -1,47 +1,54 @@
 // nodeunit
+var object = _.prototype;
 
 this.tests = {
 
     clone: {
         '': function(test){
-            var clone = $object.clone({a:1});
+            var clone = _({a:1});
                 test.ok( clone.hasOwnProperty('a') );
-                test.equal( Object.getPrototypeOf(clone), $object);
+                test.equal( Object.getPrototypeOf(clone), object);
                 test.strictEqual( Object.getOwnPropertyNames(clone).length, 1);
     
-            clone = $object.clone({a:1}, {});
+            clone = object.clone({a:1}, {});
                 test.ok( clone.hasOwnProperty('a') );
-                test.equal( Object.getPrototypeOf(clone), $object);
+                test.equal( Object.getPrototypeOf(clone), object);
                 test.strictEqual( Object.getOwnPropertyNames(clone).length, 1);
     
-            clone = $object.clone();
+            clone = _();
                 test.strictEqual( Object.getOwnPropertyNames(clone).length, 0);
-                test.equal( Object.getPrototypeOf(clone), $object);
-    
+                test.equal( Object.getPrototypeOf(clone), object);
+            
+            clone = object.clone.call(null, {a:1});
+                test.ok( clone !== null );
+                test.equal(typeof clone, 'object');
+                test.ok( object.hasOwnProperty.call(clone, 'a') );
+                test.strictEqual( Object.getPrototypeOf(clone), null);
+
             test.done();
         },
     
         call: function(test){
             var $proto = {a: 1};
     
-                var clone = $object.clone.call($proto);
+                var clone = _($proto, 'clone');
                     test.equal( Object.getPrototypeOf(clone), $proto,
                         'check prototype');
     
-                clone = $object.clone.call($proto, {b:2});
+                clone = object.clone.call($proto, {b:2});
                     test.ok( clone.hasOwnProperty('b') );
     
-                clone = $object.clone.call($proto, {b:2}, {});
+                clone = object.clone.call($proto, {b:2}, {});
                     test.ok( clone.hasOwnProperty('b') );
     
             test.done();
         },
     
         constructor: function(test){
-            var constructor = $object.clone({constructor: ''}).constructor;
-            var c = $object.clone({constructor: ''});
+            var constructor = _({constructor: ''}).constructor;
+            var c = _({constructor: ''});
                 test.ok(constructor !== c.constructor);
-                test.ok(constructor !== $object.clone().constructor);
+                test.ok(constructor !== _().constructor);
                 test.equal(typeof constructor, 'function');
     
     
@@ -53,7 +60,7 @@ this.tests = {
         
         '': function(test){
             var customConstructorCalled = false;
-            var $myType = $object.clone({
+            var $myType = _({
                 constructor: function(){
                     customConstructorCalled = true;
                 }
@@ -70,7 +77,7 @@ this.tests = {
         
         'super property should can be modified': function(test){
             
-            var obj = $object.clone({a: 1}).create();
+            var obj = _({a: 1}).create();
             obj.a = 2;
                 
                 test.equal(obj.a, 2);
@@ -86,7 +93,7 @@ this.tests = {
             function Constructor(){};
     
             test.deepEqual(
-                $object.describe({
+                object.describe({
                                           _p: undefined,
                        '(const) _unwritable': 231,
                                   property1 : 11,
@@ -105,7 +112,7 @@ this.tests = {
                                    property1: {value: 11},
                                    property2: {value: 22, enumerable:false},
                                    property3: {value: 33, writable:true},
-                                   property4: {value: 44, writable:false, configurable: false},
+                                   property4: {value: 44, configurable: false},
                                    property5: {value: 55, writable:true, configurable: false},
 //                                      getter: {get: Function},
 //                                      setter: {'set': Function, enumerable:false},
@@ -120,7 +127,7 @@ this.tests = {
         
         'constructor': function(test){
             var proto = {};
-            var descriptors = $object.describe.call(proto, {constructor: 'MyCustomName'});
+            var descriptors = object.describe.call(proto, {constructor: 'MyCustomName'});
 
                 var constructor = descriptors.constructor.value;
                 test.equal(typeof constructor, 'function');
@@ -128,17 +135,17 @@ this.tests = {
                 test.equal(constructor.typeName, 'MyCustomName');
                 test.strictEqual(constructor.prototype, proto);
 
-            var $obj = $object.clone().clone();
-            constructor.call($obj, {key: 11});
-
-                test.equal($obj.key, 11);
+//            var $obj = $().clone();
+//            constructor.call($obj, {key: 11});
+//
+//                test.equal($obj.key, 11);
 
             test.done();            
         },
 
         'get, set modifiers': function(test){
             
-            var obj = $object.create({
+            var obj = _({
                 _private: 1,
                 getterValue: 2,
                 setterValue: 0,
@@ -159,15 +166,15 @@ this.tests = {
             test.done();    
         },
         
-        'once modifier': function(test){
-            var obj = $object.create({
+        'init modifier': function(test){
+            var obj = _({
                 getterCalls: 0,
                 setterCalls: 0,
-                '(get once) getterOnce': function(){
+                '(init) getterOnce': function(){
                     this.getterCalls++;
                     return 'G';
                 },
-                '(set once) setterOnce': function(value){
+                '(init) setterOnce': function(value){
                     this.setterCalls++;
                     return value;
                 }
@@ -187,36 +194,36 @@ this.tests = {
         }
     },
 
-    'can, cant': function(test){
-
-        var $myObj = $object.clone({
-            fly: function(){},
-            swim: function(a,b,c){}
-        });
-        var myObj = $myObj.create();
-            test.ok(!!   myObj.can('swim').as($myObj) );
-            test.ok(!! $object.can.call(myObj, 'fly').like($myObj) );
-
-            test.ok(!    myObj.cant('swim').as($myObj) );
-            test.ok(!  $object.cant.call(myObj, 'fly').like($myObj) );
-
-        test.done();
-    },
+//    'can, cant': function(test){
+//
+//        var $myObj = $({
+//            fly: function(){},
+//            swim: function(a,b,c){}
+//        });
+//        var myObj = $myObj.create();
+//            test.ok(!!   myObj.can('swim').as($myObj) );
+//            test.ok(!! $object.can.call(myObj, 'fly').like($myObj) );
+//
+//            test.ok(!    myObj.cant('swim').as($myObj) );
+//            test.ok(!  $object.cant.call(myObj, 'fly').like($myObj) );
+//
+//        test.done();
+//    },
 
     copy: function(test){
-        var myArray = $object.copy(Array);
+        var myArray = object.copy(Array);
         myArray[0] = 11;
         myArray[1] = 22;
             test.deepEqual(myArray, [11 ,22]);
 
-            myArray.defineProperties({test: 'T'});
+            myArray.defineFields({test: 'T'});
                 test.strictEqual(myArray.test, 'T');
 
 
-        var $collection = $object.clone({items: []});
+        var $collection = _({items: []});
         var $users = $collection.clone({name: ''});
         
-        var injected = Object.prototype === $object;
+        var injected = Object.prototype === object;
 
             // $users full prototype chain:
             //$users -> $collection -> $object -> Object.prototype -> null
@@ -225,7 +232,7 @@ this.tests = {
 
             var userCopy = $users.copy();
             //~$users -> $object
-                test.deepEqual(Object.getPrototypeOf(userCopy), $object);
+                test.deepEqual(Object.getPrototypeOf(userCopy), object);
                 test.ok(userCopy.hasOwnProperty('name'));
                 test.ok(userCopy.items === undefined);
 
@@ -239,9 +246,9 @@ this.tests = {
             userCopy = $users.copy(Array, Infinity);
             //~$users -> ~$collection -> ~$object -> Array.prototype
                 test.ok(userCopy.hasOwnProperty('name'));
-                test.ok(userCopy.getPrototype().hasOwnProperty('items'));
-                if(!injected) test.ok(userCopy.getPrototype().getPrototype().hasOwnProperty('clone'));
-                test.deepEqual(userCopy.getPrototype().getPrototype().getPrototype(), Array.prototype);
+                test.ok(userCopy.getProto().hasOwnProperty('items'));
+                if(!injected) test.ok(userCopy.getProto().getProto().hasOwnProperty('clone'));
+                test.deepEqual(userCopy.getProto().getProto().getProto(), Array.prototype);
 
             userCopy = $users.copy(Array, Infinity, true);
             //~($users + $collection + $object) -> Array.prototype
@@ -256,7 +263,7 @@ this.tests = {
     },
 
     deepCopy: function(test){
-        var obj = $object.clone({l1: {l2: {l3: null}}});
+        var obj = _({l1: {l2: {l3: null}}});
         var deepCopy = obj.deepCopy();
         test.strictEqual(deepCopy.l1.l2.l3, null);
 
@@ -270,7 +277,7 @@ this.tests = {
     },
 
     deepClone: function(test){
-        var obj = $object.clone({l1: {l2: {l3: null}}});
+        var obj = _({l1: {l2: {l3: null}}});
         var deepClone = obj.deepClone();
             test.strictEqual(deepClone.l1.l2.l3, null);
 
@@ -286,7 +293,8 @@ this.tests = {
     '__super__': {
         'callSuper, applySuper': function(test){
             var calls = [];
-            var $parent = $object.clone({
+            var $parent = _({
+                test: 11,
                 constructor: function(arg){
                     calls.push('collection');
                     this.callSuper('constructor', arg);
@@ -298,10 +306,10 @@ this.tests = {
                     this.applySuper(arguments);
                 }
             });
-            var child = $child.create({setBy$objectConstructor: 11});
+            var child = $child.create({test: 11});
                 
                 test.deepEqual(calls, ['users','collection']);
-                test.equal(child.setBy$objectConstructor, 11);
+                test.equal(child.test, 11);
     
             test.done();
         },
@@ -310,9 +318,9 @@ this.tests = {
     
             test.expect(3);
     
-            var $parent = $object.clone({
+            var $parent = _({
                 testSuper: function(){
-                    test.strictEqual(this.__super__, $object);
+                    test.strictEqual(this.__super__, object);
                 }
             });
             var $child = $parent.clone({
@@ -322,7 +330,7 @@ this.tests = {
                 },
                 
                 asyncCheck: function(){
-                    var callback = this.createSuperSafeCallback(function(){
+                    var callback = this.createBoundMethod(function(){
                         test.strictEqual(this.__super__, $parent);
                         this.applySuper('testSuper');                    
                     },this);
@@ -342,7 +350,7 @@ this.tests = {
         "first call applySuper() on sealed object \
          should doesn't throw an error": function(test){
             
-            var $parent = $object.clone({
+            var $parent = _({
                 method: function(){}
             });
             var $child = $parent.clone({
@@ -387,34 +395,34 @@ this.tests = {
 //        test.done();
 //    },
 
-    concat: function(test){
-        var $parent = $object.clone({a: 1});
+    paste: function(test){
+        var $parent = _({a: 1});
         var $child  = $parent.clone({b: 2});
-        var toMerge = $child .clone({c: 3, _c: 33});
+        var $mixin  = $child .clone({c: 3, _c: 33});
 
-            var obj = $object.clone().concat(toMerge);
-                test.strictEqual(obj._c, 33);
-                test.strictEqual(obj.c,  3);
-                test.strictEqual(obj.b,  undefined);
-                test.strictEqual(obj.a,  undefined);
+            var mix = $mixin.paste({});
+                test.strictEqual(mix._c, 33);
+                test.strictEqual(mix.c,  3);
+                test.strictEqual(mix.b,  undefined);
+                test.strictEqual(mix.a,  undefined);
 
-            obj = $object.clone().concat(toMerge, ['a','_c']);
-                test.strictEqual(obj._c, 33);
-                test.strictEqual(obj.c,  undefined);
-                test.strictEqual(obj.b,  undefined);
-                test.strictEqual(obj.a,  1);
+            mix = $mixin.paste({}, ['a','_c']);
+                test.strictEqual(mix._c, 33);
+                test.strictEqual(mix.c,  undefined);
+                test.strictEqual(mix.b,  undefined);
+                test.strictEqual(mix.a,  1);
 
-            obj = $object.clone().concat(toMerge, true);
-                test.strictEqual(obj._c, 33);
-                test.strictEqual(obj.c,  3);
-                test.strictEqual(obj.b,  2);
-                test.strictEqual(obj.a,  1);
+            mix = $mixin.paste({}, true);
+                test.strictEqual(mix._c, 33);
+                test.strictEqual(mix.c,  3);
+                test.strictEqual(mix.b,  2);
+                test.strictEqual(mix.a,  1);
 
         test.done();
     },
 
     getPrototypes: function(test){
-        var $obj = $object.clone({n:1})
+        var $obj = _({n:1})
                           .clone({n:2})
                           .clone({n:3})
                           .create();
@@ -422,11 +430,11 @@ this.tests = {
             test.deepEqual($obj.getPrototypes(), [{n:1}, {n:2}, {n:3}]);
             test.deepEqual($obj.getPrototypes(undefined, true), [{n:3}, {n:2}, {n:1}]);
             var prototypes = $obj.getPrototypes(Object.prototype);
-            if( $object === Object.prototype ){
+            if( object === Object.prototype ){
                 test.deepEqual(prototypes, [{n:1}, {n:2}, {n:3}]);
             }else{
-                test.deepEqual(prototypes, [$object, {n:1}, {n:2}, {n:3}]);
-                test.strictEqual(prototypes[0], $object);
+                test.deepEqual(prototypes, [object, {n:1}, {n:2}, {n:3}]);
+                test.strictEqual(prototypes[0], object);
             }
             
             //test.deepEqual($obj.getPrototypes(null), [Object.prototype, Object.prototype, {n:1}, {n:2}, {n:3}]);
@@ -435,7 +443,7 @@ this.tests = {
     },
 
     getValues: function(test){
-        var obj = $object.clone({en:'1 0', _p:'0 0'}).clone({ownEn:'1 1', _own:'0 1'});
+        var obj = _({en:'1 0', _p:'0 0'}).clone({ownEn:'1 1', _own:'0 1'});
         //                      enumerable,   own
         test.deepEqual(obj.getValues(true,   true).sort(), [ '1 1' ]); 
         test.deepEqual(obj.getValues(false, false).sort(), [ '0 0', '0 1', '1 0', '1 1' ]);
@@ -446,7 +454,7 @@ this.tests = {
     },
 
     setValues: function(test){
-        var obj = $object.clone({en:'1 0', _p:'0 0'}).clone({ownEn:'1 1', _own:'0 1'}), values;
+        var obj = _({en:'1 0', _p:'0 0'}).clone({ownEn:'1 1', _own:'0 1'}), values;
 
         values = obj.getValues();
             test.deepEqual(obj, obj.copy(Infinity).setValues(values) );
@@ -468,74 +476,6 @@ this.tests = {
         
         
         test.done();
-    },
-
-    $namespace: {
-        /*
-        
-        namespace contents:
-            ns = {
-                prototype: $ns,
-                items: {
-                    prototype: $item,
-                    subitems: {}, 
-                    $subitem: $subitem,
-                    
-                    extend: $ns.extend
-                },
-                $item: $item,
-    
-                extend: $ns.extend,
-                put: $ns.put
-            }
-            
-        1) $subitem should be a direct child of $item
-        2) items, subitems should be plural
-    
-        clone.clone()
-        clone.prototype
-        */
-        
-        extend: function(test){
-            var ns1 = clonejs.$namespace.create();
-                ns1.extend('collection',      {name: 'collection'})
-                   .extend('arrayCollection', {name: 'arrayCollection'});
-    
-                _ns_check(ns1, test);
-            
-            test.done();
-        },
-        
-        put: function(test){
-            var $collection = $object.clone({constructor: 'Collection'}),
-                $arrayCollection = $collection.clone({constructor: 'ArrayCollection'});
-            var ns2 = clonejs.$namespace.create();
-            ns2.put($arrayCollection);
-        
-                _ns_check(ns2, test);
-    
-            var ns3 = clonejs.$namespace.create();
-            ns3.put('collection.arrayCollection', $arrayCollection);
-            
-                _ns_check(ns3, test);
-            
-            test.done();
-        }
     }
+
 };
-
-function _ns_check(newNS, test){
-    test.strictEqual(newNS.prototype, $object);
-    test.strictEqual(newNS.extend,    clonejs.$namespace.extend);
-    test.strictEqual(newNS.put,       clonejs.$namespace.put);
-    
-    test.ok( $object.isPrototypeOf(newNS.$collection) );
-    test.equal( newNS.$collection.constructor.typeName, 'Collection');
-    test.strictEqual(newNS.collection.prototype, newNS.$collection);
-    test.strictEqual(newNS.collection.extend,    clonejs.$namespace.extend);
-
-    test.ok( newNS.$collection.isPrototypeOf(newNS.collection.$arrayCollection) );
-    test.equal( newNS.collection.$arrayCollection.constructor.typeName, 'ArrayCollection');
-    test.strictEqual(newNS.collection.arrayCollection.prototype, newNS.collection.$arrayCollection);
-    test.strictEqual(newNS.collection.arrayCollection.extend,    clonejs.$namespace.extend);
-}
