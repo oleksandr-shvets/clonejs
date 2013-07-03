@@ -46,3 +46,16 @@
 * add scripts
 * add npm overlay
 * test script: run all *.test.js files
+
+### First relases
+
+version 0.4.5 9d4bfee
+version 0.5.0 4125a04ec5
+version 0.6.0 0bcbbca1d1
+version 0.6.1 8b099b53a7
+version 0.6.2 18dfca72c3
+version 0.7.0 26e58a1e7e
+version 0.7.1 bdaa55564d
+Build 0.7.2.01 (2013-03-30 20:17) b1302c8cac
+Build v0.7.2-02-beta (2013-03-30 22:06) 7b2ed7e4a5
+Build v0.7.2-03-beta (2013-04-01 12:06) 110d180ca4
