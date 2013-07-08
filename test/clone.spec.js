@@ -3,6 +3,14 @@
 this.tests = {
 
     clone: {
+        "2 args": function(test){
+            //TODO: 2 args test
+            test.done();        
+        },
+        "3 args": function(test){
+            //TODO: 3 args test
+            test.done();        
+        },
         create: function(test){
             var c = clone.create({a:1});
                 test.ok( c.hasOwnProperty('a') );
