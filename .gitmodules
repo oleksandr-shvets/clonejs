@@ -1,6 +1,3 @@
-[submodule "lib/es5-shim"]
-	path = lib/es5-shim
-	url = git://github.com/kriskowal/es5-shim.git
 [submodule "build/html"]
 	path = build/html
 	url = git://github.com/quadroid/clonejs.git
