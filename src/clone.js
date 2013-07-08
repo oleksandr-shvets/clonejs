@@ -98,10 +98,6 @@ var clone = (function(){
     clone.create = function clone_create(/** !object */state, /** object= */behavior$){
         return clone(clone.prototype, state, behavior$);
     };// clone.bind(null, clone.prototype);
-//    
-//    clone.new = function clone_new(/** !Object */obj,/** ...? */ state, arg1, arg2, arg3, arg4, arg5){
-//        return                 new               obj.constructor(state, arg1, arg2, arg3, arg4, arg5);
-//    };
 
     // // // // // // // // // // // // // // // // // // // // // // // // // //
     // behavior of all created by clone.create objects:
@@ -124,10 +120,6 @@ var clone = (function(){
 
             return newBehavior$;
         }
-//        /** @memberOf clone# */
-//        function  $new(/** !Object */obj,/** ...? */ state, arg1, arg2, arg3, arg4, arg5){
-//            return new               obj.constructor(state, arg1, arg2, arg3, arg4, arg5);
-//        }
     ];
     for(var i=0, sz=prototype.length; i<sz; i++){
         var method = prototype[i];
@@ -141,20 +133,6 @@ var clone = (function(){
         state.__proto__ = obj;
         return state;
     }
-
-//    function clone_byConstructorAndProto(obj, state){
-//        if('__proto__' in obj){
-//        }else{
-//            state = clone_byConstructor(obj, state);
-//        }
-//        return clone_byProto(obj, state);
-//    }
-    
-//    function clone_byObjectCreate(/** !Object */proto, /** object= */state){
-//        var newObj = Object.create(proto);
-//        for(var key in state) newObj[key] = state[key];
-//        return newObj;
-//    }
 
     function clone_byConstructor(/** !Object */proto, /** object= */state){
         var  OwnConstructor = state.hasOwnProperty('constructor') && state.constructor.InitClone || state.constructor;
