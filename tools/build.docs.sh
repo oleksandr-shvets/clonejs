@@ -7,4 +7,4 @@ cd `dirname $0`/../lib/jsdoc-toolkit/
     -D="title:clone.js" \
     -d=../../build/html/ \
     -t=./templates/codeview-jsdoc2-template/ \
-    ../../src/
+    ../../src/clone.js
