@@ -1,3 +1,10 @@
+##### Build v1.0.0-alpha (2013-07-08)
+* Completely redesigned, the new version of framework:
+* Very improved speed
+* Separation of objects to state and behavior
+* Lazy initialization
+* Supporting IE6+
+
 ##### Build v0.7.4 (2013-04-14 09:06)
 * add ability to inject into Object.prototype, update module interface
 * change namespace interface

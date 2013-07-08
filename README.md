@@ -3,9 +3,9 @@
 [**CloneJS.org**](http://clonejs.org)
 |  [API documentation](http://clonejs.org/symbols/clone.html)
 |  [ChangeLog](https://github.com/quadroid/clonejs/blob/master/CHANGELOG.md)
-*|  [GitHub](http://github.com/quadroid/clonejs)
+|  [GitHub](http://github.com/quadroid/clonejs)
 |  [NPM package](http://npmjs.org/package/clonejs)
-|  [Travis CI](http://travis-ci.org/quadroid/clonejs)*
+|  [Travis CI](http://travis-ci.org/quadroid/clonejs)
 <!-- /HIDDEN -->
   
 **This framework provides:**
