@@ -10,8 +10,8 @@ REPO_DIR=`pwd`
 
 cd $TMP_DIR
 let ERR=0
-
 git clone "$REPO_DIR" || ERR=$?
+cd clonejs*
 #npm install clonejs || ERR=$?
 
 [ "$ERR" = '0' ] && $CMD || ERR=$?

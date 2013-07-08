@@ -207,4 +207,4 @@ var clone = (function(){
     }
 })();
 
-module && (module.exports = clone);
+if(module) module.exports = clone;

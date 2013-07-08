@@ -10,7 +10,7 @@
     }
   ],
   "scripts": {
-    "test": "tools/test.sh"
+    "test": "tools/test.quick.sh"
   },
   "repository": {
     "type": "git",
