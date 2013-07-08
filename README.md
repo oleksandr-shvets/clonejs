@@ -18,7 +18,7 @@
 
 [Lazy initialization⠙]: http://en.wikipedia.org/wiki/Lazy_initialization
 
-The main code of this framework:
+The main code of the framework:
 
     function clone(/** Object! */obj, /** object! */state, /** object= */behavior$){
         if( behavior$ ){
@@ -29,6 +29,7 @@ The main code of this framework:
         }
         return state;
     }
+
 Thats it!
 
 #### Try the true [prototype-based OOP⠙](http://en.wikipedia.org/wiki/Prototype-based_programming)

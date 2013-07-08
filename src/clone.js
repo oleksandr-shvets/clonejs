@@ -1,8 +1,11 @@
 /**
  * @class
+ * 
  * clone.js - the true prototype-based javascript nano-framework.
  * @version v1.0.0-alpha
- * @see www.clonejs.org
+ * @author  Alex Shvets
+ * @see     www.clonejs.org
+ * 
  * @description
  * Function `clone` works like `Object.create`, but the second argument is simple object, not property descriptor.
  * @param {!Object} obj - Object to clone
