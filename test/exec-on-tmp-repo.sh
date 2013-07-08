@@ -12,7 +12,7 @@ cd $TMP_DIR
 let ERR=0
 git clone "$REPO_DIR" || ERR=$?
 cd clonejs*
-#npm install clonejs || ERR=$?
+npm install || ERR=$?
 
 [ "$ERR" = '0' ] && $CMD || ERR=$?
 
