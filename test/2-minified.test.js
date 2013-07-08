@@ -1,4 +1,3 @@
-global.clonejs = require('../build/clone.min.js');
-global.$object = clonejs.$object;
+global.clone = require('../build/clone.min.js');
 
 module.exports = require('./clone.spec.js');
