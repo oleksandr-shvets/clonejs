@@ -18,6 +18,19 @@
 
 [Lazy initialization⠙]: http://en.wikipedia.org/wiki/Lazy_initialization
 
+The main code of this framework:
+
+    function clone(/** Object! */obj, /** object! */state, /** object= */behavior$){
+        if( behavior$ ){
+            behavior$.__proto__ = obj;
+            state.__proto__ = behavior$;
+        }else{
+            state.__proto__ = obj;
+        }
+        return state;
+    }
+Thats it!
+
 #### Try the true [prototype-based OOP⠙](http://en.wikipedia.org/wiki/Prototype-based_programming)
 
 **It's trivial to create new "classes"** - just clone the object and change a couple of properties and voila... new "class".
@@ -39,15 +52,13 @@ Node.js:
 
     npm install clonejs
 
-[CDN⠙][] for client-side (~3 KB gzipped):
+[CDN⠙][] for client-side:
 
     <script src="http://quadroid.github.io/clonejs/cdn/clone.min.js"></script>
 
 ### Usage
 
-    //<node.js>
-    var clone = require('clonejs');
-    //</node.js>
+    var clone = require('clonejs');//</node.js>
         
     /// Forget about classes.    
     //  Instead of creating class (function), create prototype (object):
@@ -85,17 +96,24 @@ Node.js:
 ###### Lazy initialization:
 
 Instead of defining in constructor, you can initialize your properties separetly.
+Lazy initialization is the tactic, that will initialize property in first use of them.
 
     var obj = clone.create({
         name: "Default Name"
-    },{
+        },{
         __inits__: {
-            myProperty: function(){
-                console.log("init fn called");
-                return "name is "+ this.name;
+            lazy: function(){
+                console.log("Lazy initialization...");
+                return this.name +": Lazy initiated.":
             }
         }
     });
+    console.log( obj.lazy );
+    // Lazy initialization...
+    // Default Name: Lazy initiated.
+    
+    console.log( obj.lazy );// initializer don't run again
+    // Default Name: Lazy initiated.
 
 [Object.create⠙]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create
 [Object.defineProperty⠙]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty
