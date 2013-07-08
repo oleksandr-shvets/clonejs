@@ -32,7 +32,7 @@ var clone = (function(){
     // setup functions (depends on JavaScript version):
     
     var clone2 =      '__proto__' in Object ? clone_byProto         : clone_byConstructor;
-    var define = 'defineProperty' in Object && (!window || window.XMLHttpRequest)// ie9+ detection
+    var define = 'defineProperty' in Object && (typeof(window)==='undefined' || window.XMLHttpRequest)// ie9+ detection
                                             ? Object.defineProperty : defineProperty_shim;
     var freeze =         'freeze' in Object ? Object.freeze         : function(){};
     
@@ -206,3 +206,5 @@ var clone = (function(){
         }
     }
 })();
+
+module && (module.exports = clone);
