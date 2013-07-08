@@ -67,7 +67,7 @@ function include_markdown($filename){
           <h2 id="project_tagline">The true prototype-based JavaScript micro-framework.</h2>
           
             <nav>
-                  <a href="./symbols/%24object.html">API documentation</a>
+                  <a href="./symbols/clone.html">API documentation</a>
                 | <a href="https://github.com/quadroid/clonejs/blob/master/CHANGELOG.md">ChangeLog</a>
                 | <a href="http://github.com/quadroid/clonejs">GitHub</a>
                 | <a href="http://npmjs.org/package/clonejs">NPM</a>

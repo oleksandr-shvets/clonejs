@@ -52,7 +52,7 @@
           <h2 id="project_tagline">The true prototype-based JavaScript micro-framework.</h2>
           
             <nav>
-                  <a href="./symbols/%24object.html">API documentation</a>
+                  <a href="./symbols/clone.html">API documentation</a>
                 | <a href="https://github.com/quadroid/clonejs/blob/master/CHANGELOG.md">ChangeLog</a>
                 | <a href="http://github.com/quadroid/clonejs">GitHub</a>
                 | <a href="http://npmjs.org/package/clonejs">NPM</a>
@@ -63,7 +63,7 @@
               <a class="zip_download_link" href="https://github.com/quadroid/clonejs/zipball/master">Download this project as a .zip file</a>
               <a class="tar_download_link" href="https://github.com/quadroid/clonejs/tarball/master">Download this project as a tar.gz file</a>
               <span class="version">
-                 v0.7.4-beta              </span>
+                 v1.0.0-alpha              </span>
             </section>
         </header>
     </div>
@@ -84,18 +84,29 @@
         
         <p></p>
 
-<p>This framework based on the ECMA Script 5 features like <a target="_blank" href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create">Object.create⠙</a> and <a target="_blank" href="http://ejohn.org/blog/ecmascript-5-objects-and-properties/#ig-sh-1">property descriptors⠙</a>.
-So, it isn&#39;t supported by IE8, but now, finally, you can use property descriptors, getters and setters!  </p>
-
 <p><strong>This framework provides:</strong></p>
 
-<ul><li>Class-less, the pure prototype-based paradigm.</li><li>Easy creation of special properties: getters/setters, runned only once accessors, constants, &quot;final&quot; (unconfigurable) and &quot;hidden&quot; (unenumerable) properties.</li><li>Power object creation tools: <a href="./symbols/%24object.html#clone">clone</a>, <a href="./symbols/%24object.html#copy">copy</a>, <a href="./symbols/%24object.html#deepCopy">deepCopy</a>, <a href="./symbols/%24object.html#deepClone">deepClone</a>, <a href="./symbols/%24object.html#create">create</a>.</li><li>Object properties iteration, like arrays: <a href="./symbols/%24object.html#forEach">forEach</a>, <a href="./symbols/%24object.html#map">map</a>, <a href="./symbols/%24object.html#filter">filter</a>, <a href="./symbols/%24object.html#every">every</a>, <a href="./symbols/%24object.html#some">some</a>.</li><li><a href="./symbols/%24object.html#applySuper">applySuper</a> method to easy and inheritance safe call parent prototype methods.</li><li>Object modify methods (<a href="./symbols/%24object.html#concat">concat</a>, <a href="./symbols/%24object.html#paste">paste</a>), which preserve property descriptors state. </li></ul>
+<ul><li>Speed! It&#39;s extrimerly fast!</li><li>Class-less, the pure prototype-oriented paradigm.</li><li>Separate all your objects and classes to state (data) and behavior (methods).</li><li><a target="_blank" href="http://en.wikipedia.org/wiki/Lazy_initialization">Lazy initialization⠙</a> support (by <code>__inits__</code> behavior).</li><li>IE6+ support! Shims <code>Object.create</code> and <code>Object.getPrototypeOf</code> methods.</li></ul>
+
+<p>The main code of the framework:</p>
+
+<pre><code>function clone(/** Object! */obj, /** object! */state, /** object= */behavior$){
+    if( behavior$ ){
+        behavior$.__proto__ = obj;
+        state.__proto__ = behavior$;
+    }else{
+        state.__proto__ = obj;
+    }
+    return state;
+}</code></pre>
+
+<p>Thats it!</p>
 
 <h4>Try the true <a target="_blank" href="http://en.wikipedia.org/wiki/Prototype-based_programming">prototype-based OOP⠙</a></h4>
 
 <p><strong>It&#39;s trivial to create new &quot;classes&quot;</strong> - just clone the object and change a couple of properties and voila... new &quot;class&quot;.</p>
 
-<p><strong>It&#39;s really class-free</strong>: <code>$object.clone</code> produces prototype objects, not function-constructors, unlike other class-producing tools (<code>Ext.define</code>, <code>dojo.declare</code>).</p>
+<p><strong>It&#39;s really class-free</strong>: <code>clone</code> produces prototype objects, not function-constructors, unlike other class-producing tools (<code>Ext.define</code>, <code>dojo.declare</code>).</p>
 
 <p>In this framework you can easilly create and manipulate objects without constructors, instead of classic js way,
 where you should define a constructor for every object (that you want to use as prototype), even if you didn&#39;t need it.
@@ -111,188 +122,67 @@ It&#39;s possible to build and maintain extremely <strong>large numbers of &quot
 
 <pre><code>npm install clonejs</code></pre>
 
-<p><a target="_blank" href="http://code.lancepollard.com/github-as-a-cdn/">CDN⠙</a> for client-side (~3 KB gzipped):</p>
+<p><a target="_blank" href="http://code.lancepollard.com/github-as-a-cdn/">CDN⠙</a> for client-side:</p>
 
 <pre><code>&lt;script src=&quot;http://quadroid.github.io/clonejs/cdn/clone.min.js&quot;&gt;&lt;/script&gt;</code></pre>
 
-<h6>Injected mode</h6>
-
-<pre><code>&lt;script&gt;var clonejs = {inject: Object.prototype}&lt;/script&gt;
-&lt;script src=&quot;http://quadroid.github.io/clonejs/cdn/clone.min.js&quot;&gt;&lt;/script&gt;</code></pre>
-
 <h3>Usage</h3>
 
-<pre><code>//&lt;node.js&gt;
-var clonejs = require(&#39;clonejs&#39;),
-    $object = clonejs.$object;
-//or: var $object = require(&#39;clonejs&#39;).$object;
-//or: require(&#39;clonejs&#39;).inject();
-//&lt;/node.js&gt;
+<pre><code>var clone = require(&#39;clonejs&#39;);//&lt;/node.js&gt;
 
 /// Forget about classes.    
 //  Instead of creating class (function), create prototype (object):
-var $duck = $object.clone({
-    name: &#39;Unnamed&#39;,
+
+var duck$ = {
     quack: function(){
-        console.log( this.name +&#39; Duck: Quack-quack!&#39;);
+        console.log( this.name +&quot; Duck: Quack-quack!&quot;);
+    }
+};
+
+/// Inheritance is simple (talkingDuck$ extends duck$):
+
+var talkingDuck$ = clone(duck$, {
+    quack: function(){
+        duck$.quack.call(this);
+        console.log(&quot;My name is &quot;+ this.name +&quot;!&quot;);
     }
 });
-$duck.quack();//Unnamed Duck: Quack-quack!
 
-/// Inheritance is simple: 
-var $talkingDuck = $duck.clone({
-    quack: function(){
-        this.applySuper(&#39;quack&#39;);
-        console.log(&#39;My name is &#39;+ this.name +&#39;!&#39;);
-    }       
-});
+/// Forget about the `new` operator, use clone to create instances:
 
-/// Forget about the `new` operator, use .create() method instead:
-var donald = $talkingDuck.create({name: &#39;Donald&#39;});
+var donald = clone(talkingDuck$, {name: &quot;Donald&quot;});
 donald.quack();// Donald Duck: Quack-quack! 
                // My name is Donald!
+var daffy = clone(talkingDuck$, {name: &quot;Daffy&quot;});
+daffy.quack(); // Daffy Duck: Quack-quack! 
+               // My name is Daffy!
 
 /// Forget about the `instanceof` operator, use JS native 
 //  .isPrototypeOf() method instead:
-$duck.isPrototypeOf(donald);// true</code></pre>
 
-<h6>Cloning objects:</h6>
+duck$.isPrototypeOf(donald);// true</code></pre>
 
-<pre><code>var $proto  = $object.clone({a:1, b:2, c:3});
+<h6>Lazy initialization:</h6>
 
-/// clone:
-var clone   = $proto.clone();
-    clone.a = 11; // $proto.a not changed
-   $proto.b = 22; // clone.b will be also changed to 22
+<p>Instead of defining in constructor, you can initialize your properties separetly.
+Lazy initialization is the tactic, that will initialize property in first use of them.</p>
 
-///  copy: 
-var  copy   = $proto.copy();
-     copy.a = 111;// $proto.a not changed
-   $proto.b = 222;// copy.b not changed  
-
-/// create:
-var instance   = $proto.create({d: 4444});
-    instance.a = 1111;// $proto.a not changed
-      $proto.b = 2222;// like clone, instance.b will be also changed to 2222
-console.log( instance.a );// 1111
-console.log( instance.d );// 4444</code></pre>
-
-<p>See: <a href="./symbols/%24object.html#clone">clone</a>, <a href="./symbols/%24object.html#copy">copy</a>, <a href="./symbols/%24object.html#create">create</a>, <a href="./symbols/%24object.html#deepCopy">deepCopy</a>, <a href="./symbols/%24object.html#deepClone">deepClone</a>.</p>
-
-<h6>Property modificators:</h6>
-
-<pre><code>var $myType = $object.clone({
-                    constructor : &quot;MyType&quot;,
-                      property0 : &quot;simple property&quot;,
-    &#39;(final)          property1&#39;: &quot;not configurable and not writable&quot;,
-    &#39;(writable final) property2&#39;: &quot;not configurable only&quot;,
-    &#39;(hidden)         property3&#39;: &quot;not enumerable&quot;,
-    &#39;(const)           constant&#39;: &quot;not writable&quot;,
-    &#39;(get)       property3alias&#39;: &#39;property3&#39;,// automatically create getter
-                          _item : &quot;private property (not enumerable)&quot;,
-                   &#39;(get)  item&#39;: function() { return this._item },
-                   &#39;(set)  item&#39;: function(v){ this._item = v    },
-              &#39;(get once)  once&#39;: function() {
-                                      console.log(&#39;getter called&#39;);
-                                      return this.property0;
-                                  }
-});
-
-console.log( $myType.property3alias === $myType.property3 );// true 
-
-console.log( $myType.once );// getter called
-                            // simple property
-
-console.log( $myType.once );// simple property</code></pre>
-
-<p>See: <a href="./symbols/%24object.html#.describe">describe</a>.</p>
-
-<h6>Inheritance &amp; constructors:</h6>
-
-<pre><code>var $parent = $object.clone({
-    constructor: function Parent(){
-        this.applySuper();
-        console.log(&#39;$parent constructor arguments:&#39;, arguments);
+<pre><code>var obj = clone.create({
+    name: &quot;Default Name&quot;
+    },{
+    __inits__: {
+        lazy: function(){
+            console.log(&quot;Lazy initialization...&quot;);
+            return this.name +&quot;: Lazy initiated.&quot;:
+        }
     }
 });
+console.log( obj.lazy );
+// Lazy initialization...
+// Default Name: Lazy initiated.
 
-var $child = $parent.clone({
-    constructor: function Child(arg1, arg2){
-        this.callSuper(&#39;constructor&#39;, arg1, arg2);
-        console.log(&#39;$child constructor arguments:&#39;, arguments);
-    }
-});
-
-var $grandchild = $child.clone({
-    constructor: function Grandchild(){
-        this.applySuper(arguments);
-        console.log(&#39;$grandchild constructor arguments:&#39;, arguments);
-    }
-});
-
-var myBoy = $grandchild.create(1,2,3);
-/// console log:
-    // $parent constructor arguments: [1,2]
-    // $child constructor arguments: [1,2,3]
-    // $grandchild constructor arguments: [1,2,3]
-
-console.log( $child.isPrototypeOf(myBoy) );// true</code></pre>
-
-<p>See: <a href="./symbols/%24object.html#constructor">constructor</a>, <a href="./symbols/%24object.html#create">create</a>, <a href="./symbols/%24object.html#applySuper">applySuper</a>, <a href="./symbols/%24object.html#callSuper">callSuper</a>, <a href="./symbols/%24object.html#createSuperSafeCallback">createSuperSafeCallback</a>.</p>
-
-<h6>Properties iteration:</h6>
-
-<pre><code>var $obj = $object.clone({a: 11, b: 22, c: 33}),
-     obj = $obj.create({d: 44});
-
-/// Map only own properties (default):
-
-var mappedObj1 = obj.map(function(value){return 100 + value});
-    // mappedObj1 == {d: 144}
-
-/// Map all properties, replace default (`$object`) prototype of returned object:
-
-var proto = {e: 55};
-var mappedObj2 = obj.map(function(value){return 100 + value}, obj, false, proto);
-    // mappedObj2 == {a: 111, b: 122, c: 133, d: 144, e: 155}
-proto.f = 66;
-    // mappedObj2 == {a: 111, b: 122, c: 133, d: 144, e: 155, f: 66}</code></pre>
-
-<p>See: <a href="./symbols/%24object.html#forEach">forEach</a>, <a href="./symbols/%24object.html#map">map</a>, <a href="./symbols/%24object.html#filter">filter</a>, <a href="./symbols/%24object.html#every">every</a>, <a href="./symbols/%24object.html#some">some</a>.</p>
-
-<h6>Namespaces:</h6>
-
-<pre><code>var app = clonejs.$namespace.create();
-
-/// create namespace item `app.collections`
-
-app.extend(&#39;collections&#39;, {
-    $item:  {},
-    _items: {}
-});
-
-/// create namespace item `app.collections.arrayCollections`
-
-app.collections.extend(&#39;arrayCollections&#39;, {_items: []});
-
-/// create namespace item  `app.models.users`
-
-var $users = app.collections.$arrayCollections.clone({
-    $item: {name: &#39;&#39;, isAdmin: false},
-    constructor: function Users(items){
-        items.forEach(function(item){
-            var newItem = $object.create.call(this.$item, item);
-            this._items.push(newItem);
-        }, this);
-    }
-});
-app.put(&#39;models.users&#39;, $users);
-
-/// use namespace:
-
-var users = app.models.$users.create([{name: &#39;User1&#39;}]);</code></pre>
-
-<p>See: <a href="./symbols/$namespace.html">$namespace</a>, <a href="./symbols/$namespace.html#extend">$namespace.extend</a>, <a href="./symbols/$namespace.html#put">$namespace.put</a>.</p>
+console.log( obj.lazy );// initializer don&#39;t run again
+// Default Name: Lazy initiated.</code></pre>
 
 <p></p>
           
