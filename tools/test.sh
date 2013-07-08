@@ -1,5 +1,5 @@
 echo ":: run all tests :::::::::::::::::::::::::::::::::"
-set -x
+#set -x
 
 cd `dirname $0`/../
 
