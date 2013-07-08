@@ -103,34 +103,6 @@ var clone = (function(){
     // // // // // // // // // // // // // // // // // // // // // // // // // //
     // behavior of all created by clone.create objects:
     
-    if(define === defineProperty_shim){
-        /** @memberOf clone# */
-        var $set = function(/** !object */state){
-            for(var name in state){
-                if(typeof this[name] === 'function' && this[name].name === 'initAccessor_shim'){
-                    this[name].call(this, state[name]);
-                }else{
-                    this[name] = state[name];
-                }
-            }
-        };
-        /** @memberOf clone# */
-        var $get = function(name){
-            if(typeof  this[name] === 'function' && this[name].name === 'initAccessor_shim'){
-                return this[name].call(this);
-            }else{
-                return this[name];
-            }
-        };
-    }else{
-        $set = function(/** !object */state){
-            for(var key in state) this[key] = state[key];
-        };
-        $get = function(name){
-            return this[name];
-        };
-    }
-    
     var prototype = [
         /** @memberOf clone# */
         function $clone(/** object=object */state, /** object= */behavior$){
@@ -149,9 +121,6 @@ var clone = (function(){
 
             return newBehavior$;
         },
-        
-        $get,
-        $set,
         /** @memberOf clone# */
         function  $new(/** !Object */obj,/** ...? */ state, arg1, arg2, arg3, arg4, arg5){
             return new               obj.constructor(state, arg1, arg2, arg3, arg4, arg5);
