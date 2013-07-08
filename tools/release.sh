@@ -19,7 +19,7 @@ set -x
 
 ./build.cdn.sh || exit 15
 
-./test.sh || echo -e "\r\nPlease fix all tests to continue."; exit 20
+./test.sh || (echo -e "\r\nPlease fix all tests to continue."; exit 20)
 
 # write $NEW_VERSION into .version file (without CRLF):
 echo "$NEW_VERSION" | tr -d "[\r\n]" > ../.version
