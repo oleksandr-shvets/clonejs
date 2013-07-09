@@ -47,7 +47,7 @@ var clone = (function(){
     if(Object.create === undefined) Object.create = function Object_create(obj, /** Object= */descriptors){
         var newObj = clone(obj, {});
         for(var key in descriptors){
-            describe(newObj, key, descriptors[key]);
+            define(newObj, key, descriptors[key]);
         }
         return newObj;
     };
