@@ -13,8 +13,8 @@
  * @param {Object=} behavior$ - The behavior (methods) of new, cloned object)
  */
 var clone = (function(){
-    function clone(/** !Object */obj, /** !object */state, /** Object= */behavior$){
-        var newObj = clone2(obj, behavior$ || state);
+    function clone(/** !Object */obj, /** !object=object */state, /** Object= */behavior$){
+        var newObj = clone2(obj, behavior$ || state || {});
         if(behavior$){
             newObj = clone2(newObj, state);
             if( behavior$.__inits__ ){
@@ -45,7 +45,7 @@ var clone = (function(){
         return obj.hasOwnProperty('__proto__') ? Object.prototype : obj.__proto__;
     };
     if(Object.create === undefined) Object.create = function Object_create(obj, /** Object= */descriptors){
-        var newObj = clone(obj, {});
+        var newObj = clone(obj);
         for(var key in descriptors){
             define(newObj, key, descriptors[key]);
         }
@@ -95,7 +95,7 @@ var clone = (function(){
         return InitClone;
     };
     
-    clone.create = function clone_create(/** !object */state, /** object= */behavior$){
+    clone.create = function clone_create(/** !object=object */state, /** object= */behavior$){
         return clone(clone.prototype, state, behavior$);
     };// clone.bind(null, clone.prototype);
 
@@ -105,7 +105,7 @@ var clone = (function(){
     var prototype = [
         /** @memberOf clone# */
         function $clone(/** object=object */state, /** object= */behavior$){
-            return clone(this, state||{}, behavior$);
+            return clone(this, state, behavior$);
         },
         /** @memberOf clone# */
         function $extend(/** !object */state, /** object= */behavior$){
