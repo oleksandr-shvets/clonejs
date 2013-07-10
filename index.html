@@ -1,214 +1,96 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="generator" content="JsDoc Toolkit" />
+		<title>Globals ■ clone.js</title>
 
-  <head>
-    <title>clone.js</title>
-    
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Clonejs : The true prototype-based JavaScript micro-framework." />
-    
-    <link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/tomorrow.min.css">
-    <script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
-    
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-    <style>
-        NAV {
-            color: rgb(128, 128, 128);
-            position: absolute;
-            z-index: 11;
-            margin-top: 5px;
-        }
-        NAV A {color: white}
-        NAV A:hover {color:#007edf}
-        #downloads{
-            width: 603px;
-            background-position-x: 400px;
-        }
-        #downloads .version{
-            float: right;
-            color: grey;
-            font-style: italic;
-            margin-top: 40px;
-            margin-right: 15px;
-        }
-        #main_content IMG {width: auto; height: auto}
-        #main_content H2 IMG {float: right}
-        #main_content PRE CODE {padding: 0px}
-    </style>
-  </head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+		<meta name="mobileoptimized" content="0" />
+	
+		<link rel="stylesheet" href="css/all.css" media="all" />
+		<link rel="stylesheet" href="css/handheld.css" media="only screen and (max-width: 660px)" />
+		<link rel="stylesheet" href="css/handheld.css" media="handheld" />
+		<link rel="stylesheet" href="css/screen.css" media="screen and (min-width: 661px)" />
 
-  <body>
+		<script src="javascript/all.js"></script>
+		<!--[if lt IE 9]>
+			<script src="javascript/html5.js"></script>
+		<![endif]-->
+	</head>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
+	<body>
 
-          
-                    
-          <a id="forkme_banner" href="https://github.com/quadroid/clonejs">View on GitHub</a>
+<div class="index">
+	<div class="menu">
+		<div class="indexLinks">
+			<a href="index.html">Home</a>
+			<a href="files.html">Files</a>
+		</div>
+	        
+		<h2 class="heading1"><a href="index.html">clone.js</a></h2>
+		
+		<input type="text" name="classFilter" class="classFilter" id="ClassFilter" placeholder="Filter"></input>
+		
+		<nav>
+			<ul class="classList" id="ClassList">
+				
+					<li><a href="symbols/_global_.html">_global_</a></li>
+				
+					<li><a href="symbols/clone.html">clone</a></li>
+				
+					<li><a href="symbols/Object.html">Object</a></li>
+				
+			</ul>
+		</nav>
+	</div>
+	<div class="fineprint" style="clear:both">
+		<footer>
+			
+			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
+			Template: <a href="https://github.com/quadroid/clonejs/tree/master/lib/jsdoc-toolkit/templates/codeview-jsdoc2-template" target="_blank">Codeview</a> 1.3<br />
+			Generated on:
+			<time datetime='2013-6-10' pubdate>2013-6-10 21:05</time>
+		</footer>
+	</div>
+</div>
 
-          <h1 id="project_title">CloneJS</h1>
-          <h2 id="project_tagline">The true prototype-based JavaScript micro-framework.</h2>
-          
-            <nav>
-                  <a href="./symbols/clone.html">API documentation</a>
-                | <a href="https://github.com/quadroid/clonejs/blob/master/CHANGELOG.md">ChangeLog</a>
-                | <a href="http://github.com/quadroid/clonejs">GitHub</a>
-                | <a href="http://npmjs.org/package/clonejs">NPM</a>
-                | <a href="http://travis-ci.org/quadroid/clonejs">Travis CI</a>
-            </nav>
+<div class="index indexStatic"></div>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/quadroid/clonejs/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/quadroid/clonejs/tarball/master">Download this project as a tar.gz file</a>
-              <span class="version">
-                 v1.0.0-alpha              </span>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-
-        <script>
-        if( window.location.protocol == 'file:' ){
-            var src = '../../test/conf/nodeunit-browser.html';
-            document.write('\
-                <h6 style="margin: 0px"><a href="'+src+'">Unit testing...</a></h6> \
-                <iframe src="'+src+'" style="width:100%; height:32em"></iframe> \
-            ');
-        };
-        </script>
-        
-        <p></p>
-
-<p><strong>This framework provides:</strong></p>
-
-<ul><li>Speed! It&#39;s extremely fast!</li><li>Class-less, the pure prototype-based paradigm.</li><li><a target="_blank" href="http://martinfowler.com/bliki/LazyInitialization.html">Lazy initialization⠙</a> support (by <code>__inits__</code> behavior).</li><li>Separation of all your objects into the state (data) and behavior (methods).</li><li>IE6+ support! +Emulation of <code>Object.getPrototypeOf</code> (partial) and <code>Object.create</code> functions.</li></ul>
-
-<p>This is the base code of all framework:</p>
-
-<pre><code>function clone(/** Object! */obj, /** object! */state, /** object= */behavior$){
-    if( behavior$ ){
-        behavior$.__proto__ = obj;
-        state.__proto__ = behavior$;
-    }else{
-        state.__proto__ = obj;
-    }
-    return state;
-}</code></pre>
-
-<p>That&#39;s it!</p>
-
-<h4>Try the true <a target="_blank" href="http://en.wikipedia.org/wiki/Prototype-based_programming">prototype-based OOP⠙</a></h4>
-
-<p>In this framework you can easilly create and manipulate objects without constructors, instead of classic js way,
-where you should define a constructor for every object (that you want to use as prototype), even if you didn&#39;t need it.
-It&#39;s possible to build and maintain extremely <strong>large numbers of &quot;classes&quot; with comparatively little code</strong>.</p>
-
-<p><strong>It&#39;s trivial to create new &quot;classes&quot;</strong> - just clone the object and change a couple of properties and voila... new &quot;class&quot;.</p>
-
-<p><strong>It&#39;s really class-free</strong>: <code>clone</code> produces prototype objects, not function-constructors, unlike all other class-producing tools (<code>Ext.define</code>, <code>dojo.declare</code> etc).</p>
-
-<p>Read more:</p>
-
-<ul><li><a target="_blank" href="http://programmers.stackexchange.com/questions/110936/what-are-the-advantages-of-prototype-based-oop-over-class-based-oop#answers-header">Advantages of prototype-based OOP⠙</a></li><li><a target="_blank" href="http://www.2ality.com/2011/11/javascript-classes.html">Myth: JavaScript needs classes⠙</a></li></ul>
-
-<h3>Installation</h3>
-
-<p>Node.js:</p>
-
-<pre><code>npm install clonejs</code></pre>
-
-<p><a target="_blank" href="http://code.lancepollard.com/github-as-a-cdn/">CDN⠙</a> for client-side:</p>
-
-<pre><code>&lt;script src=&quot;http://quadroid.github.io/clonejs/cdn/clone.min.js&quot;&gt;&lt;/script&gt;</code></pre>
-
-<h3>Usage</h3>
-
-<pre><code>var clone = require(&#39;clonejs&#39;);//&lt;/node.js&gt;
-
-/// Forget about classes.    
-//  Instead of creating class (function), create prototype (object):
-
-var duck$ = {
-    quack: function(){
-        console.log( this.name +&quot; Duck: Quack-quack!&quot;);
-    }
-};
-
-/// Inheritance is simple (talkingDuck$ extends duck$):
-
-var talkingDuck$ = clone(duck$, {
-    quack: function(){
-        duck$.quack.call(this);
-        console.log(&quot;My name is &quot;+ this.name +&quot;!&quot;);
-    }
-});
-
-/// Forget about the `new` operator, use clone to create instances:
-
-var donald = clone(talkingDuck$, {name: &quot;Donald&quot;});
-donald.quack();// Donald Duck: Quack-quack! 
-               // My name is Donald!
-var daffy  = clone(talkingDuck$, {name: &quot;Daffy&quot;});
-daffy.quack(); // Daffy Duck: Quack-quack! 
-               // My name is Daffy!
-
-/// Forget about the `instanceof` operator, use JS native 
-//  .isPrototypeOf() method instead:
-
-duck$.isPrototypeOf(donald);// true</code></pre>
-
-<h4>Lazy initialization</h4>
-
-<p>How to initialize object without constructor?<br/>lazy initialization is the tactic of delaying the calculation of a value until the first time it is needed.</p>
-
-<pre><code>var obj = clone.create({
-    name: &quot;Default Name&quot;
-    },{
-    __inits__: {
-        lazy: function(){
-            console.log(&quot;Lazy initialization...&quot;);
-            return this.name +&quot;: Lazy initiated.&quot;:
-        }
-    }
-});
-
-console.log( obj.lazy );
-// Lazy initialization...
-// Default Name: Lazy initiated.
-
-console.log( obj.lazy );// initializer does&#39;t run again
-// Default Name: Lazy initiated.</code></pre>
-
-<p></p>
-          
-      </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">CloneJS maintained by <a href="https://github.com/quadroid">Alex Shvets</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-  </body>
-  <script>
-  window.onload = function(){
-      Array.prototype.forEach.call( document.querySelectorAll('PRE > CODE'), function(el){
-          //el.className = 'language-javascript';
-          hljs.highlightBlock(el, null, false);
-      });
-      //hljs.initHighlighting();
-  }
-  </script>
-
-  <!-- Yandex.Metrika counter -->
+<div class="content">
+	<div class="innerContent">
+		<article>
+			<h1 class="classTitle"><span>Global objects</span></h1>
+			
+			<ul id="ClassList2">
+				
+					<li>
+						<h2 class="classname"><a href="symbols/_global_.html">_global_</a></h2>
+						<p></p>
+					</li>
+				
+					<li>
+						<h2 class="classname"><a href="symbols/clone.html">clone</a></h2>
+						<p><p>clone.js - the true prototype-based javascript nano-framework.</p>
+					</li>
+				
+					<li>
+						<h2 class="classname"><a href="symbols/Object.html">Object</a></h2>
+						<p></p>
+					</li>
+				
+			</ul>
+		</article>
+	</div>
+</div>
+		<script type="text/javascript">
+			wbos.CssTools.MediaQueryFallBack.LoadCss('css/screen.css', 'css/handheld.css', 660)
+			codeview.classFilter.Init()
+		</script>
+	</body>
+	
+	<!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function (d, w, c) {
         (w[c] = w[c] || []).push(function() {
@@ -245,5 +127,5 @@ console.log( obj.lazy );// initializer does&#39;t run again
 
     ga('create', 'UA-1886659-9', 'clonejs.org');
     ga('send', 'pageview');
-</script>  
+</script>
 </html>
