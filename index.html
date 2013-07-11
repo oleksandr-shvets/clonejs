@@ -86,9 +86,9 @@
 
 <p><strong>This framework provides:</strong></p>
 
-<ul><li>Speed! It&#39;s extremely fast!</li><li>Class-less, the pure prototype-based paradigm.</li><li><a target="_blank" href="http://martinfowler.com/bliki/LazyInitialization.html">Lazy initialization⠙</a> support (by <code>__inits__</code> behavior).</li><li>Separation of all your objects into the state (data) and behavior (methods).</li><li>IE6+ support! +Emulation of <code>Object.getPrototypeOf</code> (partial) and <code>Object.create</code> functions.</li></ul>
+<ul><li>Speed! It&#39;s extremely fast! <a href="http://jsperf.com/object-properties-init/4">Faster than JS core class creation!</a></li><li>Class-less, the pure prototype-based paradigm.</li><li><a target="_blank" href="http://martinfowler.com/bliki/LazyInitialization.html">Lazy initialization⠙</a> support (by <code>__inits__</code> behavior).</li><li>Separation of all your objects into the state (data) and behavior (methods).</li><li>IE6 support! + Emulation of <code>Object.getPrototypeOf</code> (partial) and <code>Object.create</code>.</li></ul>
 
-<p>This is the base code of all framework:</p>
+<p>This is the main code of the framework:</p>
 
 <pre><code>function clone(/** Object! */obj, /** object! */state, /** object= */behavior$){
     if( behavior$ ){
@@ -114,7 +114,7 @@ It&#39;s possible to build and maintain extremely <strong>large numbers of &quot
 
 <p>Read more:</p>
 
-<ul><li><a target="_blank" href="http://programmers.stackexchange.com/questions/110936/what-are-the-advantages-of-prototype-based-oop-over-class-based-oop#answers-header">Advantages of prototype-based OOP⠙</a></li><li><a target="_blank" href="http://www.2ality.com/2011/11/javascript-classes.html">Myth: JavaScript needs classes⠙</a></li></ul>
+<ul><li><a target="_blank" href="http://programmers.stackexchange.com/questions/110936/what-are-the-advantages-of-prototype-based-oop-over-class-based-oop#answers-header">Advantages of prototype-based OOP⠙</a></li><li><a target="_blank" href="http://www.2ality.com/2011/11/javascript-classes.html">Myth: JavaScript needs classes⠙</a></li><li><a target="_blank" href="http://habrahabr.ru/post/175029/">Нужны ли в JavaScript классы?⠙</a></li></ul>
 
 <h3>Installation</h3>
 
@@ -148,7 +148,7 @@ var talkingDuck$ = clone(duck$, {
     }
 });
 
-/// Forget about the `new` operator, use clone to create instances:
+/// Forget about the `new` operator, use `clone` function to create instances:
 
 var donald = clone(talkingDuck$, {name: &quot;Donald&quot;});
 donald.quack();// Donald Duck: Quack-quack! 
@@ -164,7 +164,7 @@ duck$.isPrototypeOf(donald);// true</code></pre>
 
 <h4>Lazy initialization</h4>
 
-<p>How to initialize object without constructor?<br/>lazy initialization is the tactic of delaying the calculation of a value until the first time it is needed.</p>
+<p>How to initialize object without constructor?<br/>Lazy initialization is the tactic of delaying the calculation of a value until the first time it is needed.</p>
 
 <pre><code>var obj = clone.create({
     name: &quot;Default Name&quot;
