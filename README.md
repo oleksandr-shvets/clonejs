@@ -10,15 +10,16 @@
   
 **This framework provides:**
 
-* Speed! It's extrimerly fast!
-* Class-less, the pure prototype-oriented paradigm.
-* Separate all your objects and classes to state (data) and behavior (methods).
+* Speed! It's extremely fast!
+* Class-less, the pure prototype-based paradigm.
 * [Lazy initialization⠙][] support (by `__inits__` behavior).
-* IE6+ support! Shims `Object.create` and `Object.getPrototypeOf` methods.
+* Separation of all your objects into the state (data) and behavior (methods).
+* IE6 support! + Emulation of `Object.getPrototypeOf` (partial) and `Object.create`.
+ 
 
-[Lazy initialization⠙]: http://en.wikipedia.org/wiki/Lazy_initialization
+[Lazy initialization⠙]: http://martinfowler.com/bliki/LazyInitialization.html
 
-The main code of the framework:
+This is the main code of the framework:
 
     function clone(/** Object! */obj, /** object! */state, /** object= */behavior$){
         if( behavior$ ){
@@ -30,22 +31,23 @@ The main code of the framework:
         return state;
     }
 
-Thats it!
+That's it!
 
 #### Try the true [prototype-based OOP⠙](http://en.wikipedia.org/wiki/Prototype-based_programming)
-
-**It's trivial to create new "classes"** - just clone the object and change a couple of properties and voila... new "class".
-
-**It's really class-free**: `clone` produces prototype objects, not function-constructors, unlike other class-producing tools (`Ext.define`, `dojo.declare`).
 
 In this framework you can easilly create and manipulate objects without constructors, instead of classic js way,
 where you should define a constructor for every object (that you want to use as prototype), even if you didn't need it.
 It's possible to build and maintain extremely **large numbers of "classes" with comparatively little code**.
 
-See more:
+**It's trivial to create new "classes"** - just clone the object and change a couple of properties and voila... new "class".
+
+**It's really class-free**: `clone` produces prototype objects, not function-constructors, unlike all other class-producing tools (`Ext.define`, `dojo.declare` etc).
+
+Read more:
 
 - [Advantages of prototype-based OOP⠙](http://programmers.stackexchange.com/questions/110936/what-are-the-advantages-of-prototype-based-oop-over-class-based-oop#answers-header)
 - [Myth: JavaScript needs classes⠙](http://www.2ality.com/2011/11/javascript-classes.html)
+- [Нужны ли в JavaScript классы?⠙](http://habrahabr.ru/post/175029/)
 
 ### Installation
 
@@ -79,12 +81,12 @@ Node.js:
         }
     });
     
-    /// Forget about the `new` operator, use clone to create instances:
+    /// Forget about the `new` operator, use `clone` function to create instances:
     
     var donald = clone(talkingDuck$, {name: "Donald"});
     donald.quack();// Donald Duck: Quack-quack! 
                    // My name is Donald!
-    var daffy = clone(talkingDuck$, {name: "Daffy"});
+    var daffy  = clone(talkingDuck$, {name: "Daffy"});
     daffy.quack(); // Daffy Duck: Quack-quack! 
                    // My name is Daffy!
 
@@ -92,12 +94,12 @@ Node.js:
     //  .isPrototypeOf() method instead:
     
     duck$.isPrototypeOf(donald);// true
+  
 
+#### Lazy initialization
 
-###### Lazy initialization:
-
-Instead of defining in constructor, you can initialize your properties separetly.
-Lazy initialization is the tactic, that will initialize property in first use of them.
+How to initialize object without constructor?  
+Lazy initialization is the tactic of delaying the calculation of a value until the first time it is needed.
 
     var obj = clone.create({
         name: "Default Name"
@@ -109,11 +111,12 @@ Lazy initialization is the tactic, that will initialize property in first use of
             }
         }
     });
+    
     console.log( obj.lazy );
     // Lazy initialization...
     // Default Name: Lazy initiated.
     
-    console.log( obj.lazy );// initializer don't run again
+    console.log( obj.lazy );// initializer does't run again
     // Default Name: Lazy initiated.
 
 [Object.create⠙]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create

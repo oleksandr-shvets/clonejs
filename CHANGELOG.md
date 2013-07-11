@@ -1,5 +1,5 @@
-##### Build v1.0.0-alpha (2013-07-08)
-* Completely redesigned, the new version of framework:
+#### Build v1.0.0-alpha (2013-07-08)
+Completely redesigned, the new version of framework:
 * Very improved speed
 * Separation of objects to state and behavior
 * Lazy initialization
@@ -54,7 +54,7 @@
 * add npm overlay
 * test script: run all *.test.js files
 
-### First versions
+#### First versions
 
 * version 0.4.5 9d4bfee
 * version 0.5.0 4125a04ec5

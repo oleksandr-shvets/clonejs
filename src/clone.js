@@ -1,18 +1,24 @@
-/**
- * @class
- * 
- * clone.js - the true prototype-based javascript nano-framework.
- * @version v1.0.0-alpha
- * @author  Alex Shvets
- * @see     www.clonejs.org
- * 
- * @description
- * Function `clone` works like `Object.create`, but the second argument is simple object, not property descriptor.
- * @param {!Object} obj - Object to clone
- * @param {!object} state - The properties of new, cloned object, should be object literal only ({key:"value"})
- * @param {Object=} behavior$ - The behavior (methods) of new, cloned object)
- */
-var clone = (function(){
+/**#nocode+*/
+void function(globalScope){"use strict";
+/**#nocode-*/
+    /**
+     * @class
+     *
+     * clone.js - the true prototype-based javascript nano-framework.
+     * @version v1.0.0-alpha
+     * @author  Alex Shvets
+     * @see     www.clonejs.org
+     *
+     * @description
+     * 
+     * **clone()** function:  
+     *   
+     * Create new object, inherited from other object (prototype).  
+     * Works like Object.create, but the second argument is simple object, not property descriptor.
+     * @param {!Object} obj - Object to clone. Prototype.
+     * @param {!object} state - The properties of new, cloned object, should be object literal only ({key:"value"})
+     * @param {Object=} behavior$ - The behavior (methods) of new, cloned object)
+     */
     function clone(/** !Object */obj, /** !object=object */state, /** Object= */behavior$){
         var newObj = clone2(obj, behavior$ || state || {});
         if(behavior$){
@@ -20,7 +26,7 @@ var clone = (function(){
             if( behavior$.__inits__ ){
                 var accessors = behavior$.__inits__;
                 for(var key in accessors){
-                    clone.defineInitProperty(behavior$, key, accessors[key],
+                    clone.defineInitPropertyOf(behavior$, key, accessors[key],
                         {configurable:true},
                         {configurable:true, writable:true, enumerable:true}
                     );
@@ -32,32 +38,64 @@ var clone = (function(){
     }
     
     // // // // // // // // // // // // // // // // // // // // // // // // // //
-    // setup functions (depends on JavaScript version):
+    // setup (depends on JavaScript version):
+
+    var rootPrototype;
+    if(typeof globalScope.clone === 'object'){
+        rootPrototype   = globalScope.clone;
+        clone.prototype = rootPrototype;
+    }else{
+        rootPrototype = clone.prototype;
+    }
     
-    var clone2 =      '__proto__' in Object ? clone_byProto         : clone_byConstructor;
+    if('module' in globalScope && 'exports' in module){
+        module.exports = clone;
+    }else{
+        globalScope.clone = clone;
+    }
+    
+    //
+    
+    var clone2 =      '__proto__' in {}     ? clone_byProto         : clone_byConstructor;
     var define = 'defineProperty' in Object && (typeof(window)==='undefined' || window.XMLHttpRequest)// ie9+ detection
-                                            ? Object.defineProperty : defineProperty_shim;
+                                            ? Object.defineProperty : shim_definePropertyOf;
     var freeze =         'freeze' in Object ? Object.freeze         : function(){};
     
-    // shim:
+    // ES5 shim:
     
-    if(Object.getPrototypeOf === undefined) Object.getPrototypeOf = function Object_getPrototypeOf(obj){
-        return obj.hasOwnProperty('__proto__') ? Object.prototype : obj.__proto__;
-    };
-    if(Object.create === undefined) Object.create = function Object_create(obj, /** Object= */descriptors){
-        var newObj = clone(obj);
-        for(var key in descriptors){
-            define(newObj, key, descriptors[key]);
-        }
-        return newObj;
-    };
+    if(Object.getPrototypeOf === undefined) Object.getPrototypeOf = 
+        function shim_getPrototypeOf(obj){
+            // see shim_definePropertyOf
+            return obj.hasOwnProperty('__proto__') ? Object.prototype : obj.__proto__;
+        };
+    
+    if(Object.create === undefined) Object.create = 
+        function shim_objectCreate(obj, /** Object= */descriptors){
+            var newObj = clone(obj);
+            for(var key in descriptors){
+                define(newObj, key, descriptors[key]);
+            }
+            return newObj;
+        };
 
     // // // // // // // // // // // // // // // // // // // // // // // // // //
     // static methods:
 
-    clone.defineProperty = define;
+    /** This is link to standart [Object.defineProperty][] function. 
+     *  [Object.defineProperty]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty
+     *  @function
+     *  @param obj
+     *  @param propertyName
+     *  @param descriptor */
+    clone.definePropertyOf = define;
 
-    clone.defineInitProperty = function defineInitProperty(obj, propertyName, getter, descriptor, initedDescriptor){
+    clone.defineInitPropertyOf = function defineInitPropertyOf(
+        /** object */obj,
+        /** string */propertyName,
+        /** function():* */getter,
+        /** PropertyDescriptor */descriptor,
+        /** PropertyDescriptor */initedDescriptor
+    ){
 //        if( initedDescriptor === undefined){
 //            initedDescriptor = descriptor ? {
 //                writable:     descriptor.writable,
@@ -86,7 +124,7 @@ var clone = (function(){
         define(obj, propertyName, descriptor);
     };
     
-    clone.defineConstructor = function clone_defineConstructor(obj, /** string='constructor' */propertyName){
+    clone.defineConstructorOf = function defineConstructorOf(obj, /** string='constructor' */propertyName){
         function InitClone(state){
             for(var key in state) this[key] = state[key];
         }
@@ -94,24 +132,36 @@ var clone = (function(){
         define(obj, propertyName||'constructor', {value: InitClone, writable:true, configurable:true});
         return InitClone;
     };
-    
-    clone.create = function clone_create(/** !object=object */state, /** object= */behavior$){
-        return clone(clone.prototype, state, behavior$);
-    };// clone.bind(null, clone.prototype);
+
+    /**
+     * Creates new object inherited from clone.prototype.
+     * @returns {Object}
+     */
+    clone.create = function createClone(/** !object=object */state, /** object= */behavior$){
+        return clone(rootPrototype, state, behavior$);
+    };// clone.bind(null, rootPrototype);
 
     // // // // // // // // // // // // // // // // // // // // // // // // // //
     // behavior of all created by clone.create objects:
     
-    var prototype = [
-        /** @memberOf clone# */
+    var prototypeMethods = [
+        /** 
+         * The object-oriented notation of clone function:  
+         * For example: `myObject.$clone()` is identical to `clone(myObject)`.
+         * @returns {Object}
+         * @memberOf clone# */
         function $clone(/** object=object */state, /** object= */behavior$){
             return clone(this, state, behavior$);
         },
-        /** @memberOf clone# */
+        
+        /** 
+         * 
+         * @returns {Object}
+         * @memberOf clone# */
         function $extend(/** !object */state, /** object= */behavior$){
             var newBehavior$ = clone(this, state, behavior$);
 
-            //clone.defineConstructor(behavior$ || newBehavior$);
+            //clone.defineConstructorOf(behavior$ || newBehavior$);
 
             if(behavior$){
                 freeze(behavior$);
@@ -121,9 +171,9 @@ var clone = (function(){
             return newBehavior$;
         }
     ];
-    for(var i=0, sz=prototype.length; i<sz; i++){
-        var method = prototype[i];
-        define(clone.prototype, method.name, {value: method, writable:true, configurable:true});
+    for(var i=0, sz= prototypeMethods.length; i<sz; i++){
+        var method = prototypeMethods[i];
+        define(rootPrototype, method.name, {value: method, writable:true, configurable:true});
     }
 
     return clone; // // // // // // // // // // // // // // // // // // // // //
@@ -137,13 +187,13 @@ var clone = (function(){
     function clone_byConstructor(/** !Object */proto, /** object= */state){
         var  OwnConstructor = state.hasOwnProperty('constructor') && state.constructor.InitClone || state.constructor;
         if(! OwnConstructor || OwnConstructor.name != 'InitClone'){
-            try{// to modify OwnConstructor, warn on errors.
+            try{// to modify OwnConstructor, just warn if error.
                 // cache created constructor (if proto does not have own constructor):
                 if(OwnConstructor === false){
-                    var NewConstructor = clone.defineConstructor(proto);
+                    var NewConstructor = clone.defineConstructorOf(proto);
                 }else{
                     // cache constructor for objects, that already has custom constructor:
-                    NewConstructor = clone.defineConstructor(OwnConstructor, 'InitClone');
+                    NewConstructor = clone.defineConstructorOf(OwnConstructor, 'InitClone');
                     //
                     if( OwnConstructor.prototype !== proto){
                         OwnConstructor.prototype = proto;
@@ -162,7 +212,7 @@ var clone = (function(){
         return new OwnConstructor(state);
     }
     
-    function defineProperty_shim(/** !Object */obj, /** string */propertyName, /** !Object */descriptor){
+    function shim_definePropertyOf(/** !Object */obj, /** string */propertyName, /** !Object */descriptor){
         var proto = obj.__proto__ || obj;
         if(descriptor.get || descriptor.set){
             var PropertyName  = propertyName[0].toUpperCase() + propertyName.substring(1);
@@ -186,6 +236,5 @@ var clone = (function(){
             }
         }
     }
-})();
-
-if(module) module.exports = clone;
+    
+}(typeof global === 'object' && global || window);
