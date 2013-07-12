@@ -3,14 +3,49 @@
 this.tests = {
 
     clone: {
+        "1 arg": function(test){
+            var p = {p:{}};
+            var c = clone(p);
+
+            test.strictEqual( Object.getPrototypeOf(c), p);
+            test.ok(!c.hasOwnProperty('p') );
+            test.equal( Object.getOwnPropertyNames(c).length, 0);
+            test.strictEqual(c.p, p.p);
+
+            test.done();
+        },
+        
         "2 args": function(test){
-            //TODO: 2 args test
+            var p = {p:{}}, s = {s:{}};
+            var c = clone(p,s);
+
+                test.strictEqual( Object.getPrototypeOf(c), p);
+                test.ok( c.hasOwnProperty('s') );
+                test.ok(!c.hasOwnProperty('p') );
+                test.equal( Object.getOwnPropertyNames(c).length, 1);
+                test.strictEqual(c.p, p.p);
+                test.strictEqual(c.s, s.s);
+
             test.done();        
         },
+        
         "3 args": function(test){
-            //TODO: 3 args test
+            var p = {p:{}}, s = {s:{}}, b = {b:{}};
+            var c = clone(p,s,b);
+
+                test.strictEqual( Object.getPrototypeOf(c), b);
+                test.strictEqual( Object.getPrototypeOf(b), p);
+                test.ok( c.hasOwnProperty('s') );
+                test.ok(!c.hasOwnProperty('p') );
+                test.ok(!c.hasOwnProperty('b') );
+                test.equal( Object.getOwnPropertyNames(c).length, 1);
+                test.strictEqual(c.p, p.p);
+                test.strictEqual(c.s, s.s);            
+                test.strictEqual(c.b, b.b);            
+               
             test.done();        
         },
+        
         create: function(test){
             var c = clone.create({a:1});
                 test.ok( c.hasOwnProperty('a') );
