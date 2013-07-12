@@ -64,7 +64,7 @@ function include_markdown($filename){
           <a id="forkme_banner" href="https://github.com/quadroid/clonejs">View on GitHub</a>
 
           <h1 id="project_title">CloneJS</h1>
-          <h2 id="project_tagline">The true prototype-based JavaScript micro-framework.</h2>
+          <h2 id="project_tagline">The true prototype-based lazy programming framework.</h2>
           
             <nav>
                   <a href="./symbols/clone.html">API documentation</a>
