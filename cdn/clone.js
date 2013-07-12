@@ -5,7 +5,7 @@ void function(globalScope){"use strict";
      * @class
      *
      * clone.js - the true prototype-based javascript nano-framework.
-     * @version v1.0.0-alpha
+     * @version v1.0.1-alpha
      * @author  Alex Shvets
      * @see     www.clonejs.org
      *
@@ -48,10 +48,10 @@ void function(globalScope){"use strict";
         rootPrototype = clone.prototype;
     }
     
-    if('module' in globalScope && 'exports' in module){
-        module.exports = clone;
-    }else{
+    if(typeof module === 'undefined'){
         globalScope.clone = clone;
+    }else{
+        module.exports = clone;
     }
     
     //
@@ -170,6 +170,14 @@ void function(globalScope){"use strict";
 
             return newBehavior$;
         }
+        
+//        function $create(/** *= */state, /** ...* */ arg1, arg2, arg3){
+//            if( this.$behavior.hasOwnProperty('constructor') ){
+//                return new this.constructor(state, arg1, arg2, arg3);
+//            }else{
+//                return clone2(this, state);
+//            }
+//        }
     ];
     for(var i=0, sz= prototypeMethods.length; i<sz; i++){
         var method = prototypeMethods[i];
