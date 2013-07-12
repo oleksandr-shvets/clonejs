@@ -46,18 +46,19 @@ cd ../
 
 # write changelog:
 # TODO: Analyse old and new versions, and add corresponding heading level.
-echo -e <<<___CHANGELOG
-
-**Legend** _(actual since v0.8):_
-- **<u>X</u>.0.0** - Global changes.
-- **0.<u>X</u>.0** - Major changes: add/remove methods, changing signatures.
-- **0.0.<u>X</u>** - Minor changes (no new features): bugfixes, optimizations.
-- **0.0.0-<u>X</u>** - Micro changes, that not affect clone.min.js (tests, docs, html).
-
-##### $MESSAGE
-
-$(cat CHANGELOG.md)
-___CHANGELOG > CHANGELOG.md || exit 40
+#echo -e <<<___CHANGELOG
+#
+#**Legend** _(actual since v0.8):_
+#- **<u>X</u>.0.0** - Global changes.
+#- **0.<u>X</u>.0** - Major changes: add/remove methods, changing signatures.
+#- **0.0.<u>X</u>** - Minor changes (no new features): bugfixes, optimizations.
+#- **0.0.0-<u>X</u>** - Micro changes, that not affect clone.min.js (tests, docs, html).
+#
+###### $MESSAGE
+#
+#$(cat CHANGELOG.md)
+#___CHANGELOG > CHANGELOG.md || exit 40
+echo -e "##### $MESSAGE\r\n\r\n$(cat CHANGELOG.md)" > CHANGELOG.md || exit 40
 
 QUESTION="Tag $VERSION and push? [y/n](y): "
 [ $TERM == 'dumb' ] && echo $QUESTION
