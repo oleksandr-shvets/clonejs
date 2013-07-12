@@ -1,6 +1,6 @@
 echo ":: deploy: push ::::::::::::::::::::::::::::::"
 cd `dirname $0`
-set +x
+set -x
 
      VERSION=`cat ../.version`
  OLD_VERSION=$1
@@ -39,8 +39,8 @@ done
 MESSAGE="`cat ../$MESSAGE_FILE`"
 
 STATUS="succeful"
-./deploy.html.sh "$MESSAGE" || STATUS="done with errors"; echo "Deploy html-pages error $?"#; exit 20
-./deploy.wiki.sh "$MESSAGE" || STATUS="done with errors"; echo "Deploy wiki-pages error $?"#; exit 30
+./deploy.html.sh "$MESSAGE" || STATUS="done with errors"; echo "Deploy html-pages error $?"
+./deploy.wiki.sh "$MESSAGE" || STATUS="done with errors"; echo "Deploy wiki-pages error $?"
 
 cd ../
 

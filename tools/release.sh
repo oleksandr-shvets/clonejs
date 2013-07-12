@@ -33,7 +33,7 @@ sed -i "" "s/\(@version \)$OLD_VERSION/\1$NEW_VERSION/g" \
     ../src/clone.js \
     || exit 40
     
-./build.docs.sh                || exit 50
+./build.docs.sh                #|| exit 50
 ./build.html.sh                || exit 60
 
 ./deploy.push.sh $OLD_VERSION  || exit 70
