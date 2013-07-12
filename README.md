@@ -10,7 +10,7 @@
   
 **This framework provides:**
 
-* Speed! It's extremely fast!
+* Speed! It's extremely fast! [Faster than JS core class creation!][jsperf]
 * Class-less, the pure prototype-based paradigm.
 * [Lazy initialization⠙][] support (by `__inits__` behavior).
 * Separation of all your objects into the state (data) and behavior (methods).
@@ -18,6 +18,7 @@
  
 
 [Lazy initialization⠙]: http://martinfowler.com/bliki/LazyInitialization.html
+[jsperf]: http://jsperf.com/object-properties-init/4
 
 This is the main code of the framework:
 
