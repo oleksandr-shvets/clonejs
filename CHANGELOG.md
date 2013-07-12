@@ -1,3 +1,9 @@
+##### Build v1.0.1-alpha (2013-07-12) 
+* determination with static methods naming
+* fix bugs
+* add some tests
+* make API docs
+
 #### Build v1.0.0-alpha (2013-07-08)
 Completely redesigned, the new version of framework:
 * Very improved speed
