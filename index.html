@@ -104,7 +104,7 @@
 
 <h4>What is the clone?</h4>
 
-<p><code>clone</code> function creates new object — clone.<br/><strong>Clone — this is the lazy shallow copy.</strong> Ie, it is actually not a copy, it&#39;s simply a reference to the object,
+<p><code>clone</code> function creates new object — clone.<br/><strong>Clone — this is the lazy shallow copy</strong>, ie, it is actually not a copy, it&#39;s just a reference to the object,
 with one difference: if you will add/replace any of its properties, it would not affect the cloned object (prototype).</p>
 
 <h4>Try the true <a target="_blank" href="http://en.wikipedia.org/wiki/Prototype-based_programming">prototype-based OOP⠙</a></h4>
@@ -119,7 +119,7 @@ It&#39;s possible to build and maintain extremely <strong>large numbers of &quot
 
 <p>Read more:</p>
 
-<ul><li><a target="_blank" href="http://programmers.stackexchange.com/questions/110936/what-are-the-advantages-of-prototype-based-oop-over-class-based-oop#answers-header">Advantages of prototype-based OOP⠙</a></li><li><a target="_blank" href="http://www.2ality.com/2011/11/javascript-classes.html">Myth: JavaScript needs classes⠙</a></li><li><a target="_blank" href="http://habrahabr.ru/post/175029/">Нужны ли в JavaScript классы?⠙</a></li></ul>
+<ul><li><a target="_blank" href="http://programmers.stackexchange.com/questions/110936/what-are-the-advantages-of-prototype-based-oop-over-class-based-oop#answers-header">Advantages of prototype-based OOP⠙</a></li><li><a target="_blank" href="http://www.2ality.com/2011/11/javascript-classes.html">Myth: JavaScript needs classes⠙</a></li><li><a target="_blank" href="http://translate.google.com/translate?hl=&amp;sl=ru&amp;tl=en&amp;u=http%3A%2F%2Fhabrahabr.ru%2Fpost%2F175029%2F">Does JavaScript need classes? (robot translation, sorry)⠙</a></li></ul>
 
 <h3>Installation</h3>
 
@@ -187,7 +187,15 @@ console.log( obj.lazy );
 // Default Name: Lazy initiated.
 
 console.log( obj.lazy );// initializer does&#39;t run again
-// Default Name: Lazy initiated.</code></pre>
+// Default Name: Lazy initiated.
+
+
+var myClass$ = clone.create({
+    constructor: function MyClass(state){
+        MyClass.Init.call(this, state);
+    }
+});
+var myClass = new myClass$.constructor({});</code></pre>
 
 <p></p>
           
