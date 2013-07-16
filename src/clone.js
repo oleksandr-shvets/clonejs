@@ -1,5 +1,6 @@
 /**#nocode+*/
-void function(globalScope){"use strict";
+void function(global){"use strict";
+     function defineModule(){
 /**#nocode-*/
     /**
      * @class
@@ -39,19 +40,14 @@ void function(globalScope){"use strict";
     
     // // // // // // // // // // // // // // // // // // // // // // // // // //
     // setup (depends on JavaScript version):
-
-    var rootPrototype;
-    if(typeof globalScope.clone === 'object' && globalScope.clone !== clone){
-        rootPrototype   = globalScope.clone;
-        clone.prototype = rootPrototype;
+        
+    var _prototype;// underscored variables used in closure functions
+    if(typeof _globalClone === 'object' && _globalClone.useProto){
+        // inject
+        _prototype = _globalClone.useProto;
+        clone.prototype = _prototype;
     }else{
-        rootPrototype = clone.prototype;
-    }
-    
-    if(typeof module === 'undefined'){
-        globalScope.clone = clone;
-    }else{
-        module.exports = clone;
+        _prototype = clone.prototype;
     }
     
     //
@@ -244,5 +240,32 @@ void function(globalScope){"use strict";
             }
         }
     }
+    }// // // // // // // // // // // // // // // // // // // // // // // // // // // //
+    // module
     
-}(typeof global === 'object' && global || window);
+    var _globalClone = global.clone;
+
+    // CommonJS modules (node.js)
+    if(typeof module === 'object' && module.exports){
+        module.exports = defineModule();
+
+    // AMD
+    }else if(typeof define === 'function'){
+        define(defineModule);
+        
+    // Browser
+    }else{
+        var clone = global.clone = defineModule();
+        /**#nocode-*/
+        /**
+         * For browsers only. Replace `window.clone` by previous value.
+         * @returns {clone} function */
+        clone.noConflict = function(){
+            global.clone = _globalClone;
+            return clone;
+        }
+        /**#nocode+*/
+    }
+    
+}(typeof(window)==='object' && window || global);
+/**#nocode-*/
