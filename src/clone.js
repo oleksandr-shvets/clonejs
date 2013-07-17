@@ -137,6 +137,29 @@ void function(global){"use strict";
         return clone(rootPrototype, state, behavior$);
     };// clone.bind(null, rootPrototype);
 
+    /** Shoose clone method. Call without parameters to return current method name. */
+    clone.by = function cloneBy(/** ('constructor'|'create'|'proto'|'auto')= */method){
+        var methods = {
+            proto:       _cloneByProto,
+            create:      _cloneByObjectCreate,
+            constructor: _cloneByConstructor
+        };
+        if(method){
+            if( method === 'auto' ){
+                setTimeout(_setCloneMethodByProfiling, 0);
+            }else if( methods.hasOwnProperty(method) ){
+                _clone = methods[method];
+            }else{
+                throw new TypeError("Unknown clone method — "+ method);
+            }
+        }else{
+            for(var methodName in methods){
+                if( _clone === methods[methodName] ){
+                    return methodName;
+                }
+            }
+        }
+    }
     // // // // // // // // // // // // // // // // // // // // // // // // // //
     // behavior of all created by clone.create objects:
     
