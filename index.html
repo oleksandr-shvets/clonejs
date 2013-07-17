@@ -77,7 +77,7 @@
             var src = '../../test/conf/nodeunit-browser.html';
             document.write('\
                 <h6 style="margin: 0px"><a href="'+src+'">Unit testing...</a></h6> \
-                <iframe src="'+src+'" style="width:100%; height:32em"></iframe> \
+                <iframe id="unitTests" src="'+src+'" style="width:100%; height:32em"></iframe> \
             ');
         };
         </script>
@@ -104,7 +104,7 @@
 
 <h4>What is the clone?</h4>
 
-<p><code>clone</code> function creates new object — clone.<br/><strong>Clone — this is the lazy shallow copy</strong>, ie, it is actually not a copy, it&#39;s just a reference to the object,
+<p><code>clone</code> function produces new objects — clones.<br/><strong>Clone — this is the lazy shallow copy</strong>, ie, it is actually not a copy, it&#39;s just a reference to the object,
 with one difference: if you will add/replace any of its properties, it would not affect the cloned object (prototype).</p>
 
 <h4>Try the true <a target="_blank" href="http://en.wikipedia.org/wiki/Prototype-based_programming">prototype-based OOP⠙</a></h4>
@@ -115,7 +115,7 @@ It&#39;s possible to build and maintain extremely <strong>large numbers of &quot
 
 <p><strong>It&#39;s trivial to create new &quot;classes&quot;</strong> - just clone the object and change a couple of properties and voila... new &quot;class&quot;.</p>
 
-<p><strong>It&#39;s really class-free</strong>: <code>clone</code> produces prototype objects, not function-constructors, unlike all other class-producing tools (<code>Ext.define</code>, <code>dojo.declare</code> etc).</p>
+<p><strong>It&#39;s really class-free</strong>: <code>clone</code> produces objects (prototypes), not function-constructors, unlike all other class-producing tools (<code>Ext.define</code>, <code>dojo.declare</code> etc).</p>
 
 <p>Read more:</p>
 
@@ -166,6 +166,26 @@ daffy.quack(); // Daffy Duck: Quack-quack!
 //  .isPrototypeOf() method instead:
 
 duck$.isPrototypeOf(donald);// true</code></pre>
+
+<h5>Object-oriented notation:</h5>
+
+<pre><code>  var object$ = clone.prototype;
+
+  var duck$ = object$.$clone({
+      quack: function(){
+          console.log( this.name +&quot; Duck: Quack-quack!&quot;);
+      }
+  });
+
+  var talkingDuck$ = duck$.$extend({
+      quack: function(){
+          duck$.quack.call(this);
+          console.log(&quot;My name is &quot;+ this.name +&quot;!&quot;);
+      }
+  });
+
+  var donald = talkingDuck$.$clone({name: &quot;Donald&quot;});
+  var daffy  = talkingDuck$.$clone({name: &quot;Daffy&quot;});</code></pre>
 
 <h4>Lazy initialization</h4>
 

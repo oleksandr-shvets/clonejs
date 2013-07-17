@@ -93,7 +93,7 @@ function include_markdown($filename){
             var src = '../../test/conf/nodeunit-browser.html';
             document.write('\
                 <h6 style="margin: 0px"><a href="'+src+'">Unit testing...</a></h6> \
-                <iframe src="'+src+'" style="width:100%; height:32em"></iframe> \
+                <iframe id="unitTests" src="'+src+'" style="width:100%; height:32em"></iframe> \
             ');
         };
         </script>
