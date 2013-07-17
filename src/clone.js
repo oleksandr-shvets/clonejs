@@ -160,6 +160,15 @@ void function(global){"use strict";
             }
         }
     }
+    
+    clone.$call = function(/** Object */obj, /** string */method,/** (...)= */arg1, arg2, arg3, arg4, arg5, arg6, arg7){
+        return clone.prototype[method].call(obj, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+    }
+    
+    clone.$apply = function(/** Object */obj, /** string */method, /** Array= */args){
+        return clone.prototype[method].apply(obj, args);
+    }
+    
     // // // // // // // // // // // // // // // // // // // // // // // // // //
     // behavior of all created by clone.create objects:
     
