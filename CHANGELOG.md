@@ -1,10 +1,17 @@
+#### Build v1.1.0-alpha (2013-07-17) 
+* add \_\_parent\_\_ property
+* add clone.$call(), clone.$apply()
+* add clone method shoosing
+* add AMD compability
+* fix bugs
+
 ##### Build v1.0.1-alpha (2013-07-12) 
 * determination with static methods naming
 * fix bugs
 * add some tests
 * make API docs
 
-#### Build v1.0.0-alpha (2013-07-08)
+### Build v1.0.0-alpha (2013-07-08)
 Completely redesigned, the new version of framework:
 * Very improved speed
 * Separation of objects to state and behavior
