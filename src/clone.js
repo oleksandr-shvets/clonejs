@@ -34,6 +34,7 @@ void function(global){"use strict";
                 }
                 delete behavior$.__inits__;
             }
+            _define(updatedBehavior, '__parent__', {value: obj, writable:true, configurable:true});
         }
         return newObj;
     }
@@ -212,6 +213,12 @@ void function(global){"use strict";
         define(rootPrototype, method.name, {value: method, writable:true, configurable:true});
     }
 
+    clone.definePropertyOf(_prototype, '__parent__', {
+        configurable: true,
+        get:('__proto__' in {}) ?
+            function(){return this.__proto__} :
+            function(){return Object.getPrototypeOf(this)}
+    });
     return clone; // // // // // // // // // // // // // // // // // // // // //
     // utility functions:
 
