@@ -41,7 +41,25 @@
         }
     </style>
     <script>
-        nodeunit.run({tests: this.tests});
+        nodeunit.run({auto: this.tests});
+        if('__proto__' in {}){
+            runTests('proto', this.tests);
+        }if(Object.create && Object.length === 0){
+            runTests('create', this.tests);
+        }
+        runTests('constructor', this.tests);
+        
+        function runTests(method, specs){
+            var tests = {};
+            for(var key in specs){
+                tests[key+" (by "+method+")"] = specs[key];
+            }
+            clone.by(method);
+            var suite = {};
+            suite[method] = tests;
+            nodeunit.run(suite);
+        }
+        
     </script>
 </body>
 </html>

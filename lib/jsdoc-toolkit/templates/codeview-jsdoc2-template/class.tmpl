@@ -19,7 +19,7 @@
 							}
 							classType += "Namespace ";
 						} else {
-							classType += "Prototype ";
+							classType += "Type ";
 						}
 					!}
 					{+classType+}<span>{+data.alias+}</span>
@@ -154,6 +154,108 @@
 							</dl>
 						</nav>
 					</if>
+				</section>
+			</if>
+	<!--
+	#### CONSTRUCTOR DETAILS
+	-->
+			<if test="!data.isBuiltin() && (data.isNamespace || data.is('CONSTRUCTOR'))">
+				<section>
+					<div class="details props">
+						<div class="innerProps">
+							<h2 class="sectionTitle" id="class_detail">
+								{+classType+}Detail
+							</h2>
+							
+							<if test="!data.is('CONSTRUCTOR') && !data.isNamespace"><div class="fixedFont">{!
+								if (data.isPrivate) output += "&lt;private&gt; ";
+								if (data.isInner) output += "&lt;inner&gt; ";
+							!}
+								<b>{+ data.alias +}</b><if test="classType != 'Namespace '">{+ makeSignature(data.params) +}</if>
+							</div></if>
+                            
+										<div class="fixedFont heading" id="{+Link.symbolNameToLinkName(data)+}">
+											<span class='lighter'>
+											{!
+												if (data.isPrivate) output += "&lt;private&gt; ";
+												if (data.isInner) output += "&lt;inner&gt; ";
+												if (data.isStatic) output += "&lt;static&gt; ";
+											!}
+											</span>
+											
+											<if test="data.isStatic && data.memberOf != '_global_'"><span class="light">{+data.memberOf+}.</span></if><b>{+data.name.replace(/\^\d+$/, '')+}</b>{+makeSignature(data.params)+}<if test="data.type"><span class="light">: {{+new Link().toSymbol(data.type)+}}</span></if>
+										</div>
+										
+										<div class="description">
+											{+resolveLinks(data.desc)+}
+										</div>
+							
+							<if test="data.example.length">
+								<for each="example" in="data.example">
+									<pre class="code">{+example+}</pre>
+								</for>
+							</if>
+						
+							<if test="data.params.length">
+								<dl class="detailList params">
+									<dt class="heading">Parameters:</dt>
+									<for each="item" in="data.params">
+										<dt>
+											{+((item.type)?""+("<span class=\"light fixedFont\">{"+(new Link().toSymbol(item.type)+"}</span> ")) : "")+} <b>{+item.name+}</b>
+											<if test="item.isOptional"><i>Optional<if test="item.defaultValue">, Default: {+item.defaultValue+}</if></i></if>
+										</dt>
+										<dd>{+resolveLinks(item.desc)+}</dd>
+									</for>
+								</dl>
+							</if>
+							
+							<if test="data.deprecated || data.since || data.exceptions.length || data.returns.length || data.requires.length || data.see.length">
+								<dl class="detailList nomargin">
+									<if test="data.deprecated">
+										<dt>
+											{+resolveLinks(data.deprecated)+}
+										</dt>
+									</if>
+									
+									<if test="data.since">
+										<dt class="heading">Since:</dt>
+										<dd>{+ data.since +}</dd>
+									</if>
+									
+									<if test="data.exceptions.length">
+										<dt class="heading">Throws:</dt>
+										<for each="item" in="data.exceptions">
+											<dt>
+												{+((item.type)?"<span class=\"light fixedFont\">{"+(new Link().toSymbol(item.type))+"}</span> " : "")+} <b>{+item.name+}</b>
+											</dt>
+												<dd>{+resolveLinks(item.desc)+}</dd>
+										</for>
+									</if>
+									
+									<if test="data.returns.length">
+										<dt class="heading">Returns:</dt>
+										<for each="item" in="data.returns">
+												<dd>{+((item.type)?"<span class=\"light fixedFont\">{"+(new Link().toSymbol(item.type))+"}</span> " : "")+}{+resolveLinks(item.desc)+}</dd>
+										</for>
+									</if>
+									
+									<if test="data.requires.length">
+										<dt class="heading">Requires:</dt>
+										<for each="item" in="data.requires">
+											<dd>{+ resolveLinks(item) +}</dd>
+										</for>
+									</if>
+									
+									<if test="data.see.length">
+										<dt class="heading">See:</dt>
+										<for each="item" in="data.see">
+											<dd>{+ new Link().toSymbol(item) +}</dd>
+										</for>
+									</if>
+								</dl>
+							</if>
+						</div>
+					</div>
 				</section>
 			</if>
 	<!--
@@ -311,96 +413,6 @@
 				</section>
 			</if>
 	<!--
-	#### CONSTRUCTOR DETAILS
-	-->
-			<if test="!data.isBuiltin() && (data.isNamespace || data.is('CONSTRUCTOR'))">
-				<section>
-					<div class="details props">
-						<div class="innerProps">
-							<h2 class="sectionTitle" id="class_detail">
-								{+classType+}Detail
-							</h2>
-							
-							<if test="!data.is('CONSTRUCTOR') && !data.isNamespace"><div class="fixedFont">{!
-								if (data.isPrivate) output += "&lt;private&gt; ";
-								if (data.isInner) output += "&lt;inner&gt; ";
-							!}
-								<b>{+ data.alias +}</b><if test="classType != 'Namespace '">{+ makeSignature(data.params) +}</if>
-							</div></if>
-							
-							<div class="description">
-								{+resolveLinks(data.desc)+}
-							</div>
-							
-							<if test="data.example.length">
-								<for each="example" in="data.example">
-									<pre class="code">{+example+}</pre>
-								</for>
-							</if>
-						
-							<if test="data.params.length">
-								<dl class="detailList params">
-									<dt class="heading">Parameters:</dt>
-									<for each="item" in="data.params">
-										<dt>
-											{+((item.type)?""+("<span class=\"light fixedFont\">{"+(new Link().toSymbol(item.type)+"}</span> ")) : "")+} <b>{+item.name+}</b>
-											<if test="item.isOptional"><i>Optional<if test="item.defaultValue">, Default: {+item.defaultValue+}</if></i></if>
-										</dt>
-										<dd>{+resolveLinks(item.desc)+}</dd>
-									</for>
-								</dl>
-							</if>
-							
-							<if test="data.deprecated || data.since || data.exceptions.length || data.returns.length || data.requires.length || data.see.length">
-								<dl class="detailList nomargin">
-									<if test="data.deprecated">
-										<dt>
-											{+resolveLinks(data.deprecated)+}
-										</dt>
-									</if>
-									
-									<if test="data.since">
-										<dt class="heading">Since:</dt>
-										<dd>{+ data.since +}</dd>
-									</if>
-									
-									<if test="data.exceptions.length">
-										<dt class="heading">Throws:</dt>
-										<for each="item" in="data.exceptions">
-											<dt>
-												{+((item.type)?"<span class=\"light fixedFont\">{"+(new Link().toSymbol(item.type))+"}</span> " : "")+} <b>{+item.name+}</b>
-											</dt>
-												<dd>{+resolveLinks(item.desc)+}</dd>
-										</for>
-									</if>
-									
-									<if test="data.returns.length">
-										<dt class="heading">Returns:</dt>
-										<for each="item" in="data.returns">
-												<dd>{+((item.type)?"<span class=\"light fixedFont\">{"+(new Link().toSymbol(item.type))+"}</span> " : "")+}{+resolveLinks(item.desc)+}</dd>
-										</for>
-									</if>
-									
-									<if test="data.requires.length">
-										<dt class="heading">Requires:</dt>
-										<for each="item" in="data.requires">
-											<dd>{+ resolveLinks(item) +}</dd>
-										</for>
-									</if>
-									
-									<if test="data.see.length">
-										<dt class="heading">See:</dt>
-										<for each="item" in="data.see">
-											<dd>{+ new Link().toSymbol(item) +}</dd>
-										</for>
-									</if>
-								</dl>
-							</if>
-						</div>
-					</div>
-				</section>
-			</if>
-	<!--
 	#### FIELD DETAILS
 	-->
 			<if test="defined(ownProperties) && ownProperties.length">
@@ -507,9 +519,7 @@
 											!}
 											</span>
 											
-											<if test="member.type"><span class="light">{{+new Link().toSymbol(member.type)+}}</span></if>
-											
-											<if test="member.isStatic && member.memberOf != '_global_'"><span class="light">{+member.memberOf+}.</span></if><b>{+member.name.replace(/\^\d+$/, '')+}</b>{+makeSignature(member.params)+}
+											<if test="member.isStatic && member.memberOf != '_global_'"><span class="light">{+member.memberOf+}.</span></if><b>{+member.name.replace(/\^\d+$/, '')+}</b>{+makeSignature(member.params)+}<if test="member.type"><span class="light">: {{+new Link().toSymbol(member.type)+}}</span></if>
 										</div>
 										
 										<div class="description">

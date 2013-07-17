@@ -1,5 +1,5 @@
 <!-- HIDDEN: -->
-## CloneJS [![Build Status](https://travis-ci.org/quadroid/clonejs.png?branch=master "travis-ci.org")](https://travis-ci.org/quadroid/clonejs) [![NPM version](https://badge.fury.io/js/clonejs.png)](http://badge.fury.io/js/clonejs)
+## CloneJS [![Build Status](https://travis-ci.org/quadroid/clonejs.png?branch=master "travis-ci.org")](https://travis-ci.org/quadroid/clonejs) [![NPM version](https://badge.fury.io/js/clonejs.png)](http://badge.fury.io/js/clonejs)  
 [**CloneJS.org**](http://clonejs.org)
 |  [API documentation](http://clonejs.org/symbols/clone.html)
 |  [ChangeLog](https://github.com/quadroid/clonejs/blob/master/CHANGELOG.md)
@@ -13,14 +13,15 @@
 * Speed! It's extremely fast! [Faster than JS core class creation!][jsperf]
 * Class-less, the pure prototype-based paradigm.
 * [Lazy initialization⠙][] support (by `__inits__` behavior).
-* Separation of all your objects into the state (data) and behavior (methods).
+* Separation of all your objects into the state (data) and behavior (methods),  
+  as in ECMA Script 6: classes does not have fields, only methods.
 * IE6 support! + Emulation of `Object.getPrototypeOf` (partial) and `Object.create`.
  
 
 [Lazy initialization⠙]: http://martinfowler.com/bliki/LazyInitialization.html
 [jsperf]: http://jsperf.com/object-properties-init/4
 
-This is the main code of the framework:
+This is the main code of the framework (ECMA Script 6 only version):
 
     function clone(/** Object! */obj, /** object! */state, /** object= */behavior$){
         if( behavior$ ){
@@ -34,6 +35,12 @@ This is the main code of the framework:
 
 That's it!
 
+#### What is the clone?
+
+`clone` function produces new objects — clones.  
+**Clone — this is the lazy shallow copy**, ie, it is actually not a copy, it's just a reference to the object,
+with one difference: if you will add/replace any of its properties, it would not affect the cloned object (prototype).
+
 #### Try the true [prototype-based OOP⠙](http://en.wikipedia.org/wiki/Prototype-based_programming)
 
 In this framework you can easilly create and manipulate objects without constructors, instead of classic js way,
@@ -42,13 +49,13 @@ It's possible to build and maintain extremely **large numbers of "classes" with 
 
 **It's trivial to create new "classes"** - just clone the object and change a couple of properties and voila... new "class".
 
-**It's really class-free**: `clone` produces prototype objects, not function-constructors, unlike all other class-producing tools (`Ext.define`, `dojo.declare` etc).
+**It's really class-free**: `clone` produces objects (prototypes), not function-constructors, unlike all other class-producing tools (`Ext.define`, `dojo.declare` etc).
 
 Read more:
 
 - [Advantages of prototype-based OOP⠙](http://programmers.stackexchange.com/questions/110936/what-are-the-advantages-of-prototype-based-oop-over-class-based-oop#answers-header)
 - [Myth: JavaScript needs classes⠙](http://www.2ality.com/2011/11/javascript-classes.html)
-- [Нужны ли в JavaScript классы?⠙](http://habrahabr.ru/post/175029/)
+- [Does JavaScript need classes? (robot translation, sorry)⠙](http://translate.google.com/translate?hl=&sl=ru&tl=en&u=http%3A%2F%2Fhabrahabr.ru%2Fpost%2F175029%2F)
 
 ### Installation
 
@@ -95,7 +102,26 @@ Node.js:
     //  .isPrototypeOf() method instead:
     
     duck$.isPrototypeOf(donald);// true
-  
+
+##### Object-oriented notation:
+
+      var object$ = clone.prototype;
+      
+      var duck$ = object$.$clone({
+          quack: function(){
+              console.log( this.name +" Duck: Quack-quack!");
+          }
+      });
+        
+      var talkingDuck$ = duck$.$extend({
+          quack: function(){
+              duck$.quack.call(this);
+              console.log("My name is "+ this.name +"!");
+          }
+      });
+            
+      var donald = talkingDuck$.$clone({name: "Donald"});
+      var daffy  = talkingDuck$.$clone({name: "Daffy"});
 
 #### Lazy initialization
 
@@ -119,6 +145,16 @@ Lazy initialization is the tactic of delaying the calculation of a value until t
     
     console.log( obj.lazy );// initializer does't run again
     // Default Name: Lazy initiated.
+
+
+    var myClass$ = clone.create({
+        constructor: function MyClass(state){
+            MyClass.Init.call(this, state);
+        }
+    });
+    var myClass = new myClass$.constructor({});
+    
+
 
 [Object.create⠙]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create
 [Object.defineProperty⠙]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty
