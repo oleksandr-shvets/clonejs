@@ -3,6 +3,4 @@
 	url = git://github.com/quadroid/clonejs.git
 [submodule "wiki"]
 	path = wiki
-	url = git://github.com/quadroid/clonejs.wiki.git[submodule "node_modules/nodeunit"]
-	path = node_modules/nodeunit
-	url = git://github.com/caolan/nodeunit.git
+	url = git://github.com/quadroid/clonejs.wiki.git
