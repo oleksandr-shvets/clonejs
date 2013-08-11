@@ -89,7 +89,7 @@
 	<!--
 	#### CONSTRUCTOR DETAILS
 	-->
-			<if test="!data.isBuiltin() && (data.isNamespace || data.is('CONSTRUCTOR'))">
+			<if test="data.desc && !data.isBuiltin() && (data.isNamespace || data.is('CONSTRUCTOR'))">
 				<section>
 					<div class="details props">
 						<div class="innerProps">
