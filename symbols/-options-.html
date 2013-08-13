@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
-		<title>_global_ ■ clone.js</title>
+		<title>-options- ■ clone.js</title>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 		<meta name="mobileoptimized" content="0" />
@@ -72,15 +72,23 @@
 			<header>
 				<h1 class="classTitle">
 					
-					Built-In Namespace <span>_global_</span>
+					Namespace <span>-options-</span>
 				</h1>
 				
 				<div class="intro">
 					<p class="description summary">
-						Description of some native subtypes.
- Listed objects does not present in global (window) object, it's only descriptions.
+						
 					</p>
 						
+					
+						<ul class="summary">
+							
+							
+							
+								<li><i>Defined in: </i> <a href="../symbols/src/src_clone.js.html">clone.js</a></li>
+							
+							
+						</ul>
 					
 				</div>
 			</header>
@@ -90,6 +98,45 @@
 	<!--
 	#### CONSTRUCTOR DETAILS
 	-->
+			
+				<section>
+					<div class="details props">
+						<div class="innerProps">
+							<h2 class="sectionTitle" id="class_detail">
+								Namespace Detail
+							</h2>
+							
+							
+                            
+										<div class="fixedFont heading" id="-options-">
+											<span class='lighter'>
+											
+											</span>
+											
+											<b>-options-</b>()
+										</div>
+										
+										<div class="description">
+											<p>You can set options by defining global <code>clone</code> variable before clone.js load:</p>
+										</div>
+							
+							
+								
+									<pre class="code">(window || global).clone = {
+    injectCloneBehaviorInto: Object.prototype,
+    setCloneMethodByBench: false,
+    makeES5compat: false,
+    makeGlobal: true
+};</pre>
+								
+							
+						
+							
+							
+							
+						</div>
+					</div>
+				</section>
 			
 
     <!--
@@ -102,7 +149,7 @@
                     
                         <nav>
                             <div class="props">
-                                <table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class _global_.">
+                                <table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class -options-.">
                                     <caption class="sectionTitle">Field Summary</caption>
 
                                     <thead>
@@ -118,10 +165,10 @@
                                             <td class="attributes">&nbsp;</td>
                                             <td class="nameDescription">
                                                 <div class="fixedFont">
-                                                    <b><a href="../symbols/_global_.html#behaviorDescriptor">behaviorDescriptor</a></b>
+                                                    <b><a href="../symbols/-options-.html#injectCloneBehaviorInto">injectCloneBehaviorInto</a></b>
                                                 </div>
-                                                <div class="description"><p>Object literal, that may have properties:
-<a href="clone.behavior$.html#$extends">$extends</a>, <a href="clone.behavior$.html#$defaults">$defaults</a>, <a href="clone.behavior$.html#$inits">$inits</a>.</div>
+                                                <div class="description"><p>You can make all objects behaves like a clone:
+                                            <code>({thisWillBeHash: true}).$get()</code></p></div>
                                             </td>
                                         </tr>
                                     
@@ -129,9 +176,9 @@
                                             <td class="attributes">&nbsp;</td>
                                             <td class="nameDescription">
                                                 <div class="fixedFont">
-                                                    <b><a href="../symbols/_global_.html#Class">Class</a></b>
+                                                    <b><a href="../symbols/-options-.html#makeES5compat">makeES5compat</a></b>
                                                 </div>
-                                                <div class="description"><p>Function-constructor: function, that can be called by "new" operator and/or have modified prototype property.</div>
+                                                <div class="description"><p>Make some ECMA Script 5 shims, see <a href="../symbols/Object.html">Object</a>.</div>
                                             </td>
                                         </tr>
                                     
@@ -139,9 +186,9 @@
                                             <td class="attributes">&nbsp;</td>
                                             <td class="nameDescription">
                                                 <div class="fixedFont">
-                                                    <b><a href="../symbols/_global_.html#ObjLiteral">ObjLiteral</a></b>
+                                                    <b><a href="../symbols/-options-.html#makeGlobal">makeGlobal</a></b>
                                                 </div>
-                                                <div class="description"><p>Simple key-value object, which proto is Object.prototype and all it properties is enumerable.</div>
+                                                <div class="description"><p>Make <code>clone</code> function global (for nodejs).</div>
                                             </td>
                                         </tr>
                                     
@@ -149,10 +196,10 @@
                                             <td class="attributes">&nbsp;</td>
                                             <td class="nameDescription">
                                                 <div class="fixedFont">
-                                                    <b><a href="../symbols/_global_.html#propertyDescriptor">propertyDescriptor</a></b>
+                                                    <b><a href="../symbols/-options-.html#setCloneMethodByBench">setCloneMethodByBench</a></b>
                                                 </div>
-                                                <div class="description"><p>Object, that has at least one of the following property:
-<code>value</code>, <code>get</code>, <code>set</code>, <code>writable</code>, <code>configurable</code>, <code>enumerable</code>.</div>
+                                                <div class="description"><p>Run quick (about 100ms) benchmark of clone methods
+                                            (by [[ proto ]], by Object.create, by constructor).</div>
                                             </td>
                                         </tr>
                                     
@@ -186,20 +233,19 @@
 							</h2>
 							
 							
-								<div class="fixedFont heading" id="behaviorDescriptor">
+								<div class="fixedFont heading" id="injectCloneBehaviorInto">
 									<span class='lighter'>
 									
 									</span>
 									
+									<span class="light">{object}</span>
 									
-									
-									<b>behaviorDescriptor</b>							
+									<b>injectCloneBehaviorInto</b>							
 								</div>
 								
 								<div class="description">
-									<p>Object literal, that may have properties:
-<a href="clone.behavior$.html#$extends">$extends</a>, <a href="clone.behavior$.html#$defaults">$defaults</a>, <a href="clone.behavior$.html#$inits">$inits</a>.
-All other properties should be functions (or constants).</p>
+									<p>You can make all objects behaves like a clone:
+                                            <code>({thisWillBeHash: true}).$get()</code></p>
 									
 									
 									
@@ -210,19 +256,18 @@ All other properties should be functions (or constants).</p>
 								
 								<div class="hr"></div>
 							
-								<div class="fixedFont heading" id="Class">
+								<div class="fixedFont heading" id="makeES5compat">
 									<span class='lighter'>
 									
 									</span>
 									
+									<span class="light">{boolean}</span>
 									
-									
-									<b>Class</b>							
+									<b>makeES5compat</b>							
 								</div>
 								
 								<div class="description">
-									<p>Function-constructor: function, that can be called by "new" operator and/or have modified prototype property.
-For example: <code>Object</code>, <code>Array</code>, <code>RegExp</code>.</p>
+									<p>Make some ECMA Script 5 shims, see <a href="../symbols/Object.html">Object</a>.</p>
 									
 									
 									
@@ -233,18 +278,19 @@ For example: <code>Object</code>, <code>Array</code>, <code>RegExp</code>.</p>
 								
 								<div class="hr"></div>
 							
-								<div class="fixedFont heading" id="ObjLiteral">
+								<div class="fixedFont heading" id="makeGlobal">
 									<span class='lighter'>
 									
 									</span>
 									
+									<span class="light">{boolean=true}</span>
 									
-									
-									<b>ObjLiteral</b>							
+									<b>makeGlobal</b>							
 								</div>
 								
 								<div class="description">
-									<p>Simple key-value object, which proto is Object.prototype and all it properties is enumerable.</p>
+									<p>Make <code>clone</code> function global (for nodejs). True by
+                                            default (if global clone options object defined).</p>
 									
 									
 									
@@ -255,19 +301,19 @@ For example: <code>Object</code>, <code>Array</code>, <code>RegExp</code>.</p>
 								
 								<div class="hr"></div>
 							
-								<div class="fixedFont heading" id="propertyDescriptor">
+								<div class="fixedFont heading" id="setCloneMethodByBench">
 									<span class='lighter'>
 									
 									</span>
 									
+									<span class="light">{boolean}</span>
 									
-									
-									<b>propertyDescriptor</b>							
+									<b>setCloneMethodByBench</b>							
 								</div>
 								
 								<div class="description">
-									<p>Object, that has at least one of the following property:
-<code>value</code>, <code>get</code>, <code>set</code>, <code>writable</code>, <code>configurable</code>, <code>enumerable</code>.</p>
+									<p>Run quick (about 100ms) benchmark of clone methods
+                                            (by [[ proto ]], by Object.create, by constructor).</p>
 									
 									
 									
@@ -275,19 +321,6 @@ For example: <code>Object</code>, <code>Array</code>, <code>RegExp</code>.</p>
 								
 								
 									
-									<dl class="detailList nomargin">
-									
-										
-										
-										
-											<dt class="heading">See:</dt>
-											
-												<dd><a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty⠙</a></dd>
-											
-										
-										
-									</dl>
-								
 								
 								
 							
