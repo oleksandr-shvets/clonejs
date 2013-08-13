@@ -33,7 +33,7 @@ function defineModule(){
                 }
                 delete updatedBehavior.__inits__;
             }
-            _define(updatedBehavior, '__parent__', {value: obj, writable:true, configurable:true});
+            _define(updatedBehavior, 'parent$', {value: obj, writable:true, configurable:true});
             return state === undefined ? updatedBehavior : _clone(updatedBehavior, state);
 //        }else if(obj === Object.prototype){
 //            return state||{};
@@ -54,7 +54,7 @@ function defineModule(){
         _prototype = clone.prototype;
     }
 
-    var jScriptVersion = /*@cc_on @_jscript_version || @*/0;
+    var jScriptVersion = /**@preserve@cc_on @_jscript_version || @*/0;
         
     var _clone  =      '__proto__' in {}     ? _cloneByProto         : 
                           'create' in Object ? _cloneByObjectCreate  : _cloneByConstructor;
@@ -207,8 +207,9 @@ function defineModule(){
 
         $extend: 
         /** 
-         * 
-         * @returns {Object} */
+         * Creates new type, inherited from this object.  
+         * Types should not be modified after creation, so, it's freezed.
+         * @returns {prototype$} */
         function $extend(/** !hash= */state, /** !hash */behavior){
             var newPrototype$ = behavior ? clone(this, state, behavior) : clone(this, undefined, state);
             //clone.defineConstructorOf(behavior || newPrototype$);
@@ -232,12 +233,12 @@ function defineModule(){
 
     clone.defineConstructorOf(_prototype);
 
-    clone.definePropertyOf(_prototype, '__parent__', {
-        configurable: true,
-        get:('__proto__' in {}) ?
-            function(){return this.__proto__} :
-            function(){return Object.getPrototypeOf(this)}
-    });
+//    clone.definePropertyOf(_prototype, 'parent$', {
+//        configurable: true,
+//        get:('__proto__' in {}) ?
+//            function(){return this.__proto__} :
+//            function(){return Object.getPrototypeOf(this)}
+//    });
          
     // if `clone.prototype` has enumerable properties, do not use it in `clone.create`
     for(var key in _prototype){
@@ -299,7 +300,7 @@ function defineModule(){
                     var NewConstructor = clone.defineConstructorOf(proto);
                 }else{
                     // cache constructor for objects, that already has custom constructor:
-                    NewConstructor = clone.defineConstructorOf(OwnConstructor, 'Init');
+                    NewConstructor = clone.defineConstructorOf(OwnConstructor, undefined, 'Init');
                     //
                     if( OwnConstructor.prototype !== proto){
                         OwnConstructor.prototype = proto;
