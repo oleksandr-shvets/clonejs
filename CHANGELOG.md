@@ -1,3 +1,9 @@
+##### Build v1.3.1-alpha (2013-08-15) 
+* rename $super to $inherits
+* fix benchmarking
+* fix _getPrototypeOf_es3
+* add bench to test
+
 ##### Build v1.3.0-alpha (2013-08-15) 
 * arhitecture redisign
 * add behavior$
