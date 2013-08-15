@@ -1,3 +1,9 @@
+##### Build v1.3.0-alpha (2013-08-15) 
+* arhitecture redisign
+* add behavior$
+* docs: dont show <static> word in docs
+* docs: show constructor details only if it description present
+
 #### Build v1.1.0-alpha (2013-07-17) 
 * add \_\_parent\_\_ property
 * add clone.$call(), clone.$apply()
