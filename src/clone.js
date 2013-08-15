@@ -587,7 +587,7 @@ function defineModule(){
             ){
             var obj = cloneMethod(class$, {a:"string", b1:function(){}, c1:3});
         }
-        if(console) console.log("Benchmarking "+ methods[i].name +": ", count, "/", time, "=", count / time);
+        if(console) console.log("Benchmarking "+ cloneMethod.name +": ", count, "/", time, "=", count / time);
         return count / time;
     }
     /**#nocode-*/
