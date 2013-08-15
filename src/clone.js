@@ -54,9 +54,14 @@ function defineModule(){
         return newObj;
     }
 
-    // This method is slowest, but it creates custom $clone method,
-    // that is fastest than all. So, use it if you need hundreds of instances. 
+    // This method is slowest on first call, but it creates custom $clone method,
+    // that may be is fastest than all. So, use it if you need hundreds of instances. 
     function _cloneByConstructor(/** !Object */proto, /** ObjLiteral= */state){
+        
+        if(_hasOwn.call(proto, '$clone') && proto.$clone !== clone.$.$clone ){
+            return proto.$clone(state);
+        }
+        
         if(! _hasOwn.call(proto, 'constructor') ){
             proto.constructor = Clone;
         }
@@ -394,7 +399,7 @@ function defineModule(){
          * The object-oriented notation of clone function:  
          * For example: `myObject.$clone()` is identical to `clone(myObject)`.  
          * This method can be overrided. The difference with {@link constructor} is that $clone is only
-         * function, not a {@link Class}, and it has only one argument – {@link ObjLiteral}.
+         * function, not a {@link Class}, and it has only one argument – {@link ObjLiteral} state.
          * @returns {clone.$} */
         $clone: function(/** ObjLiteral=object */state){
             return _clone(this, state || {});
@@ -621,7 +626,7 @@ function defineModule(){
     // underscored variables used in closure functions
 
     var _clone    =             protoSupported ? _cloneByProto         :
-    /**/                    'create' in Object ? _cloneByCreate  : _cloneByConstructor;
+    /**/                    'create' in Object ? _cloneByCreate        : _cloneByConstructor;
     var _define   = 'defineProperty' in Object &&
     (jScriptVersion ===0 || jScriptVersion > 8)? Object.defineProperty : _defineProperty_es3;
     var _getProto = 'getPrototypeOf' in Object ? Object.getPrototypeOf : _getPrototypeOf_es3;
