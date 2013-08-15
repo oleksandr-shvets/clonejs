@@ -46,7 +46,7 @@
 				
 					<li><a href="../symbols/clone.behavior%24.html">clone<span class='break'> </span>.<span class='break'> </span>behavior$</a></li>
 				
-					<li><a href="../symbols/clone.Hash.html">clone<span class='break'> </span>.<span class='break'> </span>Hash</a></li>
+					<li><a href="../symbols/clone.Dict.html">clone<span class='break'> </span>.<span class='break'> </span>Dict</a></li>
 				
 					<li><a href="../symbols/Object.html">Object</a></li>
 				
@@ -59,7 +59,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="https://github.com/quadroid/clonejs/tree/master/lib/jsdoc-toolkit/templates/codeview-jsdoc2-template" target="_blank">Codeview</a> 1.3<br />
 			Generated on:
-			<time datetime='2013-7-13' pubdate>2013-7-13 14:32</time>
+			<time datetime='2013-7-15' pubdate>2013-7-15 11:08</time>
 		</footer>
 	</div>
 </div>
@@ -121,7 +121,7 @@
                                                     <b><a href="../symbols/_global_.html#behaviorDescriptor">behaviorDescriptor</a></b>
                                                 </div>
                                                 <div class="description"><p>Object literal, that may have properties:
-<a href="clone.behavior$.html#$extends">$extends</a>, <a href="clone.behavior$.html#$defaults">$defaults</a>, <a href="clone.behavior$.html#$inits">$inits</a>.</div>
+<a href="clone.behavior$.html#$super">$super</a>, <a href="clone.behavior$.html#$defaults">$defaults</a>, <a href="clone.behavior$.html#$inits">$inits</a>.</div>
                                             </td>
                                         </tr>
                                     
@@ -169,6 +169,67 @@
 	#### METHODS SUMMARY
 	-->
 			
+				<section>
+					
+					
+					<div class="props">
+						<h2 class="sectionTitle">Method Summary</h2>
+						
+						
+							<nav>
+								<table class="summaryTable" id="MethodsList" cellspacing="0" summary="A summary of the methods documented in the class _global_.">
+									<thead>
+										<tr>
+											<th scope="col">Method Attributes</th>
+											<th scope="col">Method Name and Description</th>
+										</tr>
+									</thead>
+									
+									<tbody>
+										
+										
+											<tr
+												 class='item0'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/_global_.html#_cloneByConstructor">_cloneByConstructor</a></b>(proto, state<sup>opt</sup>)
+													</div>
+													<div class="description"></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item1'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/_global_.html#_cloneByCreate">_cloneByCreate</a></b>(proto, state)
+													</div>
+													<div class="description"></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item2'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/_global_.html#_cloneByProto">_cloneByProto</a></b>(proto, state)
+													</div>
+													<div class="description"></div>
+												</td>
+											</tr>
+										
+									</tbody>
+								</table>
+							</nav>
+						
+					
+						
+					</div>
+				</section>
+			
 			
 	<!--
 	#### EVENTS SUMMARY
@@ -198,7 +259,7 @@
 								
 								<div class="description">
 									<p>Object literal, that may have properties:
-<a href="clone.behavior$.html#$extends">$extends</a>, <a href="clone.behavior$.html#$defaults">$defaults</a>, <a href="clone.behavior$.html#$inits">$inits</a>.
+<a href="clone.behavior$.html#$super">$super</a>, <a href="clone.behavior$.html#$defaults">$defaults</a>, <a href="clone.behavior$.html#$inits">$inits</a>.
 All other properties should be functions (or constants).</p>
 									
 									
@@ -298,6 +359,153 @@ For example: <code>Object</code>, <code>Array</code>, <code>RegExp</code>.</p>
 	<!--
 	#### METHOD DETAILS
 	-->		
+			
+				<section>
+					<div class="details props">
+						<div class="innerProps">
+							<h2 class="sectionTitle">
+								Method Detail
+							</h2>
+							
+							<ul class="methodDetail" id="MethodDetail">
+								
+								
+									<li 
+										 class='item0'
+									>
+										<div class="fixedFont heading" id="_cloneByConstructor">
+											<span class='lighter'>
+											
+											</span>
+											
+											<b>_cloneByConstructor</b>(proto, state<sup>opt</sup>)
+										</div>
+										
+										<div class="description">
+											
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{!<a href="../symbols/Object.html">Object</a>}</span> <b>proto</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
+														<span class="light fixedFont">{<a href="../symbols/_global_.html#ObjLiteral">ObjLiteral</a>=}</span> <b>state</b>
+														
+													</dt>
+													<dd></dd>
+												
+											</dl>
+										
+										
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item1'
+									>
+										<div class="fixedFont heading" id="_cloneByCreate">
+											<span class='lighter'>
+											
+											</span>
+											
+											<b>_cloneByCreate</b>(proto, state)
+										</div>
+										
+										<div class="description">
+											
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{!<a href="../symbols/Object.html">Object</a>}</span> <b>proto</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
+														<span class="light fixedFont">{!<a href="../symbols/_global_.html#ObjLiteral">ObjLiteral</a>}</span> <b>state</b>
+														
+													</dt>
+													<dd></dd>
+												
+											</dl>
+										
+										
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item2'
+									>
+										<div class="fixedFont heading" id="_cloneByProto">
+											<span class='lighter'>
+											
+											</span>
+											
+											<b>_cloneByProto</b>(proto, state)
+										</div>
+										
+										<div class="description">
+											
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{!<a href="../symbols/Object.html">Object</a>}</span> <b>proto</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
+														<span class="light fixedFont">{!<a href="../symbols/_global_.html#ObjLiteral">ObjLiteral</a>}</span> <b>state</b>
+														
+													</dt>
+													<dd></dd>
+												
+											</dl>
+										
+										
+										
+										
+									</li>
+								
+							</ul>
+						</div>
+					</div>
+				</section>
 			
 			
 	<!--

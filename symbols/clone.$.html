@@ -46,7 +46,7 @@
 				
 					<li><a href="../symbols/clone.behavior%24.html">clone<span class='break'> </span>.<span class='break'> </span>behavior$</a></li>
 				
-					<li><a href="../symbols/clone.Hash.html">clone<span class='break'> </span>.<span class='break'> </span>Hash</a></li>
+					<li><a href="../symbols/clone.Dict.html">clone<span class='break'> </span>.<span class='break'> </span>Dict</a></li>
 				
 					<li><a href="../symbols/Object.html">Object</a></li>
 				
@@ -59,7 +59,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="https://github.com/quadroid/clonejs/tree/master/lib/jsdoc-toolkit/templates/codeview-jsdoc2-template" target="_blank">Codeview</a> 1.3<br />
 			Generated on:
-			<time datetime='2013-7-13' pubdate>2013-7-13 14:32</time>
+			<time datetime='2013-7-15' pubdate>2013-7-15 11:08</time>
 		</footer>
 	</div>
 </div>
@@ -105,6 +105,42 @@ Alias to <code>clone.prototype</code>.</p>
     #### FIELDS SUMMARY
     -->
 
+            
+                
+                <section>
+                    
+                        <nav>
+                            <div class="props">
+                                <table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class clone.$.">
+                                    <caption class="sectionTitle">Field Summary</caption>
+
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Field Attributes</th>
+                                        <th scope="col">Field Name and Description</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    
+                                        <tr>
+                                            <td class="attributes">&nbsp;</td>
+                                            <td class="nameDescription">
+                                                <div class="fixedFont">
+                                                    <b><a href="../symbols/clone.%24.html#constructor">constructor</a></b>
+                                                </div>
+                                                <div class="description"><p>Default constructor.</div>
+                                            </td>
+                                        </tr>
+                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </nav>
+                    
+
+                    
+                </section>
             
 	<!--
 	#### METHODS SUMMARY
@@ -159,7 +195,7 @@ For example: <code>myObject.$clone()</code> is identical to <code>clone(myObject
 												<td class="nameDescription">
 													<div class="fixedFont"><b><a href="../symbols/clone.%24.html#$get">$get</a></b>(key<sup>opt</sup>)
 													</div>
-													<div class="description"><p>If called without arguments – returns state <a href="../symbols/clone.Hash.html">clone.Hash</a>.</div>
+													<div class="description"><p>If called without arguments – returns state clone.Hash.</div>
 												</td>
 											</tr>
 										
@@ -203,6 +239,42 @@ For example: <code>myObject.$clone()</code> is identical to <code>clone(myObject
 	#### FIELD DETAILS
 	-->
 			
+				<section>
+					<div class="details props">
+						<div class="innerProps">
+							<h2 class="sectionTitle">
+								Field Detail
+							</h2>
+							
+							
+								<div class="fixedFont heading" id="constructor">
+									<span class='lighter'>
+									
+									</span>
+									
+									<span class="light">{<a href="../symbols/_global_.html#Class">Class</a>}</span>
+									
+									<b>constructor</b>							
+								</div>
+								
+								<div class="description">
+									<p>Default constructor. By default alias to $clone method. <br />
+Difference with $clone is that constructor is <a href="../symbols/_global_.html#Class">Class</a>,
+it prototype property pointed to this.</p>
+									
+									
+									
+								</div>
+								
+								
+									
+								
+								
+							
+						</div>
+					</div>
+				</section>
+			
 	<!--
 	#### METHOD DETAILS
 	-->		
@@ -225,12 +297,14 @@ For example: <code>myObject.$clone()</code> is identical to <code>clone(myObject
 											
 											</span>
 											
-											<b>$clone</b>(state<sup>=object</sup>)<span class="light">: {<a href="../symbols/Object.html">Object</a>}</span>
+											<b>$clone</b>(state<sup>=object</sup>)<span class="light">: {<a href="../symbols/clone.%24.html">clone.$</a>}</span>
 										</div>
 										
 										<div class="description">
 											<p>The object-oriented notation of clone function: <br />
-For example: <code>myObject.$clone()</code> is identical to <code>clone(myObject)</code>.</p>
+For example: <code>myObject.$clone()</code> is identical to <code>clone(myObject)</code>. <br />
+This method can be overrided. The difference with constructor is that $clone is only
+function, not a <a href="../symbols/_global_.html#Class">Class</a>, and it has only one argument – <a href="../symbols/_global_.html#ObjLiteral">ObjLiteral</a>.</p>
 											
 											
 											
@@ -264,7 +338,7 @@ For example: <code>myObject.$clone()</code> is identical to <code>clone(myObject
 												
 													<dt class="heading">Returns:</dt>
 													
-														<dd><span class="light fixedFont">{<a href="../symbols/Object.html">Object</a>}</span> </dd>
+														<dd><span class="light fixedFont">{<a href="../symbols/clone.%24.html">clone.$</a>}</span> </dd>
 													
 												
 												
@@ -329,11 +403,11 @@ For example: <code>myObject.$clone()</code> is identical to <code>clone(myObject
 											
 											</span>
 											
-											<b>$get</b>(key<sup>opt</sup>)<span class="light">: {<a href="../symbols/clone.Hash.html">clone.Hash</a>|*}</span>
+											<b>$get</b>(key<sup>opt</sup>)<span class="light">: {clone.Hash|*}</span>
 										</div>
 										
 										<div class="description">
-											<p>If called without arguments – returns state <a href="../symbols/clone.Hash.html">clone.Hash</a>.</p>
+											<p>If called without arguments – returns state clone.Hash.</p>
 											
 											
 											
@@ -367,7 +441,7 @@ For example: <code>myObject.$clone()</code> is identical to <code>clone(myObject
 												
 													<dt class="heading">Returns:</dt>
 													
-														<dd><span class="light fixedFont">{<a href="../symbols/clone.Hash.html">clone.Hash</a>|*}</span> </dd>
+														<dd><span class="light fixedFont">{clone.Hash|*}</span> </dd>
 													
 												
 												
