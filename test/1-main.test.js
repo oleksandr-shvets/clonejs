@@ -1,3 +1,5 @@
+
+global.clone = {setCloneMethodByBench: true};
 global.clone = require('../src/clone.js');
 var    tests = require('./clone.spec.js').tests;
 
