@@ -1,5 +1,5 @@
 #### Build v1.1.0-alpha (2013-07-17) 
-* add __parent__ property
+* add \_\_parent\_\_ property
 * add clone.$call(), clone.$apply()
 * add clone method shoosing
 * add AMD compability

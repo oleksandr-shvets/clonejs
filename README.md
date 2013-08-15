@@ -1,6 +1,6 @@
 <!-- HIDDEN: -->
-## CloneJS [![Build Status](https://travis-ci.org/quadroid/clonejs.png?branch=master "travis-ci.org")](https://travis-ci.org/quadroid/clonejs) [![NPM version](https://badge.fury.io/js/clonejs.png)](http://badge.fury.io/js/clonejs)  
-[**CloneJS.org**](http://clonejs.org)
+## cloneJS [![Build Status](https://travis-ci.org/quadroid/clonejs.png?branch=master "travis-ci.org")](https://travis-ci.org/quadroid/clonejs) [![NPM version](https://badge.fury.io/js/clonejs.png)](http://badge.fury.io/js/clonejs)  
+[**cloneJS.org**](http://clonejs.org)
 |  [API documentation](http://clonejs.org/symbols/clone.html)
 |  [ChangeLog](https://github.com/quadroid/clonejs/blob/master/CHANGELOG.md)
 |  [GitHub](http://github.com/quadroid/clonejs)
@@ -10,36 +10,23 @@
   
 **This framework provides:**
 
-* Speed! It's extremely fast! [Faster than JS core class creation!][jsperf]
+* Speed! It's extremely fast! [Faster than JS core!][jsperf] (class-objects creation).
 * Class-less, the pure prototype-based paradigm.
-* [Lazy initialization⠙][] support (by `__inits__` behavior).
+* [Lazy initialization⠙][] support (by [$inits][] behavior).
 * Separation of all your objects into the state (data) and behavior (methods),  
   as in ECMA Script 6: classes does not have fields, only methods.
 * IE6 support! + Emulation of `Object.getPrototypeOf` (partial) and `Object.create`.
- 
 
 [Lazy initialization⠙]: http://martinfowler.com/bliki/LazyInitialization.html
 [jsperf]: http://jsperf.com/object-properties-init/4
-
-This is the main code of the framework (ECMA Script 6 only version):
-
-    function clone(/** Object! */obj, /** object! */state, /** object= */behavior$){
-        if( behavior$ ){
-            behavior$.__proto__ = obj;
-            state.__proto__ = behavior$;
-        }else{
-            state.__proto__ = obj;
-        }
-        return state;
-    }
-
-That's it!
+[$inits]: http://clonejs.org/symbols/clone.Behavior.html#.$inits
 
 #### What is the clone?
 
-`clone` function produces new objects — clones.  
-**Clone — this is the lazy shallow copy**, ie, it is actually not a copy, it's just a reference to the object,
-with one difference: if you will add/replace any of its properties, it would not affect the cloned object (prototype).
+[`clone()`][clone] function produces new objects — clones.  
+**clone — this is the lazy shallow copy**, i.e., it is actually not a copy, it's just a reference to the object,
+with one difference: if you will add/replace any of its properties, it would not affect the cloned object (prototype).  
+All JavaScript objects are clones of `Object.prototype` (except itself and objects, created by `Object.create(null)`).
 
 #### Try the true [prototype-based OOP⠙](http://en.wikipedia.org/wiki/Prototype-based_programming)
 
@@ -49,7 +36,7 @@ It's possible to build and maintain extremely **large numbers of "classes" with 
 
 **It's trivial to create new "classes"** - just clone the object and change a couple of properties and voila... new "class".
 
-**It's really class-free**: `clone` produces objects (prototypes), not function-constructors, unlike all other class-producing tools (`Ext.define`, `dojo.declare` etc).
+**It's really class-free**: [`clone()`][clone] produces objects (prototypes), not function-constructors, unlike all other class-producing tools (`Ext.define`, `dojo.declare` etc).
 
 Read more:
 
@@ -74,15 +61,15 @@ Node.js:
     /// Forget about classes.    
     //  Instead of creating class (function), create prototype (object):
     
-    var duck$ = {
+    var duck$ = { // $ postfix means prototype: Duck.prototype === duck$
         quack: function(){
             console.log( this.name +" Duck: Quack-quack!");
         }
     };
 
-    /// Inheritance is simple (talkingDuck$ extends duck$):
+    /// Inheritance is simple (talkingDuck prototype extends duck prototype):
     
-    var talkingDuck$ = clone(duck$, {
+    var talkingDuck$ = clone.extend( duck$, {
         quack: function(){
             duck$.quack.call(this);
             console.log("My name is "+ this.name +"!");
@@ -91,10 +78,10 @@ Node.js:
     
     /// Forget about the `new` operator, use `clone` function to create instances:
     
-    var donald = clone(talkingDuck$, {name: "Donald"});
+    var donald = clone( talkingDuck$, {name: "Donald"});
     donald.quack();// Donald Duck: Quack-quack! 
                    // My name is Donald!
-    var daffy  = clone(talkingDuck$, {name: "Daffy"});
+    var daffy  = clone( talkingDuck$, {name: "Daffy"});
     daffy.quack(); // Daffy Duck: Quack-quack! 
                    // My name is Daffy!
 
@@ -104,10 +91,8 @@ Node.js:
     duck$.isPrototypeOf(donald);// true
 
 ##### Object-oriented notation:
-
-      var object$ = clone.prototype;
       
-      var duck$ = object$.$clone({
+      var duck$ = clone.extend({
           quack: function(){
               console.log( this.name +" Duck: Quack-quack!");
           }
@@ -129,32 +114,58 @@ How to initialize object without constructor?
 Lazy initialization is the tactic of delaying the calculation of a value until the first time it is needed.
 
     var obj = clone.create({
-        name: "Default Name"
+        name: "object"
         },{
-        __inits__: {
+        $inits: {
             lazy: function(){
                 console.log("Lazy initialization...");
-                return this.name +": Lazy initiated.":
+                return this.name +" lazy initiated.":
             }
         }
     });
     
-    console.log( obj.lazy );
+    console.log( "obj.lazy: " + obj.lazy );
     // Lazy initialization...
-    // Default Name: Lazy initiated.
+    // obj.lazy: object lazy initiated.
     
-    console.log( obj.lazy );// initializer does't run again
-    // Default Name: Lazy initiated.
+    console.log( "obj.lazy: " + obj.lazy );// initializer does't run again
+    // obj.lazy: object lazy initiated.
 
+This code will work on IE8-, but you need to remember:
 
-    var myClass$ = clone.create({
-        constructor: function MyClass(state){
-            MyClass.Init.call(this, state);
-        }
-    });
-    var myClass = new myClass$.constructor({});
+###### Internet Explorer 8– obsticles
     
+Your accessor function **should not return** `null` or `undefined`.  
+**If accessor returns boolean**, you need to compare it with `true` or `false` obviously:
 
+    if( obj.lazyBoolean == true   ) console.log(true);
+    // or
+    if( obj.lazyBoolean.valueOf() ) console.log(true);
+
+**If accessor returns object**, you need to call `valueOf()` method:
+
+    console.log( obj.lazyObject.valueOf().name );
+    
+    // for info, this will works without errors/warnings on all browsers:
+    console.log( ({name: "obj.property" }).valueOf().name );// obj.property
+    console.log( (function(){return "fn"}).valueOf()()    );// fn
+    console.log( (777).valueOf() );// 777
+    console.log( "str".valueOf() );// str
+    console.log( false.valueOf() );// false
+    // but this will throw error:
+    console.log( (undefined).valueOf() );
+    console.log(      (null).valueOf() );
+    
+You can call `valueOf()` method only on first access.   
+**If accessor returns primitive value** (string, number, boolean), you can use it as normal.  
+JavaScript automatically invokes `valueOf()` in places where a primitive value is expected.
+
+
+##### For more details, see [API documentation](http://clonejs.org/symbols/clone.html)
+  
+  
+[clone]: http://clonejs.org/symbols/clone.html#clone
+[create]: http://clonejs.org/symbols/clone.html#create
 
 [Object.create⠙]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/create
 [Object.defineProperty⠙]: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty
