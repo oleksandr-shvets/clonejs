@@ -89,28 +89,28 @@ function defineModule(){
             return behavior;
         }
 
-        /// $super
+        /// $inherits
 
-        if( _hasOwn.call(behavior, '$super') ){
-            var $super = behavior.$super;
-            if(! _hasOwn.call($super, '$super') || _getProto($super) != $super.$super ){
-                $super = Behavior($super);
+        if( _hasOwn.call(behavior, '$inherits') ){
+            var $inherits = behavior.$inherits;
+            if(! _hasOwn.call($inherits, '$inherits') || _getProto($inherits) != $inherits.$inherits ){
+                $inherits = Behavior($inherits);
             }
         }else{
-            $super = _clone$;
+            $inherits = _clone$;
         }
-        if( $super !== behavior.$super ){
-            behavior.$super = $super;
+        if( $inherits !== behavior.$inherits ){
+            behavior.$inherits = $inherits;
         }
         
         /// $defaults
 
         var defaults = behavior.$defaults;
-        if( defaults && _getProto(defaults) !== $super ){
-            defaults = behavior.$defaults = _clone($super, defaults);
+        if( defaults && _getProto(defaults) !== $inherits ){
+            defaults = behavior.$defaults = _clone($inherits, defaults);
             _freeze(defaults);
             var proto = defaults;
-        }else   proto = $super;
+        }else   proto = $inherits;
 
         if( _getProto(behavior) !== proto ){
             behavior = _clone(proto, behavior);
@@ -245,7 +245,7 @@ function defineModule(){
             //proto = _clone$;
         }//</arguments>
         else{
-            behavior.$super = proto;
+            behavior.$inherits = proto;
         }
         return Behavior(behavior);
     };
@@ -388,7 +388,7 @@ function defineModule(){
             return this.$clone(state);
         },
         
-        $super: Object.prototype,
+        $inherits: Object.prototype,
 
         /** 
          * The object-oriented notation of clone function:  
@@ -473,7 +473,7 @@ function defineModule(){
      *
      * @property {object.<string,*>} $defaults  
      *           List of fields default values.
-     * @property {clone.behavior$} $super  
+     * @property {clone.behavior$} $inherits  
      *           The parent behavior. Superclass.
      * @property {object.<string,function:*>} $inits  
      *           List of lazy initialization fields.
@@ -723,7 +723,7 @@ if(typeof module === 'object' && 'exports' in module){
     
     /**
      * Object literal, that may have properties:
-     * [$super](clone.behavior$.html#$super), [$defaults](clone.behavior$.html#$defaults), [$inits](clone.behavior$.html#$inits).
+     * [$inherits](clone.behavior$.html#$inherits), [$defaults](clone.behavior$.html#$defaults), [$inits](clone.behavior$.html#$inits).
      * All other properties should be functions (or constants).
      * @name behaviorDescriptor
      * @define {ObjLiteral} */
