@@ -13,7 +13,7 @@ function defineModule(){
     /** @namespace
      *
      * clone.js - the true prototype-based lazy programming framework.
-     * @version v1.3.0-alpha
+     * @version v1.3.1-alpha
      * @author  Alex Shvets
      * @see     www.clonejs.org
      *
