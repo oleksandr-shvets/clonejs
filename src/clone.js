@@ -539,7 +539,7 @@ function defineModule(){
 
     function _getPrototypeOf_es3(obj){
         // see _defineProperty_es3
-        return _hasOwn.call(obj, '__proto__') ? Object.prototype : obj.__proto__;
+        return _hasOwn.call(obj, '__proto__') ? obj.__proto__ : obj.constructor.prototype;
         //return obj.__proto__ === obj ? clone.prototype : obj.__proto__;
     }
 
