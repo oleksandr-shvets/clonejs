@@ -219,7 +219,7 @@ function defineModule(){
         }
     }else{
         clone.Dict = function Dict_byCreate(/** !ObjLiteral= */data){
-            var dict = Object.create(null);
+            var dict = (Object.create || _objectCreate_es3)(null);
             for(var key in data) dict[key] = data[key];
             return dict;
         }
@@ -548,8 +548,8 @@ function defineModule(){
         //return obj.__proto__ === obj ? clone.prototype : obj.__proto__;
     }
 
-    function _objectCreate_es3(obj, /** {propertyDescriptor}= */descriptors){
-        var newObj = clone(obj);
+    function _objectCreate_es3(/** Object? */obj, /** {propertyDescriptor}= */descriptors){
+        var newObj = clone(obj || Object.prototype);
         for(var key in descriptors){
             _define(newObj, key, descriptors[key]);
         }
