@@ -63,20 +63,20 @@ function defineModule(){
         }
         
         if(! _hasOwn.call(proto, 'constructor') ){
-            proto.constructor = Clone;
+            proto.constructor = _Clone;
         }
 
-        function Clone(state){
+        function _Clone(state){
             for(var key in state) this[key] = state[key];
         }
-        Clone.prototype = proto;
+        _Clone.prototype = proto;
 
         /** @override */
         proto.$clone = function(state){
-            return new Clone(state);
+            return new _Clone(state);
         }
 
-        return new Clone(state);
+        return new _Clone(state);
     }
 
     /**
