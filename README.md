@@ -19,30 +19,39 @@
 
 [Lazy initialization⠙]: http://martinfowler.com/bliki/LazyInitialization.html
 [jsperf]: http://jsperf.com/object-properties-init/4
-[$inits]: http://clonejs.org/symbols/clone.Behavior.html#.$inits
+[$inits]: http://clonejs.org/symbols/clone.behavior$.html#$inits
 
-#### What is the clone?
+### What is the Clone?
 
-[`clone()`][clone] function produces new objects — clones.  
-**clone — this is the lazy shallow copy**, i.e., it is actually not a copy, it's just a reference to the object,
+`clone` function produces new objects — Clones.  
+**Clone object — this is the lazy shallow copy**, i.e., it is actually not a copy, it's just a reference to the object,
 with one difference: if you will add/replace any of its properties, it would not affect the cloned object (prototype).  
-All JavaScript objects are clones of `Object.prototype` (except itself and objects, created by `Object.create(null)`).
+All JavaScript objects are clones of `Object.prototype` (except itself and objects, created by `Object.create(null)`). 
 
-#### Try the true [prototype-based OOP⠙](http://en.wikipedia.org/wiki/Prototype-based_programming)
+### Try the true prototype-based OOP
 
-In this framework you can easilly create and manipulate objects without constructors, instead of classic js way,
+With this framework you can easilly create and manipulate objects without constructors, instead of classic js way,
 where you should define a constructor for every object (that you want to use as prototype), even if you didn't need it.
 It's possible to build and maintain extremely **large numbers of "classes" with comparatively little code**.
 
 **It's trivial to create new "classes"** - just clone the object and change a couple of properties and voila... new "class".
 
-**It's really class-free**: [`clone()`][clone] produces objects (prototypes), not function-constructors, unlike all other class-producing tools (`Ext.define`, `dojo.declare` etc).
+**It's really class-free**: `clone()` produces objects (prototypes), not function-constructors, unlike all other class-producing tools (`Ext.define`, `dojo.declare` etc).
 
 Read more:
 
 - [Advantages of prototype-based OOP⠙](http://programmers.stackexchange.com/questions/110936/what-are-the-advantages-of-prototype-based-oop-over-class-based-oop#answers-header)
+by Mike Anderson
+- [Does JavaScript need classes? (in russian)⠙](http://habrahabr.ru/post/175029/) [(robot translation)⠙](http://translate.google.com/translate?hl=&sl=ru&tl=en&u=http%3A%2F%2Fhabrahabr.ru%2Fpost%2F175029%2F)
+by Me (Alexander Shvets)
 - [Myth: JavaScript needs classes⠙](http://www.2ality.com/2011/11/javascript-classes.html)
-- [Does JavaScript need classes? (robot translation, sorry)⠙](http://translate.google.com/translate?hl=&sl=ru&tl=en&u=http%3A%2F%2Fhabrahabr.ru%2Fpost%2F175029%2F)
+by [Dr. Axel Rauschmayer (University of Munich)⠙](http://rauschma.de)
+- [JS Objects: De”construct”ion⠙](http://davidwalsh.name/javascript-objects-deconstruction)
+by Kyle Simpson
+- [Stop Using Constructor Functions In JavaScript⠙](http://ericleads.com/2012/09/stop-using-constructor-functions-in-javascript/)
+by [Eric Elliott (Adobe)⠙](http://ericleads.com/about/)
+- [Constructors Are Bad For JavaScript⠙](http://tareksherif.ca/blog/2013/08/constructors-are-bad-for-javascript/)
+by Tarek Sherif
 
 ### Installation
 
@@ -160,8 +169,8 @@ You can call `valueOf()` method only on first access.
 **If accessor returns primitive value** (string, number, boolean), you can use it as normal.  
 JavaScript automatically invokes `valueOf()` in places where a primitive value is expected.
 
-
-##### For more details, see [API documentation](http://clonejs.org/symbols/clone.html)
+----
+For more details, see [API documentation](http://clonejs.org/symbols/clone.html)
   
   
 [clone]: http://clonejs.org/symbols/clone.html#clone
