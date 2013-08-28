@@ -648,10 +648,14 @@ function defineModule(){
 
     // underscored variables used in closure functions
 
-    var _clone    =             protoSupported ? _cloneByProto         :
-    /**/                    'create' in Object ? _cloneByCreate        : _cloneByConstructor;
     var _define   = 'defineProperty' in Object &&
     (jScriptVersion ===0 || jScriptVersion > 8)? Object.defineProperty : _defineProperty_es3;
+    if(protoSupported)     clone.byProto        = _cloneByProto;
+    if('create' in Object) clone.byObjectCreate = _cloneByCreate;
+    /* always available: */clone.byConstructor  = _cloneByConstructor;
+
+    var _clone    = clone.byProto || clone.byObjectCreate || clone.byConstructor;
+
     var _getProto = 'getPrototypeOf' in Object ? Object.getPrototypeOf : _getPrototypeOf_es3;
     var _freeze   =         'freeze' in Object ? Object.freeze         : function doNothing(){};
 
