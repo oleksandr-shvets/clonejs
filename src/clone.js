@@ -485,7 +485,8 @@ function defineModule(){
      * @property {object.<string,function:*>} $inits  
      *           List of lazy initialization fields.
      */
-    var behavior$Descriptor = {
+    /**#nocode+*/
+    var behavior$Descriptor =/**#nocode-*/ {
         constructor: Behavior,
 
         /**
