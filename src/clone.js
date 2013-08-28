@@ -102,7 +102,7 @@ function defineModule(){
                 $inherits = Behavior($inherits);
             }
         }else{
-            $inherits = _clone$;
+            $inherits = _protoOfNewClones;
         }
         if( $inherits !== behavior.$inherits ){
             behavior.$inherits = $inherits;
@@ -235,6 +235,8 @@ function defineModule(){
      */
     clone.new = function(/** !ObjLiteral={} */state, /** !behaviorDescriptor=clone.$ */behavior){
         return clone((behavior ? Behavior(behavior) : _clone$), state || {});
+            return new _protoOfNewClones.constructor;
+            behavior = behavior ? Behavior(behavior) : _protoOfNewClones;
     };
     
     /**
@@ -247,7 +249,7 @@ function defineModule(){
         }
         if( behavior === undefined ){
             behavior = proto;
-            //proto = _clone$;
+            //proto = _protoOfNewClones;
         }//</arguments>
         else{
             behavior.$inherits = proto;
@@ -644,28 +646,28 @@ function defineModule(){
         
     // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
-    var _clone$;
+    var _protoOfNewClones;
     if(setupOptions && setupOptions.injectCloneBehaviorInto){
-        _clone$ = setupOptions.injectCloneBehaviorInto;
-        clone.prototype = _clone$;
+        _protoOfNewClones = setupOptions.injectCloneBehaviorInto;
+        clone.prototype = _protoOfNewClones;
         // var clone = {injectCloneBehaviorInto: Object.prototype};
     }else{
-        _clone$ = clone.prototype;
+        _protoOfNewClones = clone.prototype;
     }
     clone.$ = clone.prototype;
 
     if( _define !== _defineProperty_es3) for(var name in clone$Descriptor){
-        _define( _clone$, name, {value: clone$Descriptor[name], writable:true, configurable:true} );
+        _define( _protoOfNewClones, name, {value: clone$Descriptor[name], writable:true, configurable:true} );
     }else{
-        _clone$ = clone.$ = clone$Descriptor;
+        _protoOfNewClones = clone.$ = clone$Descriptor;
     }
     
-    // if `clone.prototype` has enumerable property, do not use it in `clone.create`
-    for(var key in _clone$){
-        _clone$ = Object.prototype; break;
+    // if `clone.prototype` has enumerable property(ies), do not use it in `clone.new`
+    for(var key in _protoOfNewClones){
+        _protoOfNewClones = Object.prototype; break;
     }
 
-    //clone.defineConstructorOf(_clone$);
+    //clone.defineConstructorOf(_protoOfNewClones);
 
     clone.behavior$ = clone.extend(behavior$Descriptor);
     
