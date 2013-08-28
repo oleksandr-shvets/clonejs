@@ -234,9 +234,13 @@ function defineModule(){
      * @returns {Object}
      */
     clone.new = function(/** !ObjLiteral={} */state, /** !behaviorDescriptor=clone.$ */behavior){
-        return clone((behavior ? Behavior(behavior) : _clone$), state || {});
+        if(arguments.length === 0){
+            // `new` operator is faster than `clone` fn
             return new _protoOfNewClones.constructor;
+        }else{
             behavior = behavior ? Behavior(behavior) : _protoOfNewClones;
+            return clone(behavior, state);
+        }
     };
     
     /**
