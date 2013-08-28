@@ -113,7 +113,7 @@ Node.js:
 How to initialize object without constructor?  
 Lazy initialization is the tactic of delaying the calculation of a value until the first time it is needed.
 
-    var obj = clone.create({
+    var obj = clone.new({
         name: "object"
         },{
         $inits: {

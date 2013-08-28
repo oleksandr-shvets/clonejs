@@ -51,7 +51,7 @@ this.tests = {
 
         $inits: function(test){
             getterCalls = 0;
-            var state, obj = clone.create({
+            var state, obj = clone.new({
                 thisCalls: 0
                 },{
                 $inits: {
@@ -75,7 +75,7 @@ this.tests = {
         },
 
         create: function(test){
-            var c = clone.create({a:1});
+            var c = clone.new({a:1});
             test.ok( c.hasOwnProperty('a') );
 //            test.equal( Object.getPrototypeOf(c), clone.prototype);
             test.strictEqual( Object.getOwnPropertyNames(c).length, 1);

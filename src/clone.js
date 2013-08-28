@@ -233,8 +233,8 @@ function defineModule(){
      * Creates new object, based on `{@link clone.$}`.
      * @returns {Object}
      */
-    clone.create = function(/** !ObjLiteral={} */state, /** !behaviorDescriptor=clone.$ */behavior){
-        return _clone((behavior ? Behavior(behavior) : _clone$), state || {});
+    clone.new = function(/** !ObjLiteral={} */state, /** !behaviorDescriptor=clone.$ */behavior){
+        return clone((behavior ? Behavior(behavior) : _clone$), state || {});
     };
     
     /**
@@ -371,11 +371,11 @@ function defineModule(){
 //    }
     
     // // // // // // // // // // // // // // // // // // // // // // // // // //
-    // behavior of all created by clone.create objects:
+    // behavior of all created by clone.new objects:
 
     /** @name clone.$
      *  @class
-     * Root prototype/behavior for clone instances (created by `{@link clone.create}`).  
+     * Root prototype/behavior for clone instances (created by `{@link clone.new}`).  
      * Alias to `clone.prototype`.
      */
      var clone$Descriptor = /** @lands {clone.$#} */{
