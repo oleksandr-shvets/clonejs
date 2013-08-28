@@ -384,18 +384,34 @@ function defineModule(){
         /**#@+ @memberOf clone.$# */
 
         /**
-         * Default constructor. By default alias to {@link $clone} method.  
-         * Difference with $clone is that constructor is {@link Class},
-         * it prototype property pointed to this.
+         * In this framework constructors are optional. You can create types without constructor.  
+         * Use constructor like initialize method:
+         * 
+         *     // create class:
+         *     var class$ = {
+         *         constructor: function(a, b){
+         *             this.a = a;
+         *             this.b = b;
+         *         }
+         *     };
+         *     
+         *     // create instance:
+         *     var _instance = clone(class$);
+         *     
+         *     // create callback, that will initialize _instance later:
+         *     function callback(){ _instance.constructor(1, 2) }
+         *     
+         *   
+         * So, you can create empty instance, and initealize it later.  
+         *   
+         * The `new` operator is about 2-3 times faster than {@link clone} function. If you need 
+         * thausens of instances, define the constructor and use it with new operator instead of {@link clone}.
+         * 
          * @returns {clone.$}
          * @type Class
          * @field
          */
-        constructor: function Clone(state){
-            return this.$clone(state);
-        },
-        
-        $inherits: Object.prototype,
+        constructor: function Clone(){},
 
         /** 
          * The object-oriented notation of clone function:  
