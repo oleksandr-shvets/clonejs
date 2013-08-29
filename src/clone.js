@@ -57,7 +57,9 @@ function defineModule(){
             state = {};
         }
         //</arguments>
-        return ('function' === typeof proto.$clone) ? proto.$clone(state) : _clone(proto, state);
+        if(typeof  proto.$clone === 'function' && proto.$clone !== clone.$.$clone){
+            return proto.$clone(state)
+        }else return _clone(proto, state);
     }
 
     /**#@+ @memberOf private */
@@ -82,7 +84,7 @@ function defineModule(){
         
         //TODO: this is duplicated functionality of clone(), need to make ability
         //      to call this function many times.
-        if(_hasOwn.call(proto, '$clone') && proto.$clone !== clone.$.$clone ){
+        if(typeof  proto.$clone === 'function' && proto.$clone !== clone.$.$clone ){
             return proto.$clone(state);
         }
         
