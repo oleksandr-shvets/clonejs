@@ -1,6 +1,7 @@
 <!-- HIDDEN: -->
 ## cloneJS [![Build Status](https://travis-ci.org/quadroid/clonejs.png?branch=master "travis-ci.org")](https://travis-ci.org/quadroid/clonejs) [![NPM version](https://badge.fury.io/js/clonejs.png)](http://badge.fury.io/js/clonejs)  
 [**cloneJS.org**](http://clonejs.org)
+|  [Nano](http://github.com/quadroid/clonejs-nano)
 |  [API documentation](http://clonejs.org/symbols/clone.html)
 |  [ChangeLog](https://github.com/quadroid/clonejs/blob/master/CHANGELOG.md)
 |  [GitHub](http://github.com/quadroid/clonejs)

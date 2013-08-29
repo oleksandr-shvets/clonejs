@@ -1,6 +1,6 @@
 {
     "name": "clonejs",
-    "version": "v1.3.1-alpha",
+    "version": "v1.3.2-alpha",
     "main": "build/clone.min.js",
     "ignore": [
         "lib",
