@@ -42,7 +42,7 @@ function defineModule(){
      *                 By default — empty object (`{}`).
      * @returns {Object}
      */
-    function clone(/** !Object|Class */proto, /** !ObjLiteral=object */state){
+    function clone(/** !Object|Class */proto, /** !ObjLiteral={} */state){
 //        if( this && this instanceof clone){// new operator used 
 //            state = arguments[0];
 //            proto = clone.prototype;
@@ -50,18 +50,13 @@ function defineModule(){
 //                return this;
 //            }
 //        }
-        if(typeof proto === 'function'){
-            proto = proto.prototype;
-        }
-        if( state === undefined){
-            state = {};
-        }
+        if(typeof proto === 'function' ) proto = proto.prototype;
+        if(typeof state === 'undefined') state = {};
         //</arguments>
-        if(typeof  proto.$clone === 'function' && proto.$clone !== clone.$.$clone){
-            return proto.$clone(state)
+        if(typeof  proto.$clone === 'function' && proto.$clone !== clone.$.$clone ){
+            return proto.$clone(state);
         }else return _clone(proto, state);
     }
-
     /**#@+ @memberOf private */
     
     /** The fastest method (except second and next calls `byConstructor()`). */
@@ -110,9 +105,10 @@ function defineModule(){
      * If behavior object passed, it will be returned without changes.
      * @return {clone.behavior$}
      */
-    function Behavior(/** !behaviorDescriptor|clone.behavior$ */behavior){
-        
-        if( behavior instanceof Behavior ){
+    function _Behavior(/** !behaviorDescriptor|clone.behavior$ */behavior){
+
+        //if( clone.behavior$.isPrototypeOf(behavior) ){
+        if( behavior instanceof _Behavior ){
             return behavior;
         }
 
@@ -121,34 +117,29 @@ function defineModule(){
         if( _hasOwn.call(behavior, '$inherits') ){
             var $inherits = behavior.$inherits;
             if(! _hasOwn.call($inherits, '$inherits') || _getProto($inherits) != $inherits.$inherits ){
-                $inherits = Behavior($inherits);
+                $inherits = _Behavior($inherits);
             }
         }else{
             $inherits = _protoOfNewClones;
         }
-        if( $inherits !== behavior.$inherits ){
-            behavior.$inherits = $inherits;
-        }
         
         /// $defaults
 
-        var defaults = behavior.$defaults;
-        if( defaults && _getProto(defaults) !== $inherits ){
-            defaults = behavior.$defaults = _clone($inherits, defaults);
-            _freeze(defaults);
-            var proto = defaults;
+        var $inits = behavior.$inits;
+        
+        var $defaults = behavior.$defaults || $inits && {};
+        if( $defaults && _getProto($defaults) !== $inherits ){
+            $defaults = _clone($inherits, $defaults);
+            _define(behavior, '$defaults', {value: $defaults});
+            //_freeze(defaults);
+            var proto = $defaults;
         }else   proto = $inherits;
-
-        if( _getProto(behavior) !== proto ){
-            behavior = _clone(proto, behavior);
-        }
         
         /// $inits
 
-        var $inits = behavior.$inits;
         if( $inits ){
             for(var key in $inits){
-                clone.defineInitPropertyOf(behavior, key, $inits[key],
+                clone.defineInitPropertyOf( $defaults, key, $inits[key],
                     {configurable:true},// iteration should not modify object, so, init getter is un-enumerable
                     {configurable:true, writable:true, enumerable:true}
                 );
@@ -157,6 +148,16 @@ function defineModule(){
         }
         
         ///
+
+        //if($defaults) _freeze($defaults);
+
+        if( _getProto(behavior) !== proto ){
+            behavior = _clone(proto, behavior);
+        }
+
+        if( $inherits !== behavior.$inherits ){
+            _define(behavior, '$inherits', {value:$inherits});
+        }
         
         if( _hasOwn.call(behavior, 'constructor') && behavior.constructor.prototype !== behavior){
             behavior.constructor.prototype = behavior;
@@ -262,7 +263,7 @@ function defineModule(){
             // `new` operator is faster than `clone` fn
             return new _protoOfNewClones.constructor;
         }else{
-            behavior = behavior ? Behavior(behavior) : _protoOfNewClones;
+            behavior = behavior ? _Behavior(behavior) : _protoOfNewClones;
             return clone(behavior, state);
         }
     };
@@ -282,7 +283,7 @@ function defineModule(){
         else{
             behavior.$inherits = proto;
         }
-        return Behavior(behavior);
+        return _Behavior(behavior);
     };
 
     clone.defineInitPropertyOf = function(
@@ -411,7 +412,7 @@ function defineModule(){
          * function (it prototype property isn't pointed to this), not a {@link Class}, and it should
          * have only one argument – {@link ObjLiteral} state.
          * @returns {clone.$} */
-        $clone: function(/** ObjLiteral=object */state){
+        $clone: function(/** ObjLiteral={} */state){
             return _clone(this, state || {});
         },
         
@@ -483,7 +484,7 @@ function defineModule(){
      * @name    clone.behavior$
      * @extends clone.$
      * @class
-     * The behavior object prototype. Behavior objects is like a classes, but it's not a functions — **it's objects**,
+     * The behavior object prototype. _Behavior objects is like a classes, but it's not a functions — **it's objects**,
      * also **behaviors are immutable** (can't be modified after creation).
      *
      * @property {object.<string,*>} $defaults  
@@ -493,11 +494,11 @@ function defineModule(){
      * @property {object.<string,function:*>} $inits  
      *           List of lazy initialization fields.
      *           
-     * @borrows  private.Behavior as #constructor
+     * @borrows  private._Behavior as #constructor
      */
     /**#nocode+*/
     var behavior$Descriptor =/**#nocode-*/ {
-        constructor: Behavior,
+        constructor: _Behavior,
 
         /**
          * Creates new type, inherited from this object.
@@ -537,6 +538,7 @@ function defineModule(){
                 var setter /*= proto["set" + upperPropertyName]*/ = descriptor.set;
             }
             var accessor = function accessor(value){
+                //TODO: what is $owner?
                 var scope = (this === accessor) ? accessor.$owner || null : this;
                 if( value ){
                     setter.call(scope, value);
@@ -571,14 +573,10 @@ function defineModule(){
     }
 
     function _setCloneMethodByBench(/** number=33 */msec){
-        var methods = [
-            _cloneByConstructor,
-            _cloneByCreate
-            //,function objInstantiationByNewForIn(obj, state){return new obj.constructor(state)}
-        ];
-        if( '__proto__' in {} ){
-          methods.push(_cloneByProto);
-        }
+        var methods = [ _cloneByConstructor ];
+        if(clone.byObjectCreate) methods.push(_cloneByCreate);
+        if(clone.byProto)        methods.push(_cloneByProto);
+        //methods.push(function objInstantiationByNewForIn(obj, state){return new obj.constructor(state)})
 
         var bestMethodIdx = 0, bestResult = 0;
         for(var i=0, sz=methods.length; i<sz; i++){
@@ -602,11 +600,11 @@ function defineModule(){
 
         for(var count=0, time=0, startTime = Date.now();
             time < msec;
-            ++count %32 || (time = Date.now() - startTime)// check time every %N iterations
+            ++count %128 || (time = Date.now() - startTime)// check time every %N iterations
         ){
             var obj = cloneMethod(class$, {a:"string", b1:function(){}, c1:3});
         }
-        if(console) console.log("Benchmarking "+ cloneMethod.name +": ", count, "/", time, "=", count / time);
+        if(console) console.log("Benchmarking "+ cloneMethod.name +": ", count, "/", time, "=", (count / time).toFixed() );
         return count / time;
     }
     /**#@- private */

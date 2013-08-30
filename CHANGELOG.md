@@ -1,3 +1,14 @@
+##### Build v1.3.2-alpha (2013-08-30) 
+* move $inits accessors to $defaults
+* fix bug of $clone method call
+* clone.by*() methods will be available only if it can be applied
+* speed up empty clone creation
+* change ideology of constructor usage
+* rename _clone$ to _protoOfNewClones
+* rename clone.create to create.new
+* _objectCreate_es3(null) should not throw an error
+* fix msg in deploy script
+
 ##### Build v1.3.1-alpha (2013-08-15) 
 * rename $super to $inherits
 * fix benchmarking
