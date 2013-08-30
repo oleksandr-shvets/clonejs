@@ -174,15 +174,9 @@ You can call `valueOf()` method only on first access.
 **If accessor returns primitive value** (string, number, boolean), you can use it as normal.  
 JavaScript automatically invokes `valueOf()` in places where a primitive value is expected.
 
-<<<<<<< HEAD
 -----
 
 ##### For more details, see [API documentation](http://clonejs.org/symbols/clone.html)
-=======
-----
-For more details, see [API documentation](http://clonejs.org/symbols/clone.html)
->>>>>>> a369ad4f450b542d214cf284280c1dbdc05caf02
-  
   
 [clone]: http://clonejs.org/symbols/clone.html#clone
 [create]: http://clonejs.org/symbols/clone.html#create
