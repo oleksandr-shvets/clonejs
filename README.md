@@ -44,11 +44,7 @@ Read more:
 - [Advantages of prototype-based OOP⠙](http://programmers.stackexchange.com/questions/110936/what-are-the-advantages-of-prototype-based-oop-over-class-based-oop#answers-header)
 by Mike Anderson
 - [Does JavaScript need classes? (in russian)⠙](http://habrahabr.ru/post/175029/) [(robot translation)⠙](http://translate.google.com/translate?hl=&sl=ru&tl=en&u=http%3A%2F%2Fhabrahabr.ru%2Fpost%2F175029%2F)
-<<<<<<< HEAD
 by [Me](//github.com/quadroid)
-=======
-by Me (Alexander Shvets)
->>>>>>> a369ad4f450b542d214cf284280c1dbdc05caf02
 - [Myth: JavaScript needs classes⠙](http://www.2ality.com/2011/11/javascript-classes.html)
 by [Dr. Axel Rauschmayer (University of Munich)⠙](http://rauschma.de)
 - [JS Objects: De”construct”ion⠙](http://davidwalsh.name/javascript-objects-deconstruction)
