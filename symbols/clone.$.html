@@ -59,7 +59,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="https://github.com/quadroid/clonejs/tree/master/lib/jsdoc-toolkit/templates/codeview-jsdoc2-template" target="_blank">Codeview</a> 1.3<br />
 			Generated on:
-			<time datetime='2013-7-15' pubdate>2013-7-15 14:02</time>
+			<time datetime='2013-7-30' pubdate>2013-7-30 15:55</time>
 		</footer>
 	</div>
 </div>
@@ -77,7 +77,7 @@
 				
 				<div class="intro">
 					<p class="description summary">
-						<p>Root prototype/behavior for clone instances (created by <code><a href="../symbols/clone.html#.create">clone.create</a></code>). <br />
+						<p>Root prototype/behavior for clone instances (created by <code><a href="../symbols/clone.html#.new">clone.new</a></code>). <br />
 Alias to <code>clone.prototype</code>.</p>
 					</p>
 						
@@ -129,7 +129,7 @@ Alias to <code>clone.prototype</code>.</p>
                                                 <div class="fixedFont">
                                                     <b><a href="../symbols/clone.%24.html#constructor">constructor</a></b>
                                                 </div>
-                                                <div class="description"><p>Default constructor.</div>
+                                                <div class="description"><p>In this framework constructors are optional.</div>
                                             </td>
                                         </tr>
                                     
@@ -170,9 +170,9 @@ Alias to <code>clone.prototype</code>.</p>
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/clone.%24.html#$clone">$clone</a></b>(state<sup>=object</sup>)
+													<div class="fixedFont"><b><a href="../symbols/clone.%24.html#$clone">$clone</a></b>(state)
 													</div>
-													<div class="description"><p>The object-oriented notation of clone function: <br />
+													<div class="description"><p>This is the object-oriented notation of clone function: <br />
 For example: <code>myObject.$clone()</code> is identical to <code>clone(myObject)</code>.</div>
 												</td>
 											</tr>
@@ -258,9 +258,28 @@ For example: <code>myObject.$clone()</code> is identical to <code>clone(myObject
 								</div>
 								
 								<div class="description">
-									<p>Default constructor. By default alias to $clone method. <br />
-Difference with $clone is that constructor is <a href="../symbols/_global_.html#Class">Class</a>,
-it prototype property pointed to this.</p>
+									<p>In this framework constructors are optional. You can create types without constructor. <br />
+Use constructor like initialize method:</p>
+
+<pre><code>// create class:
+var class$ = {
+    constructor: function(a, b){
+        this.a = a;
+        this.b = b;
+    }
+};
+
+// create instance:
+var _instance = clone(class$);
+
+// create callback, that will initialize _instance later:
+function callback(){ _instance.constructor(1, 2) }
+</code></pre>
+
+<p>So, you can create empty instance, and initealize it later.  </p>
+
+<p>The <code>new</code> operator is about 2-3 times faster than <a href="../symbols/clone.html">clone</a> function. If you need <br />
+thausens of instances, define the constructor and use it with new operator instead of <a href="../symbols/clone.html">clone</a>.</p>
 									
 									
 									
@@ -297,14 +316,15 @@ it prototype property pointed to this.</p>
 											
 											</span>
 											
-											<b>$clone</b>(state<sup>=object</sup>)<span class="light">: {<a href="../symbols/clone.%24.html">clone.$</a>}</span>
+											<b>$clone</b>(state)<span class="light">: {<a href="../symbols/clone.%24.html">clone.$</a>}</span>
 										</div>
 										
 										<div class="description">
-											<p>The object-oriented notation of clone function: <br />
+											<p>This is the object-oriented notation of clone function: <br />
 For example: <code>myObject.$clone()</code> is identical to <code>clone(myObject)</code>. <br />
 This method can be overrided. The difference with constructor is that $clone is only
-function, not a <a href="../symbols/_global_.html#Class">Class</a>, and it has only one argument – <a href="../symbols/_global_.html#ObjLiteral">ObjLiteral</a> state.</p>
+function (it prototype property isn't pointed to this), not a <a href="../symbols/_global_.html#Class">Class</a>, and it should
+have only one argument – <a href="../symbols/_global_.html#ObjLiteral">ObjLiteral</a> state.</p>
 											
 											
 											
@@ -318,7 +338,7 @@ function, not a <a href="../symbols/_global_.html#Class">Class</a>, and it has o
 												<dt class="heading">Parameters:</dt>
 												
 													<dt>
-														<span class="light fixedFont">{<a href="../symbols/_global_.html#ObjLiteral">ObjLiteral</a>=object}</span> <b>state</b>
+														<span class="light fixedFont">{<a href="../symbols/_global_.html#ObjLiteral">ObjLiteral</a>={}}</span> <b>state</b>
 														
 													</dt>
 													<dd></dd>

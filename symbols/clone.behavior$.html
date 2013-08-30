@@ -59,7 +59,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="https://github.com/quadroid/clonejs/tree/master/lib/jsdoc-toolkit/templates/codeview-jsdoc2-template" target="_blank">Codeview</a> 1.3<br />
 			Generated on:
-			<time datetime='2013-7-15' pubdate>2013-7-15 14:02</time>
+			<time datetime='2013-7-30' pubdate>2013-7-30 15:55</time>
 		</footer>
 	</div>
 </div>
@@ -77,7 +77,7 @@
 				
 				<div class="intro">
 					<p class="description summary">
-						<p>The behavior object prototype. Behavior objects is like a classes, but it's not a functions — <strong>it's objects</strong>,
+						<p>The behavior object prototype. _Behavior objects is like a classes, but it's not a functions — <strong>it's objects</strong>,
 also <strong>behaviors are immutable</strong> (can't be modified after creation).</p>
 					</p>
 						
@@ -198,7 +198,7 @@ also <strong>behaviors are immutable</strong> (can't be modified after creation)
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/clone.behavior%24.html#behavior$Descriptor.$extend">behavior$Descriptor.$extend</a></b>(defaults<sup>opt</sup>, behavior)
+													<div class="fixedFont"><b><a href="../symbols/clone.behavior%24.html#$extend">$extend</a></b>(defaults<sup>opt</sup>, behavior)
 													</div>
 													<div class="description"><p>Creates new type, inherited from this object.</div>
 												</td>
@@ -334,12 +334,12 @@ also <strong>behaviors are immutable</strong> (can't be modified after creation)
 									<li 
 										 class='item0'
 									>
-										<div class="fixedFont heading" id="behavior$Descriptor.$extend">
+										<div class="fixedFont heading" id="$extend">
 											<span class='lighter'>
 											
 											</span>
 											
-											<b>behavior$Descriptor.$extend</b>(defaults<sup>opt</sup>, behavior)<span class="light">: {<a href="../symbols/clone.behavior%24.html">clone.behavior$</a>}</span>
+											<b>$extend</b>(defaults<sup>opt</sup>, behavior)<span class="light">: {<a href="../symbols/clone.behavior%24.html">clone.behavior$</a>}</span>
 										</div>
 										
 										<div class="description">
@@ -409,7 +409,8 @@ Types should not be modified after creation, so, it's freezed.</p>
 										</div>
 										
 										<div class="description">
-											<p>Thransforms <a href="../symbols/_global_.html#behaviorDescriptor">behaviorDescriptor</a> to the behavior object.</p>
+											<p>Thransforms <a href="../symbols/_global_.html#behaviorDescriptor">behaviorDescriptor</a> to the behavior object. <br />
+If behavior object passed, it will be returned without changes.</p>
 											
 											
 											
@@ -423,7 +424,7 @@ Types should not be modified after creation, so, it's freezed.</p>
 												<dt class="heading">Parameters:</dt>
 												
 													<dt>
-														<span class="light fixedFont">{!<a href="../symbols/_global_.html#behaviorDescriptor">behaviorDescriptor</a>}</span> <b>behavior</b>
+														<span class="light fixedFont">{!<a href="../symbols/_global_.html#behaviorDescriptor">behaviorDescriptor</a>|<a href="../symbols/clone.behavior%24.html">clone.behavior$</a>}</span> <b>behavior</b>
 														
 													</dt>
 													<dd></dd>

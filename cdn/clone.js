@@ -1,96 +1,114 @@
-/*
- * Naming convention
- * =================
- * $method - 
- * object$ - Prototype.
- * Object  - Class.
- * _object - Variable that used in closure(s).
- */
 /**#nocode+*/
 (function(){"use strict";
 function defineModule(){
 /**#nocode-*/
     /** @namespace
      *
-     * clone.js - the true prototype-based lazy programming framework.
-     * @version v1.3.0-alpha
+     * clone.js - the true prototype-based lazy programming framework.  
+     *   
+     * <h3>
+     * Naming convention
+     * </h3><pre>
+     * $property - $  prefix used to prevent accidental name collision.    
+     * object$   - $ postfix means prototype (Object.prototype === object$).              
+     * Object    - Class.                                                 
+     * _variable - Variable that used in closure(s).    
+     * </pre>
+     * 
+     * @version v1.3.2-alpha
      * @author  Alex Shvets
      * @see     www.clonejs.org
+     * 
+     * @borrows private._cloneByProto       as byProto
+     * @borrows private._cloneByCreate      as byObjectCreate
+     * @borrows private._cloneByConstructor as byConstructor
      *
+     * @function
      * @description
      * 
-     * Create new object, inherited from other object (prototype).  
-     * Works like Object.create, but the second argument is simple object, not [propertyDescriptor](_global_.html#propertyDescriptor).
+     * Creates new object, inherited from other object (prototype).  
+     * Works like {@link Object.create}, but the second argument is simple object, not [propertyDescriptor](_global_.html#propertyDescriptor).
      * It should be an object literal only. But, if you really need it, the rule may be changed to:  
      * *External usage of second argument after cloning should use only it own properties.*  
-     * Function should not change it arguments, but, clone() do this, this is side effect of `__proto__` usage.  
+     * clone() function may change its argument, this is the side effect of `__proto__` usage.  
      * This rule is need to make no difference with other clone methods: by constructor and Object.create.  
+     *    
+     * It's not named as class (noun: `new Clone`), becouse
+     * it mainly should be used as function (verb): `clone (something)`.
+     * 
      * @param  proto - Object to clone. Prototype. If function passed, it prototype property will be used instead.
      * @param  state - The own properties of created object, should be not a variable, object literal only
      *                 (because it can be modified), for example: `{key:"value"}`.  
      *                 By default — empty object (`{}`).
      * @returns {Object}
      */
-    // It's not named as class (noun, Clone), becouse it mainly should be used as function (verb).
-    function clone(/** !Object|Class */proto, /** !ObjLiteral=object */state){
-        if(typeof proto === 'function'){
-            proto = proto.prototype;
-        }
-        if( state === undefined){
-            state = {};
-        }
+    function clone(/** !Object|Class */proto, /** !ObjLiteral={} */state){
+//        if( this && this instanceof clone){// new operator used 
+//            state = arguments[0];
+//            proto = clone.prototype;
+//            if(!state){
+//                return this;
+//            }
+//        }
+        if(typeof proto === 'function' ) proto = proto.prototype;
+        if(typeof state === 'undefined') state = {};
         //</arguments>
-        return ('function' === typeof proto.$clone) ? proto.$clone(state) : _clone(proto, state);
+        if(typeof  proto.$clone === 'function' && proto.$clone !== clone.$.$clone ){
+            return proto.$clone(state);
+        }else return _clone(proto, state);
     }
-
-    function _cloneByProto(/** !Object */proto, /** !ObjLiteral */state){
+    /**#@+ @memberOf private */
+    
+    /** The fastest method (except second and next calls `byConstructor()`). */
+    function _cloneByProto(/** Object */proto, /** !ObjLiteral */state){
         state.__proto__ = proto;
         return state;
     }
 
-    function _cloneByCreate(/** !Object */proto, /** !ObjLiteral */state){
+    /** Use this method only if `byProto()` unavailable. */
+    function _cloneByCreate(/** Object */proto, /** ObjLiteral= */state){
         var newObj = Object.create(proto);
         for(var key in state) newObj[key] = state[key];
         return newObj;
     }
 
-    // This method is slowest on first call, but it creates custom $clone method,
-    // that may be is fastest than all. So, use it if you need hundreds of instances. 
+    /** 
+     * This method is slowest on first call, but it creates custom $clone method,
+     * that may be fastest than all. So, use it if you need hundreds of instances. */
     function _cloneByConstructor(/** !Object */proto, /** ObjLiteral= */state){
         
-        if(_hasOwn.call(proto, '$clone') && proto.$clone !== clone.$.$clone ){
+        //TODO: this is duplicated functionality of clone(), need to make ability
+        //      to call this function many times.
+        if(typeof  proto.$clone === 'function' && proto.$clone !== clone.$.$clone ){
             return proto.$clone(state);
         }
         
         if(! _hasOwn.call(proto, 'constructor') ){
-            proto.constructor = Clone;
+            proto.constructor = _Clone;
         }
 
-        function Clone(state){
+        function _Clone(state){
             for(var key in state) this[key] = state[key];
         }
-        Clone.prototype = proto;
+        _Clone.prototype = proto;
 
         /** @override */
         proto.$clone = function(state){
-            return new Clone(state);
+            return new _Clone(state);
         }
 
-        return new Clone(state);
+        return new _Clone(state);
     }
 
     /**
-     * Thransforms {@link behaviorDescriptor} to the behavior object.
-     * @name constructor
-     * @memberOf clone.behavior$#
-     * @function
-     * @param {!behaviorDescriptor} behavior
+     * Thransforms {@link behaviorDescriptor} to the behavior object.  
+     * If behavior object passed, it will be returned without changes.
      * @return {clone.behavior$}
      */
-    /**#nocode+*/
-    function Behavior(/** !behaviorDescriptor */behavior){
-        
-        if( behavior instanceof Behavior ){
+    function _Behavior(/** !behaviorDescriptor|clone.behavior$ */behavior){
+
+        //if( clone.behavior$.isPrototypeOf(behavior) ){
+        if( behavior instanceof _Behavior ){
             return behavior;
         }
 
@@ -99,34 +117,29 @@ function defineModule(){
         if( _hasOwn.call(behavior, '$inherits') ){
             var $inherits = behavior.$inherits;
             if(! _hasOwn.call($inherits, '$inherits') || _getProto($inherits) != $inherits.$inherits ){
-                $inherits = Behavior($inherits);
+                $inherits = _Behavior($inherits);
             }
         }else{
-            $inherits = _clone$;
-        }
-        if( $inherits !== behavior.$inherits ){
-            behavior.$inherits = $inherits;
+            $inherits = _protoOfNewClones;
         }
         
         /// $defaults
 
-        var defaults = behavior.$defaults;
-        if( defaults && _getProto(defaults) !== $inherits ){
-            defaults = behavior.$defaults = _clone($inherits, defaults);
-            _freeze(defaults);
-            var proto = defaults;
+        var $inits = behavior.$inits;
+        
+        var $defaults = behavior.$defaults || $inits && {};
+        if( $defaults && _getProto($defaults) !== $inherits ){
+            $defaults = _clone($inherits, $defaults);
+            _define(behavior, '$defaults', {value: $defaults});
+            //_freeze(defaults);
+            var proto = $defaults;
         }else   proto = $inherits;
-
-        if( _getProto(behavior) !== proto ){
-            behavior = _clone(proto, behavior);
-        }
         
         /// $inits
 
-        var $inits = behavior.$inits;
         if( $inits ){
             for(var key in $inits){
-                clone.defineInitPropertyOf(behavior, key, $inits[key],
+                clone.defineInitPropertyOf( $defaults, key, $inits[key],
                     {configurable:true},// iteration should not modify object, so, init getter is un-enumerable
                     {configurable:true, writable:true, enumerable:true}
                 );
@@ -135,6 +148,16 @@ function defineModule(){
         }
         
         ///
+
+        //$defaults && _freeze($defaults);
+
+        if( _getProto(behavior) !== proto ){
+            behavior = _clone(proto, behavior);
+        }
+
+        if( $inherits !== behavior.$inherits ){
+            _define(behavior, '$inherits', {value:$inherits});
+        }
         
         if( _hasOwn.call(behavior, 'constructor') && behavior.constructor.prototype !== behavior){
             behavior.constructor.prototype = behavior;
@@ -143,17 +166,27 @@ function defineModule(){
         //_freeze(behavior);
         return  behavior;
     }
-    /**#nocode-*/
+    
+    /**#@- private */
 
     var protoSupported = '__proto__' in {};
     
     if( protoSupported ){
+        clone.Dict = function Dict_byProto(/** !ObjLiteral= */data){
+            if( data === undefined){
+                data = {};
+            }//</arguments>
+            data.__proto__ = null;
+            return data;
+        }
+    }else{
         /**
-         * Object, that has only own properties (it prototype is null). Can be created by `Object.create(null)`.  
+         * Constructor of objects, that has only own properties (its prototype is null).  
+         * Also can be created by `Object.create(null)`.  
          * What is it for? See examples:
          * @example
-         * /// Example 1:
-         *     
+         * /// Example 1 /////////////////////////////////////////////////////////
+         *
          *     // Phone book
          *     var phones = {
          *       'John': '+7987654',
@@ -165,9 +198,9 @@ function defineModule(){
          *     }
          *     console.log(getPhone('John'));          // => '+7987654'
          *     console.log(getPhone('hasOwnProperty'));// => function hasOwnProperty() { [native code] }
-         *     
-         * /// Example 2:
-         *     
+         *
+         * /// Example 2 /////////////////////////////////////////////////////////
+         *
          *     var phones = {
          *       'John':'+7987654',
          *       'Peter':'+7654321'
@@ -179,9 +212,9 @@ function defineModule(){
          *     console.log(getPhone('John'));          // => '+7987654'
          *     phones['hasOwnProperty'] = '+7666666';  // Add new user
          *     console.log(getPhone('John'));          // oops!
-         *     
-         * /// Example 3:
-         *     
+         *
+         * /// Example 3 /////////////////////////////////////////////////////////
+         *
          *     var phones = {
          *       'John':'+7987654',
          *       'Peter':'+7654321'
@@ -193,9 +226,9 @@ function defineModule(){
          *     console.log(getPhone('John'));          // => '+7987654'
          *     phones['hasOwnProperty'] = '+7666666';  // Add new user
          *     console.log(getPhone('John'));          // => '+7987654'
-         *     
-         * /// Example 4 (use clone.Dict):
-         *     
+         *
+         * /// Example 4 (use clone.Dict)  ///////////////////////////////////////
+         *
          *     var phones = clone.Dict({
          *       'John':'+7987654',
          *       'Peter':'+7654321'
@@ -206,35 +239,33 @@ function defineModule(){
          *     console.log(getPhone('John'));          // => '+7987654'
          *     phones['hasOwnProperty'] = '+7666666';  // Add new user
          *     console.log(getPhone('John'));          // => '+7987654'
-         * 
+         *
          * @constructor
          * @typedef object
          * @returns {clone.Dict} */
-        clone.Dict = function Dict_byProto(/** !ObjLiteral= */data){
-            if( data === undefined){
-                data = {};
-            }//</arguments>
-            data.__proto__ = null;
-            return data;
-        }
-    }else{
         clone.Dict = function Dict_byCreate(/** !ObjLiteral= */data){
-            var dict = Object.create(null);
+            var dict = (Object.create || _objectCreate_es3)(null);
             for(var key in data) dict[key] = data[key];
             return dict;
         }
     }
-    clone.Dict.prototype = null;
+    clone.Dict.prototype = null;// does not affect anything, just for ideology
     
     // // // // // // // // // // // // // // // // // // // // // // // // // //
     // static methods:
 
     /**
-     * Creates new object, based on `{@link clone.$}`.
+     * Creates new object, based on `[clone.prototype]{@link clone.$}` or given {@link behaviorDescriptor}.
      * @returns {Object}
      */
-    clone.create = function(/** !ObjLiteral={} */state, /** !behaviorDescriptor=clone.$ */behavior){
-        return _clone((behavior ? Behavior(behavior) : _clone$), state || {});
+    clone.new = function(/** !ObjLiteral={} */state, /** !behaviorDescriptor=clone.$ */behavior){
+        if(arguments.length === 0){
+            // `new` operator is faster than `clone` fn
+            return new _protoOfNewClones.constructor;
+        }else{
+            behavior = behavior ? _Behavior(behavior) : _protoOfNewClones;
+            return clone(behavior, state);
+        }
     };
     
     /**
@@ -247,12 +278,12 @@ function defineModule(){
         }
         if( behavior === undefined ){
             behavior = proto;
-            //proto = _clone$;
+            //proto = _protoOfNewClones;
         }//</arguments>
         else{
             behavior.$inherits = proto;
         }
-        return Behavior(behavior);
+        return _Behavior(behavior);
     };
 
     clone.defineInitPropertyOf = function(
@@ -290,25 +321,6 @@ function defineModule(){
         _define(obj, propertyName, descriptor);
     };
     
-//    clone.defineConstructorOf = function(/** !Object */obj, /** string= */functionName, /** string='constructor' */propertyName){
-//        //var _parentConstructor = Object.getPrototypeOf(obj).constructor;
-//        /**
-//         * Default constructor:
-//         * `function(state){ for(var key in state) this[key] = state[key] }`
-//         * @name constructor
-//         * @type Class
-//         * @memberOf clone.prototype */
-//        function Init(state){
-//            //for(var key in state) this[key] = state[key];
-//            this.$set(state);
-//            //_parentConstructor.apply(this, arguments);
-//        }
-//        Init.prototype = obj;
-//        if(!Init.name) Init.name = functionName||'Init';//for IE
-//        _define(obj, propertyName||'constructor', {value: Init, writable:true, configurable:true});
-//        return Init;
-//    };
-    
     /** Switch clone method. Call without parameters to return current method. */
     //TODO: add onDone callback.
     clone.by = function(/** (function|'auto'|'proto'|'create'|'constructor')= */method){
@@ -340,26 +352,6 @@ function defineModule(){
         }
     }
     
-    clone.byProto        = _cloneByProto;
-    clone.byObjectCreate = _cloneByCreate;
-    clone.byConstructor  = _cloneByConstructor;
-
-    /** This is the link to built-in [Object.defineProperty][] function.
-     *  Use this function if you write ES3 (IE 8-) compatable code.
-     *  [Object.defineProperty]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty#Description
-     *  @function
-     *  @param {!Object} obj
-     *  @param {string} propertyName
-     *  @param {propertyDescriptor} descriptor */
-    clone.definePropertyOf = _define;
-
-    /** This is the link to built-in [Object.getPrototypeOf][] function.
-     * Use this function if you write ES3 (IE 8-) compatable code.
-     *  [Object.getPrototypeOf]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getPrototypeOf#Description
-     *  @function
-     *  @param {!Object} obj */
-    clone.getPrototypeOf = _getProto;
-    
 //    /** Faster than {@link clone.$apply}. */
 //    clone.$call = function(/** Object */obj, /** string */method,/** (...)= */arg1, arg2, arg3, arg4, arg5, arg6, arg7){
 //        return this.prototype[method].call(obj, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
@@ -371,37 +363,56 @@ function defineModule(){
 //    }
     
     // // // // // // // // // // // // // // // // // // // // // // // // // //
-    // behavior of all created by clone.create objects:
+    // behavior of all created by clone.new objects:
 
     /** @name clone.$
      *  @class
-     * Root prototype/behavior for clone instances (created by `{@link clone.create}`).  
+     * Root prototype/behavior for clone instances (created by `{@link clone.new}`).  
      * Alias to `clone.prototype`.
      */
      var clone$Descriptor = /** @lands {clone.$#} */{
         /**#@+ @memberOf clone.$# */
-
+        
+        $inherits: Object.prototype,
+        
         /**
-         * Default constructor. By default alias to {@link $clone} method.  
-         * Difference with $clone is that constructor is {@link Class},
-         * it prototype property pointed to this.
+         * In this framework constructors are optional. You can create types without constructor.  
+         * Use constructor like initialize method:
+         * 
+         *     // create class:
+         *     var class$ = {
+         *         constructor: function(a, b){
+         *             this.a = a;
+         *             this.b = b;
+         *         }
+         *     };
+         *     
+         *     // create instance:
+         *     var _instance = clone(class$);
+         *     
+         *     // create callback, that will initialize _instance later:
+         *     function callback(){ _instance.constructor(1, 2) }
+         *     
+         *   
+         * So, you can create empty instance, and initealize it later.  
+         *   
+         * The `new` operator is about 2-3 times faster than {@link clone} function. If you need 
+         * thausens of instances, define the constructor and use it with new operator instead of {@link clone}.
+         * 
          * @returns {clone.$}
          * @type Class
          * @field
          */
-        constructor: function Clone(state){
-            return this.$clone(state);
-        },
-        
-        $inherits: Object.prototype,
+        constructor: function Clone(){},
 
         /** 
-         * The object-oriented notation of clone function:  
+         * This is the object-oriented notation of clone function:  
          * For example: `myObject.$clone()` is identical to `clone(myObject)`.  
          * This method can be overrided. The difference with {@link constructor} is that $clone is only
-         * function, not a {@link Class}, and it has only one argument – {@link ObjLiteral} state.
+         * function (it prototype property isn't pointed to this), not a {@link Class}, and it should
+         * have only one argument – {@link ObjLiteral} state.
          * @returns {clone.$} */
-        $clone: function(/** ObjLiteral=object */state){
+        $clone: function(/** ObjLiteral={} */state){
             return _clone(this, state || {});
         },
         
@@ -466,14 +477,14 @@ function defineModule(){
             return mappedObj;
         }
         
-        /**#@-*/
+        /**#@- clone.$# */
     };
     
     /** 
-     *  @name    clone.behavior$
-     *  @extends clone.$
-     *  @class
-     * The behavior object prototype. Behavior objects is like a classes, but it's not a functions — **it's objects**,
+     * @name    clone.behavior$
+     * @extends clone.$
+     * @class
+     * The behavior object prototype. _Behavior objects is like a classes, but it's not a functions — **it's objects**,
      * also **behaviors are immutable** (can't be modified after creation).
      *
      * @property {object.<string,*>} $defaults  
@@ -482,9 +493,12 @@ function defineModule(){
      *           The parent behavior. Superclass.
      * @property {object.<string,function:*>} $inits  
      *           List of lazy initialization fields.
+     *           
+     * @borrows  private._Behavior as #constructor
      */
-    var behavior$Descriptor = {
-        constructor: Behavior,
+    /**#nocode+*/
+    var behavior$Descriptor =/**#nocode-*/ {
+        constructor: _Behavior,
 
         /**
          * Creates new type, inherited from this object.
@@ -500,7 +514,7 @@ function defineModule(){
             }
             return clone.extend(this, behavior);
         }
-//        function $create(/** *= */state, /** ...* */ arg1, arg2, arg3){
+//        function $new(/** *= */state, /** ...* */ arg1, arg2, arg3){
 //            if( this.$behavior.hasOwnProperty('constructor') ){
 //                return new this.constructor(state, arg1, arg2, arg3);
 //            }else{
@@ -508,10 +522,11 @@ function defineModule(){
 //            }
 //        }
     };
- 
-    /**#nocode+*/
+
     // // // // // // // // // // // // // // // // // // // // // // // // // //
     // private functions:
+
+    /**#@+ @memberOf private */
     
     function _defineProperty_es3(/** !Object */obj, /** string */propertyName, /** !propertyDescriptor */descriptor){
         var proto = obj.__proto__ || obj;
@@ -523,6 +538,7 @@ function defineModule(){
                 var setter /*= proto["set" + upperPropertyName]*/ = descriptor.set;
             }
             var accessor = function accessor(value){
+                //TODO: what is $owner?
                 var scope = (this === accessor) ? accessor.$owner || null : this;
                 if( value ){
                     setter.call(scope, value);
@@ -548,8 +564,8 @@ function defineModule(){
         //return obj.__proto__ === obj ? clone.prototype : obj.__proto__;
     }
 
-    function _objectCreate_es3(obj, /** {propertyDescriptor}= */descriptors){
-        var newObj = clone(obj);
+    function _objectCreate_es3(/** Object? */obj, /** {propertyDescriptor}= */descriptors){
+        var newObj = clone(obj || Object.prototype);
         for(var key in descriptors){
             _define(newObj, key, descriptors[key]);
         }
@@ -557,14 +573,10 @@ function defineModule(){
     }
 
     function _setCloneMethodByBench(/** number=33 */msec){
-        var methods = [
-            _cloneByConstructor,
-            _cloneByCreate
-            //,function objInstantiationByNewForIn(obj, state){return new obj.constructor(state)}
-        ];
-        if( '__proto__' in {} ){
-          methods.push(_cloneByProto);
-        }
+        var methods = [ _cloneByConstructor ];
+        if(clone.byObjectCreate) methods.push(_cloneByCreate);
+        if(clone.byProto)        methods.push(_cloneByProto);
+        //methods.push(function objInstantiationByNewForIn(obj, state){return new obj.constructor(state)})
 
         var bestMethodIdx = 0, bestResult = 0;
         for(var i=0, sz=methods.length; i<sz; i++){
@@ -588,14 +600,47 @@ function defineModule(){
 
         for(var count=0, time=0, startTime = Date.now();
             time < msec;
-            ++count %32 || (time = Date.now() - startTime)// check time every % iterations
-            ){
+            ++count %128 || (time = Date.now() - startTime)// check time every %N iterations
+        ){
             var obj = cloneMethod(class$, {a:"string", b1:function(){}, c1:3});
         }
-        if(console) console.log("Benchmarking "+ cloneMethod.name +": ", count, "/", time, "=", count / time);
+        if(console) console.log("Benchmarking "+ cloneMethod.name +": ", count, "/", time, "=", (count / time).toFixed() );
         return count / time;
     }
-    /**#nocode-*/
+    /**#@- private */
+        
+    /**
+     * @name _global_
+     * @namespace
+     *  Description of some native subtypes.
+     *  Listed objects does not present in global (window) object, it's only descriptions.
+     */
+        /**
+         * Object, that has at least one of the following property:
+         * `value`, `get`, `set`, `writable`, `configurable`, `enumerable`.
+         * @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty⠙</a>
+         * @name propertyDescriptor
+         * @define {({value:*}|{get:{function():*}}|{set:{function(*):void}}|{writable:boolean}|{configurable:boolean}|{enumerable:boolean})} */
+        //{Object.< 'writable'|'configurable'|'enumerable', boolean= > | Object.<'get'|'set',function> | Object.<'value',?> }
+        //{Object.< 'writable'|'configurable'|'enumerable', boolean= > | Object.<'get'|'set'|'configurable'|'enumerable', function|boolean= >}
+        
+        /**
+         * Object literal, that may have properties:
+         * [$inherits](clone.behavior$.html#$inherits), [$defaults](clone.behavior$.html#$defaults), [$inits](clone.behavior$.html#$inits).
+         * All other properties should be functions (or constants).
+         * @name behaviorDescriptor
+         * @define {ObjLiteral} */
+        
+        /**
+         * Function-constructor: function, that can be called by "new" operator and/or have modified prototype property.
+         * For example: `Object`, `Array`, `RegExp`.
+         * @name Class
+         * @define {function(...):(object|undefined)} */
+        
+        /**
+         * Simple key-value object, which proto is Object.prototype and all it properties is enumerable.
+         * @name ObjLiteral
+         * @define {object} */
     
     // // // // // // // // // // // // // // // // // // // // // // // // // //
     // setup (depends on JavaScript version):
@@ -614,7 +659,7 @@ function defineModule(){
      * @property {object} injectCloneBehaviorInto  You can make all objects behaves like a clone:
      *                                             `({thisWillBeHash: true}).$get()`
      * @property {boolean}  setCloneMethodByBench  Run quick (about 100ms) benchmark of clone methods
-     *                                             (by [[ proto ]], by Object.create, by constructor).
+     *                                             (by `__proto__`, `Object.create`, `constructor`).
      * @property {boolean}          makeES5compat  Make some ECMA Script 5 shims, see {@link Object}.
      * @property {boolean=true}        makeGlobal  Make `clone` function global (for nodejs). True by
      *                                             default (if global clone options object defined). 
@@ -625,14 +670,17 @@ function defineModule(){
 
     // underscored variables used in closure functions
 
-    var _clone    =             protoSupported ? _cloneByProto         :
-    /**/                    'create' in Object ? _cloneByCreate        : _cloneByConstructor;
-    var _define   = 'defineProperty' in Object &&
-    (jScriptVersion ===0 || jScriptVersion > 8)? Object.defineProperty : _defineProperty_es3;
+    if(protoSupported)     clone.byProto        = _cloneByProto;
+    if('create' in Object) clone.byObjectCreate = _cloneByCreate;
+    /* always available: */clone.byConstructor  = _cloneByConstructor;
+
+    var _clone    = clone.byProto || clone.byObjectCreate || clone.byConstructor;
+
+    var _hasOwn   = Object.prototype.hasOwnProperty;
     var _getProto = 'getPrototypeOf' in Object ? Object.getPrototypeOf : _getPrototypeOf_es3;
     var _freeze   =         'freeze' in Object ? Object.freeze         : function doNothing(){};
-
-    var _hasOwn = Object.prototype.hasOwnProperty;
+    var _define   = 'defineProperty' in Object &&
+        (jScriptVersion===0 ||jScriptVersion>8)? Object.defineProperty : _defineProperty_es3;
 
     // ECMAScript 5 compatibility shims:
     if(setupOptions && setupOptions.makeES5compat){
@@ -640,32 +688,57 @@ function defineModule(){
         if(typeof Object.getPrototypeOf === 'undefined') /** @function */Object.getPrototypeOf = _getPrototypeOf_es3;
         if(typeof Object.create         === 'undefined') /** @function */Object.create         = _objectCreate_es3;
     }
-    /**#nocode+*/
-        
+    
+    /** This is the link to built-in [Object.create][] function.  
+     *  Use this function if you need ES3 (IE 8-) compatable code.
+     *  [Object.create]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create#Description
+     *  @function
+     *  @param {Object} proto
+     *  @param {{propertyDescriptor}} descriptors */
+    clone.create = Object.create || _objectCreate_es3;
+    
+    /** This is the link to built-in [Object.defineProperty][] function.
+     *  Use this function if you need ES3 (IE 8-) compatable code.
+     *  [Object.defineProperty]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty#Description
+     *  @function
+     *  @param {!Object} obj
+     *  @param {string} propertyName
+     *  @param {propertyDescriptor} descriptor */
+    clone.defineProperty = _define;
+
+    /** This is the link to built-in [Object.getPrototypeOf][] function.
+     * Use this function if you need ES3 (IE 8-) compatable code.
+     *  [Object.getPrototypeOf]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getPrototypeOf#Description
+     *  @function
+     *  @param {!Object} obj */
+    clone.getPrototypeOf = _getProto;
+            
     // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
-    var _clone$;
+    var _protoOfNewClones;
     if(setupOptions && setupOptions.injectCloneBehaviorInto){
-        _clone$ = setupOptions.injectCloneBehaviorInto;
-        clone.prototype = _clone$;
+        _protoOfNewClones = setupOptions.injectCloneBehaviorInto;
+        clone.prototype = _protoOfNewClones;
         // var clone = {injectCloneBehaviorInto: Object.prototype};
     }else{
-        _clone$ = clone.prototype;
+        _protoOfNewClones = clone.prototype;
     }
     clone.$ = clone.prototype;
 
     if( _define !== _defineProperty_es3) for(var name in clone$Descriptor){
-        _define( _clone$, name, {value: clone$Descriptor[name], writable:true, configurable:true} );
+        _define( _protoOfNewClones, name, {value: clone$Descriptor[name], writable:true, configurable:true} );
     }else{
-        _clone$ = clone.$ = clone$Descriptor;
+        _protoOfNewClones = clone.$ = clone$Descriptor;
     }
     
-    // if `clone.prototype` has enumerable property, do not use it in `clone.create`
-    for(var key in _clone$){
-        _clone$ = Object.prototype; break;
+    _protoOfNewClones.constructor.prototype = _protoOfNewClones;
+    
+    // if `clone.prototype` has enumerable property(ies), do not use it in `clone.new`
+    for(var key in _protoOfNewClones){
+        _protoOfNewClones = Object.prototype; break;
     }
 
-    //clone.defineConstructorOf(_clone$);
+    //clone.defineConstructorOf(_protoOfNewClones);
 
     clone.behavior$ = clone.extend(behavior$Descriptor);
     
@@ -698,7 +771,6 @@ if(typeof module === 'object' && 'exports' in module){
 // Browser
 }else{
     var clone = _global.clone = defineModule();
-    /**#nocode-*/
     /**
      * For browsers only. Replaces `window.clone` by previous value.
      * @returns {clone} function */
@@ -706,41 +778,6 @@ if(typeof module === 'object' && 'exports' in module){
         _global.clone = _globalClone;
         return clone;
     }
-    /**#nocode+*/
 }
     
 })();
-/**#nocode-*/
-/**
- * @name _global_
- * @namespace
- *  Description of some native subtypes.
- *  Listed objects does not present in global (window) object, it's only descriptions.
- */
-    /**
-     * Object, that has at least one of the following property:
-     * `value`, `get`, `set`, `writable`, `configurable`, `enumerable`.
-     * @see <a href="http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">Object.defineProperty⠙</a>
-     * @name propertyDescriptor
-     * @define {({value:*}|{get:{function():*}}|{set:{function(*):void}}|{writable:boolean}|{configurable:boolean}|{enumerable:boolean})} */
-    //{Object.< 'writable'|'configurable'|'enumerable', boolean= > | Object.<'get'|'set',function> | Object.<'value',?> }
-    //{Object.< 'writable'|'configurable'|'enumerable', boolean= > | Object.<'get'|'set'|'configurable'|'enumerable', function|boolean= >}
-    
-    /**
-     * Object literal, that may have properties:
-     * [$inherits](clone.behavior$.html#$inherits), [$defaults](clone.behavior$.html#$defaults), [$inits](clone.behavior$.html#$inits).
-     * All other properties should be functions (or constants).
-     * @name behaviorDescriptor
-     * @define {ObjLiteral} */
-    
-    /**
-     * Function-constructor: function, that can be called by "new" operator and/or have modified prototype property.
-     * For example: `Object`, `Array`, `RegExp`.
-     * @name Class
-     * @define {function(...):(object|undefined)} */
-    
-    /**
-     * Simple key-value object, which proto is Object.prototype and all it properties is enumerable.
-     * @name ObjLiteral
-     * @define {object} */
-
