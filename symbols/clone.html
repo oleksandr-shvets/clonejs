@@ -59,7 +59,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="https://github.com/quadroid/clonejs/tree/master/lib/jsdoc-toolkit/templates/codeview-jsdoc2-template" target="_blank">Codeview</a> 1.3<br />
 			Generated on:
-			<time datetime='2013-7-30' pubdate>2013-7-30 16:19</time>
+			<time datetime='2013-8-3' pubdate>2013-8-3 11:03</time>
 		</footer>
 	</div>
 </div>
@@ -92,7 +92,7 @@ _variable - Variable that used in closure(s).
 					
 						<ul class="summary">
 							
-								<li><i>Version: </i> v1.3.2-alpha</li>
+								<li><i>Version: </i> v1.3.3-alpha</li>
 							
 							
 							    <li><i>Author: </i>Alex Shvets</li>
@@ -132,9 +132,11 @@ _variable - Variable that used in closure(s).
 										<div class="description">
 											<p>Creates new object, inherited from other object (prototype). <br />
 Works like <a href="../symbols/Object.html#.create">Object.create</a>, but the second argument is simple object, not <a href="_global_.html#propertyDescriptor">propertyDescriptor</a>.
-It should be an object literal only. But, if you really need it, the rule may be changed to: <br />
-<em>External usage of second argument after cloning should use only it own properties.</em> <br />
-clone() function may change its argument, this is the side effect of <code>__proto__</code> usage. <br />
+It should be an object literal only. But, if you really need it, the rule may be changed to:  </p>
+
+<p><em>External usage of second argument after cloning should use only it own properties.</em>  </p>
+
+<p>clone() function may change its argument, this is the side effect of <code>__proto__</code> usage. <br />
 This rule is need to make no difference with other clone methods: by constructor and Object.create.  </p>
 
 <p>It's not named as class (noun: <code>new Clone</code>), becouse
@@ -148,7 +150,7 @@ it mainly should be used as function (verb): <code>clone (something)</code>.</p>
 									<dt class="heading">Parameters:</dt>
 									
 										<dt>
-											<span class="light fixedFont">{!<a href="../symbols/Object.html">Object</a>|<a href="../symbols/_global_.html#Class">Class</a>}</span>  <b>proto</b>
+											<span class="light fixedFont">{<a href="../symbols/Object.html">Object</a>|<a href="../symbols/_global_.html#Class">Class</a>}</span>  <b>proto</b>
 											
 										</dt>
 										<dd><ul>
@@ -445,7 +447,7 @@ that may be fastest than all. So, use it if you need hundreds of instances.</p>
 												<dt class="heading">Parameters:</dt>
 												
 													<dt>
-														<span class="light fixedFont">{!<a href="../symbols/Object.html">Object</a>}</span> <b>proto</b>
+														<span class="light fixedFont">{<a href="../symbols/Object.html">Object</a>}</span> <b>proto</b>
 														
 													</dt>
 													<dd></dd>

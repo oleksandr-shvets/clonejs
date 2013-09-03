@@ -59,7 +59,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="https://github.com/quadroid/clonejs/tree/master/lib/jsdoc-toolkit/templates/codeview-jsdoc2-template" target="_blank">Codeview</a> 1.3<br />
 			Generated on:
-			<time datetime='2013-7-30' pubdate>2013-7-30 16:19</time>
+			<time datetime='2013-8-3' pubdate>2013-8-3 11:03</time>
 		</footer>
 	</div>
 </div>
@@ -184,7 +184,7 @@ For example: <code>myObject.$clone()</code> is identical to <code>clone(myObject
 												<td class="nameDescription">
 													<div class="fixedFont"><b><a href="../symbols/clone.%24.html#$each">$each</a></b>(iterator, context<sup>=this</sup>)
 													</div>
-													<div class="description"></div>
+													<div class="description"><p>Iterate through own properties.</div>
 												</td>
 											</tr>
 										
@@ -195,7 +195,7 @@ For example: <code>myObject.$clone()</code> is identical to <code>clone(myObject
 												<td class="nameDescription">
 													<div class="fixedFont"><b><a href="../symbols/clone.%24.html#$get">$get</a></b>(key<sup>opt</sup>)
 													</div>
-													<div class="description"><p>If called without arguments – returns state clone.Hash.</div>
+													<div class="description"><p>If called without arguments – returns current state (Dict of all own properties).</div>
 												</td>
 											</tr>
 										
@@ -204,7 +204,7 @@ For example: <code>myObject.$clone()</code> is identical to <code>clone(myObject
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/clone.%24.html#$map">$map</a></b>(iterator, context<sup>=this</sup>, proto<sup>=this</sup>)
+													<div class="fixedFont"><b><a href="../symbols/clone.%24.html#$map">$map</a></b>(iterator, context<sup>=this</sup>, proto<sup>=null</sup>)
 													</div>
 													<div class="description"></div>
 												</td>
@@ -215,7 +215,7 @@ For example: <code>myObject.$clone()</code> is identical to <code>clone(myObject
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/clone.%24.html#$set">$set</a></b>(state_or_key, value<sup>opt</sup>)
+													<div class="fixedFont"><b><a href="../symbols/clone.%24.html#$set">$set</a></b>(property_ies, value<sup>opt</sup>)
 													</div>
 													<div class="description"></div>
 												</td>
@@ -272,14 +272,17 @@ var class$ = {
 // create instance:
 var _instance = clone(class$);
 
-// create callback, that will initialize _instance later:
-function callback(){ _instance.constructor(1, 2) }
+// initialize _instance later, in callback:
+doSomething(function callback(){
+    _instance.constructor(1, 2);
+});
 </code></pre>
 
 <p>So, you can create empty instance, and initealize it later.  </p>
 
-<p>The <code>new</code> operator is about 2-3 times faster than <a href="../symbols/clone.html">clone</a> function. If you need <br />
-thausens of instances, define the constructor and use it with new operator instead of <a href="../symbols/clone.html">clone</a>.</p>
+<p>The <code>new</code> operator is about 2-5 times faster than <a href="../symbols/clone.html">clone</a> (but creating object-prototype
+is about 20 times faster than function-class creation, see <a href="http://jsperf.com/clonejs-nano-vs-vanillajs/5">jsperf</a>). If you need
+thausens  of instances, define the constructor and use it with new operator instead of <a href="../symbols/clone.html">clone</a>.</p>
 									
 									
 									
@@ -322,9 +325,13 @@ thausens of instances, define the constructor and use it with new operator inste
 										<div class="description">
 											<p>This is the object-oriented notation of clone function: <br />
 For example: <code>myObject.$clone()</code> is identical to <code>clone(myObject)</code>. <br />
-This method can be overrided. The difference with constructor is that $clone is only
-function (it prototype property isn't pointed to this), not a <a href="../symbols/_global_.html#Class">Class</a>, and it should
-have only one argument – <a href="../symbols/_global_.html#ObjLiteral">ObjLiteral</a> state.</p>
+This method can be overrided. The difference with overriding constructor:  </p>
+
+<ul>
+<li>in interface: $clone should have only one argument – <a href="../symbols/_global_.html#ObjLiteral">ObjLiteral</a> state</li>
+<li>$clone is only function (it prototype property isn't pointed to this), it's not a <a href="../symbols/_global_.html#Class">Class</a></li>
+<li>$clone is <a href="http://ericleads.com/2013/01/javascript-constructor-functions-vs-factory-functions/">factory function⠙</a></li>
+</ul>
 											
 											
 											
@@ -383,7 +390,7 @@ have only one argument – <a href="../symbols/_global_.html#ObjLiteral">ObjLite
 										</div>
 										
 										<div class="description">
-											
+											<p>Iterate through own properties.</p>
 											
 											
 											
@@ -423,11 +430,11 @@ have only one argument – <a href="../symbols/_global_.html#ObjLiteral">ObjLite
 											
 											</span>
 											
-											<b>$get</b>(key<sup>opt</sup>)<span class="light">: {clone.Hash|*}</span>
+											<b>$get</b>(key<sup>opt</sup>)<span class="light">: {<a href="../symbols/clone.Dict.html">clone.Dict</a>|*}</span>
 										</div>
 										
 										<div class="description">
-											<p>If called without arguments – returns state clone.Hash.</p>
+											<p>If called without arguments – returns current state (Dict of all own properties).</p>
 											
 											
 											
@@ -444,7 +451,7 @@ have only one argument – <a href="../symbols/_global_.html#ObjLiteral">ObjLite
 														<span class="light fixedFont">{string|Array=}</span> <b>key</b>
 														
 													</dt>
-													<dd></dd>
+													<dd><p>key (string) or Array of keys</p></dd>
 												
 											</dl>
 										
@@ -461,7 +468,7 @@ have only one argument – <a href="../symbols/_global_.html#ObjLiteral">ObjLite
 												
 													<dt class="heading">Returns:</dt>
 													
-														<dd><span class="light fixedFont">{clone.Hash|*}</span> </dd>
+														<dd><span class="light fixedFont">{<a href="../symbols/clone.Dict.html">clone.Dict</a>|*}</span> Dict of own properties, or single property value</dd>
 													
 												
 												
@@ -482,7 +489,7 @@ have only one argument – <a href="../symbols/_global_.html#ObjLiteral">ObjLite
 											
 											</span>
 											
-											<b>$map</b>(iterator, context<sup>=this</sup>, proto<sup>=this</sup>)
+											<b>$map</b>(iterator, context<sup>=this</sup>, proto<sup>=null</sup>)<span class="light">: {<a href="../symbols/clone.Dict.html">clone.Dict</a>|Proto}</span>
 										</div>
 										
 										<div class="description">
@@ -512,7 +519,7 @@ have only one argument – <a href="../symbols/_global_.html#ObjLiteral">ObjLite
 													<dd></dd>
 												
 													<dt>
-														<span class="light fixedFont">{<a href="../symbols/Object.html">Object</a>=this}</span> <b>proto</b>
+														<span class="light fixedFont">{<a href="../symbols/Object.html">Object</a>=null}</span> <b>proto</b>
 														
 													</dt>
 													<dd></dd>
@@ -520,6 +527,27 @@ have only one argument – <a href="../symbols/_global_.html#ObjLiteral">ObjLite
 											</dl>
 										
 										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">Returns:</dt>
+													
+														<dd><span class="light fixedFont">{<a href="../symbols/clone.Dict.html">clone.Dict</a>|Proto}</span> </dd>
+													
+												
+												
+												
+												
+												
+											
+											</dl>
 										
 										<div class="hr"></div>
 									</li>
@@ -532,7 +560,7 @@ have only one argument – <a href="../symbols/_global_.html#ObjLiteral">ObjLite
 											
 											</span>
 											
-											<b>$set</b>(state_or_key, value<sup>opt</sup>)
+											<b>$set</b>(property_ies, value<sup>opt</sup>)
 										</div>
 										
 										<div class="description">
@@ -550,10 +578,10 @@ have only one argument – <a href="../symbols/_global_.html#ObjLiteral">ObjLite
 												<dt class="heading">Parameters:</dt>
 												
 													<dt>
-														<span class="light fixedFont">{<a href="../symbols/Object.html">Object</a> *}</span> <b>state_or_key</b>
+														<span class="light fixedFont">{<a href="../symbols/Object.html">Object</a>|string}</span> <b>property_ies</b>
 														
 													</dt>
-													<dd></dd>
+													<dd><p>Property name or key/value object</p></dd>
 												
 													<dt>
 														<span class="light fixedFont">{*=}</span> <b>value</b>
